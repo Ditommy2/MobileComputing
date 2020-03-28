@@ -12,7 +12,7 @@ local password
 --	end
 --end
 --http://localhost/mobilecomputing/insert.php?name=braga&password=123
-
+--delete from user where name!='paolo'
 local function urlencode(str)
 	if (str) then
 		str = string.gsub (str, "\n", "\r\n")
