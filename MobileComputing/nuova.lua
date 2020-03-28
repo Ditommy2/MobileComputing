@@ -1,5 +1,4 @@
 local composer = require( "composer" )
-local mysql=require("luasql.mysql")
 local scene = composer.newScene()
 local widget = require("widget")
 local Username
@@ -12,17 +11,34 @@ local password
 
 --	end
 --end
+--http://localhost/mobilecomputing/insert.php?name=braga&password=123
 
+local function urlencode(str)
+	if (str) then
+		str = string.gsub (str, "\n", "\r\n")
+		str = string.gsub (str, "([^%w ])",
+		function (c) return string.format ("%%%02X", string.byte(c)) end)
+		str = string.gsub (str, " ", "+")
+	end
+	return str
+end
+
+local function networkListener( event )
+
+    if ( event.isError ) then
+        print( "Network error: ", event.response )
+    else
+    	print( event.response )
+    end
+end
 
 local function handleButtonEvent( event )
     if ( "ended" == event.phase ) then
-      local file= sqlite3.open(  "192.168.1.67:5432/Program Files/PostgreSQL/12/data/base/33004")
-    --  local query= "INSERT INTO Mammita VALUES(1," .. (username.text) ..", ".. (password.text) ");"
-    local query= "INSERT INTO Mammita VALUES(1, PROVA, 123);"
-      file:exec( query )
+    	local URL = "http://192.168.1.153:80/mobilecomputing/insert.php?name=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
+      print(URL)
+        network.request(URL, "GET", networkListener)
 	end
 end
-
 
 -- -----------------------------------------------------------------------------------
 -- Code outside of the scene event functions below will only be executed ONCE unless
