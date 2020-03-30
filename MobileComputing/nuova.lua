@@ -3,6 +3,8 @@ local scene = composer.newScene()
 local widget = require("widget")
 local Username
 local password
+local json=require("json")
+local filePath=system.pathForFile("savedDatas.json", system.DocumentsDirectory)
 --local function handleButtonEvent( event )
   --  if ( "ended" == event.phase ) then
   --  	local URL = "http://web.web.com/yourscript.php?username=" .. urlencode( username.text ) .. "&password=" .. urlencode(password.text)
@@ -32,11 +34,20 @@ local function networkListener( event )
     end
 end
 
+local function loadDatas(str1, str2)
+	local file = io.open( filePath, "w" )
+	if file then
+		file:write(str1, str2)
+		io.close(file)
+	end
+end
+
 local function handleButtonEvent( event )
     if ( "ended" == event.phase ) then
     	local URL = "http://192.168.1.153:80/mobilecomputing/insert.php?name=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
       print(URL)
         network.request(URL, "GET", networkListener)
+				loadDatas(username.text, password.text)
 	end
 end
 
