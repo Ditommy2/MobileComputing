@@ -74,6 +74,7 @@ local Button = widget.newButton(
        top = 360,
        id = "Nuova",
        label = "Nuova Partita",
+			 labelColor={default={0.5, 0, 0}},
        onEvent = handleButtonEvent
    }
 )
