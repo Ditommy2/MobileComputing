@@ -5,6 +5,9 @@ local Username
 local password
 local json=require("json")
 local filePath=system.pathForFile("savedDatas.json", system.DocumentsDirectory)
+local filePathPaswordOccupata=system.pathForFile("scores.json", system.DocumentsDirectory)
+local json=require("json")
+local contents
 --local function handleButtonEvent( event )
   --  if ( "ended" == event.phase ) then
   --  	local URL = "http://web.web.com/yourscript.php?username=" .. urlencode( username.text ) .. "&password=" .. urlencode(password.text)
@@ -25,29 +28,51 @@ local function urlencode(str)
 	return str
 end
 
-local function networkListener( event )
-
-    if ( event.isError ) then
-        print( "Network error: ", event.response )
-    else
-    	print( event.response )
-    end
-end
-
-local function loadDatas(str1, str2)
+local function saveDatas(str1, str2)
 	local file = io.open( filePath, "w" )
 	if file then
-		file:write(str1, str2)
+		file:write(str1, " ", str2)
 		io.close(file)
 	end
 end
+
+local function loadDatas()
+
+    local file = io.open( filePath, "r" )
+
+    if file then
+        contents = file:read( "*a" )
+				print(contents)
+        io.close( file )
+		end
+end
+
+local function networkListener( event )
+
+    if ( event.isError ) then
+			print("Error")
+    else
+    	print( event.response .."EVENTO")
+			print("Duplicate entry ''"..username.text.."'' for key 'PRIMARY'")
+			if event.response=="" then
+				print ("riuscito")
+				saveDatas(username.text, password.text)
+				loadDatas()
+			elseif event.response == ("Duplicate entry '"..username.text.."' for key 'PRIMARY'") then
+			print("Username gia in uso")
+			composer.gotoScene("nuova")
+			end
+    end
+end
+
+
 
 local function handleButtonEvent( event )
     if ( "ended" == event.phase ) then
     	local URL = "http://192.168.1.153:80/mobilecomputing/insert.php?name=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
       print(URL)
         network.request(URL, "GET", networkListener)
-				loadDatas(username.text, password.text)
+
 	end
 end
 
@@ -77,6 +102,12 @@ sceneGroup:insert(username)
 password.isSecure = true
 password.placeholder = "Password"
 sceneGroup:insert(password)
+
+--if(json.decode(contents)=="false") then
+--local risposta = diaplay.newText(sceneGroup, "Password gia in uso")
+--risposta.x = display.contentCenterX
+--risposta.y = display.contentCenterY
+--end
 
 local Button = widget.newButton(
    {
@@ -122,6 +153,7 @@ function scene:hide( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
+		composer.removeScene("nuova")
 
 	end
 end
