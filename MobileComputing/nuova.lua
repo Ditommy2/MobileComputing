@@ -5,9 +5,10 @@ local Username
 local password
 local json=require("json")
 local filePath=system.pathForFile("savedDatas.json", system.DocumentsDirectory)
-local filePathPaswordOccupata=system.pathForFile("binario.json", system.DocumentsDirectory)
+local filePathComandi=system.pathForFile("binario.json", system.DocumentsDirectory)
 local json=require("json")
 local contents
+local confermapassword
 --local function handleButtonEvent( event )
   --  if ( "ended" == event.phase ) then
   --  	local URL = "http://web.web.com/yourscript.php?username=" .. urlencode( username.text ) .. "&password=" .. urlencode(password.text)
@@ -55,15 +56,23 @@ local function networkListener( event )
 			print("Error")
     else
     	print( event.response .."EVENTO")
-			print("Duplicate entry ''"..username.text.."'' for key 'PRIMARY'")
+			-----------------------------------------------------------------------------------------------
 			if event.response=="" then
 				print ("riuscito")
 				saveDatas(username.text, password.text)
 				loadDatas()
+				local file = io.open( filePathComandi, "w" )
+		    if file then
+					local stringa = "false"
+					file:write(json.encode(stringa))
+					io.close(file)
+				end
+				composer.gotoScene("nuova")
+				---------------------------------------------------------------------------------------------
 			elseif event.response == ("Duplicate entry '"..username.text.."' for key 'PRIMARY'") then
 			print("Username gia in uso")
 
-			local file = io.open( filePathPaswordOccupata, "w" )
+			local file = io.open( filePathComandi, "w" )
 
 	    if file then
 				local stringa = "true"
@@ -75,14 +84,26 @@ local function networkListener( event )
     end
 end
 
-
+--https://mobilecompfra.000webhostapp.com/public_html/insert.php
 
 local function handleButtonEvent( event )
     if ( "ended" == event.phase ) then
-    	local URL = "http://192.168.1.153:80/mobilecomputing/insert.php?name=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
-      print(URL)
+			if(password.text ~= confermapassword.text) then
+				print("confermadiversa")
+				local file = io.open( filePathComandi, "w" )
+
+		    if file then
+					local stringa = "confermapassword"
+					file:write(json.encode(stringa))
+					io.close(file)
+				end
+				composer.gotoScene("nuova")
+else
+    	local URL = "https://appmcsite.000webhostapp.com/insert.php?username=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
+			--local URL = "".. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
         network.request(URL, "GET", networkListener)
 
+			end
 	end
 end
 
@@ -104,31 +125,39 @@ function scene:create( event )
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 
- username = native.newTextField( display.contentCenterX, 100, 180, 30 )
+ username = native.newTextField( display.contentCenterX, 80, 180, 30 )
 username.placeholder = "Username"
 sceneGroup:insert(username)
 
- password = native.newTextField( display.contentCenterX, 160,180, 30 )
+ password = native.newTextField( display.contentCenterX, 140,180, 30 )
 password.isSecure = true
 password.placeholder = "Password"
 sceneGroup:insert(password)
 
-local file = io.open( filePathPaswordOccupata, "r" )
+confermapassword = native.newTextField( display.contentCenterX, 200,180, 30 )
+confermapassword.isSecure = true
+confermapassword.placeholder = "Conferma Password"
+sceneGroup:insert(confermapassword)
+
+local file = io.open( filePathComandi, "r" )
 
 if file then
 		local contents = file:read( "*a" )
 		--local printare = json.decode(cotents)
 		print(contents)
-		print("dopo contents")
 		io.close( file )
-		print(contents)
 		if contents=="\"true\"" then
-			print("culo")
 			local risposta = display.newText( sceneGroup, "Username già in uso",display.contentCenterX, 100, native.systemFont, 19)
 			risposta.x=display.contentCenterX
 			risposta.y = username.y-34
 			risposta:setFillColor(0.5, 0, 0)
-end
+		end
+		if contents=="\"confermapassword\"" then
+			local risposta = display.newText( sceneGroup, "Le password sono diverse",display.contentCenterX, 100, native.systemFont, 19)
+			risposta.x=display.contentCenterX
+			risposta.y = username.y-34
+			risposta:setFillColor(0.5, 0, 0)
+		end
 end
 --if(json.decode(contents)=="false") then
 --local risposta = diaplay.newText(sceneGroup, "Password gia in uso")
@@ -149,7 +178,7 @@ local Button = widget.newButton(
 )
 sceneGroup:insert(Button)
 Button.x=display.contentCenterX
-Button.y=260
+Button.y=270
 end
 
 
