@@ -4,13 +4,24 @@ local scene = composer.newScene( )
 local utenteTextField
 local passTextField
 local button
+local serverAnswer
 
 local function networkListener( event )
-
+  local risposta = event.response
     if ( event.isError ) then
-        print( "Network error: ", event.response )
+        print( "Network error: ", risposta )
     else
-        print ( "RESPONSE: " .. event.response )
+      if(risposta == "" ) then
+        serverAnswer.text = "Username o password errati."
+        serverAnswer:setFillColor(1,0,0)
+        serverAnswer.alpha = 1
+        transition.to( serverAnswer, { time=3000, alpha=0 } )
+      else
+        serverAnswer.text = risposta
+        serverAnswer:setFillColor(0,1,0)
+        serverAnswer.alpha = 1
+        --transition.to( serverAnswer, { time=3000, alpha=0 } )
+      end
     end
 end
 
@@ -35,31 +46,37 @@ end
 -- create()
 function scene:create( event )
 	local sceneGroup = self.view
+  local loginGroup = display.newGroup()
+  sceneGroup:insert(loginGroup)
 
-  local utenteText = display.newText( "Username: ", 0,0,native.systemFont, 15)
+  local utenteText = display.newText( "Username: ", 100, 50,native.systemFont, 20)
   utenteText.anchorX = 0
   utenteText.anchorY = 0
-  utenteText.x = 20
-  utenteText.y = 65
-  utenteTextField = native.newTextField( 120, 100, 200, 30 )
+  utenteTextField = native.newTextField( 100, 70, 200, 30 )
+  utenteTextField.anchorX = 0
+  utenteTextField.anchorY = 0
 
-  local utentePassw = display.newText( "Password: ", 0,0,native.systemFont, 15)
+  local utentePassw = display.newText( "Password: ", 100,110,native.systemFont, 20)
   utentePassw.anchorX = 0
   utentePassw.anchorY = 0
-  utentePassw.x = 20
-  utentePassw.y = 130
-  passTextField = native.newTextField( 120, 165, 200, 30 )
+  passTextField = native.newTextField( 100, 130, 200, 30 )
+  passTextField.anchorX = 0
+  passTextField.anchorY = 0
 
-  button = display.newText("Carica", 0,0, native.systemFont, 30)
-  button.x = 300
-  button.y = 130
+  button = display.newText("Carica", 450,105, native.systemFont, 40)
   button:addEventListener("tap", getSavings)
 
-  sceneGroup:insert(utenteText)
-  sceneGroup:insert(utenteTextField)
-  sceneGroup:insert(utentePassw)
-  sceneGroup:insert(passTextField)
-  sceneGroup:insert(button)
+  loginGroup:insert(utenteText)
+  loginGroup:insert(utenteTextField)
+  loginGroup:insert(utentePassw)
+  loginGroup:insert(passTextField)
+  loginGroup:insert(button)
+
+  serverAnswer = display.newText("", display.contentCenterX, 200, native.systemFont, 20)
+  serverAnswer.alpha=0
+  sceneGroup:insert(serverAnswer)
+  --loginGroup.x = display.contentCenterX
+  --loginGroup.y = display.contentCenterY
 end
 
 -- show()
