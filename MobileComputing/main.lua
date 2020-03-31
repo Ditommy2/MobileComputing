@@ -15,7 +15,7 @@ local json=require("json")
 local file = io.open( filePathPaswordOccupata, "w" )
 
 if file then
-  local stringa = "true"
+  local stringa = "false"
   file:write(json.encode(stringa))
   io.close(file)
 end

@@ -52,7 +52,9 @@ end
 local function networkListener( event )
 
     if ( event.isError ) then
-			print("Error")
+        print( "Network error ", event.response )
+
+
     else
     	print( event.response .."EVENTO")
 			print("Duplicate entry ''"..username.text.."'' for key 'PRIMARY'")
