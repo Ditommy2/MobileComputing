@@ -35,7 +35,7 @@ local function urlencode(str)
 end
 
 local function getSavings()
-  local url = "http://127.0.0.1:80/testServer/carica.php?user=".. urlencode(utenteTextField.text) .. "&passw=" ..urlencode(passTextField.text)
+  local url = "https://appmcsite.000webhostapp.com/carica.php?user=".. urlencode(utenteTextField.text) .. "&passw=" ..urlencode(passTextField.text)
 
   print(url)
 
