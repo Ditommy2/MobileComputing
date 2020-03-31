@@ -20,7 +20,6 @@ local function networkListener( event )
         serverAnswer.text = risposta
         serverAnswer:setFillColor(0,1,0)
         serverAnswer.alpha = 1
-        --transition.to( serverAnswer, { time=3000, alpha=0 } )
       end
     end
 end
@@ -47,7 +46,6 @@ end
 function scene:create( event )
 	local sceneGroup = self.view
   local loginGroup = display.newGroup()
-  sceneGroup:insert(loginGroup)
 
   local utenteText = display.newText( "Username: ", 100, 50,native.systemFont, 20)
   utenteText.anchorX = 0
@@ -72,11 +70,11 @@ function scene:create( event )
   loginGroup:insert(passTextField)
   loginGroup:insert(button)
 
+  sceneGroup:insert(loginGroup)
+
   serverAnswer = display.newText("", display.contentCenterX, 200, native.systemFont, 20)
   serverAnswer.alpha=0
   sceneGroup:insert(serverAnswer)
-  --loginGroup.x = display.contentCenterX
-  --loginGroup.y = display.contentCenterY
 end
 
 -- show()
