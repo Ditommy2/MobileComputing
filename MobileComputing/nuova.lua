@@ -5,7 +5,7 @@ local Username
 local password
 local json=require("json")
 local filePath=system.pathForFile("savedDatas.json", system.DocumentsDirectory)
-local filePathPaswordOccupata=system.pathForFile("scores.json", system.DocumentsDirectory)
+local filePathPaswordOccupata=system.pathForFile("binario.json", system.DocumentsDirectory)
 local json=require("json")
 local contents
 --local function handleButtonEvent( event )
@@ -31,7 +31,8 @@ end
 local function saveDatas(str1, str2)
 	local file = io.open( filePath, "w" )
 	if file then
-		file:write(str1, " ", str2)
+		local stringa = str1.." "..str2
+		file:write(json.encode(stringa))
 		io.close(file)
 	end
 end
@@ -42,6 +43,7 @@ local function loadDatas()
 
     if file then
         contents = file:read( "*a" )
+				--local printare = json.decode(cotents)
 				print(contents)
         io.close( file )
 		end
@@ -60,6 +62,14 @@ local function networkListener( event )
 				loadDatas()
 			elseif event.response == ("Duplicate entry '"..username.text.."' for key 'PRIMARY'") then
 			print("Username gia in uso")
+
+			local file = io.open( filePathPaswordOccupata, "w" )
+
+	    if file then
+				local stringa = "true"
+				file:write(json.encode(stringa))
+				io.close(file)
+			end
 			composer.gotoScene("nuova")
 			end
     end
@@ -94,15 +104,32 @@ function scene:create( event )
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 
- username = native.newTextField( 160, 200, 180, 30 )
+ username = native.newTextField( display.contentCenterX, 100, 180, 30 )
 username.placeholder = "Username"
 sceneGroup:insert(username)
 
- password = native.newTextField( 160, 260,180, 30 )
+ password = native.newTextField( display.contentCenterX, 160,180, 30 )
 password.isSecure = true
 password.placeholder = "Password"
 sceneGroup:insert(password)
 
+local file = io.open( filePathPaswordOccupata, "r" )
+
+if file then
+		local contents = file:read( "*a" )
+		--local printare = json.decode(cotents)
+		print(contents)
+		print("dopo contents")
+		io.close( file )
+		print(contents)
+		if contents=="\"true\"" then
+			print("culo")
+			local risposta = display.newText( sceneGroup, "Username già in uso",display.contentCenterX, 100, native.systemFont, 19)
+			risposta.x=display.contentCenterX
+			risposta.y = username.y-34
+			risposta:setFillColor(0.5, 0, 0)
+end
+end
 --if(json.decode(contents)=="false") then
 --local risposta = diaplay.newText(sceneGroup, "Password gia in uso")
 --risposta.x = display.contentCenterX
@@ -121,8 +148,8 @@ local Button = widget.newButton(
    }
 )
 sceneGroup:insert(Button)
-
-
+Button.x=display.contentCenterX
+Button.y=260
 end
 
 
