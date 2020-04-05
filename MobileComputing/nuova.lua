@@ -125,6 +125,15 @@ function scene:create( event )
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 
+
+	local background=display.newImageRect(sceneGroup, "nuovaBackground.png", 800, 700)
+	background.x=display.contentCenterX
+	background.y=display.contentCenterY
+	sceneGroup:insert(background)
+	local midBackground = display.newRect( display.contentCenterX, display.contentCenterY+20, 220, 255 )
+	midBackground:setFillColor(0.18, 0.18, 0.23)
+	sceneGroup:insert(midBackground)
+
  username = native.newTextField( display.contentCenterX, 80, 180, 30 )
 username.placeholder = "Username"
 sceneGroup:insert(username)
@@ -179,7 +188,10 @@ local Button = widget.newButton(
 sceneGroup:insert(Button)
 Button.x=display.contentCenterX
 Button.y=270
+
+
 end
+
 
 
 -- show()
