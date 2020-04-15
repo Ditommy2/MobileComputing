@@ -53,12 +53,11 @@ end
 local function networkListener( event )
 
     if ( event.isError ) then
-			print("Error")
+			print("Cozzio che è successo?")
     else
     	print( event.response .."EVENTO")
 			-----------------------------------------------------------------------------------------------
 			if event.response=="" then
-				print ("riuscito")
 				saveDatas(username.text, password.text)
 				loadDatas()
 				local file = io.open( filePathComandi, "w" )
@@ -89,7 +88,6 @@ end
 local function handleButtonEvent( event )
     if ( "ended" == event.phase ) then
 			if(password.text ~= confermapassword.text) then
-				print("confermadiversa")
 				local file = io.open( filePathComandi, "w" )
 
 		    if file then
