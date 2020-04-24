@@ -34,6 +34,43 @@ end
 
 
 -------------------------------------------------
+local function displayStanza(stanza, offx, offy)
+  local dimensioniStanza = 20
+  local spessoreCorridoio = 5
+  local lunghezzaCorridoio = 50
+  local coloreStanza={1, 0, 0}
+  local coloreCorridoio={1, 0, 0}
+local item = display.newRect( offx, offy, dimensioniStanza, dimensioniStanza )
+item:setFillColor(coloreStanza[1], coloreStanza[2], coloreStanza[3])
+mapGroup:insert(item)
+if stanza.NORD~=nil then
+  item=display.newRect( offx, offy-10-(lunghezzaCorridoio/2), spessoreCorridoio, lunghezzaCorridoio )
+  item:setFillColor(coloreCorridoio[1], coloreCorridoio[2], coloreCorridoio[3])
+  mapGroup:insert(item)
+  displayStanza(stanza.NORD, offx, (offy-lunghezzaCorridoio-10))
+end
+
+if stanza.SUD~=nil then
+  item=display.newRect( offx, offy+10+(lunghezzaCorridoio/2), spessoreCorridoio, lunghezzaCorridoio )
+  item:setFillColor(1, 0, 0)
+  mapGroup:insert(item)
+  displayStanza(stanza.SUD, offx, (offy+lunghezzaCorridoio+10))
+end
+
+if stanza.EST~=nil then
+  item=display.newRect( offx+10+(lunghezzaCorridoio/2), offy, lunghezzaCorridoio, spessoreCorridoio )
+  item:setFillColor(1, 0, 0)
+  mapGroup:insert(item)
+  displayStanza(stanza.EST, offx+lunghezzaCorridoio+10, offy)
+end
+
+if stanza.OVEST~=nil then
+  item=display.newRect( offx-10-(lunghezzaCorridoio/2), offy, lunghezzaCorridoio, spessoreCorridoio )
+  item:setFillColor(1, 0, 0)
+  mapGroup:insert(item)
+  displayStanza(stanza.OVEST, offx-lunghezzaCorridoio-10, offy)
+end
+end
 --------------------------------------------------------
 
 
@@ -52,6 +89,7 @@ for x=1, colonne, 1 do
   end
 end
 end
+-----------------------------------------------------------------------------
 -- create()
 function scene:create( event )
 
@@ -84,8 +122,11 @@ function scene:create( event )
   row:setFillColor(0.1, 0.1, 0.1)
   inventoryGroup:insert(row)
 
+  local stanza3={}
+  local stanza2={EST=stanza3}
+  local stanza1={SUD=stanza2}
 
-  local inventario={"pala", "spada", "pala", "osso"}
+  local inventario={"ITEM", "ITEM", "ITEM", "ITEM"}
   displayGrid(inventario, 4, 2)
 
   mapGroup=display.newGroup()
@@ -95,6 +136,7 @@ function scene:create( event )
   local map = display.newRect( display.contentCenterX, display.contentCenterY, lunghezza-64, altezza-4 )
   map:setFillColor(0.18, 0.18, 0.23)
   mapGroup:insert(map)
+  displayStanza(stanza1, display.contentCenterX-60, display.contentCenterY-30)
   mapGroup.x=120
   mapGroup.y=95
   inventoryGroup.x=-120
