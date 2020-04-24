@@ -87,6 +87,16 @@ function scene:create( event )
 
   local inventario={"pala", "spada", "pala", "osso"}
   displayGrid(inventario, 4, 2)
+
+  mapGroup=display.newGroup()
+  local mapBackground = display.newRect( display.contentCenterX, display.contentCenterY, lunghezza-60, altezza )
+  mapBackground:setFillColor(0.9, 0.9, 0.9)
+  mapGroup:insert(mapBackground)
+  local map = display.newRect( display.contentCenterX, display.contentCenterY, lunghezza-64, altezza-4 )
+  map:setFillColor(0.18, 0.18, 0.23)
+  mapGroup:insert(map)
+  mapGroup.x=120
+  mapGroup.y=95
   inventoryGroup.x=-120
   inventoryGroup.y=95
 end
