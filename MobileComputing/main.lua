@@ -19,4 +19,4 @@ if file then
   file:write(json.encode(stringa))
   io.close(file)
 end
-composer.gotoScene("nuova")
+composer.gotoScene("interfaccia")

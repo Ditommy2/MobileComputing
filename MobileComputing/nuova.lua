@@ -19,6 +19,7 @@ local confermapassword
 --end
 --http://localhost/mobilecomputing/insert.php?name=braga&password=123
 --delete from user where name!='paolo'
+-----------------------------------------------------------------------------------------------------
 local function urlencode(str)
 	if (str) then
 		str = string.gsub (str, "\n", "\r\n")
@@ -28,7 +29,7 @@ local function urlencode(str)
 	end
 	return str
 end
-
+---------------------------------------------------------------------------------------------------
 local function saveDatas(str1, str2)
 	local file = io.open( filePath, "w" )
 	if file then
@@ -37,7 +38,7 @@ local function saveDatas(str1, str2)
 		io.close(file)
 	end
 end
-
+---------------------------------------------------------------------------------------------------
 local function loadDatas()
 
     local file = io.open( filePath, "r" )
@@ -49,14 +50,13 @@ local function loadDatas()
         io.close( file )
 		end
 end
-
+---------------------------------------------------------------------------------------------------
 local function networkListener( event )
 
     if ( event.isError ) then
 			print("Cozzio che è successo?")
     else
     	print( event.response .."EVENTO")
-			-----------------------------------------------------------------------------------------------
 			if event.response=="" then
 				saveDatas(username.text, password.text)
 				loadDatas()
@@ -67,7 +67,6 @@ local function networkListener( event )
 					io.close(file)
 				end
 				composer.gotoScene("nuova")
-				---------------------------------------------------------------------------------------------
 			elseif event.response == ("Duplicate entry '"..username.text.."' for key 'PRIMARY'") then
 			print("Username gia in uso")
 
@@ -84,7 +83,7 @@ local function networkListener( event )
 end
 
 --https://mobilecompfra.000webhostapp.com/public_html/insert.php
-
+---------------------------------------------------------------------------------------------------
 local function handleButtonEvent( event )
     if ( "ended" == event.phase ) then
 			if(password.text ~= confermapassword.text) then
@@ -117,7 +116,7 @@ end
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
 
--- create()
+-- create()---------------------------------------------------------------------------------------------------
 function scene:create( event )
 
 	local sceneGroup = self.view
@@ -192,7 +191,7 @@ end
 
 
 
--- show()
+-- show()---------------------------------------------------------------------------------------------------
 function scene:show( event )
 
 	local sceneGroup = self.view
@@ -208,7 +207,7 @@ function scene:show( event )
 end
 
 
--- hide()
+-- hide()---------------------------------------------------------------------------------------------------
 function scene:hide( event )
 
 	local sceneGroup = self.view
@@ -225,7 +224,7 @@ function scene:hide( event )
 end
 
 
--- destroy()
+-- destroy()---------------------------------------------------------------------------------------------------
 function scene:destroy( event )
 
 	local sceneGroup = self.view
