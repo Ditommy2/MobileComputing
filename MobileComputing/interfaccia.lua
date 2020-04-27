@@ -221,7 +221,7 @@ function scene:create( event )
   mapBackground4:setFillColor(0.9, 0.9, 0.9)
   overlayGroup:insert(mapBackground4)
 ---------------------------------------------------------------------------------------------------------------------------
-  local mapBackground5 = display.newRect( display.contentCenterX+118, display.contentCenterY, 52, altezza+11 )
+  local mapBackground5 = display.newRect( display.contentCenterX+118, display.contentCenterY, 53, altezza+11 )
   mapBackground5:setFillColor(0.18, 0.18, 0.23)
   overlayGroup:insert(mapBackground5)
 
@@ -229,7 +229,7 @@ function scene:create( event )
   mapBackground6:setFillColor(0.18, 0.18, 0.23)
   overlayGroup:insert(mapBackground6)
 
-  local mapBackground7 = display.newRect( display.contentCenterX, display.contentCenterY-61, lunghezza-55, 7 )
+  local mapBackground7 = display.newRect( display.contentCenterX, display.contentCenterY-61, lunghezza-55, 8 )
   mapBackground7:setFillColor(0.18, 0.18, 0.23)
   overlayGroup:insert(mapBackground7)
 
