@@ -136,6 +136,25 @@ for x=1, colonne, 1 do
   end
 end
 end
+------------------------------------------------------------------------------
+local function dragMap(event)
+  local mappa=event.target
+  local phase=event.phase
+
+  if("began"==phase) then
+      display.currentStage:setFocus(mappa)
+      mappa.touchOffsetX=event.x-mappa.x
+      mappa.touchOffsetY=event.y-mappa.y
+    elseif("moved"==phase) then
+      -- Muove la nave
+      mappa.x=event.x-mappa.touchOffsetX
+      mappa.y=event.y-mappa.touchOffsetY
+   elseif("ended"==phase or "cancelled"==phase) then
+     --rilascio del tocco
+     display.currentStage:setFocus(nil)
+    end
+    return true
+end
 -----------------------------------------------------------------------------
 -- create()
 function scene:create( event )
@@ -144,9 +163,13 @@ function scene:create( event )
   inventoryGroup=display.newGroup()
   mapGroup=display.newGroup()
   backGroup=display.newGroup()
-  sceneGroup:insert(backGroup)
-  sceneGroup:insert(inventoryGroup)
+  overlayGroup=display.newGroup()
   sceneGroup:insert(mapGroup)
+  sceneGroup:insert(backGroup)
+
+  sceneGroup:insert(inventoryGroup)
+  sceneGroup:insert(overlayGroup)
+
 
 	-- Code here runs when the scene is first created but has not yet appeared on screen
   local background=display.newImageRect(backGroup, "nuovaBackground.png", 800, 700)
@@ -154,7 +177,7 @@ function scene:create( event )
 	background.y=display.contentCenterY-320
 	sceneGroup:insert(background)
 
-  local midBackground = display.newRect( display.contentCenterX, display.contentCenterY+95, 568, 130 )
+  local midBackground = display.newRect( display.contentCenterX-136, display.contentCenterY+95, 300, 130 )
   midBackground:setFillColor(0.18, 0.18, 0.23)
   backGroup:insert(midBackground)
 
@@ -177,23 +200,55 @@ function scene:create( event )
   row:setFillColor(0.1, 0.1, 0.1)
   inventoryGroup:insert(row)
 
-  local mappaGenerata = proceduraleMappa(0, {}, 4)
+  local mappaGenerata = proceduraleMappa(0, {}, 7)
   local inventario={"ITEM", "ITEM", "ITEM", "ITEM"}
   displayGrid(inventario, 4, 2)
 
 
-  local mapBackground = display.newRect( display.contentCenterX, display.contentCenterY, lunghezza-60, altezza )
-  mapBackground:setFillColor(0.9, 0.9, 0.9)
-  mapGroup:insert(mapBackground)
-  local map = display.newRect( display.contentCenterX, display.contentCenterY, lunghezza-64, altezza-4 )
+  local mapBackground1 = display.newRect( display.contentCenterX, display.contentCenterY-55, lunghezza-60, 5 )
+  mapBackground1:setFillColor(0.9, 0.9, 0.9)
+  overlayGroup:insert(mapBackground1)
+
+  local mapBackground2 = display.newRect( display.contentCenterX, display.contentCenterY+55, lunghezza-60, 5 )
+  mapBackground2:setFillColor(0.9, 0.9, 0.9)
+  overlayGroup:insert(mapBackground2)
+
+  local mapBackground3 = display.newRect( display.contentCenterX+90, display.contentCenterY, 5, altezza-5 )
+  mapBackground3:setFillColor(0.9, 0.9, 0.9)
+  overlayGroup:insert(mapBackground3)
+
+  local mapBackground4 = display.newRect( display.contentCenterX-90, display.contentCenterY, 5, altezza-5 )
+  mapBackground4:setFillColor(0.9, 0.9, 0.9)
+  overlayGroup:insert(mapBackground4)
+---------------------------------------------------------------------------------------------------------------------------
+  local mapBackground5 = display.newRect( display.contentCenterX+118, display.contentCenterY, 52, altezza+11 )
+  mapBackground5:setFillColor(0.18, 0.18, 0.23)
+  overlayGroup:insert(mapBackground5)
+
+  local mapBackground6 = display.newRect( display.contentCenterX-116, display.contentCenterY, 47, altezza+11 )
+  mapBackground6:setFillColor(0.18, 0.18, 0.23)
+  overlayGroup:insert(mapBackground6)
+
+  local mapBackground7 = display.newRect( display.contentCenterX, display.contentCenterY-61, lunghezza-55, 7 )
+  mapBackground7:setFillColor(0.18, 0.18, 0.23)
+  overlayGroup:insert(mapBackground7)
+
+  local mapBackground8 = display.newRect( display.contentCenterX, display.contentCenterY+61, lunghezza-55, 8 )
+  mapBackground8:setFillColor(0.18, 0.18, 0.23)
+  overlayGroup:insert(mapBackground8)
+
+
+  local map = display.newRect( display.contentCenterX, display.contentCenterY, 800, 700 )
   map:setFillColor(0.18, 0.18, 0.23)
   mapGroup:insert(map)
   displayStanza(mappaGenerata, display.contentCenterX, display.contentCenterY)-- -60, -30
   mapGroup.x=120
   mapGroup.y=95
+  overlayGroup.x=140
+  overlayGroup.y=95
   inventoryGroup.x=-120
   inventoryGroup.y=95
-
+  mapGroup:addEventListener("touch", dragMap)
 
 end
 
