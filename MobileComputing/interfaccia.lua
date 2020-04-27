@@ -142,14 +142,22 @@ function scene:create( event )
 
 	local sceneGroup = self.view
   inventoryGroup=display.newGroup()
+  mapGroup=display.newGroup()
+  backGroup=display.newGroup()
+  sceneGroup:insert(backGroup)
+  sceneGroup:insert(inventoryGroup)
+  sceneGroup:insert(mapGroup)
+
 	-- Code here runs when the scene is first created but has not yet appeared on screen
-  local background=display.newImageRect(sceneGroup, "nuovaBackground.png", 800, 700)
+  local background=display.newImageRect(backGroup, "nuovaBackground.png", 800, 700)
 	background.x=display.contentCenterX
-	background.y=display.contentCenterY
+	background.y=display.contentCenterY-320
 	sceneGroup:insert(background)
+
   local midBackground = display.newRect( display.contentCenterX, display.contentCenterY+95, 568, 130 )
   midBackground:setFillColor(0.18, 0.18, 0.23)
-  sceneGroup:insert(midBackground)
+  backGroup:insert(midBackground)
+
   local spessore = 5
   local lunghezza = 240
   local altezza=120
@@ -169,25 +177,24 @@ function scene:create( event )
   row:setFillColor(0.1, 0.1, 0.1)
   inventoryGroup:insert(row)
 
-  local stanza3={}
-  local stanza2={EST=stanza3}
-  local stanza1={SUD=stanza2}
   local mappaGenerata = proceduraleMappa(0, {}, 4)
   local inventario={"ITEM", "ITEM", "ITEM", "ITEM"}
   displayGrid(inventario, 4, 2)
 
-  mapGroup=display.newGroup()
+
   local mapBackground = display.newRect( display.contentCenterX, display.contentCenterY, lunghezza-60, altezza )
   mapBackground:setFillColor(0.9, 0.9, 0.9)
   mapGroup:insert(mapBackground)
   local map = display.newRect( display.contentCenterX, display.contentCenterY, lunghezza-64, altezza-4 )
   map:setFillColor(0.18, 0.18, 0.23)
   mapGroup:insert(map)
-  displayStanza(mappaGenerata, display.contentCenterX-60, display.contentCenterY-30)
+  displayStanza(mappaGenerata, display.contentCenterX, display.contentCenterY)-- -60, -30
   mapGroup.x=120
   mapGroup.y=95
   inventoryGroup.x=-120
   inventoryGroup.y=95
+
+
 end
 
 
