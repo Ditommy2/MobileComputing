@@ -13,26 +13,65 @@ local scene = composer.newScene()
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
-local function convertTo2D(input, colonne, righe)
-local grid = {}
-local index=1
-for x=1, colonne, 1 do
-  if (index>#input) then
-    return grid
-  end
-    grid[x]={}
-  for y=1, righe, 1 do
-    grid[x][y]=input[index]
+local function proceduraleMappa (index, mappa, numero)
+  local x
+  local cardinale
+  local trovato = false
+  if index>0 then
+    x=math.random(1, index)
+    print("genera un random 1, ", index)
+    print("esce ", x)
+  else
+    x=1
+    print("genera prima stanza")
+    local stanza={NORD=nil, SUD=nil, EST=nil, OVEST=nil, TESTO="stanza", visitato=false}
+    mappa[x]=stanza
+    trovato=true
     index=index+1
-    if (index>#input) then
-      return grid
+  end
+  while trovato==false do
+    cardinale=math.random(1, 4)
+    if (cardinale == 1) and (mappa[x].NORD == nil) then
+      print("assegna alla stanza ", x, " una stanza a NORD")
+      local stanza = {NORD=nil, SUD=mappa[x], EST=nil, OVEST=nil, TESTO="stanza", visitato=false}
+      mappa[x].NORD = stanza
+      index=index+1
+      mappa[index]=stanza
+      trovato=true
+    end
+
+    if (cardinale == 2) and (mappa[x].SUD == nil) then
+      print("assegna alla stanza ", x, " una stanza a SUD")
+      local stanza = {NORD=mappa[x], SUD=nil, EST=nil, OVEST=nil, TESTO="stanza", visitato=false}
+      mappa[x].SUD = stanza
+      index=index+1
+      mappa[index]=stanza
+      trovato=true
+    end
+
+    if (cardinale == 3) and (mappa[x].EST == nil) then
+      print("assegna alla stanza ", x, " una stanza a EST")
+      local stanza = {NORD=nil, SUD=nil, EST=nil, OVEST=mappa[x], TESTO="stanza", visitato=false}
+      mappa[x].EST = stanza
+      index=index+1
+      mappa[index]=stanza
+      trovato=true
+    end
+
+    if (cardinale == 4) and (mappa[x].OVEST == nil) then
+      print("assegna alla stanza ", x, " una stanza a OVEST")
+      local stanza = {NORD=nil, SUD=nil, EST=mappa[x], OVEST=nil, TESTO="stanza", visitato=false}
+      mappa[x].OVEST = stanza
+      index=index+1
+      mappa[index]=stanza
+      trovato=true
     end
   end
+  if index==numero then
+    return mappa[1]
+  end
+  return proceduraleMappa(index, mappa, numero)
 end
-return grid
-end
-
-
 -------------------------------------------------
 local function displayStanza(stanza, offx, offy)
   local dimensioniStanza = 20
@@ -43,32 +82,40 @@ local function displayStanza(stanza, offx, offy)
 local item = display.newRect( offx, offy, dimensioniStanza, dimensioniStanza )
 item:setFillColor(coloreStanza[1], coloreStanza[2], coloreStanza[3])
 mapGroup:insert(item)
-if stanza.NORD~=nil then
+if stanza.NORD~=nil and stanza.NORD.visitato~=true then
   item=display.newRect( offx, offy-10-(lunghezzaCorridoio/2), spessoreCorridoio, lunghezzaCorridoio )
   item:setFillColor(coloreCorridoio[1], coloreCorridoio[2], coloreCorridoio[3])
   mapGroup:insert(item)
+  stanza.NORD.visitato=true
   displayStanza(stanza.NORD, offx, (offy-lunghezzaCorridoio-10))
+
 end
 
-if stanza.SUD~=nil then
+if stanza.SUD~=nil and stanza.SUD.visitato~=true then
   item=display.newRect( offx, offy+10+(lunghezzaCorridoio/2), spessoreCorridoio, lunghezzaCorridoio )
   item:setFillColor(1, 0, 0)
   mapGroup:insert(item)
+  stanza.SUD.visitato=true
   displayStanza(stanza.SUD, offx, (offy+lunghezzaCorridoio+10))
+
 end
 
-if stanza.EST~=nil then
+if stanza.EST~=nil and stanza.EST.visitato~=true then
   item=display.newRect( offx+10+(lunghezzaCorridoio/2), offy, lunghezzaCorridoio, spessoreCorridoio )
   item:setFillColor(1, 0, 0)
   mapGroup:insert(item)
+  stanza.EST.visitato=true
   displayStanza(stanza.EST, offx+lunghezzaCorridoio+10, offy)
+
 end
 
-if stanza.OVEST~=nil then
+if stanza.OVEST~=nil and stanza.OVEST.visitato~=true then
   item=display.newRect( offx-10-(lunghezzaCorridoio/2), offy, lunghezzaCorridoio, spessoreCorridoio )
   item:setFillColor(1, 0, 0)
   mapGroup:insert(item)
+  stanza.OVEST.visitato=true
   displayStanza(stanza.OVEST, offx-lunghezzaCorridoio-10, offy)
+
 end
 end
 --------------------------------------------------------
@@ -125,7 +172,7 @@ function scene:create( event )
   local stanza3={}
   local stanza2={EST=stanza3}
   local stanza1={SUD=stanza2}
-
+  local mappaGenerata = proceduraleMappa(0, {}, 4)
   local inventario={"ITEM", "ITEM", "ITEM", "ITEM"}
   displayGrid(inventario, 4, 2)
 
@@ -136,7 +183,7 @@ function scene:create( event )
   local map = display.newRect( display.contentCenterX, display.contentCenterY, lunghezza-64, altezza-4 )
   map:setFillColor(0.18, 0.18, 0.23)
   mapGroup:insert(map)
-  displayStanza(stanza1, display.contentCenterX-60, display.contentCenterY-30)
+  displayStanza(mappaGenerata, display.contentCenterX-60, display.contentCenterY-30)
   mapGroup.x=120
   mapGroup.y=95
   inventoryGroup.x=-120
