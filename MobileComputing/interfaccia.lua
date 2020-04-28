@@ -119,7 +119,25 @@ if stanza.OVEST~=nil and stanza.OVEST.visitato~=true then
 end
 end
 --------------------------------------------------------
+local function dragItem(event)
+  local item=event.target
+  local phase=event.phase
 
+  if("began"==phase) then
+      display.currentStage:setFocus(item)
+      item.touchOffsetX=event.x-item.x
+      item.touchOffsetY=event.y-item.y
+    elseif("moved"==phase) then
+      -- Muove la nave
+      item.x=event.x-item.touchOffsetX
+      item.y=event.y-item.touchOffsetY
+   elseif("ended"==phase or "cancelled"==phase) then
+     --rilascio del tocco
+     display.currentStage:setFocus(nil)
+    end
+    return true
+end
+--------------------------------------------------------
 
 local function displayGrid(input, colonne, righe)
   local index=1
@@ -129,6 +147,7 @@ for x=1, colonne, 1 do
   for y=1, righe, 1 do
     local item = (display.newText( input[index], partenzax+(x*60), partenzay+(y*60),  native.systemFont, 16))
     item:setFillColor(1, 0, 0)
+    item:addEventListener("touch", dragItem)
     inventoryGroup:insert(item)
     index=index+1
     if (index > #input) then return
@@ -137,24 +156,7 @@ for x=1, colonne, 1 do
 end
 end
 ------------------------------------------------------------------------------
-local function dragMap(event)
-  local mappa=event.target
-  local phase=event.phase
 
-  if("began"==phase) then
-      display.currentStage:setFocus(mappa)
-      mappa.touchOffsetX=event.x-mappa.x
-      mappa.touchOffsetY=event.y-mappa.y
-    elseif("moved"==phase) then
-      -- Muove la nave
-      mappa.x=event.x-mappa.touchOffsetX
-      mappa.y=event.y-mappa.touchOffsetY
-   elseif("ended"==phase or "cancelled"==phase) then
-     --rilascio del tocco
-     display.currentStage:setFocus(nil)
-    end
-    return true
-end
 -----------------------------------------------------------------------------
 -- create()
 function scene:create( event )
@@ -164,22 +166,18 @@ function scene:create( event )
   mapGroup=display.newGroup()
   backGroup=display.newGroup()
   overlayGroup=display.newGroup()
-  sceneGroup:insert(mapGroup)
-  sceneGroup:insert(backGroup)
+  midBackGroup=display.newGroup()
 
-  sceneGroup:insert(inventoryGroup)
-  sceneGroup:insert(overlayGroup)
-
-
-	-- Code here runs when the scene is first created but has not yet appeared on screen
   local background=display.newImageRect(backGroup, "nuovaBackground.png", 800, 700)
 	background.x=display.contentCenterX
 	background.y=display.contentCenterY-320
-	sceneGroup:insert(background)
+
+	-- Code here runs when the scene is first created but has not yet appeared on screen
+
 
   local midBackground = display.newRect( display.contentCenterX-136, display.contentCenterY+95, 300, 130 )
   midBackground:setFillColor(0.18, 0.18, 0.23)
-  backGroup:insert(midBackground)
+  midBackGroup:insert(midBackground)
 
   local spessore = 5
   local lunghezza = 240
@@ -248,8 +246,15 @@ function scene:create( event )
   overlayGroup.y=95
   inventoryGroup.x=-120
   inventoryGroup.y=95
-  mapGroup:addEventListener("touch", dragMap)
+  mapGroup:addEventListener("touch", dragItem)
 
+  sceneGroup:insert(mapGroup)
+  sceneGroup:insert(midBackGroup)
+  -----stacca----------------------
+  sceneGroup:insert(background)
+  sceneGroup:insert(backGroup)
+  sceneGroup:insert(inventoryGroup)
+  sceneGroup:insert(overlayGroup)
 end
 
 
