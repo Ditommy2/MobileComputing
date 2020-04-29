@@ -23,7 +23,9 @@ if file then
 end
  inv = lowerFixedMenu.create.inventario
  mappa = lowerFixedMenu.create.mappaGenerata
+ mappa.corrente=true
  funzione=lowerFixedMenu.display
+ composer.setVariable( "stanzaCorrente", mappa )
  composer.setVariable( "inv", inv )
  composer.setVariable( "mappa", mappa )
  composer.setVariable( "funzione", funzione )

@@ -15,9 +15,17 @@ local scene = composer.newScene()
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
+local funzione= composer.getVariable( "funzione" )
+local mappaloc= composer.getVariable( "mappa" )
+local invloc= composer.getVariable( "inv" )
+local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 local function handleButtonEvent( event )
     if ( "ended" == event.phase ) then
-        composer.gotoScene("livello1")
+      local direzione = "SUD"
+      stanzaCorrente.corrente=false
+      stanzaCorrente[direzione].corrente=true
+      composer.setVariable( "stanzaCorrente", stanzaCorrente[direzione] )
+      composer.gotoScene("livello1")
 	   end
 end
 -- create()
@@ -39,10 +47,7 @@ function scene:show( event )
 
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
-    local funzione= composer.getVariable( "funzione" )
-    local mappaloc= composer.getVariable( "mappa" )
-    local invloc= composer.getVariable( "inv" )
-    composer.setVariable( "mappa", mappaloc )
+
     composer.setVariable( "inv", {"EMPTY"} )
     funzione(self,  mappaloc, invloc)
     local Button = widget.newButton(

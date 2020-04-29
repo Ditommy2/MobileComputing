@@ -15,8 +15,16 @@ local scene = composer.newScene()
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
+local funzione= composer.getVariable( "funzione" )
+local mappaloc= composer.getVariable( "mappa" )
+local invloc= composer.getVariable( "inv" )
+local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 local function handleButtonEvent( event )
     if ( "ended" == event.phase ) then
+        local direzione = "NORD"
+        stanzaCorrente.corrente=false
+        stanzaCorrente[direzione].corrente=true
+        composer.setVariable( "stanzaCorrente", stanzaCorrente[direzione] )
         composer.gotoScene("livello2")
 	   end
 end
@@ -38,9 +46,7 @@ function scene:show( event )
 
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
-    local funzione= composer.getVariable( "funzione" )
-    local mappaloc= composer.getVariable( "mappa" )
-    local invloc= composer.getVariable( "inv" )
+
     funzione(self,  mappaloc, invloc)
     local background=display.newImageRect(backGroup, "nuovaBackground.png", 800, 700)
     background.x=display.contentCenterX

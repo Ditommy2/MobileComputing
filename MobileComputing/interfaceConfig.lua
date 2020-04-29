@@ -10,7 +10,7 @@ local function proceduraleMappaFunzione(index, mappa, numero)
   else
     x=1
     print("genera prima stanza")
-    local stanza={NORD=nil, SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false}
+    local stanza={NORD=nil, SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false}
     mappa[x]=stanza
     trovato=true
     index=index+1
@@ -19,7 +19,7 @@ local function proceduraleMappaFunzione(index, mappa, numero)
     cardinale=math.random(1, 4)
     if (cardinale == 1) and (mappa[x].NORD == nil) then
       print("assegna alla stanza ", x, " una stanza a NORD")
-      local stanza = {NORD=nil, SUD=mappa[x], EST=nil, OVEST=nil, TESTO=index, visitato=false}
+      local stanza = {NORD=nil, SUD=mappa[x], EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false}
       mappa[x].NORD = stanza
       index=index+1
       mappa[index]=stanza
@@ -28,7 +28,7 @@ local function proceduraleMappaFunzione(index, mappa, numero)
 
     if (cardinale == 2) and (mappa[x].SUD == nil) then
       print("assegna alla stanza ", x, " una stanza a SUD")
-      local stanza = {NORD=mappa[x], SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false}
+      local stanza = {NORD=mappa[x], SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false}
       mappa[x].SUD = stanza
       index=index+1
       mappa[index]=stanza
@@ -37,7 +37,7 @@ local function proceduraleMappaFunzione(index, mappa, numero)
 
     if (cardinale == 3) and (mappa[x].EST == nil) then
       print("assegna alla stanza ", x, " una stanza a EST")
-      local stanza = {NORD=nil, SUD=nil, EST=nil, OVEST=mappa[x], TESTO=index, visitato=false}
+      local stanza = {NORD=nil, SUD=nil, EST=nil, OVEST=mappa[x], TESTO=index, visitato=false, corrente=false}
       mappa[x].EST = stanza
       index=index+1
       mappa[index]=stanza
@@ -46,7 +46,7 @@ local function proceduraleMappaFunzione(index, mappa, numero)
 
     if (cardinale == 4) and (mappa[x].OVEST == nil) then
       print("assegna alla stanza ", x, " una stanza a OVEST")
-      local stanza = {NORD=nil, SUD=nil, EST=mappa[x], OVEST=nil, TESTO=index, visitato=false}
+      local stanza = {NORD=nil, SUD=nil, EST=mappa[x], OVEST=nil, TESTO=index, visitato=false, corrente=false}
       mappa[x].OVEST = stanza
       index=index+1
       mappa[index]=stanza
@@ -79,10 +79,13 @@ local function displayStanzaFunzione(stanza, offx, offy)
   local dimensioniStanza = 20
   local spessoreCorridoio = 5
   local lunghezzaCorridoio = 50
+  local coloreCorrente = {0, 1, 1}
   local coloreStanza={1, 0, 0}
   local coloreCorridoio={1, 0, 0}
 local item = display.newRect( offx, offy, dimensioniStanza, dimensioniStanza )
 item:setFillColor(coloreStanza[1], coloreStanza[2], coloreStanza[3])
+if(stanza.corrente==true) then item:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
+end
 mapGroup:insert(item)
 print("stanza stampata: ")
 print(stanza.TESTO)
