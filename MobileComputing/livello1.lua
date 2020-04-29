@@ -42,7 +42,6 @@ function scene:show( event )
     local mappaloc= composer.getVariable( "mappa" )
     local invloc= composer.getVariable( "inv" )
     funzione(self,  mappaloc, invloc)
-    print("livello 1: ", mappaloc.NORD.TESTO)
     local background=display.newImageRect(backGroup, "nuovaBackground.png", 800, 700)
     background.x=display.contentCenterX
     background.y=display.contentCenterY-320

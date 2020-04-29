@@ -45,7 +45,6 @@ function scene:show( event )
     composer.setVariable( "mappa", mappaloc )
     composer.setVariable( "inv", {"EMPTY"} )
     funzione(self,  mappaloc, invloc)
-    print("livello 2: ", mappaloc.NORD.TESTO)
     local Button = widget.newButton(
        {
            shape = "roundedRect",
