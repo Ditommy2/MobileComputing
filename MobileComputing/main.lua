@@ -6,6 +6,8 @@
 
 -- Your code here
 local composer = require("composer")
+local lowerFixedMenu= require("lowerFixedMenu")
+local support = require("interfaceConfig")
 display.setStatusBar(display.HiddenStatusBar)
 math.randomseed(os.time())
 local filePathComandi=system.pathForFile("binario.json", system.DocumentsDirectory)
@@ -19,4 +21,12 @@ if file then
   file:write(json.encode(stringa))
   io.close(file)
 end
-composer.gotoScene("interfaccia")
+ inv = lowerFixedMenu.create.inventario
+ mappa = lowerFixedMenu.create.mappaGenerata
+ funzione=lowerFixedMenu.display
+ composer.setVariable( "inv", inv )
+ composer.setVariable( "mappa", mappa )
+ composer.setVariable( "funzione", funzione )
+ composer.setVariable( "mapx", 120 )
+ composer.setVariable( "mapy", 95 )
+composer.gotoScene("livello1")
