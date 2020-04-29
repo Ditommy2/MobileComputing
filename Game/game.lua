@@ -15,6 +15,42 @@ local enemy
 local inventory
 local map
 local moveTimer
+local animationTimer
+
+--Character walking sheet
+local sheet_walking_Options =
+{
+  width=192,
+  height=192,
+  numFrames=18,
+}
+
+--Loading sprite sheet
+local sheet_walking = graphics.newImageSheet( "Character/character_walk_sequences.png", sheet_walking_Options )
+
+--Character walking sequences table
+local sequences_walking =
+{
+    --Right walking sequence
+    {
+        name = "rightWalk",
+        start = 10,
+        count = 9,
+        time = 1000,
+        loopCount = 0,
+        loopDirection = "forward"
+    },
+
+    --Left walking sequence
+    {
+        name = "leftWalk",
+        start = 1,
+        count = 9,
+        time = 1000,
+        loopCount = 0,
+        loopDirection = "forward"
+    }
+}
 
 --Layering groups
 local backgroundGroup
@@ -44,11 +80,15 @@ local function moveListener(event)
   if(phase=="began") then
     display.getCurrentStage():setFocus(target)
 
-    --Touch in the movement area
+    --Touch in the movement area, starting the right movement sprite animation
     if((event.x < target.nonMovementArea.minX) and (event.y < target.nonMovementArea.maxY)) then
       dir = "l"
+      character:setSequence( "leftWalk" )
+      character:play()
     elseif((event.x > target.nonMovementArea.maxX) and (event.y < target.nonMovementArea.maxY)) then
       dir = "r"
+      character:setSequence( "rightWalk" )
+      character:play()
     end
 
     --Start movement
@@ -57,23 +97,42 @@ local function moveListener(event)
   elseif(phase=="moved") then   --Touch moved
     --Touch falls in the non-movement area
     if((event.x > target.nonMovementArea.minX and event.x < target.nonMovementArea.maxX) or (event.y > target.nonMovementArea.maxY)) then
-      --Pause movement
+      --Pause movement and animation
       timer.pause(moveTimer)
+      character:pause()
+
+      --Facing the right direction
+      if(moveTimer.params.direction=="r") then
+        character:setFrame(10)
+      elseif(moveTimer.params.direction=="l") then
+        character:setFrame(1)
+      end
     else  --Touch back in the movement area
-      --Eventually modifying movement direction
+      --Eventually modifying movement direction and sprite sequence
       if((event.x < target.nonMovementArea.minX) and (event.y < target.nonMovementArea.maxY)) then
         moveTimer.params.direction = "l"
+        character:setSequence( "leftWalk" )
       elseif((event.x > target.nonMovementArea.maxX) and (event.y < target.nonMovementArea.maxY)) then
         moveTimer.params.direction = "r"
+        character:setSequence( "rightWalk" )
       end
 
-      --Resuming movement
+      --Resuming movement and animation
       timer.resume( moveTimer )
+      character:play()
     end
   elseif (phase=="ended" or phase=="cancelled") then
-    --Ending movement and canceling focus
+    --Ending movement, canceling focus and stopping animation
     display.getCurrentStage():setFocus(nil)
     timer.cancel( moveTimer )
+    character:pause()
+
+    --Facing the right direction
+    if(moveTimer.params.direction=="r") then
+      character:setFrame(10)
+    elseif(moveTimer.params.direction=="l") then
+      character:setFrame(1)
+    end
   end
 
   return true
@@ -114,9 +173,12 @@ function scene:create(event)
   plainBack.x = 0
   plainBack.y = height
 
-  --Displaying character
-  character = display.newImageRect( midGroup, "deadpool.png", width * 0.15, height * 0.2)
+  --Displaying character and setting sprite sheets
+  character = display.newSprite( sheet_walking, sequences_walking )
+  character:setFrame(10)
   character.anchorY = 1
+  character.width =  192
+  character.height = 192
   character.x = display.contentWidth * 0.1
   character.y = display.contentHeight - plainBack.height
 
