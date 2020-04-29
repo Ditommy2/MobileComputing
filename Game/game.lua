@@ -20,13 +20,13 @@ local animationTimer
 --Character walking sheet
 local sheet_walking_Options =
 {
-  width=192,
-  height=192,
-  numFrames=18,
+  width=144,
+  height=256,
+  numFrames=9,
 }
 
 --Loading sprite sheet
-local sheet_walking = graphics.newImageSheet( "Character/character_walk_sequences.png", sheet_walking_Options )
+local sheet_walking = graphics.newImageSheet( "Character/trumpPiccolo.png", sheet_walking_Options )
 
 --Character walking sequences table
 local sequences_walking =
@@ -34,8 +34,8 @@ local sequences_walking =
     --Right walking sequence
     {
         name = "rightWalk",
-        start = 10,
-        count = 9,
+        start = 7,
+        count = 3,
         time = 1000,
         loopCount = 0,
         loopDirection = "forward"
@@ -44,8 +44,8 @@ local sequences_walking =
     --Left walking sequence
     {
         name = "leftWalk",
-        start = 1,
-        count = 9,
+        start = 4,
+        count = 3,
         time = 1000,
         loopCount = 0,
         loopDirection = "forward"
@@ -177,8 +177,8 @@ function scene:create(event)
   character = display.newSprite( sheet_walking, sequences_walking )
   character:setFrame(10)
   character.anchorY = 1
-  character.width =  192
-  character.height = 192
+  -- character.width =  192
+  -- character.height = 192
   character.x = display.contentWidth * 0.1
   character.y = display.contentHeight - plainBack.height
 
