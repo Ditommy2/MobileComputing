@@ -59,10 +59,16 @@ local function handleButtonEvent( event )
         print("DIREZIONE: ----------------------------------------------------------------------", direzione)
         print("MOVIMENTO DA ", stanzaCorrente.TESTO, " a ", stanzaCorrente[direzione].TESTO)
         stanzaCorrente.corrente=false
-        stanzaCorrente[direzione].corrente=true
-        composer.setVariable( "stanzaCorrente", stanzaCorrente[direzione] )
-        composer.removeScene( "livello1", false )
-        composer.gotoScene("livello1")
+        composer.setVariable( "prossimaStanza", stanzaCorrente[direzione] )
+      --  stanzaCorrente[direzione].corrente=true
+      --  composer.setVariable( "stanzaCorrente", stanzaCorrente[direzione] )
+        composer.removeScene( "livello1" )
+        for i = mainGroup.numChildren, 1, -1 do
+          mainGroup[i]:removeSelf()
+          print("FRECCIA RIMOSSA")
+          mainGroup[i] = nil
+        end
+        composer.gotoScene("corridoio")
 end
 -- create()
 function scene:create( event )
@@ -70,7 +76,51 @@ function scene:create( event )
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
   local phase = event.phase
+  funzione(self,  mappaloc, invloc)
+  --composer.removeScene( "livello2")
+  local numero = stanzaCorrente.seedBackground
+  local immagine = "proceduralBackgrounds/back"..numero..".jpg"
+  local background=display.newImageRect(backGroup, immagine, 570, 200)
+  background.x=display.contentCenterX
+  background.y=display.contentCenterY-70
+--  sceneGroup:insert(background)
+  mainGroup=display.newGroup()
+  print("stanza Corrente: ", stanzaCorrente.TESTO)
+  if stanzaCorrente.NORD~=nil then
+    local freccia = display.newImageRect(objectSheet, 1, 50, 50)
+    freccia.id="NORD"
+    freccia:addEventListener("tap", handleButtonEvent)
+    mainGroup:insert(freccia)
+    freccia.x=display.contentCenterX
+    freccia.y=40
+  end
 
+  if stanzaCorrente.SUD~=nil then
+    local freccia = display.newImageRect(objectSheet, 2, 50, 50)
+    freccia.id="SUD"
+    freccia:addEventListener("tap", handleButtonEvent)
+    mainGroup:insert(freccia)
+    freccia.x=display.contentCenterX
+    freccia.y=160
+  end
+
+  if stanzaCorrente.EST~=nil then
+    local freccia = display.newImageRect(objectSheet, 3, 50, 50)
+    freccia.id="EST"
+    freccia:addEventListener("tap", handleButtonEvent)
+    mainGroup:insert(freccia)
+    freccia.x=display.contentCenterX+250
+    freccia.y=display.contentCenterY-60
+  end
+
+  if stanzaCorrente.OVEST~=nil then
+    local freccia = display.newImageRect(objectSheet, 4, 50, 50)
+    freccia.id="OVEST"
+    freccia:addEventListener("tap", handleButtonEvent)
+    mainGroup:insert(freccia)
+    freccia.x=display.contentCenterX-250
+    freccia.y=display.contentCenterY-60
+  end
 
 --local freccia = display.newImageRect(sceneGroup, objectSheet, 4, 50, 50)
 --freccia.x=display.contentCenterX
@@ -92,49 +142,7 @@ function scene:show( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs when the scene is entirely on screen
-    funzione(self,  mappaloc, invloc)
-    --composer.removeScene( "livello2")
-    local background=display.newImageRect(backGroup, "nuovaBackground.png", 800, 700)
-    background.x=display.contentCenterX
-    background.y=display.contentCenterY-320
-  --  sceneGroup:insert(background)
-    mainGroup=display.newGroup()
-    print("stanza Corrente: ", stanzaCorrente.TESTO)
-    if stanzaCorrente.NORD~=nil then
-      local freccia = display.newImageRect(objectSheet, 1, 50, 50)
-      freccia.id="NORD"
-      freccia:addEventListener("tap", handleButtonEvent)
-      mainGroup:insert(freccia)
-      freccia.x=display.contentCenterX
-      freccia.y=40
-    end
 
-    if stanzaCorrente.SUD~=nil then
-      local freccia = display.newImageRect(objectSheet, 2, 50, 50)
-      freccia.id="SUD"
-      freccia:addEventListener("tap", handleButtonEvent)
-      mainGroup:insert(freccia)
-      freccia.x=display.contentCenterX
-      freccia.y=160
-    end
-
-    if stanzaCorrente.EST~=nil then
-      local freccia = display.newImageRect(objectSheet, 3, 50, 50)
-      freccia.id="EST"
-      freccia:addEventListener("tap", handleButtonEvent)
-      mainGroup:insert(freccia)
-      freccia.x=display.contentCenterX+250
-      freccia.y=display.contentCenterY-60
-    end
-
-    if stanzaCorrente.OVEST~=nil then
-      local freccia = display.newImageRect(objectSheet, 4, 50, 50)
-      freccia.id="OVEST"
-      freccia:addEventListener("tap", handleButtonEvent)
-      mainGroup:insert(freccia)
-      freccia.x=display.contentCenterX-250
-      freccia.y=display.contentCenterY-60
-    end
 	end
 end
 
@@ -147,14 +155,14 @@ function scene:hide( event )
 
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is on screen (but is about to go off screen)
-    for i = mainGroup.numChildren, 1, -1 do
-  mainGroup[i]:removeSelf()
-  mainGroup[1] = nil
-end
+
 --composer.removeScene("livello1")
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
    ---composer.removeScene("livello1")
+
+
+
 	end
 end
 
