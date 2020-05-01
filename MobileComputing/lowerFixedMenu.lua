@@ -15,7 +15,7 @@ local inventario =
   local midBackground = display.newRect( display.contentCenterX-136, display.contentCenterY+95, 300, 130 )
   midBackground:setFillColor(0.18, 0.18, 0.23)
   midBackGroup:insert(midBackground)
-
+  print(display.contentWidth, " altezza display")
   local spessore = 5
   local lunghezza = 240
   local altezza=120
