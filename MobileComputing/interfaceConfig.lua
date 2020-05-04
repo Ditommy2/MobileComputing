@@ -1,5 +1,7 @@
 local composer= require("composer")
-local function proceduraleMappaFunzione(index, mappa, numero)
+-----------------------------------------------------------------------------------
+local function proceduraleMappaFunzione(index, mappa, numero, a, b, tabella)
+  print("punto di partenza: ", a, " ", b)
   local x
   local cardinale
   local trovato = false
@@ -15,50 +17,59 @@ local function proceduraleMappaFunzione(index, mappa, numero)
     local stanza={NORD=nil, SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed}
     mappa[x]=stanza
     trovato=true
+    tabella[a][b]=true
     index=index+1
   end
   while trovato==false do
     cardinale=math.random(1, 4)
-    if (cardinale == 1) and (mappa[x].NORD == nil) then
+    if (cardinale == 1) and (mappa[x].NORD == nil) and (tabella[a][b+1]==false) then
       print("assegna alla stanza ", x, " una stanza a NORD")
       local stanza = {NORD=nil, SUD=mappa[x], EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed}
       mappa[x].NORD = stanza
       index=index+1
       mappa[index]=stanza
+      b=b+1
+      tabella[a][b]=true
       trovato=true
     end
 
-    if (cardinale == 2) and (mappa[x].SUD == nil) then
+    if (cardinale == 2) and (mappa[x].SUD == nil) and (tabella[a][b-1]==false) then
       print("assegna alla stanza ", x, " una stanza a SUD")
       local stanza = {NORD=mappa[x], SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false,  seedBackground=seed}
       mappa[x].SUD = stanza
       index=index+1
       mappa[index]=stanza
+      b=b-1
+      tabella[a][b]=true
       trovato=true
     end
 
-    if (cardinale == 3) and (mappa[x].EST == nil) then
+    if (cardinale == 3) and (mappa[x].EST == nil) and (tabella[a+1][b]==false) then
       print("assegna alla stanza ", x, " una stanza a EST")
       local stanza = {NORD=nil, SUD=nil, EST=nil, OVEST=mappa[x], TESTO=index, visitato=false, corrente=false, seedBackground=seed}
       mappa[x].EST = stanza
       index=index+1
       mappa[index]=stanza
+      a=a+1
+      tabella[a][b]=true
       trovato=true
     end
 
-    if (cardinale == 4) and (mappa[x].OVEST == nil) then
+    if (cardinale == 4) and (mappa[x].OVEST == nil) and (tabella[a-1][b]==false) then
       print("assegna alla stanza ", x, " una stanza a OVEST")
       local stanza = {NORD=nil, SUD=nil, EST=mappa[x], OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed}
       mappa[x].OVEST = stanza
       index=index+1
       mappa[index]=stanza
+      a=a-1
+      tabella[a][b]=true
       trovato=true
     end
   end
   if index==numero then
     return mappa[1]
   end
-  return proceduraleMappaFunzione(index, mappa, numero)
+  return proceduraleMappaFunzione(index, mappa, numero, a, b, tabella)
 end
 --------------------------------------------------------------------------------------------------------------
 local function annullaVisitefunzione(primaStanza, stanza)
@@ -198,5 +209,22 @@ dragMapSet=
     end
     return true
 end),
+------------------------------------------------------------------------------------------------------------------
+tabellaFunction=
+(function (n)
+  local tabella={}
+  local numero = (2*n)+1
+  for i=1, numero, 1 do
+    tabella[i]={}
+    print("creata colonna numero ", i)
+    for j=1, numero, 1 do
+      print("creata casella in ", i, " ", j)
+      tabella[i][j]=false
+    end
+  end
+  return tabella
+end),
+-----------------------------------------------------------------------------------------------
+
 }
 return interfacciaConfig

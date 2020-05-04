@@ -1,6 +1,9 @@
 
 local composer = require("composer")
 local interfaccia = require("interfaceConfig")
+local numero = 7
+local tabella = interfaccia.tabellaFunction(numero)
+
 local inventario =
 {
   display=
@@ -93,6 +96,6 @@ local inventario =
   sceneGroup:insert(inventoryGroup)
   sceneGroup:insert(overlayGroup)
 end),
-create={inventario={"ITEM", "ITEM", "ITEM", "ITEM"}, mappaGenerata = interfaccia.proceduraleMappa(0, {}, 7)}
+create={inventario={"ITEM", "ITEM", "ITEM", "ITEM"}, mappaGenerata = interfaccia.proceduraleMappa(0, {}, 7, numero+1, numero+1, tabella)}
 }
 return inventario
