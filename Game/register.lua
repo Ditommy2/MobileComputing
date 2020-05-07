@@ -1,7 +1,7 @@
 local composer = require( "composer" )
 local scene = composer.newScene()
 local widget = require("widget")
-local Username
+local username
 local password
 local json=require("json")
 local filePath=system.pathForFile("savedDatas.json", system.DocumentsDirectory)
@@ -68,7 +68,12 @@ local function networkListener( event )
 					file:write(json.encode(stringa))
 					io.close(file)
 				end
-				composer.gotoScene("nuova")
+				for i = loginGroup.numChildren, 1, -1 do
+          loginGroup[i]:removeSelf()
+          loginGroup[i] = nil
+        end
+				composer.gotoScene( "livello1" )
+				--composer.gotoScene("register")
 			elseif event.response == ("Duplicate entry '"..username.text.."' for key 'PRIMARY'") then
 			print("Username gia in uso")
 
@@ -79,7 +84,7 @@ local function networkListener( event )
 				file:write(json.encode(stringa))
 				io.close(file)
 			end
-			composer.gotoScene("nuova")
+			composer.gotoScene("register")
 			end
     end
 end
@@ -96,7 +101,7 @@ local function handleButtonEvent( event )
 					file:write(json.encode(stringa))
 					io.close(file)
 				end
-				composer.gotoScene("nuova")
+				composer.gotoScene("register")
 else
     	local URL = "https://appmcsite.000webhostapp.com/insert.php?username=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
 			--local URL = "".. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
@@ -125,7 +130,7 @@ function scene:create( event )
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 	loginGroup=display.newGroup()
 
-	local background=display.newImageRect(sceneGroup, "nuovaBackground.png", lunghezza, altezza)
+	local background=display.newImageRect(sceneGroup, "background.png", lunghezza, altezza)
 	background.x=display.contentCenterX
 	background.y=display.contentCenterY
 	local lunghezzaFinestra=lunghezza-400
@@ -225,7 +230,7 @@ function scene:hide( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-		composer.removeScene("nuova")
+		composer.removeScene("register")
 
 	end
 end

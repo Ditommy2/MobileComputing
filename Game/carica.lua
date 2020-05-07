@@ -1,6 +1,10 @@
 local composer = require("composer")
 local scene = composer.newScene( )
 
+--Game window (16:9 aspect ratio)
+local width = display.contentWidth
+local height = display.contentWidth * (9/16)
+
 local utenteTextField
 local passTextField
 local button
@@ -47,28 +51,35 @@ function scene:create( event )
 	local sceneGroup = self.view
   local loginGroup = display.newGroup()
 
-  local utenteText = display.newText( "Username: ", 100, 50,native.systemFont, 20)
+  -- loginGroup.x = 0
+  -- loginGroup.y = 0
+
+  local utenteText = display.newText( "Username: ", 0, 0, native.systemFont, height*0.1)
+  loginGroup:insert(utenteText)
+  utenteTextField = native.newTextField( utenteText.x, utenteText.y + utenteText.height, width*0.4, utenteText.height)
+  loginGroup:insert(utenteTextField)
+  local utentePassw = display.newText( "Password: ", utenteText.x, utenteTextField.y + utenteTextField.height,native.systemFont, utenteText.height)
+  loginGroup:insert(utentePassw)
+  passTextField = native.newTextField( utentePassw.x, utentePassw.y + utentePassw.height, width*0.4, utenteText.height )
+  loginGroup:insert(passTextField)
+  button = display.newText("Carica", width*0.6, utenteText.y + utenteText.height + utenteTextField.height, native.systemFont, utenteText.height * 2)
+  loginGroup:insert(button)
+
   utenteText.anchorX = 0
   utenteText.anchorY = 0
-  utenteTextField = native.newTextField( 100, 70, 200, 30 )
   utenteTextField.anchorX = 0
   utenteTextField.anchorY = 0
-
-  local utentePassw = display.newText( "Password: ", 100,110,native.systemFont, 20)
   utentePassw.anchorX = 0
   utentePassw.anchorY = 0
-  passTextField = native.newTextField( 100, 130, 200, 30 )
   passTextField.anchorX = 0
   passTextField.anchorY = 0
+  passTextField.anchorX = 0
+  passTextField.anchorY = 0
+  button.anchorX = 0
 
-  button = display.newText("Carica", 450,105, native.systemFont, 40)
+  loginGroup.y = height * 0.25
+
   button:addEventListener("tap", getSavings)
-
-  loginGroup:insert(utenteText)
-  loginGroup:insert(utenteTextField)
-  loginGroup:insert(utentePassw)
-  loginGroup:insert(passTextField)
-  loginGroup:insert(button)
 
   sceneGroup:insert(loginGroup)
 
