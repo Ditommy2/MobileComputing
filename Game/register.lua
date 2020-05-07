@@ -179,7 +179,10 @@ end
 --risposta.x = display.contentCenterX
 --risposta.y = display.contentCenterY
 --end
-
+local title = display.newImageRect( sceneGroup, "title.png", 600, 100 )
+ title.x = display.contentCenterX
+ title.y = display.contentCenterY-500
+ loginGroup:insert(title)
 local Button = widget.newButton(
    {
        shape = "roundedRect",
