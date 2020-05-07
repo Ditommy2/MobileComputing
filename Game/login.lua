@@ -1,13 +1,23 @@
+-----------------------------------------------------------------------------------------
+--
+-- login.lua
+--
+-----------------------------------------------------------------------------------------
+
 local composer = require( "composer" )
+
 local scene = composer.newScene()
 
-local widget = require("widget")
+-- -----------------------------------------------------------------------------------
+-- Code outside of the scene event functions below will only be executed ONCE unless
+-- the scene is removed entirely (not recycled) via "composer.removeScene()"
+-- -----------------------------------------------------------------------------------
+
 -- forward declare the text fields
 local json = require("json")
 
 local username
 local password
-local email
 
 local function urlencode(str)
   if (str) then
@@ -25,18 +35,18 @@ local function networkListener( event )
         print( "Network error. ")
     else
         if event.response == "success" then
-            print("Success! We are now registered!")
+            print("Success! We are now logged!")
 
             -- put the code here to go to where the user needs to be
             -- after a successful registration
-            composer.gotoScene("login")
+            composer.gotoScene("stanza1")
 
         else
             -- put code here to notify the user of the problem, perhaps
             -- a native.alert() dialog that shows them the value of event.response
             -- and take them back to the registration screen to let them try again
 
-            local alert = native.showAlert( "You are not connected to the Internet. ", { "Try again"}, onComplete )
+            local alert = native.showAlert( "You are not registered. ", { "Try again"}, onComplete )
 
     end
   end
