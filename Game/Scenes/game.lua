@@ -26,7 +26,7 @@ local sheet_walking_Options =
 }
 
 --Loading sprite sheet
-local sheet_walking = graphics.newImageSheet( "Character/trumpPiccolo.png", sheet_walking_Options )
+local sheet_walking = graphics.newImageSheet( "Images/Characters/trumpPiccolo.png", sheet_walking_Options )
 
 --Character walking sequences table
 local sequences_walking =
@@ -156,7 +156,7 @@ function scene:create(event)
   sceneGroup:insert(mapGroup)
 
   --Displaying background and adding movement listener
-  local background = display.newImageRect( backgroundGroup, "nuovaBackground.png", width, height)
+  local background = display.newImageRect( backgroundGroup, "Images/Backgrounds/nuovaBackground.png", width, height)
   background.x = display.contentCenterX
   background.y = display.contentCenterY
   physics.addBody(background, "static", {shape={ 0, 0, width, 0, width, height - (height*0.3), 0, height - (height*0.3)}})
@@ -167,7 +167,7 @@ function scene:create(event)
   background.nonMovementArea = area
 
   --Displaying status bar background
-  local plainBack = display.newImageRect( midGroup, "plainBack.png", width, height * 0.3)
+  local plainBack = display.newImageRect( midGroup, "Images/Backgrounds/plainBack.png", width, height * 0.3)
   plainBack.anchorX = 0
   plainBack.anchorY = 1
   plainBack.x = 0
@@ -183,7 +183,7 @@ function scene:create(event)
   character.y = display.contentHeight - plainBack.height
 
   --Displaying enemy
-  enemy = display.newImageRect( midGroup, "joker.png", width * 0.15, height * 0.2)
+  enemy = display.newImageRect( midGroup, "Images/Characters/joker.png", width * 0.15, height * 0.2)
   enemy.anchorY = 1
   enemy.x = width - (width * 0.1)
   enemy.y = height - plainBack.height

@@ -6,12 +6,17 @@ local scene = composer.newScene( )
 local width = display.contentWidth
 local height = display.contentWidth * (9/16)
 
-local buttonNuova
-local buttonCarica
+local utenteTextField
+local passTextField
+local button
 local serverAnswer
+local loginGroup
 
 local function networkListener( event )
   local risposta = event.response
+
+  print(event.response)
+
     if ( event.isError ) then
         print( "Network error: ", risposta )
     else
@@ -19,11 +24,9 @@ local function networkListener( event )
         serverAnswer.text = "Username o password errati."
         serverAnswer:setFillColor(1,0,0)
         serverAnswer.alpha = 1
-        transition.to( serverAnswer, { time=3000, alpha=0 } )
+        transition.to( serverAnswer, { time=4000, alpha=0 } )
       else
-        serverAnswer.text = risposta
-        serverAnswer:setFillColor(0,1,0)
-        serverAnswer.alpha = 1
+        composer.gotoScene("Scenes.nuovaCarica")
       end
     end
 end
@@ -50,57 +53,54 @@ end
 function scene:create( event )
 	local sceneGroup = self.view
 
-  local background=display.newImageRect(sceneGroup, "background.png", width, height)
+  local background=display.newImageRect(sceneGroup, "Images/Backgrounds/background.png", width, height)
   background.x=display.contentCenterX
   background.y=display.contentCenterY
   sceneGroup:insert(background)
 
-  local title = display.newImageRect( sceneGroup, "title.png", 600, 100 )
+  local title = display.newImageRect( sceneGroup, "Images/Utility/title.png", 600, 100 )
    title.x = display.contentCenterX
    title.y = 200
 
-  local gameGroup = display.newGroup()
+  loginGroup = display.newGroup()
 
-  buttonNuova = widget.newButton({
-      shape = "roundedRect",
-      x = width*0.1,
-      y = height*0.25,
-      width=width*0.3,
-      height= height * 0.2,
-      id = "nuova",
-      label = "Nuova Partita",
-      labelColor={default={0.5, 0, 0}},
-      fontSize=50,
-      onEvent = handleButtonEvent
-  })
+  utenteTextField = native.newTextField( 0, height*0.1, width*0.4, height * 0.1)
+  utenteTextField.placeholder = "username"
+  loginGroup:insert(utenteTextField)
 
-  gameGroup:insert(buttonNuova)
+  passTextField = native.newTextField( 0, utenteTextField.height + utenteTextField.height*2, width*0.4, utenteTextField.height)
+  passTextField.placeholder = "password"
+  loginGroup:insert(passTextField)
 
-  buttonCarica = widget.newButton({
+  button = widget.newButton({
       shape = "roundedRect",
       x = width*0.6,
       y = height*0.25,
       width=width*0.3,
       height= height * 0.2,
-      id = "carica",
-      label = "Carica Partita",
+      id = "login",
+      label = "Login",
       labelColor={default={0.5, 0, 0}},
       fontSize=50,
       onEvent = handleButtonEvent
   })
+  loginGroup:insert(button)
 
-  gameGroup:insert(buttonCarica)
+  utenteTextField.anchorX = 0
+  utenteTextField.anchorY = 0
+  passTextField.anchorX = 0
+  passTextField.anchorY = 0
+  passTextField.anchorX = 0
+  passTextField.anchorY = 0
+  button.anchorX = 0
 
-  buttonNuova.anchorX = 0
-  buttonCarica.anchorX = 0
+  loginGroup.y = height * 0.35
 
-  gameGroup.y = height * 0.35
+  button:addEventListener("tap", getSavings)
 
-  --button:addEventListener("tap", getSavings)
+  sceneGroup:insert(loginGroup)
 
-  sceneGroup:insert(gameGroup)
-
-  serverAnswer = display.newText("", display.contentCenterX, 200, native.systemFont, 20)
+  serverAnswer = display.newText("", display.contentCenterX, height*0.85, native.systemFont, height*0.1)
   serverAnswer.alpha=0
   sceneGroup:insert(serverAnswer)
 end
@@ -126,6 +126,10 @@ function scene:hide( event )
 	if ( phase == "will" ) then
 
 	elseif ( phase == "did" ) then
+    for i = loginGroup.numChildren, 1, -1 do
+      loginGroup[i]:removeSelf()
+      loginGroup[i] = nil
+    end
 
 	end
 end

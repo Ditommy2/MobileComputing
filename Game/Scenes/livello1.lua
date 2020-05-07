@@ -1,5 +1,6 @@
 
 local composer = require( "composer" )
+composer.recycleAutomatically=false
 local lowerFixedMenu= require("lowerFixedMenu")
 local widget = require("widget")
 local scene = composer.newScene()
@@ -10,9 +11,6 @@ local altezza=  lunghezza*(9/16)
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
 -- -----------------------------------------------------------------------------------
 
-
-
-
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
@@ -20,7 +18,7 @@ local funzione= composer.getVariable( "funzione" )
 local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
-local prossimaStanza=composer.getVariable( "prossimaStanza" )
+
 local sheetOptions=
 {
   frames=
@@ -51,32 +49,24 @@ local sheetOptions=
     },
   },
 }
-local objectSheet=graphics.newImageSheet( "directionArrow.png", sheetOptions )
+local objectSheet=graphics.newImageSheet( "Images/Utility/directionArrow.png", sheetOptions )
 local function handleButtonEvent( event )
         local item=event.target
         local direzione = item.id
-
       --  item:removeEventListener("tap", handleButtonEvent)
-        print("DIREZIONE DA CORRIDOIO: ----------------------------------------------------------------------", direzione)
-
-        if direzione=="EST" then
-          prossimaStanza.corrente=true
-          print("MOVIMENTO DA ", stanzaCorrente.TESTO, " a ", prossimaStanza.TESTO)
-          composer.setVariable( "stanzaCorrente", prossimaStanza)
-        end
-
-        if direzione=="OVEST" then
-          stanzaCorrente.corrente=true
-          print("RITORNO SU STANZA ", stanzaCorrente.TESTO)
-          composer.setVariable("stanzaCorrente", stanzaCorrente)
-        end
-        composer.removeScene( "corridoio")
+        print("DIREZIONE: ----------------------------------------------------------------------", direzione)
+        print("MOVIMENTO DA ", stanzaCorrente.TESTO, " a ", stanzaCorrente[direzione].TESTO)
+        stanzaCorrente.corrente=false
+        composer.setVariable( "prossimaStanza", stanzaCorrente[direzione] )
+      --  stanzaCorrente[direzione].corrente=true
+      --  composer.setVariable( "stanzaCorrente", stanzaCorrente[direzione] )
+        composer.removeScene( "livello1" )
         for i = mainGroup.numChildren, 1, -1 do
-        mainGroup[i]:removeSelf()
-        print("FRECCIA RIMOSSA")
-        mainGroup[i] = nil
+          mainGroup[i]:removeSelf()
+          print("FRECCIA RIMOSSA")
+          mainGroup[i] = nil
         end
-        composer.gotoScene( "livello1" )
+        composer.gotoScene("corridoio")
 end
 -- create()
 function scene:create( event )
@@ -84,28 +74,52 @@ function scene:create( event )
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
   local phase = event.phase
-
   funzione(self,  mappaloc, invloc)
-  local background=display.newImageRect(backGroup, "nuovaBackground.png", lunghezza, altezza-300)
+  --composer.removeScene( "livello2")
+  local numero = stanzaCorrente.seedBackground
+  local immagine = "Backgrounds/proceduralBackgrounds/back"..numero..".jpg"
+  local background=display.newImageRect(backGroup, immagine, lunghezza, altezza-300)
   background.x=display.contentCenterX
   background.y=display.contentCenterY-170
 --  sceneGroup:insert(background)
   mainGroup=display.newGroup()
   print("stanza Corrente: ", stanzaCorrente.TESTO)
+  if stanzaCorrente.NORD~=nil then
+    local freccia = display.newImageRect(objectSheet, 1, 50, 50)
+    freccia.id="NORD"
+    freccia:addEventListener("tap", handleButtonEvent)
+    mainGroup:insert(freccia)
+    freccia.x=display.contentCenterX
+    freccia.y=display.contentCenterY-300
+  end
 
-    local frecciaEST  = display.newImageRect(mainGroup, objectSheet, 3, 50, 50)
-    frecciaEST.id="EST"
-    frecciaEST:addEventListener("tap", handleButtonEvent)
-    frecciaEST.x=display.contentCenterX+520
-    frecciaEST.y=display.contentCenterY-100
+  if stanzaCorrente.SUD~=nil then
+    local freccia = display.newImageRect(objectSheet, 2, 50, 50)
+    freccia.id="SUD"
+    freccia:addEventListener("tap", handleButtonEvent)
+    mainGroup:insert(freccia)
+    freccia.x=display.contentCenterX
+    freccia.y=display.contentCenterY
+  end
 
-    local frecciaOVEST  = display.newImageRect(mainGroup, objectSheet, 4, 50, 50)
-    frecciaOVEST.id="OVEST"
-    frecciaOVEST:addEventListener("tap", handleButtonEvent)
-    frecciaOVEST.x=display.contentCenterX-520
-    frecciaOVEST.y=display.contentCenterY-100
+  if stanzaCorrente.EST~=nil then
+    local freccia = display.newImageRect(objectSheet, 3, 50, 50)
+    freccia.id="EST"
+    freccia:addEventListener("tap", handleButtonEvent)
+    mainGroup:insert(freccia)
+    freccia.x=display.contentCenterX+520
+    freccia.y=display.contentCenterY-100
+  end
 
-    print("CORRIDOIO TRA STANZA ", stanzaCorrente.TESTO, " E ", prossimaStanza.TESTO)
+  if stanzaCorrente.OVEST~=nil then
+    local freccia = display.newImageRect(objectSheet, 4, 50, 50)
+    freccia.id="OVEST"
+    freccia:addEventListener("tap", handleButtonEvent)
+    mainGroup:insert(freccia)
+    freccia.x=display.contentCenterX-520
+    freccia.y=display.contentCenterY-100
+  end
+
 --local freccia = display.newImageRect(sceneGroup, objectSheet, 4, 50, 50)
 --freccia.x=display.contentCenterX
 --freccia.y=display.contentCenterY
@@ -139,11 +153,13 @@ function scene:hide( event )
 
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is on screen (but is about to go off screen)
---composer.removeScene("livello1")
 
+--composer.removeScene("livello1")
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-   --composer.removeScene("livello1")
+   ---composer.removeScene("livello1")
+
+
 
 	end
 end

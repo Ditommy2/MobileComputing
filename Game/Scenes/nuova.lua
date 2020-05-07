@@ -1,7 +1,7 @@
 local composer = require( "composer" )
 local scene = composer.newScene()
 local widget = require("widget")
-local username
+local Username
 local password
 local json=require("json")
 local filePath=system.pathForFile("savedDatas.json", system.DocumentsDirectory)
@@ -68,12 +68,7 @@ local function networkListener( event )
 					file:write(json.encode(stringa))
 					io.close(file)
 				end
-				for i = loginGroup.numChildren, 1, -1 do
-          loginGroup[i]:removeSelf()
-          loginGroup[i] = nil
-        end
-				composer.gotoScene( "livello1" )
-				--composer.gotoScene("register")
+				composer.gotoScene("nuova")
 			elseif event.response == ("Duplicate entry '"..username.text.."' for key 'PRIMARY'") then
 			print("Username gia in uso")
 
@@ -84,7 +79,7 @@ local function networkListener( event )
 				file:write(json.encode(stringa))
 				io.close(file)
 			end
-			composer.gotoScene("register")
+			composer.gotoScene("Scenes.nuova")
 			end
     end
 end
@@ -101,7 +96,7 @@ local function handleButtonEvent( event )
 					file:write(json.encode(stringa))
 					io.close(file)
 				end
-				composer.gotoScene("register")
+				composer.gotoScene("Scenes.nuova")
 else
     	local URL = "https://appmcsite.000webhostapp.com/insert.php?username=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
 			--local URL = "".. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
@@ -130,7 +125,7 @@ function scene:create( event )
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 	loginGroup=display.newGroup()
 
-	local background=display.newImageRect(sceneGroup, "background.png", lunghezza, altezza)
+	local background=display.newImageRect(sceneGroup, "Images/Backgrounds/nuovaBackground.png", lunghezza, altezza)
 	background.x=display.contentCenterX
 	background.y=display.contentCenterY
 	local lunghezzaFinestra=lunghezza-400
@@ -179,10 +174,7 @@ end
 --risposta.x = display.contentCenterX
 --risposta.y = display.contentCenterY
 --end
-local title = display.newImageRect( sceneGroup, "title.png", 600, 100 )
- title.x = display.contentCenterX
- title.y = display.contentCenterY-500
- loginGroup:insert(title)
+
 local Button = widget.newButton(
    {
        shape = "roundedRect",
@@ -233,7 +225,7 @@ function scene:hide( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-		composer.removeScene("register")
+		composer.removeScene("nuova")
 
 	end
 end
