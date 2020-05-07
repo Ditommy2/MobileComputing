@@ -6,7 +6,7 @@
 
 -- Your code here
 local composer = require("composer")
-local lowerFixedMenu= require("lowerFixedMenu")
+local lowerFixedMenu = require("lowerFixedMenu")
 local support = require("interfaceConfig")
 display.setStatusBar(display.HiddenStatusBar)
 math.randomseed(os.time())
@@ -31,4 +31,4 @@ end
  composer.setVariable( "funzione", funzione )
  composer.setVariable( "mapx", 120 )
  composer.setVariable( "mapy", 95 )
-composer.gotoScene("livello1")
+ composer.gotoScene("livello1")

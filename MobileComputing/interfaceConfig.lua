@@ -1,8 +1,22 @@
 local composer= require("composer")
 -----------------------------------------------------------------------------------
-local function proceduraleMappaFunzione(index, mappa, numero, a, b, tabella)
-  print("punto di partenza: ", a, " ", b)
+local function stampaTabella(tabella)
+for i=1, #tabella do
+  print("---------------------------------")
+for j=1, #tabella[i] do
+if tabella[i][j]==true then
+print("*")
+elseif tabella[i][j]==false then
+print("-")
+end
+end
+end
+end
+-----------------------------------------------------------------------------------
+local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, primaY)
+
   local x
+  local a, b
   local cardinale
   local trovato = false
   local seed = math.random(1, 5)
@@ -11,20 +25,26 @@ local function proceduraleMappaFunzione(index, mappa, numero, a, b, tabella)
 
     print("genera un random 1, ", index)
     print("esce ", x)
+    a=mappa[x].x
+    b=mappa[x].y
+
   else
     x=1
+    a=primaX
+    b=primaY
     print("genera prima stanza")
-    local stanza={NORD=nil, SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed}
+    local stanza={NORD=nil, SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b}
     mappa[x]=stanza
     trovato=true
     tabella[a][b]=true
     index=index+1
   end
+  print("punto di partenza: ", a, " ", b)
   while trovato==false do
     cardinale=math.random(1, 4)
     if (cardinale == 1) and (mappa[x].NORD == nil) and (tabella[a][b+1]==false) then
       print("assegna alla stanza ", x, " una stanza a NORD")
-      local stanza = {NORD=nil, SUD=mappa[x], EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed}
+      local stanza = {NORD=nil, SUD=mappa[x], EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b+1}
       mappa[x].NORD = stanza
       index=index+1
       mappa[index]=stanza
@@ -35,7 +55,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, a, b, tabella)
 
     if (cardinale == 2) and (mappa[x].SUD == nil) and (tabella[a][b-1]==false) then
       print("assegna alla stanza ", x, " una stanza a SUD")
-      local stanza = {NORD=mappa[x], SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false,  seedBackground=seed}
+      local stanza = {NORD=mappa[x], SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false,  seedBackground=seed, x=a, y=b-1}
       mappa[x].SUD = stanza
       index=index+1
       mappa[index]=stanza
@@ -46,7 +66,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, a, b, tabella)
 
     if (cardinale == 3) and (mappa[x].EST == nil) and (tabella[a+1][b]==false) then
       print("assegna alla stanza ", x, " una stanza a EST")
-      local stanza = {NORD=nil, SUD=nil, EST=nil, OVEST=mappa[x], TESTO=index, visitato=false, corrente=false, seedBackground=seed}
+      local stanza = {NORD=nil, SUD=nil, EST=nil, OVEST=mappa[x], TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a+1, y=b}
       mappa[x].EST = stanza
       index=index+1
       mappa[index]=stanza
@@ -57,7 +77,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, a, b, tabella)
 
     if (cardinale == 4) and (mappa[x].OVEST == nil) and (tabella[a-1][b]==false) then
       print("assegna alla stanza ", x, " una stanza a OVEST")
-      local stanza = {NORD=nil, SUD=nil, EST=mappa[x], OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed}
+      local stanza = {NORD=nil, SUD=nil, EST=mappa[x], OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a-1, y=b}
       mappa[x].OVEST = stanza
       index=index+1
       mappa[index]=stanza
@@ -67,9 +87,12 @@ local function proceduraleMappaFunzione(index, mappa, numero, a, b, tabella)
     end
   end
   if index==numero then
+    --stampaTabella(tabella)
     return mappa[1]
   end
-  return proceduraleMappaFunzione(index, mappa, numero, a, b, tabella)
+  print("CHIAMATA RICOR")
+  --stampaTabella(tabella)
+  return proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, primaY)
 end
 --------------------------------------------------------------------------------------------------------------
 local function annullaVisitefunzione(primaStanza, stanza)

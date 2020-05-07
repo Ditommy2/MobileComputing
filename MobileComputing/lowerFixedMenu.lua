@@ -96,6 +96,6 @@ local inventario =
   sceneGroup:insert(inventoryGroup)
   sceneGroup:insert(overlayGroup)
 end),
-create={inventario={"ITEM", "ITEM", "ITEM", "ITEM"}, mappaGenerata = interfaccia.proceduraleMappa(0, {}, 7, numero+1, numero+1, tabella)}
+create={inventario={"ITEM", "ITEM", "ITEM", "ITEM"}, mappaGenerata = interfaccia.proceduraleMappa(0, {}, numero, tabella, numero+1, numero+1)}
 }
 return inventario
