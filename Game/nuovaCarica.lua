@@ -1,13 +1,13 @@
 local composer = require("composer")
+local widget = require("widget")
 local scene = composer.newScene( )
 
 --Game window (16:9 aspect ratio)
 local width = display.contentWidth
 local height = display.contentWidth * (9/16)
 
-local utenteTextField
-local passTextField
-local button
+local buttonNuova
+local buttonCarica
 local serverAnswer
 
 local function networkListener( event )
@@ -49,39 +49,56 @@ end
 -- create()
 function scene:create( event )
 	local sceneGroup = self.view
-  local loginGroup = display.newGroup()
 
-  -- loginGroup.x = 0
-  -- loginGroup.y = 0
+  local background=display.newImageRect(sceneGroup, "background.png", width, height)
+  background.x=display.contentCenterX
+  background.y=display.contentCenterY
+  sceneGroup:insert(background)
 
-  local utenteText = display.newText( "Username: ", 0, 0, native.systemFont, height*0.1)
-  loginGroup:insert(utenteText)
-  utenteTextField = native.newTextField( utenteText.x, utenteText.y + utenteText.height, width*0.4, utenteText.height)
-  loginGroup:insert(utenteTextField)
-  local utentePassw = display.newText( "Password: ", utenteText.x, utenteTextField.y + utenteTextField.height,native.systemFont, utenteText.height)
-  loginGroup:insert(utentePassw)
-  passTextField = native.newTextField( utentePassw.x, utentePassw.y + utentePassw.height, width*0.4, utenteText.height )
-  loginGroup:insert(passTextField)
-  button = display.newText("Carica", width*0.6, utenteText.y + utenteText.height + utenteTextField.height, native.systemFont, utenteText.height * 2)
-  loginGroup:insert(button)
+  local title = display.newImageRect( sceneGroup, "title.png", 600, 100 )
+   title.x = display.contentCenterX
+   title.y = 200
 
-  utenteText.anchorX = 0
-  utenteText.anchorY = 0
-  utenteTextField.anchorX = 0
-  utenteTextField.anchorY = 0
-  utentePassw.anchorX = 0
-  utentePassw.anchorY = 0
-  passTextField.anchorX = 0
-  passTextField.anchorY = 0
-  passTextField.anchorX = 0
-  passTextField.anchorY = 0
-  button.anchorX = 0
+  local gameGroup = display.newGroup()
 
-  loginGroup.y = height * 0.25
+  buttonNuova = widget.newButton({
+      shape = "roundedRect",
+      x = width*0.1,
+      y = height*0.25,
+      width=width*0.3,
+      height= height * 0.2,
+      id = "nuova",
+      label = "Nuova Partita",
+      labelColor={default={0.5, 0, 0}},
+      fontSize=50,
+      onEvent = handleButtonEvent
+  })
 
-  button:addEventListener("tap", getSavings)
+  gameGroup:insert(buttonNuova)
 
-  sceneGroup:insert(loginGroup)
+  buttonCarica = widget.newButton({
+      shape = "roundedRect",
+      x = width*0.6,
+      y = height*0.25,
+      width=width*0.3,
+      height= height * 0.2,
+      id = "carica",
+      label = "Carica Partita",
+      labelColor={default={0.5, 0, 0}},
+      fontSize=50,
+      onEvent = handleButtonEvent
+  })
+
+  gameGroup:insert(buttonCarica)
+
+  buttonNuova.anchorX = 0
+  buttonCarica.anchorX = 0
+
+  gameGroup.y = height * 0.35
+
+  --button:addEventListener("tap", getSavings)
+
+  sceneGroup:insert(gameGroup)
 
   serverAnswer = display.newText("", display.contentCenterX, 200, native.systemFont, 20)
   serverAnswer.alpha=0
