@@ -1,7 +1,7 @@
 local composer = require( "composer" )
 local scene = composer.newScene()
 local widget = require("widget")
-local Username
+local username
 local password
 local json=require("json")
 local filePath=system.pathForFile("savedDatas.json", system.DocumentsDirectory)
@@ -9,6 +9,8 @@ local filePathComandi=system.pathForFile("binario.json", system.DocumentsDirecto
 local json=require("json")
 local contents
 local confermapassword
+local lunghezza =  display.contentWidth
+local altezza=  lunghezza*(9/16)
 --local function handleButtonEvent( event )
   --  if ( "ended" == event.phase ) then
   --  	local URL = "http://web.web.com/yourscript.php?username=" .. urlencode( username.text ) .. "&password=" .. urlencode(password.text)
@@ -66,7 +68,12 @@ local function networkListener( event )
 					file:write(json.encode(stringa))
 					io.close(file)
 				end
-				composer.gotoScene("nuova")
+				for i = loginGroup.numChildren, 1, -1 do
+          loginGroup[i]:removeSelf()
+          loginGroup[i] = nil
+        end
+				composer.gotoScene( "livello1" )
+				--composer.gotoScene("register")
 			elseif event.response == ("Duplicate entry '"..username.text.."' for key 'PRIMARY'") then
 			print("Username gia in uso")
 
@@ -77,7 +84,7 @@ local function networkListener( event )
 				file:write(json.encode(stringa))
 				io.close(file)
 			end
-			composer.gotoScene("nuova")
+			composer.gotoScene("register")
 			end
     end
 end
@@ -94,7 +101,7 @@ local function handleButtonEvent( event )
 					file:write(json.encode(stringa))
 					io.close(file)
 				end
-				composer.gotoScene("nuova")
+				composer.gotoScene("register")
 else
     	local URL = "https://appmcsite.000webhostapp.com/insert.php?username=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
 			--local URL = "".. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
@@ -121,29 +128,31 @@ function scene:create( event )
 
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
+	loginGroup=display.newGroup()
 
-
-	local background=display.newImageRect(sceneGroup, "background.jpg", 800, 700)
+	local background=display.newImageRect(sceneGroup, "background.png", lunghezza, altezza)
 	background.x=display.contentCenterX
 	background.y=display.contentCenterY
+	local lunghezzaFinestra=lunghezza-400
+	local altezzzaFinestra=lunghezzaFinestra*(9/16)
 	sceneGroup:insert(background)
-	local midBackground = display.newRect( display.contentCenterX, display.contentCenterY+20, 220, 255 )
+	local midBackground = display.newRect( display.contentCenterX, display.contentCenterY-180, lunghezzaFinestra, altezzzaFinestra )
 	midBackground:setFillColor(0.18, 0.18, 0.23)
-	sceneGroup:insert(midBackground)
+	loginGroup:insert(midBackground)
 
- username = native.newTextField( display.contentCenterX, 80, 180, 30 )
+ username = native.newTextField( display.contentCenterX, display.contentCenterY-350, lunghezzaFinestra-30, 80 )
 username.placeholder = "Username"
-sceneGroup:insert(username)
+loginGroup:insert(username)
 
- password = native.newTextField( display.contentCenterX, 140,180, 30 )
+ password = native.newTextField( display.contentCenterX, display.contentCenterY-250, lunghezzaFinestra-30, 80 )
 password.isSecure = true
 password.placeholder = "Password"
-sceneGroup:insert(password)
+loginGroup:insert(password)
 
-confermapassword = native.newTextField( display.contentCenterX, 200,180, 30 )
+confermapassword = native.newTextField( display.contentCenterX, display.contentCenterY-150, lunghezzaFinestra-30, 80 )
 confermapassword.isSecure = true
 confermapassword.placeholder = "Conferma Password"
-sceneGroup:insert(confermapassword)
+loginGroup:insert(confermapassword)
 
 local file = io.open( filePathComandi, "r" )
 
@@ -153,15 +162,15 @@ if file then
 		print(contents)
 		io.close( file )
 		if contents=="\"true\"" then
-			local risposta = display.newText( sceneGroup, "Username già in uso",display.contentCenterX, 100, native.systemFont, 19)
+			local risposta = display.newText( sceneGroup, "Username già in uso",display.contentCenterX, display.contentCenterY-160, native.systemFont, 30)
 			risposta.x=display.contentCenterX
-			risposta.y = username.y-34
+			risposta.y = username.y-55
 			risposta:setFillColor(0.5, 0, 0)
 		end
 		if contents=="\"confermapassword\"" then
-			local risposta = display.newText( sceneGroup, "Le password sono diverse",display.contentCenterX, 100, native.systemFont, 19)
+			local risposta = display.newText( loginGroup, "Le password sono diverse",display.contentCenterX, display.contentCenterY-160, native.systemFont, 30)
 			risposta.x=display.contentCenterX
-			risposta.y = username.y-34
+			risposta.y = username.y-55
 			risposta:setFillColor(0.5, 0, 0)
 		end
 end
@@ -176,17 +185,20 @@ local Button = widget.newButton(
        shape = "roundedRect",
        left = 70,
        top = 360,
+			 width=lunghezzaFinestra-200,
+			 height=90,
        id = "Nuova",
        label = "Nuova Partita",
 			 labelColor={default={0.5, 0, 0}},
+			 fontSize=50,
        onEvent = handleButtonEvent
    }
 )
-sceneGroup:insert(Button)
+loginGroup:insert(Button)
 Button.x=display.contentCenterX
-Button.y=270
-
-
+Button.y=display.contentCenterY
+-- loginGroup.x=500
+ loginGroup.y=display.contentCenterY-150
 end
 
 
@@ -218,7 +230,7 @@ function scene:hide( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-		composer.removeScene("nuova")
+		composer.removeScene("register")
 
 	end
 end
