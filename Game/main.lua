@@ -10,4 +10,4 @@ local composer = require( "composer" )
 display.setStatusBar( display.HiddenStatusBar )
 
 -- Go to the Stanza1 screen
-composer.gotoScene( "stanza1" ,"fade")
+composer.gotoScene("menu")
