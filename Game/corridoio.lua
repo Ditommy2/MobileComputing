@@ -3,7 +3,8 @@ local composer = require( "composer" )
 local lowerFixedMenu= require("lowerFixedMenu")
 local widget = require("widget")
 local scene = composer.newScene()
-
+local lunghezza =  display.contentWidth
+local altezza=  lunghezza*(9/16)
 -- -----------------------------------------------------------------------------------
 -- Code outside of the scene event functions below will only be executed ONCE unless
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
@@ -85,9 +86,9 @@ function scene:create( event )
   local phase = event.phase
 
   funzione(self,  mappaloc, invloc)
-  local background=display.newImageRect(backGroup, "nuovaBackground.png", 800, 700)
+  local background=display.newImageRect(backGroup, "nuovaBackground.png", lunghezza, altezza-300)
   background.x=display.contentCenterX
-  background.y=display.contentCenterY-320
+  background.y=display.contentCenterY-170
 --  sceneGroup:insert(background)
   mainGroup=display.newGroup()
   print("stanza Corrente: ", stanzaCorrente.TESTO)
@@ -95,14 +96,14 @@ function scene:create( event )
     local frecciaEST  = display.newImageRect(mainGroup, objectSheet, 3, 50, 50)
     frecciaEST.id="EST"
     frecciaEST:addEventListener("tap", handleButtonEvent)
-    frecciaEST.x=display.contentCenterX+250
-    frecciaEST.y=display.contentCenterY-60
+    frecciaEST.x=display.contentCenterX+520
+    frecciaEST.y=display.contentCenterY-100
 
     local frecciaOVEST  = display.newImageRect(mainGroup, objectSheet, 4, 50, 50)
     frecciaOVEST.id="OVEST"
     frecciaOVEST:addEventListener("tap", handleButtonEvent)
-    frecciaOVEST.x=display.contentCenterX-250
-    frecciaOVEST.y=display.contentCenterY-60
+    frecciaOVEST.x=display.contentCenterX-520
+    frecciaOVEST.y=display.contentCenterY-100
 
     print("CORRIDOIO TRA STANZA ", stanzaCorrente.TESTO, " E ", prossimaStanza.TESTO)
 --local freccia = display.newImageRect(sceneGroup, objectSheet, 4, 50, 50)

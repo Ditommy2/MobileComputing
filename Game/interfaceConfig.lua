@@ -112,9 +112,9 @@ local function annullaVisitefunzione(primaStanza, stanza)
 end
 --------------------------------------------------------------------------------------------------------------
 local function displayStanzaFunzione(stanza, offx, offy)
-  local dimensioniStanza = 20
-  local spessoreCorridoio = 5
-  local lunghezzaCorridoio = 50
+  local dimensioniStanza = 50
+  local spessoreCorridoio = 10
+  local lunghezzaCorridoio = 100
   local coloreCorrente = {0, 1, 1}
   local coloreStanza={1, 0, 0}
   local coloreCorridoio={1, 0, 0}
@@ -126,38 +126,38 @@ mapGroup:insert(item)
 print("stanza stampata: ")
 print(stanza.TESTO)
 if stanza.NORD~=nil and stanza.NORD.visitato~=true then
-  item=display.newRect( offx, offy-10-(lunghezzaCorridoio/2), spessoreCorridoio, lunghezzaCorridoio )
+  item=display.newRect( offx, offy-(dimensioniStanza/2)-(lunghezzaCorridoio/2), spessoreCorridoio, lunghezzaCorridoio )
   item:setFillColor(coloreCorridoio[1], coloreCorridoio[2], coloreCorridoio[3])
   mapGroup:insert(item)
   stanza.NORD.visitato=true
-  displayStanzaFunzione(stanza.NORD, offx, (offy-lunghezzaCorridoio-10))
+  displayStanzaFunzione(stanza.NORD, offx, (offy-lunghezzaCorridoio-(dimensioniStanza/2)))
 
 end
 
 if stanza.SUD~=nil and stanza.SUD.visitato~=true then
-  item=display.newRect( offx, offy+10+(lunghezzaCorridoio/2), spessoreCorridoio, lunghezzaCorridoio )
+  item=display.newRect( offx, offy+(dimensioniStanza/2)+(lunghezzaCorridoio/2), spessoreCorridoio, lunghezzaCorridoio )
   item:setFillColor(1, 0, 0)
   mapGroup:insert(item)
   stanza.SUD.visitato=true
-  displayStanzaFunzione(stanza.SUD, offx, (offy+lunghezzaCorridoio+10))
+  displayStanzaFunzione(stanza.SUD, offx, (offy+lunghezzaCorridoio+(dimensioniStanza/2)))
 
 end
 
 if stanza.EST~=nil and stanza.EST.visitato~=true then
-  item=display.newRect( offx+10+(lunghezzaCorridoio/2), offy, lunghezzaCorridoio, spessoreCorridoio )
+  item=display.newRect( offx+(dimensioniStanza/2)+(lunghezzaCorridoio/2), offy, lunghezzaCorridoio, spessoreCorridoio )
   item:setFillColor(1, 0, 0)
   mapGroup:insert(item)
   stanza.EST.visitato=true
-  displayStanzaFunzione(stanza.EST, offx+lunghezzaCorridoio+10, offy)
+  displayStanzaFunzione(stanza.EST, offx+lunghezzaCorridoio+(dimensioniStanza/2), offy)
 
 end
 
 if stanza.OVEST~=nil and stanza.OVEST.visitato~=true then
-  item=display.newRect( offx-10-(lunghezzaCorridoio/2), offy, lunghezzaCorridoio, spessoreCorridoio )
+  item=display.newRect( offx-(dimensioniStanza/2)-(lunghezzaCorridoio/2), offy, lunghezzaCorridoio, spessoreCorridoio )
   item:setFillColor(1, 0, 0)
   mapGroup:insert(item)
   stanza.OVEST.visitato=true
-  displayStanzaFunzione(stanza.OVEST, offx-lunghezzaCorridoio-10, offy)
+  displayStanzaFunzione(stanza.OVEST, offx-lunghezzaCorridoio-(dimensioniStanza/2), offy)
 
 end
 end

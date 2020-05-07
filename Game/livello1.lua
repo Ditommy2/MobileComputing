@@ -4,7 +4,8 @@ composer.recycleAutomatically=false
 local lowerFixedMenu= require("lowerFixedMenu")
 local widget = require("widget")
 local scene = composer.newScene()
-
+local lunghezza =  display.contentWidth
+local altezza=  lunghezza*(9/16)
 -- -----------------------------------------------------------------------------------
 -- Code outside of the scene event functions below will only be executed ONCE unless
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
@@ -80,9 +81,9 @@ function scene:create( event )
   --composer.removeScene( "livello2")
   local numero = stanzaCorrente.seedBackground
   local immagine = "proceduralBackgrounds/back"..numero..".jpg"
-  local background=display.newImageRect(backGroup, immagine, 570, 200)
+  local background=display.newImageRect(backGroup, immagine, lunghezza, altezza-300)
   background.x=display.contentCenterX
-  background.y=display.contentCenterY-70
+  background.y=display.contentCenterY-170
 --  sceneGroup:insert(background)
   mainGroup=display.newGroup()
   print("stanza Corrente: ", stanzaCorrente.TESTO)
@@ -92,7 +93,7 @@ function scene:create( event )
     freccia:addEventListener("tap", handleButtonEvent)
     mainGroup:insert(freccia)
     freccia.x=display.contentCenterX
-    freccia.y=40
+    freccia.y=display.contentCenterY-300
   end
 
   if stanzaCorrente.SUD~=nil then
@@ -101,7 +102,7 @@ function scene:create( event )
     freccia:addEventListener("tap", handleButtonEvent)
     mainGroup:insert(freccia)
     freccia.x=display.contentCenterX
-    freccia.y=160
+    freccia.y=display.contentCenterY
   end
 
   if stanzaCorrente.EST~=nil then
@@ -109,8 +110,8 @@ function scene:create( event )
     freccia.id="EST"
     freccia:addEventListener("tap", handleButtonEvent)
     mainGroup:insert(freccia)
-    freccia.x=display.contentCenterX+250
-    freccia.y=display.contentCenterY-60
+    freccia.x=display.contentCenterX+520
+    freccia.y=display.contentCenterY-100
   end
 
   if stanzaCorrente.OVEST~=nil then
@@ -118,8 +119,8 @@ function scene:create( event )
     freccia.id="OVEST"
     freccia:addEventListener("tap", handleButtonEvent)
     mainGroup:insert(freccia)
-    freccia.x=display.contentCenterX-250
-    freccia.y=display.contentCenterY-60
+    freccia.x=display.contentCenterX-520
+    freccia.y=display.contentCenterY-100
   end
 
 --local freccia = display.newImageRect(sceneGroup, objectSheet, 4, 50, 50)

@@ -156,7 +156,7 @@ function scene:create(event)
   sceneGroup:insert(mapGroup)
 
   --Displaying background and adding movement listener
-  local background = display.newImageRect( backgroundGroup, "background.png", width, height)
+  local background = display.newImageRect( backgroundGroup, "nuovaBackground.png", width, height)
   background.x = display.contentCenterX
   background.y = display.contentCenterY
   physics.addBody(background, "static", {shape={ 0, 0, width, 0, width, height - (height*0.3), 0, height - (height*0.3)}})
