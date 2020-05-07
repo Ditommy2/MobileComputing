@@ -5,113 +5,104 @@
 -----------------------------------------------------------------------------------------
 
 local composer = require( "composer" )
+
 local scene = composer.newScene()
 
--- include Corona's "widget" library
-local widget = require "widget"
+-- -----------------------------------------------------------------------------------
+-- Code outside of the scene event functions below will only be executed ONCE unless
+-- the scene is removed entirely (not recycled) via "composer.removeScene()"
+-- -----------------------------------------------------------------------------------
 
---------------------------------------------
-
--- forward declarations and other locals
-local loginButton
-
--- 'onRelease' event listener for LoginButton
-local function onLoginButtonRelease()
-
--- go to login.lua scene
-	composer.gotoScene( "login", "fade", 500 )
-
-	return true	-- indicates successful touch
+local function gotoLogin()
+		composer.gotoScene( "login", {time=800, effect="crossFade"} )
 end
 
+local function gotoRegister()
+		composer.gotoScene( "register", {time=800, effect="crossFade"} )
+end
+
+local menuTrack
+
+-- -----------------------------------------------------------------------------------
+-- Scene event functions
+-- -----------------------------------------------------------------------------------
+
+-- create()
 function scene:create( event )
+
 	local sceneGroup = self.view
+	-- Code here runs when the scene is first created but has not yet appeared on screen
 
-	-- Called when the scene's view does not exist.
-	--
-	-- INSERT code here to initialize the scene
-	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
+	local background = display.newImageRect( sceneGroup, "background.png", 1280, 720 )
+	 background.x = display.contentCenterX
+	 background.y = display.contentCenterY
 
-	-- display a background image
-	local background = display.newImageRect( "background.jpg", display.actualContentWidth, display.actualContentHeight )
-	background.anchorX = 0
-	background.anchorY = 0
-	background.x = 0 + display.screenOriginX
-	background.y = 0 + display.screenOriginY
+	 local title = display.newImageRect( sceneGroup, "title.png", 600, 100 )
+    title.x = display.contentCenterX
+    title.y = 200
 
-	-- create/position logo/title image on upper-half of the screen
-	local titleLogo = display.newImageRect( "logo.png", 500, 400 )
-	titleLogo.x = display.contentCenterX
-	titleLogo.y = 100
+		local loginButton = display.newText( sceneGroup, "Login", display.contentCenterX, 400, native.systemFont, 70 )
+    loginButton:setFillColor( 0.82, 0.86, 1 )
 
-	-- create a widget button (which will loads level1.lua on release)
-	loginButton = widget.newButton{
-		label="Login",
-		labelColor = { default={255}, over={128} },
-		default="button.png",
-		over="button-over.png",
-		width=154, height=40,
-		onRelease = onLoginButtonRelease	-- event listener function
-	}
-	loginButton.x = display.contentCenterX
-	loginButton.y = display.contentHeight - 125
+    local registerButton = display.newText( sceneGroup, "Register", display.contentCenterX, 550, native.systemFont, 70 )
+    registerButton:setFillColor( 0.75, 0.78, 1 )
 
-	-- all display objects must be inserted into group
-	sceneGroup:insert( background )
-	sceneGroup:insert( titleLogo )
-	sceneGroup:insert( loginButton )
+		loginButton:addEventListener( "tap", gotoLogin )
+    registerButton:addEventListener( "tap", gotoRegister )
+    menuTrack = audio.loadStream( "audio/imperial_march.wav" )
 end
 
+
+-- show()
 function scene:show( event )
+
 	local sceneGroup = self.view
 	local phase = event.phase
 
-	if phase == "will" then
-		-- Called when the scene is still off screen and is about to move on screen
-	elseif phase == "did" then
-		-- Called when the scene is now on screen
-		--
-		-- INSERT code here to make the scene come alive
-		-- e.g. start timers, begin animation, play audio, etc.
+	if ( phase == "will" ) then
+		-- Code here runs when the scene is still off screen (but is about to come on screen)
+
+	elseif ( phase == "did" ) then
+		-- Code here runs when the scene is entirely on screen
+    audio.play( menuTrack, {channel =1 , loops = -1})
 	end
 end
 
+
+-- hide()
 function scene:hide( event )
+
 	local sceneGroup = self.view
 	local phase = event.phase
 
-	if event.phase == "will" then
-		-- Called when the scene is on screen and is about to move off screen
-		--
-		-- INSERT code here to pause the scene
-		-- e.g. stop timers, stop animation, unload sounds, etc.)
-	elseif phase == "did" then
-		-- Called when the scene is now off screen
+	if ( phase == "will" ) then
+		-- Code here runs when the scene is on screen (but is about to go off screen)
+
+	elseif ( phase == "did" ) then
+		-- Code here runs immediately after the scene goes entirely off screen
+    -- Stop the music!
+            audio.stop( 1 )
 	end
 end
 
+
+-- destroy()
 function scene:destroy( event )
+
 	local sceneGroup = self.view
-
-	-- Called prior to the removal of scene's "view" (sceneGroup)
-	--
-	-- INSERT code here to cleanup the scene
-	-- e.g. remove display objects, remove touch listeners, save state, etc.
-
-	if loginButton then
-		loginButton:removeSelf()	-- widgets must be manually removed
-		loginButton = nil
-	end
+	-- Code here runs prior to the removal of scene's view
+  -- Dispose audio!
+    audio.dispose( menuTrack )
 end
 
----------------------------------------------------------------------------------
 
--- Listener setup
+-- -----------------------------------------------------------------------------------
+-- Scene event function listeners
+-- -----------------------------------------------------------------------------------
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
-
------------------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------------
 
 return scene
