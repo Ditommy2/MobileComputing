@@ -1,132 +1,148 @@
------------------------------------------------------------------------------------------
---
--- login.lua
---
------------------------------------------------------------------------------------------
-
-local composer = require( "composer" )
+local composer = require("composer")
 local widget = require("widget")
-local scene = composer.newScene()
+local scene = composer.newScene( )
 
--- -----------------------------------------------------------------------------------
--- Code outside of the scene event functions below will only be executed ONCE unless
--- the scene is removed entirely (not recycled) via "composer.removeScene()"
--- -----------------------------------------------------------------------------------
+--Game window (16:9 aspect ratio)
+local width = display.contentWidth
+local height = display.contentWidth * (9/16)
 
--- forward declare the text fields
-local json = require("json")
-
-local username
-local password
-
-local function urlencode(str)
-  if (str) then
-    str = string.gsub (str, "\n", "\r\n")
-    str = string.gsub (str, "([^%w ])",
-        function (c) return string.format ("%%%02X", string.byte(c)) end)
-    str = string.gsub (str, " ", "+")
-  end
-  return str
-end
+local utenteTextField
+local passTextField
+local button
+local serverAnswer
+local loginGroup
 
 local function networkListener( event )
+  local risposta = event.response
+
+  print(event.response)
 
     if ( event.isError ) then
-        print( "Network error. ")
+        print( "Network error: ", risposta )
     else
-        if event.response == "success" then
-            print("Success! We are now logged!")
-
-            -- put the code here to go to where the user needs to be
-            -- after a successful registration
-            composer.gotoScene("stanza1")
-
-        else
-            -- put code here to notify the user of the problem, perhaps
-            -- a native.alert() dialog that shows them the value of event.response
-            -- and take them back to the registration screen to let them try again
-
-            local alert = native.showAlert( "You are not registered. ", { "Try again"}, onComplete )
-
-    end
-  end
-end
-
-local function userRegister( event )
-    if ( "ended" == event.phase ) then
-        local URL = "https://appmcsite.000webhostapp.com/insert.php" .. username.text .. "&password=" .. password.text .. "&password2=" .. password2.text .. "&email=" .. urlencode( email.text )
-        network.request(URL, "GET", networkListener)
-
+      if(risposta == "" ) then
+        serverAnswer.text = "Username o password errati."
+        serverAnswer:setFillColor(1,0,0)
+        serverAnswer.alpha = 1
+        transition.to( serverAnswer, { time=4000, alpha=0 } )
+      else
+        composer.gotoScene("nuovaCarica")
+      end
     end
 end
 
-local function loginLink( event )
-    if ( "ended" == event.phase ) then
-         composer.gotoScene("login")
+local function urlencode(str)
+    if (str) then
+        str = string.gsub (str, "\n", "\r\n")
+        str = string.gsub (str, "([^%w ])",
+        function (c) return string.format ("%%%02X", string.byte(c)) end)
+        str = string.gsub (str, " ", "+")
     end
+    return str
 end
 
-function scene:create(event)
-   local screenGroup = self.view
+local function getSavings()
+  local url = "https://appmcsite.000webhostapp.com/carica.php?user=".. urlencode(utenteTextField.text) .. "&passw=" ..urlencode(passTextField.text)
 
-   display.setDefault("background", 0, 3, 5)
+  print(url)
 
-   username = native.newTextField( 160, 200, 180, 30 )  -- take the local off since it's forward declared
-   username.placeholder = "Username"
-   screenGroup:insert(username)
+  network.request( url, "GET", networkListener)
+end
 
-   password = native.newTextField( 160, 250,180, 30 ) -- take the local off since it's forward declared
-   password.isSecure = true
-   password.placeholder = "Password"
-   screenGroup:insert(password)
+-- create()
+function scene:create( event )
+	local sceneGroup = self.view
 
-   password2 = native.newTextField( 160, 300,180, 30 ) -- take the local off since it's forward declared
-   password2.isSecure = true
-   password2.placeholder = "Confirm Password"
-   screenGroup:insert(password2)
+  local background=display.newImageRect(sceneGroup, "background.png", width, height)
+  background.x=display.contentCenterX
+  background.y=display.contentCenterY
+  sceneGroup:insert(background)
 
-   email = native.newTextField( 160, 350, 180, 30 ) -- take the local off since it's forward declared
-   email.placeholder = "E-mail"
-   screenGroup:insert(email)
+  local title = display.newImageRect( sceneGroup, "title.png", 600, 100 )
+   title.x = display.contentCenterX
+   title.y = 200
 
- local Button = widget.newButton(
-    {
-        shape = "roundedRect",
-        left = 70,
-        top = 400,
-        id = "Register",
-        label = "Register",
-        onEvent = userRegister
-    }
-)
-screenGroup:insert(Button)
+  loginGroup = display.newGroup()
 
+  utenteTextField = native.newTextField( 0, height*0.1, width*0.4, height * 0.1)
+  utenteTextField.placeholder = "username"
+  loginGroup:insert(utenteTextField)
 
-local Button2 = widget.newButton(
-    {
-        left = 70,
-        top = 460,
-        id = "Loginhere",
-        label = "Login here",
-        onEvent = loginLink
-    }
-)
-screenGroup:insert(Button2)
+  passTextField = native.newTextField( 0, utenteTextField.height + utenteTextField.height*2, width*0.4, utenteTextField.height)
+  passTextField.placeholder = "password"
+  loginGroup:insert(passTextField)
+
+  button = widget.newButton({
+      shape = "roundedRect",
+      x = width*0.6,
+      y = height*0.25,
+      width=width*0.3,
+      height= height * 0.2,
+      id = "login",
+      label = "Login",
+      labelColor={default={0.5, 0, 0}},
+      fontSize=50,
+      onEvent = handleButtonEvent
+  })
+  loginGroup:insert(button)
+
+  utenteTextField.anchorX = 0
+  utenteTextField.anchorY = 0
+  passTextField.anchorX = 0
+  passTextField.anchorY = 0
+  passTextField.anchorX = 0
+  passTextField.anchorY = 0
+  button.anchorX = 0
+
+  loginGroup.y = height * 0.35
+
+  button:addEventListener("tap", getSavings)
+
+  sceneGroup:insert(loginGroup)
+
+  serverAnswer = display.newText("", display.contentCenterX, height*0.85, native.systemFont, height*0.1)
+  serverAnswer.alpha=0
+  sceneGroup:insert(serverAnswer)
+end
+
+-- show()
+function scene:show( event )
+	local sceneGroup = self.view
+	local phase = event.phase
+
+	if ( phase == "will" ) then
+
+	elseif ( phase == "did" ) then
+
+	end
+end
+
+-- hide()
+function scene:hide( event )
+
+	local sceneGroup = self.view
+	local phase = event.phase
+
+	if ( phase == "will" ) then
+
+	elseif ( phase == "did" ) then
+    for i = loginGroup.numChildren, 1, -1 do
+      loginGroup[i]:removeSelf()
+      loginGroup[i] = nil
+    end
+
+	end
+end
+
+-- destroy()
+function scene:destroy( event )
+	local sceneGroup = self.view
 
 end
 
-function scene:show(event)
-end
-
-function scene:hide(event)
-end
-
-function scene:destroy(event)
-end
-
-scene:addEventListener("create", scene)
-scene:addEventListener("show", scene)
-scene:addEventListener("hide", scene)
-scene:addEventListener("destroy", scene)
+scene:addEventListener( "create", scene )
+scene:addEventListener( "show", scene )
+scene:addEventListener( "hide", scene )
+scene:addEventListener( "destroy", scene )
 
 return scene
