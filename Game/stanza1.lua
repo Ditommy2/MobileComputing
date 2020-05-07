@@ -1,8 +1,3 @@
------------------------------------------------------------------------------------------
---
--- menu.lua
---
------------------------------------------------------------------------------------------
 
 local composer = require( "composer" )
 
@@ -13,15 +8,52 @@ local scene = composer.newScene()
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
 -- -----------------------------------------------------------------------------------
 
-local function gotoLogin()
-		composer.gotoScene( "login", {time=800, effect="crossFade"} )
-end
+--Configure image inventory
+local inventory =
+{
+    frames =
+    {
+        {-- asteroide1
+          x = 0,
+          y = 0,
+          width = 102,
+          height = 85
+        },
+        {-- asteroide2
+          x = 0,
+          y = 85,
+          width = 90,
+          height = 83
+        },
+        {-- asteroide3
+          x = 0,
+          y = 168,
+          width = 100,
+          height = 97
+        },
+        {-- ship4
+          x = 0,
+          y = 265,
+          width = 98,
+          height = 79
+        },
+        {-- laser5
+          x = 98,
+          y = 265,
+          width = 14,
+          height = 40
+        },
+    },
+}
+local objectSheet = graphics.newImageSheet( "gameObject.png", inventory )
 
-local function gotoRegister()
-		composer.gotoScene( "register", {time=800, effect="crossFade"} )
-end
+-- Initialize variables
 
-local menuTrack
+
+--Set up display groups
+local backGroup                                              --for the background image
+local mainGro                                                --for the ateroids, laser, ship4
+local uiGroup
 
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
@@ -33,25 +65,24 @@ function scene:create( event )
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 
-	local background = display.newImageRect( sceneGroup, "background.png", 1280, 720 )
+
+		-- Set up display groups
+    backGroup = display.newGroup()  -- Display group for the background image
+    sceneGroup:insert( backGroup )  -- Insert into the scene's view group
+
+    mainGroup = display.newGroup()  -- Display group for the ship, asteroids, lasers, etc.
+    sceneGroup:insert( mainGroup )  -- Insert into the scene's view group
+
+    uiGroup = display.newGroup()    -- Display group for UI objects like the score
+    sceneGroup:insert( uiGroup )    -- Insert into the scene's view group
+
+		-- Load the background
+	 local background = display.newImageRect( backGroup, "background1.jpg", 1920, 1080 )
 	 background.x = display.contentCenterX
 	 background.y = display.contentCenterY
 
-	 local title = display.newImageRect( sceneGroup, "title.png", 600, 100 )
-    title.x = display.contentCenterX
-    title.y = 200
 
-		local loginButton = display.newText( sceneGroup, "Login", display.contentCenterX, 400, native.systemFont, 70 )
-    loginButton:setFillColor( 0.82, 0.86, 1 )
-
-    local registerButton = display.newText( sceneGroup, "Register", display.contentCenterX, 550, native.systemFont, 70 )
-    registerButton:setFillColor( 0.75, 0.78, 1 )
-
-		loginButton:addEventListener( "tap", gotoLogin )
-    registerButton:addEventListener( "tap", gotoRegister )
-    menuTrack = audio.loadStream( "audio/imperial_march.wav" )
 end
-
 
 -- show()
 function scene:show( event )
@@ -64,7 +95,10 @@ function scene:show( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs when the scene is entirely on screen
-    audio.play( menuTrack, {channel =1 , loops = -1})
+
+
+       -- Start the music!
+
 	end
 end
 
@@ -80,8 +114,10 @@ function scene:hide( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-    -- Stop the music!
-            audio.stop( 1 )
+
+        -- Stop the music!
+
+
 	end
 end
 
@@ -92,7 +128,7 @@ function scene:destroy( event )
 	local sceneGroup = self.view
 	-- Code here runs prior to the removal of scene's view
   -- Dispose audio!
-    audio.dispose( menuTrack )
+
 end
 
 
