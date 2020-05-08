@@ -21,7 +21,7 @@ local function gotoRegister()
 		composer.gotoScene( "Scenes.register", {time=800, effect="crossFade"} )
 end
 
-local menuTrack
+-- local menuTrack
 
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
@@ -49,7 +49,7 @@ function scene:create( event )
 
 		loginButton:addEventListener( "tap", gotoLogin )
     registerButton:addEventListener( "tap", gotoRegister )
-    menuTrack = audio.loadStream( "audio/imperial_march.wav" )
+    -- menuTrack = audio.loadStream( "audio/imperial_march.wav" )
 end
 
 
@@ -64,7 +64,7 @@ function scene:show( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs when the scene is entirely on screen
-    audio.play( menuTrack, {channel =1 , loops = -1})
+    -- audio.play( menuTrack, {channel =1 , loops = -1})
 	end
 end
 
@@ -81,7 +81,9 @@ function scene:hide( event )
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
     -- Stop the music!
-            audio.stop( 1 )
+		composer.removeScene("Scenes.menu")
+
+            -- audio.stop( 1 )
 	end
 end
 
@@ -92,7 +94,7 @@ function scene:destroy( event )
 	local sceneGroup = self.view
 	-- Code here runs prior to the removal of scene's view
   -- Dispose audio!
-    audio.dispose( menuTrack )
+    -- audio.dispose( menuTrack )
 end
 
 

@@ -21,6 +21,10 @@ local altezza=  lunghezza*(9/16)
 --end
 --http://localhost/mobilecomputing/insert.php?name=braga&password=123
 --delete from user where name!='paolo'
+
+local function gotoMenu()
+ 		composer.gotoScene( "Scenes.menu", {time=800, effect="crossFade"} )
+ end
 -----------------------------------------------------------------------------------------------------
 local function urlencode(str)
 	if (str) then
@@ -162,15 +166,15 @@ if file then
 		print(contents)
 		io.close( file )
 		if contents=="\"true\"" then
-			local risposta = display.newText( loginGroup, "Username già in uso",display.contentCenterX, display.contentCenterY-160, native.systemFont, 30)
+			local risposta = display.newText( sceneGroup, "Username già in uso",display.contentCenterX, display.contentCenterY-160, native.systemFont, 40)
 			risposta.x=display.contentCenterX
-			risposta.y = username.y-55
+			risposta.y = username.y+450
 			risposta:setFillColor(0.5, 0, 0)
 		end
 		if contents=="\"confermapassword\"" then
-			local risposta = display.newText( loginGroup, "Le password sono diverse",display.contentCenterX, display.contentCenterY-160, native.systemFont, 30)
+			local risposta = display.newText( loginGroup, "Le password sono diverse",display.contentCenterX, display.contentCenterY-160, native.systemFont, 40)
 			risposta.x=display.contentCenterX
-			risposta.y = username.y-55
+			risposta.y = username.y+450
 			risposta:setFillColor(0.5, 0, 0)
 		end
 end
@@ -202,8 +206,13 @@ Button.x=display.contentCenterX
 Button.y=display.contentCenterY
 -- loginGroup.x=500
  loginGroup.y=display.contentCenterY-150
-end
 
+
+local returnButton = display.newImageRect( loginGroup, "images/Utility/returnArrow.png", 200, 200 )
+returnButton.x = display.screenOriginX+100
+returnButton.y = display.screenOriginY-150
+returnButton:addEventListener("tap", gotoMenu)
+end
 
 
 -- show()---------------------------------------------------------------------------------------------------
@@ -233,6 +242,10 @@ function scene:hide( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
+		for i = loginGroup.numChildren, 1, -1 do
+      loginGroup[i]:removeSelf()
+      loginGroup[i] = nil
+    end
 		composer.removeScene("Scenes.register")
 
 	end

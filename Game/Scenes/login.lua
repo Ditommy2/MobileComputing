@@ -68,10 +68,6 @@ function scene:create( event )
 
    loginGroup = display.newGroup()
 
-
-   --loginGroup:insert(returnButton)
-
-
   utenteTextField = native.newTextField( 0, height*0.1, width*0.4, height * 0.1)
   utenteTextField.placeholder = "username"
   loginGroup:insert(utenteTextField)
@@ -113,8 +109,8 @@ function scene:create( event )
   sceneGroup:insert(serverAnswer)
 
   local returnButton = display.newImageRect( loginGroup, "images/Utility/returnArrow.png", 200, 200 )
-  returnButton.x = display.contentCenterX
-  returnButton.y = display.contentCenterY
+  returnButton.x = display.screenOriginX+100
+  returnButton.y = display.screenOriginY-150
   returnButton:addEventListener("tap", gotoMenu)
 end
 
