@@ -6,6 +6,9 @@
 
 -- Your code here
 local composer = require("composer")
+local table = {}
+table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
+composer.setVariable( "tabellaOgegttiInventario", table )
 local lowerFixedMenu = require("lowerFixedMenu")
 local support = require("interfaceConfig")
 display.setStatusBar(display.HiddenStatusBar)

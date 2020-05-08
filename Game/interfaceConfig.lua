@@ -44,7 +44,8 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     cardinale=math.random(1, 4)
     if (cardinale == 1) and (mappa[x].NORD == nil) and (tabella[a][b+1]==false) then
       print("assegna alla stanza ", x, " una stanza a NORD")
-      local stanza = {NORD=nil, SUD=mappa[x], EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b+1}
+      mappa[x].seedNORD=seed
+      local stanza = {NORD=nil, SUD=mappa[x], EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b+1, seedSUD=seed}
       mappa[x].NORD = stanza
       index=index+1
       mappa[index]=stanza
@@ -55,7 +56,8 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
 
     if (cardinale == 2) and (mappa[x].SUD == nil) and (tabella[a][b-1]==false) then
       print("assegna alla stanza ", x, " una stanza a SUD")
-      local stanza = {NORD=mappa[x], SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false,  seedBackground=seed, x=a, y=b-1}
+      mappa[x].seedSUD=seed
+      local stanza = {NORD=mappa[x], SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false,  seedBackground=seed, x=a, y=b-1, seedNORD=seed}
       mappa[x].SUD = stanza
       index=index+1
       mappa[index]=stanza
@@ -66,7 +68,8 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
 
     if (cardinale == 3) and (mappa[x].EST == nil) and (tabella[a+1][b]==false) then
       print("assegna alla stanza ", x, " una stanza a EST")
-      local stanza = {NORD=nil, SUD=nil, EST=nil, OVEST=mappa[x], TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a+1, y=b}
+      mappa[x].seedEST=seed
+      local stanza = {NORD=nil, SUD=nil, EST=nil, OVEST=mappa[x], TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a+1, y=b, seedOVEST=seed}
       mappa[x].EST = stanza
       index=index+1
       mappa[index]=stanza
@@ -77,7 +80,8 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
 
     if (cardinale == 4) and (mappa[x].OVEST == nil) and (tabella[a-1][b]==false) then
       print("assegna alla stanza ", x, " una stanza a OVEST")
-      local stanza = {NORD=nil, SUD=nil, EST=mappa[x], OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a-1, y=b}
+      mappa[x].seedOVEST=seed
+      local stanza = {NORD=nil, SUD=nil, EST=mappa[x], OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a-1, y=b, seedEST=seed}
       mappa[x].OVEST = stanza
       index=index+1
       mappa[index]=stanza
@@ -166,11 +170,17 @@ local interfacciaConfig = {
   displayGrid=
   (function(input, colonne, righe, handler)
     local index=1
-    local partenzax = display.contentCenterX-150
-    local partenzay= display.contentCenterY-90
+    local partenzax = display.contentCenterX-370
+    local partenzay= display.contentCenterY-150
   for x=1, colonne, 1 do
     for y=1, righe, 1 do
-      local item = (display.newText( input[index], partenzax+(x*60), partenzay+(y*60),  native.systemFont, 16))
+      local positioningX = partenzax+(x*150)
+      local positioningY = partenzay+(y*100)
+      local tabella = composer.getVariable( "tabellaOgegttiInventario" )
+      tabella[index]={positioningX, positioningY}
+      composer.setVariable( "tabellaOggettiInventario",  tabella)
+      local item = (display.newText( input[index], positioningX, positioningY,  native.systemFont, 30))
+      item.id=index
       item:setFillColor(1, 0, 0)
       item:addEventListener("touch", handler)
       inventoryGroup:insert(item)
@@ -191,31 +201,10 @@ end),
   annullaVisite=
   (annullaVisitefunzione),
 --------------------------------------------------------------------------------------------------------------------
-dragItem=
-(function(event)
-  local item=event.target
-  local phase=event.phase
-
-  if("began"==phase) then
-      display.currentStage:setFocus(item)
-      item.touchOffsetX=event.x-item.x
-      item.touchOffsetY=event.y-item.y
-    elseif("moved"==phase) then
-      -- Muove la nave
-      item.x=event.x-item.touchOffsetX
-      item.y=event.y-item.touchOffsetY
-   elseif("ended"==phase or "cancelled"==phase) then
-     --rilascio del tocco
-     display.currentStage:setFocus(nil)
-    end
-    return true
-end),
------------------------------------------------------------------------------------------------------------------------------
 dragMapSet=
 (function(event)
   local item=event.target
   local phase=event.phase
-
   if("began"==phase) then
       display.currentStage:setFocus(item)
       item.touchOffsetX=event.x-item.x
@@ -228,6 +217,41 @@ dragMapSet=
      --rilascio del tocco
      composer.setVariable( "mapx", item.x )
      composer.setVariable( "mapy", item.y )
+     display.currentStage:setFocus(nil)
+    end
+    return true
+end),
+-----------------------------------------------------------------------------------------------------------------------------
+dragItem=
+(function(event)
+  local item=event.target
+  local phase=event.phase
+  local idItem = item.id
+  local tabella = composer.getVariable( "tabellaOgegttiInventario" )
+  local partenza = tabella[idItem]
+  if("began"==phase) then
+      display.currentStage:setFocus(item)
+      item.touchOffsetX=event.x-item.x
+      item.touchOffsetY=event.y-item.y
+    elseif("moved"==phase) then
+      -- Muove la nave
+      item.x=event.x-item.touchOffsetX
+      item.y=event.y-item.touchOffsetY
+   elseif("ended"==phase or "cancelled"==phase) then
+     --rilascio del tocco
+     local bordoXSUP=partenza[1]+70
+     local bordoXINF=partenza[1]-70
+
+     local bordoYSUP=partenza[2]+70
+     local bordoYINF=partenza[2]-70
+
+     if(item.x<bordoXSUP and item.x>bordoXINF) then
+       if(item.y<bordoYSUP and item.y>bordoYINF) then
+         item.y=partenza[2]
+         item.x=partenza[1]
+       end
+
+     end
      display.currentStage:setFocus(nil)
     end
     return true

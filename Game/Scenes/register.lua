@@ -208,7 +208,7 @@ Button.y=display.contentCenterY
  loginGroup.y=display.contentCenterY-150
 
 
-local returnButton = display.newImageRect( loginGroup, "images/Utility/returnArrow.png", 200, 200 )
+local returnButton = display.newImageRect( loginGroup, "Images/Utility/returnArrow.png", 200, 200 )
 returnButton.x = display.screenOriginX+100
 returnButton.y = display.screenOriginY-150
 returnButton:addEventListener("tap", gotoMenu)
