@@ -68,10 +68,6 @@ function scene:create( event )
 
    loginGroup = display.newGroup()
 
-
-   --loginGroup:insert(returnButton)
-
-
   utenteTextField = native.newTextField( 0, height*0.1, width*0.4, height * 0.1)
   utenteTextField.placeholder = "username"
   loginGroup:insert(utenteTextField)
