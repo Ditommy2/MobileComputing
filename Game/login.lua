@@ -109,7 +109,10 @@ function scene:create( event )
   button:addEventListener("tap", getSavings)
   -- returnButton:addEventListener("tap", gotoMenu)
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
