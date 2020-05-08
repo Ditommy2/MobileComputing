@@ -12,9 +12,9 @@ local button
 local serverAnswer
 local loginGroup
 
--- local function gotoMenu()
--- 		composer.gotoScene( "menu", {time=800, effect="crossFade"} )
--- end
+local function gotoMenu()
+ 		composer.gotoScene( "menu", {time=800, effect="crossFade"} )
+ end
 
 local function networkListener( event )
   local risposta = event.response
@@ -66,12 +66,7 @@ function scene:create( event )
    title.x = display.contentCenterX
    title.y = 200
 
-   -- local returnButton = display.newImageRect( sceneGroup, "returnArrow.png" 100, 100 )
- 	 -- returnButton.x = display.contentCenterX
- 	 -- returnButton.y = display.contentCenterY
-   -- loginGroup:insert(returnButton)
-
-  loginGroup = display.newGroup()
+   loginGroup = display.newGroup()
 
   utenteTextField = native.newTextField( 0, height*0.1, width*0.4, height * 0.1)
   utenteTextField.placeholder = "username"
@@ -107,7 +102,6 @@ function scene:create( event )
   loginGroup.y = height * 0.35
 
   button:addEventListener("tap", getSavings)
-  -- returnButton:addEventListener("tap", gotoMenu)
 
   sceneGroup:insert(loginGroup)
 
@@ -115,6 +109,11 @@ function scene:create( event )
   serverAnswer.alpha=0
   sceneGroup:insert(serverAnswer)
 end
+
+local returnButton = display.newImageRect( sceneGroup, "returnArrow.png" 100, 100 )
+ returnButton.x = display.contentCenterX
+ returnButton.y = display.contentCenterY
+ returnButton:addEventListener("tap", gotoMenu)
 
 -- show()
 function scene:show( event )
@@ -141,7 +140,7 @@ function scene:hide( event )
       loginGroup[i]:removeSelf()
       loginGroup[i] = nil
     end
-
+composer.removeScene( "Scenes.login" )
 	end
 end
 
