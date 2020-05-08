@@ -21,6 +21,10 @@ local altezza=  lunghezza*(9/16)
 --end
 --http://localhost/mobilecomputing/insert.php?name=braga&password=123
 --delete from user where name!='paolo'
+
+local function gotoMenu()
+ 		composer.gotoScene( "Scenes.menu", {time=800, effect="crossFade"} )
+ end
 -----------------------------------------------------------------------------------------------------
 local function urlencode(str)
 	if (str) then
@@ -202,8 +206,13 @@ Button.x=display.contentCenterX
 Button.y=display.contentCenterY
 -- loginGroup.x=500
  loginGroup.y=display.contentCenterY-150
-end
 
+
+local returnButton = display.newImageRect( loginGroup, "images/Utility/returnArrow.png", 200, 200 )
+returnButton.x = display.screenOriginX+100
+returnButton.y = display.screenOriginY-150
+returnButton:addEventListener("tap", gotoMenu)
+end
 
 
 -- show()---------------------------------------------------------------------------------------------------

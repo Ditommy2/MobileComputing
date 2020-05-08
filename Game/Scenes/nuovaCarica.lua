@@ -10,6 +10,10 @@ local buttonNuova
 local buttonCarica
 local serverAnswer
 
+local function gotoMenu()
+		composer.gotoScene( "Scenes.menu", {time=800, effect="crossFade"} )
+end
+
 local function networkListener( event )
   local risposta = event.response
     if ( event.isError ) then
@@ -103,6 +107,11 @@ function scene:create( event )
   serverAnswer = display.newText("", display.contentCenterX, 200, native.systemFont, 20)
   serverAnswer.alpha=0
   sceneGroup:insert(serverAnswer)
+
+local returnButton = display.newImageRect( gameGroup, "images/Utility/returnArrow.png", 200, 200 )
+returnButton.x = display.screenOriginX+100
+returnButton.y = display.screenOriginY-150
+returnButton:addEventListener("tap", gotoMenu)
 end
 
 -- show()
@@ -126,6 +135,7 @@ function scene:hide( event )
 	if ( phase == "will" ) then
 
 	elseif ( phase == "did" ) then
+    composer.removeScene("Scenes.nuovaCarica")
 
 	end
 end
