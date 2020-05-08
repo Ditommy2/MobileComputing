@@ -134,7 +134,7 @@ function scene:create( event )
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 	loginGroup=display.newGroup()
 
-	local background=display.newImageRect(sceneGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.png", lunghezza, altezza)
+	local background=display.newImageRect(sceneGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.jpg", lunghezza, altezza)
 	background.x=display.contentCenterX
 	background.y=display.contentCenterY
 	local lunghezzaFinestra=lunghezza-400
