@@ -156,7 +156,7 @@ function scene:create(event)
   sceneGroup:insert(mapGroup)
 
   --Displaying background and adding movement listener
-  local background = display.newImageRect( backgroundGroup, "Images/Backgrounds/nuovaBackground.png", width, height)
+  local background = display.newImageRect( backgroundGroup, "Images/Backgrounds/proceduralBack/Stanze/back1.jpg", width, height)
   background.x = display.contentCenterX
   background.y = display.contentCenterY
   physics.addBody(background, "static", {shape={ 0, 0, width, 0, width, height - (height*0.3), 0, height - (height*0.3)}})
@@ -167,7 +167,7 @@ function scene:create(event)
   background.nonMovementArea = area
 
   --Displaying status bar background
-  local plainBack = display.newImageRect( midGroup, "Images/Backgrounds/plainBack.png", width, height * 0.3)
+  local plainBack = display.newImageRect( midGroup, "Images/Backgrounds/proceduralBack/Stanze/back1.jpg", width, height * 0.3)
   plainBack.anchorX = 0
   plainBack.anchorY = 1
   plainBack.x = 0

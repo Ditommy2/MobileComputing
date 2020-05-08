@@ -86,7 +86,7 @@ function scene:create( event )
   local phase = event.phase
 
   funzione(self,  mappaloc, invloc)
-  local background=display.newImageRect(backGroup, "Images/Backgrounds/nuovaBackground.png", lunghezza, altezza-300)
+  local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back"..numero..".jpg", lunghezza, altezza-300)
   background.x=display.contentCenterX
   background.y=display.contentCenterY-170
 --  sceneGroup:insert(background)

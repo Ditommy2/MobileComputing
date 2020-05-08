@@ -57,7 +57,7 @@ end
 function scene:create( event )
 	local sceneGroup = self.view
 
-  local background=display.newImageRect(sceneGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.png", width, height)
+  local background=display.newImageRect(sceneGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.jpg", width, height)
   background.x=display.contentCenterX
   background.y=display.contentCenterY
   sceneGroup:insert(background)

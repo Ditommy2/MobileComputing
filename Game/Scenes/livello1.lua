@@ -24,28 +24,28 @@ local sheetOptions=
   frames=
   {
     {--freccia nord
-      x=700,
-      y=0,
-      width=900,
-      height=800
+      x=53,
+      y=56,
+      width=909,
+      height=624
     },
     {--freccia sud
-      x=700,
-      y=1640,
-      width=900,
-      height=800
+      x=53,
+      y=1357,
+      width=963,
+      height=641
     },
     {--freccia est
-      x=1570,
-      y=800,
-      width=800,
-      height=800
+      x=1358,
+      y=1,
+      width=678,
+      height=959
     },
     {--freccia ovest
-      x=0,
-      y=800,
-      width=800,
-      height=800
+      x=1074,
+      y=1073,
+      width=680,
+      height=967
     },
   },
 }
@@ -78,7 +78,7 @@ function scene:create( event )
   funzione(self,  mappaloc, invloc)
   --composer.removeScene( "livello2")
   local numero = stanzaCorrente.seedBackground
-  local immagine = "images/Backgrounds/proceduralBack/Stanze/back"..numero..".jpg"
+  local immagine = "Images/Backgrounds/proceduralBack/Stanze/back"..numero..".jpg"
   print(immagine)
   local background=display.newImageRect(backGroup, immagine, lunghezza, altezza-300)
   background.x=display.contentCenterX
@@ -92,7 +92,7 @@ function scene:create( event )
     freccia:addEventListener("tap", handleButtonEvent)
     mainGroup:insert(freccia)
     freccia.x=display.contentCenterX
-    freccia.y=display.contentCenterY-300
+    freccia.y=display.contentCenterY-325
   end
 
   if stanzaCorrente.SUD~=nil then
@@ -109,8 +109,8 @@ function scene:create( event )
     freccia.id="EST"
     freccia:addEventListener("tap", handleButtonEvent)
     mainGroup:insert(freccia)
-    freccia.x=display.contentCenterX+520
-    freccia.y=display.contentCenterY-100
+    freccia.x=display.contentCenterX+600
+    freccia.y=display.contentCenterY-150
   end
 
   if stanzaCorrente.OVEST~=nil then
@@ -118,8 +118,8 @@ function scene:create( event )
     freccia.id="OVEST"
     freccia:addEventListener("tap", handleButtonEvent)
     mainGroup:insert(freccia)
-    freccia.x=display.contentCenterX-520
-    freccia.y=display.contentCenterY-100
+    freccia.x=display.contentCenterX-600
+    freccia.y=display.contentCenterY-150
   end
 
 --local freccia = display.newImageRect(sceneGroup, objectSheet, 4, 50, 50)
