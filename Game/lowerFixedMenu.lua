@@ -41,8 +41,8 @@ local inventario =
    row:setFillColor(0.1, 0.1, 0.1)
    inventoryGroup:insert(row)
 
-   -- local handler=interfaccia.dragItem
-   -- interfaccia.displayGrid(inventario, 4, 2, handler)
+   local handler=interfaccia.dragItem
+   interfaccia.displayGrid(inventario, 4, 2, handler)
    local lunghezzaMapBackground=lunghezza-800
    local altezzaMapBackground=lunghezzaMapBackground*(9/16)
    local mapBackground1 = display.newRect( display.contentCenterX, display.contentCenterY+(altezzaMapBackground/2), lunghezzaMapBackground, 5 )
@@ -101,6 +101,6 @@ local inventario =
   sceneGroup:insert(inventoryGroup)
   sceneGroup:insert(overlayGroup)
 end),
-create={inventario={"ITEM", "ITEM", "ITEM", "ITEM"}, mappaGenerata = interfaccia.proceduraleMappa(0, {}, numero, tabella, numero+1, numero+1)}
+create={inventario={"ITEM", "ITEM", "ITEM", "ITEM", "ITEM", "ITEM"}, mappaGenerata = interfaccia.proceduraleMappa(0, {}, numero, tabella, numero+1, numero+1)}
 }
 return inventario

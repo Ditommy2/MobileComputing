@@ -162,7 +162,7 @@ if file then
 		print(contents)
 		io.close( file )
 		if contents=="\"true\"" then
-			local risposta = display.newText( sceneGroup, "Username già in uso",display.contentCenterX, display.contentCenterY-160, native.systemFont, 30)
+			local risposta = display.newText( loginGroup, "Username già in uso",display.contentCenterX, display.contentCenterY-160, native.systemFont, 30)
 			risposta.x=display.contentCenterX
 			risposta.y = username.y-55
 			risposta:setFillColor(0.5, 0, 0)

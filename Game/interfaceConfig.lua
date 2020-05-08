@@ -166,11 +166,17 @@ local interfacciaConfig = {
   displayGrid=
   (function(input, colonne, righe, handler)
     local index=1
-    local partenzax = display.contentCenterX-150
-    local partenzay= display.contentCenterY-90
+    local partenzax = display.contentCenterX-370
+    local partenzay= display.contentCenterY-150
   for x=1, colonne, 1 do
     for y=1, righe, 1 do
-      local item = (display.newText( input[index], partenzax+(x*60), partenzay+(y*60),  native.systemFont, 16))
+      local positioningX = partenzax+(x*150)
+      local positioningY = partenzay+(y*100)
+      local tabella = composer.getVariable( "tabellaOgegttiInventario" )
+      tabella[index]={positioningX, positioningY}
+      composer.setVariable( "tabellaOggettiInventario",  tabella)
+      local item = (display.newText( input[index], positioningX, positioningY,  native.systemFont, 30))
+      item.id=index
       item:setFillColor(1, 0, 0)
       item:addEventListener("touch", handler)
       inventoryGroup:insert(item)
@@ -191,11 +197,10 @@ end),
   annullaVisite=
   (annullaVisitefunzione),
 --------------------------------------------------------------------------------------------------------------------
-dragItem=
+dragMapSet=
 (function(event)
   local item=event.target
   local phase=event.phase
-
   if("began"==phase) then
       display.currentStage:setFocus(item)
       item.touchOffsetX=event.x-item.x
@@ -211,11 +216,13 @@ dragItem=
     return true
 end),
 -----------------------------------------------------------------------------------------------------------------------------
-dragMapSet=
+dragItem=
 (function(event)
   local item=event.target
   local phase=event.phase
-
+  local idItem = item.id
+  local tabella = composer.getVariable( "tabellaOgegttiInventario" )
+  local partenza = tabella[idItem]
   if("began"==phase) then
       display.currentStage:setFocus(item)
       item.touchOffsetX=event.x-item.x
@@ -226,6 +233,21 @@ dragMapSet=
       item.y=event.y-item.touchOffsetY
    elseif("ended"==phase or "cancelled"==phase) then
      --rilascio del tocco
+     local bordoXSUP=partenza[1]+70
+     local bordoXINF=partenza[1]-70
+
+     local bordoYSUP=partenza[2]+70
+     local bordoYINF=partenza[2]-70
+
+     if(item.x<bordoXSUP and item.x>bordoXINF) then
+       if(item.y<bordoYSUP and item.y>bordoYINF) then
+         item.y=partenza[2]
+         item.x=partenza[1]
+       end
+
+     end
+
+
      composer.setVariable( "mapx", item.x )
      composer.setVariable( "mapy", item.y )
      display.currentStage:setFocus(nil)
