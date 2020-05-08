@@ -78,7 +78,7 @@ function scene:create( event )
   funzione(self,  mappaloc, invloc)
   --composer.removeScene( "livello2")
   local numero = stanzaCorrente.seedBackground
-  local immagine = "images/Backgrounds/proceduralBackgrounds/back"..numero..".jpg"
+  local immagine = "images/Backgrounds/proceduralBack/Stanze/back"..numero..".jpg"
   print(immagine)
   local background=display.newImageRect(backGroup, immagine, lunghezza, altezza-300)
   background.x=display.contentCenterX
