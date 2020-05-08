@@ -211,6 +211,8 @@ dragMapSet=
       item.y=event.y-item.touchOffsetY
    elseif("ended"==phase or "cancelled"==phase) then
      --rilascio del tocco
+     composer.setVariable( "mapx", item.x )
+     composer.setVariable( "mapy", item.y )
      display.currentStage:setFocus(nil)
     end
     return true
@@ -246,10 +248,6 @@ dragItem=
        end
 
      end
-
-
-     composer.setVariable( "mapx", item.x )
-     composer.setVariable( "mapy", item.y )
      display.currentStage:setFocus(nil)
     end
     return true
