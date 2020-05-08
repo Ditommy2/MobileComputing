@@ -108,7 +108,10 @@ function scene:create( event )
 
   button:addEventListener("tap", getSavings)
   -- returnButton:addEventListener("tap", gotoMenu)
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
   sceneGroup:insert(loginGroup)
 
