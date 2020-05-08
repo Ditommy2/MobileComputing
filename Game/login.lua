@@ -95,6 +95,7 @@ function scene:create( event )
   })
   loginGroup:insert(button)
 
+
   utenteTextField.anchorX = 0
   utenteTextField.anchorY = 0
   passTextField.anchorX = 0
@@ -107,7 +108,10 @@ function scene:create( event )
 
   button:addEventListener("tap", getSavings)
   -- returnButton:addEventListener("tap", gotoMenu)
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
   sceneGroup:insert(loginGroup)
 
