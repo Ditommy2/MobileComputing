@@ -1,7 +1,8 @@
 
 local composer = require("composer")
 local interfaccia = require("interfaceConfig")
-local numero = 7
+local numeroStanze=8
+local numero = numeroStanze
 local tabella = interfaccia.tabellaFunction(numero)
 
 local inventario =

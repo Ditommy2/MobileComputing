@@ -44,7 +44,8 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     cardinale=math.random(1, 4)
     if (cardinale == 1) and (mappa[x].NORD == nil) and (tabella[a][b+1]==false) then
       print("assegna alla stanza ", x, " una stanza a NORD")
-      local stanza = {NORD=nil, SUD=mappa[x], EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b+1}
+      mappa[x].seedNORD=seed
+      local stanza = {NORD=nil, SUD=mappa[x], EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b+1, seedSUD=seed}
       mappa[x].NORD = stanza
       index=index+1
       mappa[index]=stanza
@@ -55,7 +56,8 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
 
     if (cardinale == 2) and (mappa[x].SUD == nil) and (tabella[a][b-1]==false) then
       print("assegna alla stanza ", x, " una stanza a SUD")
-      local stanza = {NORD=mappa[x], SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false,  seedBackground=seed, x=a, y=b-1}
+      mappa[x].seedSUD=seed
+      local stanza = {NORD=mappa[x], SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false,  seedBackground=seed, x=a, y=b-1, seedNORD=seed}
       mappa[x].SUD = stanza
       index=index+1
       mappa[index]=stanza
@@ -66,7 +68,8 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
 
     if (cardinale == 3) and (mappa[x].EST == nil) and (tabella[a+1][b]==false) then
       print("assegna alla stanza ", x, " una stanza a EST")
-      local stanza = {NORD=nil, SUD=nil, EST=nil, OVEST=mappa[x], TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a+1, y=b}
+      mappa[x].seedEST=seed
+      local stanza = {NORD=nil, SUD=nil, EST=nil, OVEST=mappa[x], TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a+1, y=b, seedOVEST=seed}
       mappa[x].EST = stanza
       index=index+1
       mappa[index]=stanza
@@ -77,7 +80,8 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
 
     if (cardinale == 4) and (mappa[x].OVEST == nil) and (tabella[a-1][b]==false) then
       print("assegna alla stanza ", x, " una stanza a OVEST")
-      local stanza = {NORD=nil, SUD=nil, EST=mappa[x], OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a-1, y=b}
+      mappa[x].seedOVEST=seed
+      local stanza = {NORD=nil, SUD=nil, EST=mappa[x], OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a-1, y=b, seedEST=seed}
       mappa[x].OVEST = stanza
       index=index+1
       mappa[index]=stanza

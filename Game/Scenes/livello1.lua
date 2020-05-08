@@ -53,6 +53,7 @@ local objectSheet=graphics.newImageSheet( "Images/Utility/directionArrow.png", s
 local function handleButtonEvent( event )
         local item=event.target
         local direzione = item.id
+        composer.setVariable( "direzione", direzione )
       --  item:removeEventListener("tap", handleButtonEvent)
         print("DIREZIONE: ----------------------------------------------------------------------", direzione)
         print("MOVIMENTO DA ", stanzaCorrente.TESTO, " a ", stanzaCorrente[direzione].TESTO)
@@ -71,14 +72,15 @@ local function handleButtonEvent( event )
 end
 -- create()
 function scene:create( event )
-
+  print("SEED DIREZIONALE DEL CORRIDOIOOOO", stanzaCorrente.seedNORD)
+  print("SEED DIREZIONALE DEL CORRIDOIOOOO", stanzaCorrente.seedSUD)
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
   local phase = event.phase
   funzione(self,  mappaloc, invloc)
   --composer.removeScene( "livello2")
   local numero = stanzaCorrente.seedBackground
-  local immagine = "images/Backgrounds/proceduralBackgrounds/back"..numero..".jpg"
+  local immagine = "images/Backgrounds/proceduralBackgrounds/Stanze/back"..numero..".jpg"
   print(immagine)
   local background=display.newImageRect(backGroup, immagine, lunghezza, altezza-300)
   background.x=display.contentCenterX
