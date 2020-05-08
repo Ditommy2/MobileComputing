@@ -12,6 +12,10 @@ local button
 local serverAnswer
 local loginGroup
 
+local function gotoMenu()
+		composer.gotoScene( "menu", {time=800, effect="crossFade"} )
+end
+
 local function networkListener( event )
   local risposta = event.response
 
@@ -62,7 +66,11 @@ function scene:create( event )
    title.x = display.contentCenterX
    title.y = 200
 
-  loginGroup = display.newGroup()
+   loginGroup = display.newGroup()
+
+
+   --loginGroup:insert(returnButton)
+
 
   utenteTextField = native.newTextField( 0, height*0.1, width*0.4, height * 0.1)
   utenteTextField.placeholder = "username"
@@ -103,6 +111,11 @@ function scene:create( event )
   serverAnswer = display.newText("", display.contentCenterX, height*0.85, native.systemFont, height*0.1)
   serverAnswer.alpha=0
   sceneGroup:insert(serverAnswer)
+
+  local returnButton = display.newImageRect( loginGroup, "returnArrow.png", 100, 100 )
+  returnButton.x = display.contentCenterX
+  returnButton.y = display.contentCenterY
+  returnButton:addEventListener("tap", gotoMenu)
 end
 
 -- show()

@@ -12,9 +12,9 @@ local button
 local serverAnswer
 local loginGroup
 
--- local function gotoMenu()
--- 		composer.gotoScene( "menu", {time=800, effect="crossFade"} )
--- end
+local function gotoMenu()
+		composer.gotoScene( "menu", {time=800, effect="crossFade"} )
+end
 
 local function networkListener( event )
   local risposta = event.response
@@ -66,12 +66,16 @@ function scene:create( event )
    title.x = display.contentCenterX
    title.y = 200
 
-   -- local returnButton = display.newImageRect( sceneGroup, "returnArrow.png" 100, 100 )
- 	 -- returnButton.x = display.contentCenterX
- 	 -- returnButton.y = display.contentCenterY
-   -- loginGroup:insert(returnButton)
+   loginGroup = display.newGroup()
 
-  loginGroup = display.newGroup()
+   local returnButton = display.newImageRect( loginGroup, "returnArrow.png" 100, 100 )
+ 	 returnButton.x = display.contentCenterX
+ 	 returnButton.y = display.contentCenterY
+   returnButton:addEventListener("tap", gotoMenu)
+   --loginGroup:insert(returnButton)
+
+
+
 
   utenteTextField = native.newTextField( 0, height*0.1, width*0.4, height * 0.1)
   utenteTextField.placeholder = "username"
