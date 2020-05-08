@@ -26,7 +26,7 @@ local sheet_walking_Options =
 }
 
 --Loading sprite sheet
-local sheet_walking = graphics.newImageSheet( "Images/Characters/trumpPiccolo.png", sheet_walking_Options )
+local sheet_walking = graphics.newImageSheet( "Images/Characters/TrumpPiccolo.png", sheet_walking_Options )
 
 --Character walking sequences table
 local sequences_walking =
@@ -129,9 +129,9 @@ local function moveListener(event)
 
     --Facing the right direction
     if(moveTimer.params.direction=="r") then
-      character:setFrame(10)
+      character:setFrame(3)
     elseif(moveTimer.params.direction=="l") then
-      character:setFrame(1)
+      character:setFrame(3)
     end
   end
 
@@ -175,7 +175,7 @@ function scene:create(event)
 
   --Displaying character and setting sprite sheets
   character = display.newSprite( sheet_walking, sequences_walking )
-  character:setFrame(10)
+  character:setFrame(3)
   character.anchorY = 1
   -- character.width =  192
   -- character.height = 192
