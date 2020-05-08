@@ -60,13 +60,14 @@ local function handleButtonEvent( event )
         composer.setVariable( "prossimaStanza", stanzaCorrente[direzione] )
       --  stanzaCorrente[direzione].corrente=true
       --  composer.setVariable( "stanzaCorrente", stanzaCorrente[direzione] )
-        composer.removeScene( "livello1" )
-        for i = mainGroup.numChildren, 1, -1 do
-          mainGroup[i]:removeSelf()
-          print("FRECCIA RIMOSSA")
-          mainGroup[i] = nil
-        end
-        composer.gotoScene("corridoio")
+      --  composer.removeScene( "livello1" )
+      for i = mainGroup.numChildren, 1, -1 do
+        mainGroup[i]:removeSelf()
+        print("FRECCIA RIMOSSA")
+        mainGroup[i] = nil
+      end
+      composer.removeScene("Scenes.livello1")
+      composer.gotoScene("Scenes.corridoio")
 end
 -- create()
 function scene:create( event )
@@ -77,7 +78,8 @@ function scene:create( event )
   funzione(self,  mappaloc, invloc)
   --composer.removeScene( "livello2")
   local numero = stanzaCorrente.seedBackground
-  local immagine = "Backgrounds/proceduralBackgrounds/back"..numero..".jpg"
+  local immagine = "images/Backgrounds/proceduralBackgrounds/back"..numero..".jpg"
+  print(immagine)
   local background=display.newImageRect(backGroup, immagine, lunghezza, altezza-300)
   background.x=display.contentCenterX
   background.y=display.contentCenterY-170
@@ -157,8 +159,7 @@ function scene:hide( event )
 --composer.removeScene("livello1")
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-   ---composer.removeScene("livello1")
-
+   ---
 
 
 	end
