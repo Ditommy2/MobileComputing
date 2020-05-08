@@ -70,13 +70,13 @@ local function handleButtonEvent( event )
           print("RITORNO SU STANZA ", stanzaCorrente.TESTO)
           composer.setVariable("stanzaCorrente", stanzaCorrente)
         end
-        composer.removeScene( "corridoio")
         for i = mainGroup.numChildren, 1, -1 do
         mainGroup[i]:removeSelf()
         print("FRECCIA RIMOSSA")
         mainGroup[i] = nil
         end
-        composer.gotoScene( "livello1" )
+        composer.removeScene( "Scenes.corridoio")
+        composer.gotoScene( "Scenes.livello1" )
 end
 -- create()
 function scene:create( event )
@@ -144,6 +144,7 @@ function scene:hide( event )
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
    --composer.removeScene("livello1")
+
 
 	end
 end

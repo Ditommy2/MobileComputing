@@ -13,7 +13,7 @@ local serverAnswer
 local loginGroup
 
 local function gotoMenu()
-		composer.gotoScene( "menu", {time=800, effect="crossFade"} )
+		composer.gotoScene( "Scenes.menu", {time=800, effect="crossFade"} )
 end
 
 local function networkListener( event )
@@ -112,7 +112,7 @@ function scene:create( event )
   serverAnswer.alpha=0
   sceneGroup:insert(serverAnswer)
 
-  local returnButton = display.newImageRect( loginGroup, "returnArrow.png", 100, 100 )
+  local returnButton = display.newImageRect( loginGroup, "images/Utility/returnArrow.png", 200, 200 )
   returnButton.x = display.contentCenterX
   returnButton.y = display.contentCenterY
   returnButton:addEventListener("tap", gotoMenu)
@@ -143,7 +143,7 @@ function scene:hide( event )
       loginGroup[i]:removeSelf()
       loginGroup[i] = nil
     end
-
+composer.removeScene("Scenes.login")
 	end
 end
 
