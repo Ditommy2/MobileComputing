@@ -242,6 +242,10 @@ function scene:hide( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
+		for i = loginGroup.numChildren, 1, -1 do
+      loginGroup[i]:removeSelf()
+      loginGroup[i] = nil
+    end
 		composer.removeScene("Scenes.register")
 
 	end
