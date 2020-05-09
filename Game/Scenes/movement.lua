@@ -177,8 +177,6 @@ function scene:create(event)
   character = display.newSprite( sheet_walking, sequences_walking )
   character:setFrame(3)
   character.anchorY = 1
-  -- character.width =  192
-  -- character.height = 192
   character.x = display.contentWidth * 0.1
   character.y = display.contentHeight - plainBack.height
 

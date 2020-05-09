@@ -86,14 +86,12 @@ function scene:create( event )
   local phase = event.phase
 
   funzione(self,  mappaloc, invloc)
-<<<<<<< HEAD
   local direzioneCorridoio = composer.getVariable( "direzione" )
   local seedDirezionale = "seed"..direzioneCorridoio
   local numeroRandomico = stanzaCorrente[seedDirezionale]
   local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back"..numeroRandomico..".jpg", lunghezza, altezza-300)
-=======
-  local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back"..numero..".jpg", lunghezza, altezza-300)
->>>>>>> andrea
+  local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back"..numeroRandomico..".jpg", lunghezza, altezza-300)
+
   background.x=display.contentCenterX
   background.y=display.contentCenterY-170
 --  sceneGroup:insert(background)
