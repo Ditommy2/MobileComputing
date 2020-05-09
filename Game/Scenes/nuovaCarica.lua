@@ -9,7 +9,39 @@ local height = display.contentWidth * (9/16)
 local buttonNuova
 local buttonCarica
 local serverAnswer
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--handle dei bottoni. ha due azioni differenti in caso si prema il bottone nuova o il bottone carica
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function handleButtonEvent( event )
+	local bottone = event.target
+    if ( "ended" == event.phase ) then
+			--------------------------------------------------------------------------------------------------------------------------------------
+			--se il bottone premuto è la nuova partita allora si deve generare una mappa e partire dal livello 1. il gioco ha inizio
+			--------------------------------------------------------------------------------------------------------------------------------------
+			if bottone.id=="nuova" then
+				local table = {}
+				table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
+				composer.setVariable( "tabellaOgegttiInventario", table )
+				local lowerFixedMenu = require("lowerFixedMenu")
+				inv = lowerFixedMenu.create.inventario
+				mappa = lowerFixedMenu.create.mappaGenerata
+				mappa.corrente=true
+				funzione=lowerFixedMenu.display
+				composer.setVariable( "stanzaCorrente", mappa )
+				composer.setVariable( "inv", inv )
+				composer.setVariable( "mappa", mappa )
+				composer.setVariable( "funzione", funzione )
+				composer.setVariable( "mapx", 352 )
+				composer.setVariable( "mapy", 200 )
+				composer.removeScene( "Scenes.nuovaCarica" )
+				composer.gotoScene("Scenes.livello1")
+			end
 
+			if bottone.id=="carica" then
+			end
+		end
+end
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function gotoMenu()
 		composer.gotoScene( "Scenes.menu", {time=800, effect="crossFade"} )
 end
