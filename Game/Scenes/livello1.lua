@@ -6,19 +6,13 @@ local widget = require("widget")
 local scene = composer.newScene()
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
--- -----------------------------------------------------------------------------------
--- Code outside of the scene event functions below will only be executed ONCE unless
--- the scene is removed entirely (not recycled) via "composer.removeScene()"
--- -----------------------------------------------------------------------------------
-
--- -----------------------------------------------------------------------------------
--- Scene event functions
--- -----------------------------------------------------------------------------------
 local funzione= composer.getVariable( "funzione" )
 local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--sheet options per le freccette direzionali. è momentaneo dato che il movimento non verrà implementato così
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sheetOptions=
 {
   frames=
@@ -50,13 +44,16 @@ local sheetOptions=
   },
 }
 local objectSheet=graphics.newImageSheet( "Images/Utility/directionArrow.png", sheetOptions )
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--funzione che gestisce la pressione dei tasti delle freccette. Anche questo è momentaneo, non rappresenta la versione finale
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function handleButtonEvent( event )
         local item=event.target
         local direzione = item.id
         composer.setVariable( "direzione", direzione )
       --  item:removeEventListener("tap", handleButtonEvent)
-        print("DIREZIONE: ----------------------------------------------------------------------", direzione)
-        print("MOVIMENTO DA ", stanzaCorrente.TESTO, " a ", stanzaCorrente[direzione].TESTO)
+        -- print("DIREZIONE: ----------------------------------------------------------------------", direzione)
+        -- print("MOVIMENTO DA ", stanzaCorrente.TESTO, " a ", stanzaCorrente[direzione].TESTO)
         stanzaCorrente.corrente=false
         composer.setVariable( "prossimaStanza", stanzaCorrente[direzione] )
       --  stanzaCorrente[direzione].corrente=true
@@ -64,16 +61,19 @@ local function handleButtonEvent( event )
       --  composer.removeScene( "livello1" )
       for i = mainGroup.numChildren, 1, -1 do
         mainGroup[i]:removeSelf()
-        print("FRECCIA RIMOSSA")
+        -- print("FRECCIA RIMOSSA")
         mainGroup[i] = nil
       end
       composer.removeScene("Scenes.livello1")
       composer.gotoScene("Scenes.corridoio")
 end
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--fase create del display
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- create()
 function scene:create( event )
-  print("SEED DIREZIONALE DEL CORRIDOIOOOO", stanzaCorrente.seedNORD)
-  print("SEED DIREZIONALE DEL CORRIDOIOOOO", stanzaCorrente.seedSUD)
+  -- print("SEED DIREZIONALE DEL CORRIDOIOOOO", stanzaCorrente.seedNORD)
+  -- print("SEED DIREZIONALE DEL CORRIDOIOOOO", stanzaCorrente.seedSUD)
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
   local phase = event.phase
@@ -81,13 +81,13 @@ function scene:create( event )
   --composer.removeScene( "livello2")
   local numero = stanzaCorrente.seedBackground
   local immagine = "Images/Backgrounds/proceduralBack/Stanze/back"..numero..".jpg"
-  print(immagine)
+  -- print(immagine)
   local background=display.newImageRect(backGroup, immagine, lunghezza, altezza-300)
   background.x=display.contentCenterX
   background.y=display.contentCenterY-170
 --  sceneGroup:insert(background)
   mainGroup=display.newGroup()
-  print("stanza Corrente: ", stanzaCorrente.TESTO)
+  -- print("stanza Corrente: ", stanzaCorrente.TESTO)
   if stanzaCorrente.NORD~=nil then
     local freccia = display.newImageRect(objectSheet, 1, 50, 50)
     freccia.id="NORD"
@@ -128,7 +128,9 @@ function scene:create( event )
 --freccia.x=display.contentCenterX
 --freccia.y=display.contentCenterY
 end
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--fase show del display
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- show()
 function scene:show( event )
@@ -148,7 +150,9 @@ function scene:show( event )
 	end
 end
 
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--fase hide del display
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- hide()
 function scene:hide( event )
 
@@ -167,7 +171,9 @@ function scene:hide( event )
 	end
 end
 
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--fase destroy del display
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- destroy()
 function scene:destroy( event )
 

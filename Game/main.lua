@@ -18,7 +18,6 @@ audio.reserveChannels(1)
 audio.setVolume( 0.1, {channel=1} )
 local json=require("json")
 local file = io.open( filePathComandi, "w" )
-
 if file then
   local stringa = "false"
   file:write(json.encode(stringa))

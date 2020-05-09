@@ -1,12 +1,21 @@
 
 local composer = require("composer")
 local interfaccia = require("interfaceConfig")
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--tutto il file lo chiama numero, ma numeroStanze è meglio quindi per non cambiare tutto ho usato sto metodo
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local numeroStanze=8
 local numero = numeroStanze
 local tabella = interfaccia.tabellaFunction(numero)
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--grossa table che contiene le funzioni da trasportare nelle altre classi
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local inventario =
 {
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--funzione display che si occupa del display degli oggetti dell'interfaccia bassa
+--ci sono delle parti commentate giganti che non mi sentirei di rimuovere. Fanno parte della vecchia costruzione dell'interfaccia prima del commit "implemented nuovo background"
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   display=
   (function (self, mappaGenerata, inventario)
     local lunghezza =  display.contentWidth
@@ -23,7 +32,7 @@ local inventario =
   local midBackground = display.newRect( display.contentCenterX, display.contentCenterY, lunghezzaMidBackground, altezzaMidBackground )
   midBackground:setFillColor(0.18, 0.18, 0.23)
   midBackGroup:insert(midBackground)
-  print(display.contentWidth, " altezza display")
+  -- print(display.contentWidth, " altezza display")
   local spessore = 5
    local lunghezzaInventario=lunghezza-700
    local altezzaInventario=altezza-500
@@ -100,7 +109,6 @@ local inventario =
 
   sceneGroup:insert(mapGroup)
   sceneGroup:insert(midBackGroup)
-  -----stacca----------------------
 
   sceneGroup:insert(backGroup)
 
@@ -109,6 +117,9 @@ local inventario =
   sceneGroup:insert(inventoryGroup)
 
 end),
-create={inventario={"ITEM", "ITEM", "ITEM", "ITEM", "ITEM", "ITEM"}, mappaGenerata = interfaccia.proceduraleMappa(0, {}, numero, tabella, numero+1, numero+1)}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--coppia di valori da costruire: uno è l'inventario e l'altro è la mappa generata
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+create={inventario={"ITEM", "ITEM", "ITEM", "ITEM", "ITEM"}, mappaGenerata = interfaccia.proceduraleMappa(0, {}, numero, tabella, numero+1, numero+1)}
 }
 return inventario
