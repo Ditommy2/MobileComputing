@@ -1,17 +1,14 @@
 local composer= require("composer")
 -----------------------------------------------------------------------------------
-local function stampaTabella(tabella)
-for i=1, #tabella do
-  print("---------------------------------")
-for j=1, #tabella[i] do
-if tabella[i][j]==true then
-print("*")
-elseif tabella[i][j]==false then
-print("-")
-end
-end
-end
-end
+-- local function stampaTabella(tabella)
+-- for i=1, #tabella do
+-- for j=1, #tabella[i] do
+-- if tabella[i][j]==true then
+-- elseif tabella[i][j]==false then
+-- end
+-- end
+-- end
+-- end
 -----------------------------------------------------------------------------------
 local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, primaY)
 
@@ -23,8 +20,8 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
   if index>0 then
     x=math.random(1, index)
 
-    print("genera un random 1, ", index)
-    print("esce ", x)
+    -- print("genera un random 1, ", index)
+    -- print("esce ", x)
     a=mappa[x].x
     b=mappa[x].y
 
@@ -32,18 +29,18 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     x=1
     a=primaX
     b=primaY
-    print("genera prima stanza")
+    -- print("genera prima stanza")
     local stanza={NORD=nil, SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b}
     mappa[x]=stanza
     trovato=true
     tabella[a][b]=true
     index=index+1
   end
-  print("punto di partenza: ", a, " ", b)
+  -- print("punto di partenza: ", a, " ", b)
   while trovato==false do
     cardinale=math.random(1, 4)
     if (cardinale == 1) and (mappa[x].NORD == nil) and (tabella[a][b+1]==false) then
-      print("assegna alla stanza ", x, " una stanza a NORD")
+      -- print("assegna alla stanza ", x, " una stanza a NORD")
       mappa[x].seedNORD=seed
       local stanza = {NORD=nil, SUD=mappa[x], EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b+1, seedSUD=seed}
       mappa[x].NORD = stanza
@@ -55,7 +52,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     end
 
     if (cardinale == 2) and (mappa[x].SUD == nil) and (tabella[a][b-1]==false) then
-      print("assegna alla stanza ", x, " una stanza a SUD")
+      -- print("assegna alla stanza ", x, " una stanza a SUD")
       mappa[x].seedSUD=seed
       local stanza = {NORD=mappa[x], SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false,  seedBackground=seed, x=a, y=b-1, seedNORD=seed}
       mappa[x].SUD = stanza
@@ -67,7 +64,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     end
 
     if (cardinale == 3) and (mappa[x].EST == nil) and (tabella[a+1][b]==false) then
-      print("assegna alla stanza ", x, " una stanza a EST")
+      -- print("assegna alla stanza ", x, " una stanza a EST")
       mappa[x].seedEST=seed
       local stanza = {NORD=nil, SUD=nil, EST=nil, OVEST=mappa[x], TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a+1, y=b, seedOVEST=seed}
       mappa[x].EST = stanza
@@ -79,7 +76,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     end
 
     if (cardinale == 4) and (mappa[x].OVEST == nil) and (tabella[a-1][b]==false) then
-      print("assegna alla stanza ", x, " una stanza a OVEST")
+      -- print("assegna alla stanza ", x, " una stanza a OVEST")
       mappa[x].seedOVEST=seed
       local stanza = {NORD=nil, SUD=nil, EST=mappa[x], OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a-1, y=b, seedEST=seed}
       mappa[x].OVEST = stanza
@@ -94,7 +91,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     --stampaTabella(tabella)
     return mappa[1]
   end
-  print("CHIAMATA RICOR")
+  -- print("CHIAMATA RICOR")
   --stampaTabella(tabella)
   return proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, primaY)
 end
@@ -127,8 +124,8 @@ item:setFillColor(coloreStanza[1], coloreStanza[2], coloreStanza[3])
 if(stanza.corrente==true) then item:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
 end
 mapGroup:insert(item)
-print("stanza stampata: ")
-print(stanza.TESTO)
+-- print("stanza stampata: ")
+-- print(stanza.TESTO)
 if stanza.NORD~=nil and stanza.NORD.visitato~=true then
   item=display.newRect( offx, offy-(dimensioniStanza/2)-(lunghezzaCorridoio/2), spessoreCorridoio, lunghezzaCorridoio )
   item:setFillColor(coloreCorridoio[1], coloreCorridoio[2], coloreCorridoio[3])
@@ -263,9 +260,9 @@ tabellaFunction=
   local numero = (2*n)+1
   for i=1, numero, 1 do
     tabella[i]={}
-    print("creata colonna numero ", i)
+    -- print("creata colonna numero ", i)
     for j=1, numero, 1 do
-      print("creata casella in ", i, " ", j)
+      -- print("creata casella in ", i, " ", j)
       tabella[i][j]=false
     end
   end

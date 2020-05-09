@@ -26,28 +26,28 @@ local sheetOptions=
   frames=
   {
     {--freccia nord
-      x=700,
-      y=0,
-      width=900,
-      height=800
+      x=53,
+      y=56,
+      width=909,
+      height=624
     },
     {--freccia sud
-      x=700,
-      y=1640,
-      width=900,
-      height=800
+      x=53,
+      y=1357,
+      width=963,
+      height=641
     },
     {--freccia est
-      x=1570,
-      y=800,
-      width=800,
-      height=800
+      x=1358,
+      y=1,
+      width=678,
+      height=959
     },
     {--freccia ovest
-      x=0,
-      y=800,
-      width=800,
-      height=800
+      x=1074,
+      y=1073,
+      width=680,
+      height=967
     },
   },
 }
@@ -86,14 +86,11 @@ function scene:create( event )
   local phase = event.phase
 
   funzione(self,  mappaloc, invloc)
-<<<<<<< HEAD
   local direzioneCorridoio = composer.getVariable( "direzione" )
   local seedDirezionale = "seed"..direzioneCorridoio
   local numeroRandomico = stanzaCorrente[seedDirezionale]
   local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back"..numeroRandomico..".jpg", lunghezza, altezza-300)
-=======
-  local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back"..numero..".jpg", lunghezza, altezza-300)
->>>>>>> andrea
+
   background.x=display.contentCenterX
   background.y=display.contentCenterY-170
 --  sceneGroup:insert(background)
