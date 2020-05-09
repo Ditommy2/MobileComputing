@@ -45,6 +45,25 @@ local sheetOptions=
 }
 local objectSheet=graphics.newImageSheet( "Images/Utility/directionArrow.png", sheetOptions )
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--funzione per tornare al menu. Quando chiamata deve salvare tutti i dati in maniera persistente per poter recuperare la partita in qualsiasi momento
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function gotoMenu()
+  -- local json=require("json")
+  -- local filePathSalvataggio=system.pathForFile("salvataggi.json", system.DocumentsDirectory)
+  -- local file = io.open( filePathComandi, "w" )
+  -- if file then
+  --   local stringa = "false"
+  --   file:write(json.encode(stringa))
+  --   io.close(file)
+  -- end
+  for i = sceneGroup.numChildren, 1, -1 do
+    sceneGroup[i]:removeSelf()
+    -- print("FRECCIA RIMOSSA")
+    sceneGroup[i] = nil
+  end
+ 		composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
+ end
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione che gestisce la pressione dei tasti delle freccette. Anche questo è momentaneo, non rappresenta la versione finale
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function handleButtonEvent( event )
@@ -124,6 +143,11 @@ function scene:create( event )
     freccia.y=display.contentCenterY-150
   end
 
+  local returnButton = display.newImageRect( mainGroup, "Images/Utility/returnArrow.png", 150, 150 )
+  mainGroup:insert(returnButton)
+  returnButton.x = display.contentCenterX-550
+  returnButton.y = display.contentCenterY-300
+  returnButton:addEventListener("tap", gotoMenu)
 --local freccia = display.newImageRect(sceneGroup, objectSheet, 4, 50, 50)
 --freccia.x=display.contentCenterX
 --freccia.y=display.contentCenterY

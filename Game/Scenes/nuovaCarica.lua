@@ -36,7 +36,10 @@ local function handleButtonEvent( event )
 				composer.removeScene( "Scenes.nuovaCarica" )
 				composer.gotoScene("Scenes.livello1")
 			end
-
+			--------------------------------------------------------------------------------------------------------------------------------------
+			--se il bottone premuto è il carica si deve mostrare una lista di salvataggi collegati all'account che ha eseguito il login.
+			--a quel punto la scelta di un salvataggio porterà a riprendere quella partita da dove è stat lasciata
+			--------------------------------------------------------------------------------------------------------------------------------------
 			if bottone.id=="carica" then
 			end
 		end
