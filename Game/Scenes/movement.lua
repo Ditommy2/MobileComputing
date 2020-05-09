@@ -57,6 +57,7 @@ local backgroundGroup
 local midGroup
 local inventoryGroup
 local mapGroup
+local hidingGroup
 
 --Perform movement
 local function move(event)
@@ -84,42 +85,27 @@ local function moveListener(event)
     if((event.x < target.nonMovementArea.minX) and (event.y < target.nonMovementArea.maxY)) then
       dir = "l"
       character:setSequence( "leftWalk" )
-      character:play()
     elseif((event.x > target.nonMovementArea.maxX) and (event.y < target.nonMovementArea.maxY)) then
       dir = "r"
       character:setSequence( "rightWalk" )
-      character:play()
     end
 
     --Start movement
+    character:play()
     moveTimer = timer.performWithDelay( 30, move, 0)
+    moveTimer.isPaused = false
     moveTimer.params = {direction=dir}
   elseif(phase=="moved") then   --Touch moved
     --Touch falls in the non-movement area
     if((event.x > target.nonMovementArea.minX and event.x < target.nonMovementArea.maxX) or (event.y > target.nonMovementArea.maxY)) then
-      --Pause movement and animation
-      timer.pause(moveTimer)
+      --Ending movement, canceling focus and stopping animation
+      display.getCurrentStage():setFocus(nil)
+      timer.cancel( moveTimer )
       character:pause()
 
       --Facing the right direction
-      if(moveTimer.params.direction=="r") then
-        character:setFrame(10)
-      elseif(moveTimer.params.direction=="l") then
-        character:setFrame(1)
-      end
-    else  --Touch back in the movement area
-      --Eventually modifying movement direction and sprite sequence
-      if((event.x < target.nonMovementArea.minX) and (event.y < target.nonMovementArea.maxY)) then
-        moveTimer.params.direction = "l"
-        character:setSequence( "leftWalk" )
-      elseif((event.x > target.nonMovementArea.maxX) and (event.y < target.nonMovementArea.maxY)) then
-        moveTimer.params.direction = "r"
-        character:setSequence( "rightWalk" )
-      end
-
-      --Resuming movement and animation
-      timer.resume( moveTimer )
-      character:play()
+      character:setFrame(1)
+      return true
     end
   elseif (phase=="ended" or phase=="cancelled") then
     --Ending movement, canceling focus and stopping animation
@@ -128,11 +114,7 @@ local function moveListener(event)
     character:pause()
 
     --Facing the right direction
-    if(moveTimer.params.direction=="r") then
-      character:setFrame(3)
-    elseif(moveTimer.params.direction=="l") then
-      character:setFrame(3)
-    end
+    character:setFrame(1)
   end
 
   return true
@@ -156,9 +138,9 @@ function scene:create(event)
   sceneGroup:insert(mapGroup)
 
   --Displaying background and adding movement listener
-  local background = display.newImageRect( backgroundGroup, "Images/Backgrounds/proceduralBack/Stanze/back1.jpg", width, height)
+  local background = display.newImageRect( backgroundGroup, "Images/Backgrounds/proceduralBack/Stanze/back5.jpg", width, height*0.7)
   background.x = display.contentCenterX
-  background.y = display.contentCenterY
+  background.y = display.contentCenterY - height*0.15
   physics.addBody(background, "static", {shape={ 0, 0, width, 0, width, height - (height*0.3), 0, height - (height*0.3)}})
   background:addEventListener("touch", moveListener)
 
@@ -167,7 +149,7 @@ function scene:create(event)
   background.nonMovementArea = area
 
   --Displaying status bar background
-  local plainBack = display.newImageRect( midGroup, "Images/Backgrounds/proceduralBack/Stanze/back1.jpg", width, height * 0.3)
+  local plainBack = display.newImageRect( midGroup, "Images/Backgrounds/proceduralBack/Stanze/back5.jpg", width, height * 0.3)
   plainBack.anchorX = 0
   plainBack.anchorY = 1
   plainBack.x = 0
@@ -175,7 +157,8 @@ function scene:create(event)
 
   --Displaying character and setting sprite sheets
   character = display.newSprite( sheet_walking, sequences_walking )
-  character:setFrame(3)
+  character:setSequence(rightWalk)
+  character:setFrame(1)
   character.anchorY = 1
   character.x = display.contentWidth * 0.1
   character.y = display.contentHeight - plainBack.height
@@ -199,6 +182,20 @@ function scene:create(event)
   map.anchorY = 1
   map.x = width - (width * 0.01)
   map.y = height - (plainBack.height * 0.05)
+
+  --Displaying black bars
+  -- hidingGroup =display.newGroup()
+  -- sceneGroup:insert(hidingGroup)
+
+  local barLeft = display.newRect(display.screenOriginX, display.screenOriginY, (display.actualContentWidth/2) - (width/2), height)
+  local barRight = display.newRect(display.contentCenterX + (width/2), 0, (display.actualContentWidth/2) - (width/2), height)
+  barLeft.anchorX = 0
+  barLeft.anchorY = 0
+  barRight.anchorX = 0
+  barRight.anchorY = 0
+
+  barLeft:setFillColor(0,0,0)
+  barRight:setFillColor(0,0,0)
 end
 
 -- show()
