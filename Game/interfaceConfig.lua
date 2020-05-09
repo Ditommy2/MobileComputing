@@ -1,18 +1,22 @@
 local composer= require("composer")
------------------------------------------------------------------------------------
-local function stampaTabella(tabella)
-for i=1, #tabella do
-  print("---------------------------------")
-for j=1, #tabella[i] do
-if tabella[i][j]==true then
-print("*")
-elseif tabella[i][j]==false then
-print("-")
-end
-end
-end
-end
------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- classe che si occupa di fornire tutte le funzioni tecniche per generare e costruire l'interfaccia bassa del gioco
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- funzione di supporto per il print. Lasciare commentata, usare solo per debug
+-- local function stampaTabella(tabella)
+-- for i=1, #tabella do
+-- for j=1, #tabella[i] do
+-- if tabella[i][j]==true then
+-- elseif tabella[i][j]==false then
+-- end
+-- end
+-- end
+-- end
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--funzione che genera una mappa procedurale a partire da un numero di stanze desiderato. Per farlo costruisce una tabella con una stanza, la quale è a sua volta una tabella
+--con le varie direzioni NORD SUD EST OVEST alle quali sono associate altre stanze. Per gestire la mappa ed evitare l'appallottolarsi di stanze usa una tabella x, y che mano
+--mano viene riempita di token per segnare che la stanza è stata creata
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, primaY)
 
   local x
@@ -23,8 +27,8 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
   if index>0 then
     x=math.random(1, index)
 
-    print("genera un random 1, ", index)
-    print("esce ", x)
+    -- print("genera un random 1, ", index)
+    -- print("esce ", x)
     a=mappa[x].x
     b=mappa[x].y
 
@@ -32,18 +36,18 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     x=1
     a=primaX
     b=primaY
-    print("genera prima stanza")
+    -- print("genera prima stanza")
     local stanza={NORD=nil, SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b}
     mappa[x]=stanza
     trovato=true
     tabella[a][b]=true
     index=index+1
   end
-  print("punto di partenza: ", a, " ", b)
+  -- print("punto di partenza: ", a, " ", b)
   while trovato==false do
     cardinale=math.random(1, 4)
     if (cardinale == 1) and (mappa[x].NORD == nil) and (tabella[a][b+1]==false) then
-      print("assegna alla stanza ", x, " una stanza a NORD")
+      -- print("assegna alla stanza ", x, " una stanza a NORD")
       mappa[x].seedNORD=seed
       local stanza = {NORD=nil, SUD=mappa[x], EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b+1, seedSUD=seed}
       mappa[x].NORD = stanza
@@ -55,7 +59,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     end
 
     if (cardinale == 2) and (mappa[x].SUD == nil) and (tabella[a][b-1]==false) then
-      print("assegna alla stanza ", x, " una stanza a SUD")
+      -- print("assegna alla stanza ", x, " una stanza a SUD")
       mappa[x].seedSUD=seed
       local stanza = {NORD=mappa[x], SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false,  seedBackground=seed, x=a, y=b-1, seedNORD=seed}
       mappa[x].SUD = stanza
@@ -67,7 +71,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     end
 
     if (cardinale == 3) and (mappa[x].EST == nil) and (tabella[a+1][b]==false) then
-      print("assegna alla stanza ", x, " una stanza a EST")
+      -- print("assegna alla stanza ", x, " una stanza a EST")
       mappa[x].seedEST=seed
       local stanza = {NORD=nil, SUD=nil, EST=nil, OVEST=mappa[x], TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a+1, y=b, seedOVEST=seed}
       mappa[x].EST = stanza
@@ -79,7 +83,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     end
 
     if (cardinale == 4) and (mappa[x].OVEST == nil) and (tabella[a-1][b]==false) then
-      print("assegna alla stanza ", x, " una stanza a OVEST")
+      -- print("assegna alla stanza ", x, " una stanza a OVEST")
       mappa[x].seedOVEST=seed
       local stanza = {NORD=nil, SUD=nil, EST=mappa[x], OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a-1, y=b, seedEST=seed}
       mappa[x].OVEST = stanza
@@ -94,11 +98,13 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     --stampaTabella(tabella)
     return mappa[1]
   end
-  print("CHIAMATA RICOR")
+  -- print("CHIAMATA RICOR")
   --stampaTabella(tabella)
   return proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, primaY)
 end
---------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--funzione di supporto che annulla l'attributo "visitato" delle stanze, che deve rimanere flase, ma che è impostato a true per via della creazione ricorsiva della mappa
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function annullaVisitefunzione(primaStanza, stanza)
   stanza.visitato=false
   if stanza.NORD~=nil and stanza.NORD.visitato==true then
@@ -114,7 +120,10 @@ local function annullaVisitefunzione(primaStanza, stanza)
     annullaVisitefunzione(primaStanza, stanza.OVEST)
   end
 end
---------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--funzione ricorsova che si occupa di fare il display della mappa stanza dopo stanza. Parte infatti dallla stanza attuale e mano mano si porta l'offset x e y per stampare le stanze in posizione corretta
+--crea anche il corridoio tra una stanza e l'altra
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function displayStanzaFunzione(stanza, offx, offy)
   local dimensioniStanza = 50
   local spessoreCorridoio = 10
@@ -127,8 +136,8 @@ item:setFillColor(coloreStanza[1], coloreStanza[2], coloreStanza[3])
 if(stanza.corrente==true) then item:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
 end
 mapGroup:insert(item)
-print("stanza stampata: ")
-print(stanza.TESTO)
+-- print("stanza stampata: ")
+-- print(stanza.TESTO)
 if stanza.NORD~=nil and stanza.NORD.visitato~=true then
   item=display.newRect( offx, offy-(dimensioniStanza/2)-(lunghezzaCorridoio/2), spessoreCorridoio, lunghezzaCorridoio )
   item:setFillColor(coloreCorridoio[1], coloreCorridoio[2], coloreCorridoio[3])
@@ -165,8 +174,13 @@ if stanza.OVEST~=nil and stanza.OVEST.visitato~=true then
 
 end
 end
---------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--questa è una tabella che contiene delle funzioni
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local interfacciaConfig = {
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--la prima funzione, displayGrid, si occupa di stampare gli oggetti dell'inventario in ordine di righe e colonne in modo da poter rimanere nella griglia dell'inventario
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   displayGrid=
   (function(input, colonne, righe, handler)
     local index=1
@@ -191,16 +205,25 @@ local interfacciaConfig = {
     end
   end
 end),
----------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--questa funzione si riferisce a quella sopra e qui può essere usata da funzioni esterne. Si deve fare così per via della ricorsività
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   proceduraleMappa=
   (proceduraleMappaFunzione),
-  -----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--come sopra
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   displayStanza=
   (displayStanzaFunzione),
-  ------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--come sopra
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   annullaVisite=
   (annullaVisitefunzione),
---------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--funzione di handle per il movimento della mappa. è importante perchè comunica al composer l'ultima posizione della mappa dato che quando si cambia da una stanza
+--all'altra la mappa non deve teletrasportarsi
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 dragMapSet=
 (function(event)
   local item=event.target
@@ -221,7 +244,9 @@ dragMapSet=
     end
     return true
 end),
------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--funzione per l'handle del movimento degli oggetti dell'inventario. è da rivedere dato che ancora non controlla perfettamente l'agancio degli oggetti nelle posizioni
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 dragItem=
 (function(event)
   local item=event.target
@@ -256,22 +281,24 @@ dragItem=
     end
     return true
 end),
-------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--funzione che costruisce la tabella di token per la mappa
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 tabellaFunction=
 (function (n)
   local tabella={}
   local numero = (2*n)+1
   for i=1, numero, 1 do
     tabella[i]={}
-    print("creata colonna numero ", i)
+    -- print("creata colonna numero ", i)
     for j=1, numero, 1 do
-      print("creata casella in ", i, " ", j)
+      -- print("creata casella in ", i, " ", j)
       tabella[i][j]=false
     end
   end
   return tabella
 end),
------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 }
 return interfacciaConfig

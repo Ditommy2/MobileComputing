@@ -1,12 +1,21 @@
 
 local composer = require("composer")
 local interfaccia = require("interfaceConfig")
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--tutto il file lo chiama numero, ma numeroStanze è meglio quindi per non cambiare tutto ho usato sto metodo
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local numeroStanze=8
 local numero = numeroStanze
 local tabella = interfaccia.tabellaFunction(numero)
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--grossa table che contiene le funzioni da trasportare nelle altre classi
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local inventario =
 {
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--funzione display che si occupa del display degli oggetti dell'interfaccia bassa
+--ci sono delle parti commentate giganti che non mi sentirei di rimuovere. Fanno parte della vecchia costruzione dell'interfaccia prima del commit "implemented nuovo background"
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   display=
   (function (self, mappaGenerata, inventario)
     local lunghezza =  display.contentWidth
@@ -17,66 +26,67 @@ local inventario =
   backGroup=display.newGroup()
   overlayGroup=display.newGroup()
   midBackGroup=display.newGroup()
+  lowerOverlay=display.newGroup()
   local altezzaMidBackground=altezza-400
   local lunghezzaMidBackground=lunghezza-510
   local midBackground = display.newRect( display.contentCenterX, display.contentCenterY, lunghezzaMidBackground, altezzaMidBackground )
   midBackground:setFillColor(0.18, 0.18, 0.23)
   midBackGroup:insert(midBackground)
-  print(display.contentWidth, " altezza display")
+  -- print(display.contentWidth, " altezza display")
   local spessore = 5
    local lunghezzaInventario=lunghezza-700
    local altezzaInventario=altezza-500
-   local invBack = display.newRect( display.contentCenterX, display.contentCenterY, lunghezzaInventario, altezzaInventario )
-   invBack:setFillColor(0.9, 0.9, 0.9)
-   inventoryGroup:insert(invBack)
-   local column1 = display.newRect( display.contentCenterX-((lunghezzaInventario)/4), display.contentCenterY, spessore, altezzaInventario )
-   column1:setFillColor(0.1, 0.1, 0.1)
-   inventoryGroup:insert(column1)
-   local column2 = display.newRect( display.contentCenterX+((lunghezzaInventario)/4), display.contentCenterY, spessore, altezzaInventario )
-   column2:setFillColor(0.1, 0.1, 0.1)
-   inventoryGroup:insert(column2)
-   local column3 = display.newRect( display.contentCenterX, display.contentCenterY, spessore, altezzaInventario )
-   column3:setFillColor(0.1, 0.1, 0.1)
-   inventoryGroup:insert(column3)
-   local row = display.newRect( display.contentCenterX, display.contentCenterY, lunghezzaInventario, spessore)
-   row:setFillColor(0.1, 0.1, 0.1)
-   inventoryGroup:insert(row)
+   -- local invBack = display.newRect( display.contentCenterX, display.contentCenterY, lunghezzaInventario, altezzaInventario )
+   -- invBack:setFillColor(0.9, 0.9, 0.9)
+   -- inventoryGroup:insert(invBack)
+   -- local column1 = display.newRect( display.contentCenterX-((lunghezzaInventario)/4), display.contentCenterY, spessore, altezzaInventario )
+   -- column1:setFillColor(0.1, 0.1, 0.1)
+   -- inventoryGroup:insert(column1)
+   -- local column2 = display.newRect( display.contentCenterX+((lunghezzaInventario)/4), display.contentCenterY, spessore, altezzaInventario )
+   -- column2:setFillColor(0.1, 0.1, 0.1)
+   -- inventoryGroup:insert(column2)
+   -- local column3 = display.newRect( display.contentCenterX, display.contentCenterY, spessore, altezzaInventario )
+   -- column3:setFillColor(0.1, 0.1, 0.1)
+   -- inventoryGroup:insert(column3)
+   -- local row = display.newRect( display.contentCenterX, display.contentCenterY, lunghezzaInventario, spessore)
+   -- row:setFillColor(0.1, 0.1, 0.1)
+   -- inventoryGroup:insert(row)
 
    local handler=interfaccia.dragItem
    interfaccia.displayGrid(inventario, 4, 2, handler)
-   local lunghezzaMapBackground=lunghezza-800
-   local altezzaMapBackground=lunghezzaMapBackground*(9/16)
-   local mapBackground1 = display.newRect( display.contentCenterX, display.contentCenterY+(altezzaMapBackground/2), lunghezzaMapBackground, 5 )
-   mapBackground1:setFillColor(0.9, 0.9, 0.9)
-   overlayGroup:insert(mapBackground1)
+--    local lunghezzaMapBackground=lunghezza-800
+--    local altezzaMapBackground=lunghezzaMapBackground*(9/16)
+--    local mapBackground1 = display.newRect( display.contentCenterX, display.contentCenterY+(altezzaMapBackground/2), lunghezzaMapBackground, 5 )
+--    mapBackground1:setFillColor(0.9, 0.9, 0.9)
+--    overlayGroup:insert(mapBackground1)
+-- --
+--    local mapBackground2 = display.newRect( display.contentCenterX, display.contentCenterY-(altezzaMapBackground/2), lunghezzaMapBackground, 5 )
+--    mapBackground2:setFillColor(0.9, 0.9, 0.9)
+--    overlayGroup:insert(mapBackground2)
 --
-   local mapBackground2 = display.newRect( display.contentCenterX, display.contentCenterY-(altezzaMapBackground/2), lunghezzaMapBackground, 5 )
-   mapBackground2:setFillColor(0.9, 0.9, 0.9)
-   overlayGroup:insert(mapBackground2)
-
-   local mapBackground3 = display.newRect( display.contentCenterX+(lunghezzaMapBackground/2), display.contentCenterY, 5, altezzaMapBackground+5 )
-   mapBackground3:setFillColor(0.9, 0.9, 0.9)
-   overlayGroup:insert(mapBackground3)
---
-   local mapBackground4 = display.newRect( display.contentCenterX-(lunghezzaMapBackground/2), display.contentCenterY, 5, altezzaMapBackground+5 )
-   mapBackground4:setFillColor(0.9, 0.9, 0.9)
-   overlayGroup:insert(mapBackground4)
--- ---------------------------------------------------------------------------------------------------------------------------
-   local mapBackground5 = display.newRect( display.contentCenterX+270, display.contentCenterY, 53, altezzaMidBackground )
-   mapBackground5:setFillColor(0.18, 0.18, 0.23) --0.18
-   overlayGroup:insert(mapBackground5)
---
-   local mapBackground6 = display.newRect( display.contentCenterX-270, display.contentCenterY, 47, altezzaMidBackground )
-   mapBackground6:setFillColor(0.18, 0.18, 0.23)
-   overlayGroup:insert(mapBackground6)
---
-   local mapBackground7 = display.newRect( display.contentCenterX, display.contentCenterY-149, lunghezzaMapBackground+20, 23 )
-   mapBackground7:setFillColor(0.18, 0.18, 0.23)
-   overlayGroup:insert(mapBackground7)
---
-   local mapBackground8 = display.newRect( display.contentCenterX, display.contentCenterY+149, lunghezzaMapBackground+20, 22 )
-   mapBackground8:setFillColor(0.18, 0.18, 0.23)
-   overlayGroup:insert(mapBackground8)
+--    local mapBackground3 = display.newRect( display.contentCenterX+(lunghezzaMapBackground/2), display.contentCenterY, 5, altezzaMapBackground+5 )
+--    mapBackground3:setFillColor(0.9, 0.9, 0.9)
+--    overlayGroup:insert(mapBackground3)
+-- --
+--    local mapBackground4 = display.newRect( display.contentCenterX-(lunghezzaMapBackground/2), display.contentCenterY, 5, altezzaMapBackground+5 )
+--    mapBackground4:setFillColor(0.9, 0.9, 0.9)
+--    overlayGroup:insert(mapBackground4)
+-- -- ---------------------------------------------------------------------------------------------------------------------------
+--    local mapBackground5 = display.newRect( display.contentCenterX+270, display.contentCenterY, 53, altezzaMidBackground )
+--    mapBackground5:setFillColor(0.18, 0.18, 0.23) --0.18
+--    overlayGroup:insert(mapBackground5)
+-- --
+--    local mapBackground6 = display.newRect( display.contentCenterX-270, display.contentCenterY, 47, altezzaMidBackground )
+--    mapBackground6:setFillColor(0.18, 0.18, 0.23)
+--    overlayGroup:insert(mapBackground6)
+-- --
+--    local mapBackground7 = display.newRect( display.contentCenterX, display.contentCenterY-149, lunghezzaMapBackground+20, 23 )
+--    mapBackground7:setFillColor(0.18, 0.18, 0.23)
+--    overlayGroup:insert(mapBackground7)
+-- --
+--    local mapBackground8 = display.newRect( display.contentCenterX, display.contentCenterY+149, lunghezzaMapBackground+20, 22 )
+--    mapBackground8:setFillColor(0.18, 0.18, 0.23)
+--    overlayGroup:insert(mapBackground8)
 --
 --
    local map = display.newRect( display.contentCenterX, display.contentCenterY, lunghezza+1000, altezza+1000 )
@@ -84,6 +94,9 @@ local inventario =
    mapGroup:insert(map)
    interfaccia.annullaVisite(mappaGenerata, mappaGenerata)
    interfaccia.displayStanza(mappaGenerata, display.contentCenterX, display.contentCenterY)-- -60, -30
+   local overlayBackground = display.newImageRect(lowerOverlay, "Images/Backgrounds/lowerBackground.png", lunghezza, altezza+150)
+   overlayBackground.x=display.contentCenterX
+   overlayBackground.y=display.contentCenterY-70
    mapGroup.x=composer.getVariable( "mapx" )
    mapGroup.y=composer.getVariable( "mapy" )
    overlayGroup.x=352
@@ -96,12 +109,17 @@ local inventario =
 
   sceneGroup:insert(mapGroup)
   sceneGroup:insert(midBackGroup)
-  -----stacca----------------------
 
   sceneGroup:insert(backGroup)
-  sceneGroup:insert(inventoryGroup)
+
   sceneGroup:insert(overlayGroup)
+  sceneGroup:insert(lowerOverlay)
+  sceneGroup:insert(inventoryGroup)
+
 end),
-create={inventario={"ITEM", "ITEM", "ITEM", "ITEM", "ITEM", "ITEM"}, mappaGenerata = interfaccia.proceduraleMappa(0, {}, numero, tabella, numero+1, numero+1)}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--coppia di valori da costruire: uno è l'inventario e l'altro è la mappa generata
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+create={inventario={"ITEM", "ITEM", "ITEM", "ITEM", "ITEM"}, mappaGenerata = interfaccia.proceduraleMappa(0, {}, numero, tabella, numero+1, numero+1)}
 }
 return inventario

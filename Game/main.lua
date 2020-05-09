@@ -18,7 +18,6 @@ audio.reserveChannels(1)
 audio.setVolume( 0.1, {channel=1} )
 local json=require("json")
 local file = io.open( filePathComandi, "w" )
-
 if file then
   local stringa = "false"
   file:write(json.encode(stringa))
@@ -34,4 +33,4 @@ end
  composer.setVariable( "funzione", funzione )
  composer.setVariable( "mapx", 352 )
  composer.setVariable( "mapy", 200 )
- composer.gotoScene("Scenes.menu")
+ composer.gotoScene("Scenes.livello1")
