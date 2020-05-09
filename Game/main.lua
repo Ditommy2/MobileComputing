@@ -34,4 +34,4 @@ end
  composer.setVariable( "funzione", funzione )
  composer.setVariable( "mapx", 352 )
  composer.setVariable( "mapy", 200 )
- composer.gotoScene("Scenes.livello1")
+ composer.gotoScene("Scenes.menu")

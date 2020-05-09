@@ -109,8 +109,8 @@ function scene:create( event )
   sceneGroup:insert(serverAnswer)
 
 local returnButton = display.newImageRect( gameGroup, "images/Utility/returnArrow.png", 200, 200 )
-returnButton.x = display.screenOriginX+100
-returnButton.y = display.screenOriginY-150
+returnButton.x = display.contentCenterX-550
+returnButton.y = display.contentCenterY-550
 returnButton:addEventListener("tap", gotoMenu)
 end
 
