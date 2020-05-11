@@ -24,77 +24,34 @@ physics.start()
 -- -----------------------------------------------------------------------------------
 
 
-
-
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
-
-local function infoMossa1()
-  local testoMossa1 =
-  {
-    text = "Questa mossa ti apre l'ano\nAttacco = 60%\nDifesa = 20%\nVelocità = 40%",
-    x = 1050,
-    y = 585,
-    width = 450,
-    font = native.systemFont,
-    fontSize = 26,
-    align = "left"  -- Alignment parameter
-  }
-  local m1 = display.newText( testoMossa1 )
-  m1:setFillColor( 1, 1, 1 )
-end
-
-local function infoMossa2()
-  local testoMossa2 =
-  {
-    text = "Questa mossa ti apre l'ano\nAttacco = 60%\nDifesa = 20%\nVelocità = 40%",
-    x = 1050,
-    y = 585,
-    width = 450,
-    font = native.systemFont,
-    fontSize = 26,
-    align = "left"  -- Alignment parameter
-  }
-  local m2 = display.newText( testoMossa2 )
-  m2:setFillColor( 1, 1, 1 )
-end
-
-local function infoMossa3()
-  local testoMossa3 =
-  {
-    text = "Questa mossa ti apre l'ano\nAttacco = 60%\nDifesa = 20%\nVelocità = 40%",
-    x = 1050,
-    y = 585,
-    width = 450,
-    font = native.systemFont,
-    fontSize = 26,
-    align = "left"  -- Alignment parameter
-  }
-  local m3 = display.newText( testoMossa3 )
-  m3:setFillColor( 1, 1, 1 )
-end
-
-local function infoMossa4()
-  local testoMossa4 =
-  {
-    text = "Questa mossa ti apre l'ano\nAttacco = 60%\nDifesa = 20%\nVelocità = 40%",
-    x = 1050,
-    y = 585,
-    width = 450,
-    font = native.systemFont,
-    fontSize = 26,
-    align = "left"  -- Alignment parameter
-  }
-  local m4 = display.newText( testoMossa4 )
-  m4:setFillColor( 1, 1, 1 )
-end
 
 -- create()
 function scene:create( event )
 
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
+
+local testoMossa = display.newText( "" ,1050, 585, 450, 0, native.systemFont, 26 )
+testoMossa:setFillColor( 1, 1, 1 )
+
+local function infoMossa1()
+  testoMossa.text = "Mossa1 : Questa mossa ti apre l'ano\nAttacco = 60%\nDifesa = 20%\nVelocità = 40%"
+end
+
+local function infoMossa2()
+  testoMossa.text = "Mossa2 : Questa mossa ti fa il caffè\nAttacco = 30%\nDifesa = 50%\nVelocità = 80%"
+end
+
+local function infoMossa3()
+  testoMossa.text = "Mossa3 : Questa mossa ti fa accarezzare il gatto di titto\nAttacco = 20%\nDifesa = 90%\nVelocità = 60%"
+end
+
+local function infoMossa4()
+  testoMossa.text = "Mossa4 : Questa mossa genera gettere & settere\nAttacco = 20%\nDifesa = 50%\nVelocità = 20%"
+end
 
 	local background = display.newImageRect( sceneGroup, "Images/Backgrounds/proceduralBack/Stanze/back1.jpg", 1280, 720 )
 	 background.x = display.contentCenterX
@@ -120,7 +77,6 @@ function scene:create( event )
     mossa2:addEventListener( "tap", infoMossa2 )
     mossa3:addEventListener( "tap", infoMossa3 )
     mossa4:addEventListener( "tap", infoMossa4 )
-
 
 end
 
