@@ -2,6 +2,7 @@
 local composer = require( "composer" )
 local lowerFixedMenu= require("lowerFixedMenu")
 local widget = require("widget")
+local characterInterface = require("characterInterface")
 local scene = composer.newScene()
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
@@ -202,34 +203,29 @@ function scene:create( event )
   background.x=display.contentCenterX
   background.y=display.contentCenterY-170
   physics.addBody(background, "static", {shape={ 0, 0, lunghezza, 0, lunghezza, altezza-300, 0, altezza-300}})
-  background:addEventListener("touch", moveListener)
+  background:addEventListener("touch", characterInterface.listener)
 
   --Setting non-movement area
   local area = {minX=lunghezza*0.2, minY=0, maxX=lunghezza-(lunghezza*0.2), maxY= altezza-300}
   background.nonMovementArea = area
 
   --Displaying character and setting sprite sheets
-  character = display.newSprite( sheet_walking, sequences_walking )
-  character:setSequence(rightWalk)
-  character:setFrame(1)
-  character.anchorY = 1
-  character.x = lunghezza * 0.1
-  character.y = altezza-310
+  character =  characterInterface.creaPersonaggio()
 
 --  sceneGroup:insert(background)
   mainGroup=display.newGroup()
-    mainGroup:insert(character)
-    local frecciaEST  = display.newImageRect(mainGroup, objectSheet, 3, 50, 50)
-    frecciaEST.id="EST"
-    frecciaEST:addEventListener("tap", handleButtonEvent)
-    frecciaEST.x=display.contentCenterX+520
-    frecciaEST.y=display.contentCenterY-100
+  mainGroup:insert(character)
+  local frecciaEST  = display.newImageRect(mainGroup, objectSheet, 3, 50, 50)
+  frecciaEST.id="EST"
+  frecciaEST:addEventListener("tap", handleButtonEvent)
+  frecciaEST.x=display.contentCenterX+520
+  frecciaEST.y=display.contentCenterY-100
 
-    local frecciaOVEST  = display.newImageRect(mainGroup, objectSheet, 4, 50, 50)
-    frecciaOVEST.id="OVEST"
-    frecciaOVEST:addEventListener("tap", handleButtonEvent)
-    frecciaOVEST.x=display.contentCenterX-520
-    frecciaOVEST.y=display.contentCenterY-100
+  local frecciaOVEST  = display.newImageRect(mainGroup, objectSheet, 4, 50, 50)
+  frecciaOVEST.id="OVEST"
+  frecciaOVEST:addEventListener("tap", handleButtonEvent)
+  frecciaOVEST.x=display.contentCenterX-520
+  frecciaOVEST.y=display.contentCenterY-100
 --local freccia = display.newImageRect(sceneGroup, objectSheet, 4, 50, 50)
 --freccia.x=display.contentCenterX
 --freccia.y=display.contentCenterY
