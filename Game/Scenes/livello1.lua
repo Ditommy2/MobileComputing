@@ -117,6 +117,8 @@ function scene:create( event )
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
   local phase = event.phase
+  physics.pause()
+
   funzione(self,  mappaloc, invloc)
   --composer.removeScene( "livello2")
   local numero = stanzaCorrente.seedBackground
@@ -125,7 +127,7 @@ function scene:create( event )
   local background=display.newImageRect(backGroup, immagine, lunghezza, altezza-300)
   background.x=display.contentCenterX
   background.y=display.contentCenterY-170
-  physics.addBody(background, "static", {shape={ 0, 0, lunghezza, 0, lunghezza, altezza-300, 0, altezza-300}})
+  physics.addBody(background, "static", {shape={ 0, 0, lunghezza, 0, lunghezza, altezza-300, 0, altezza-300}, isSensor=false})
   background:addEventListener("touch", characterInterface.listener)
 
   --Setting non-movement area
@@ -180,8 +182,8 @@ function scene:create( event )
   local hidingGroup = display.newGroup()
 
   if(display.actualContentWidth > lunghezza) then
-    local barLeft = display.newRect(display.screenOriginX, display.screenOriginY, (display.actualContentWidth/2) - (lunghezza/2), altezza)
-    local barRight = display.newRect(display.contentCenterX + (lunghezza/2), 0, (display.actualContentWidth/2) - (lunghezza/2), altezza)
+    local barLeft = display.newRect(display.screenOriginX, 0, (display.actualContentWidth/2) - (lunghezza/2), altezza)
+    local barRight = display.newRect(display.contentWidth, 0, (display.actualContentWidth/2) - (lunghezza/2), altezza)
 
     barLeft.anchorX = 0
     barLeft.anchorY = 0
@@ -190,6 +192,16 @@ function scene:create( event )
 
     barLeft:setFillColor(0,0,0)
     barRight:setFillColor(0,0,0)
+
+    physics.addBody(barLeft, "static", {shape={display.screenOriginX, 0, 0, 0, 0, altezza, display.screenOriginX, altezza}, filter={categoryBits=2, maskBits=1}})
+    physics.addBody(barRight, "static", {shape={lunghezza, 0, display.actualContentWidth, 0, display.actualContentWidth, altezza, 0, altezza}, filter={categoryBits=4, maskBits=1}})
+    barLeft.myName = "BarLeft"
+    barRight.myName = "BarRight"
+
+    barLeft.collision = characterInterface.exitRoom
+    barLeft:addEventListener( "collision" )
+    barRight.collision = characterInterface.exitRoom
+    barRight:addEventListener( "collision" )
 
     hidingGroup:insert(barLeft)
     hidingGroup:insert(barRight)
@@ -237,6 +249,9 @@ function scene:show( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs when the scene is entirely on screen
+    physics.start()
+    --Runtime:addEventListener( "collision", characterInterface.exitRoom )
+
 
 	end
 end
