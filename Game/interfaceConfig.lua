@@ -147,12 +147,12 @@ if stanza.NORD~=nil and stanza.NORD.visitato~=true then
 
 end
 
-if stanza.SUD~=nil and stanza.SUD.visitato~=true then
+if stanza[SUD]~=nil and stanza[SUD].visitato~=true then
   item=display.newRect( offx, offy+(dimensioniStanza/2)+(lunghezzaCorridoio/2), spessoreCorridoio, lunghezzaCorridoio )
   item:setFillColor(1, 0, 0)
   mapGroup:insert(item)
-  stanza.SUD.visitato=true
-  displayStanzaFunzione(stanza.SUD, offx, (offy+lunghezzaCorridoio+(dimensioniStanza/2)))
+  stanza[SUD].visitato=true
+  displayStanzaFunzione(stanza[SUD], offx, (offy+lunghezzaCorridoio+(dimensioniStanza/2)))
 
 end
 

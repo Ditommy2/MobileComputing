@@ -18,6 +18,7 @@ local inventario =
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   display=
   (function (self, mappaGenerata, inventario)
+    print("display in corso")
     local lunghezza =  display.contentWidth
     local altezza=  lunghezza*(9/16)
   local sceneGroup = self.view

@@ -188,10 +188,10 @@ local function gotoMenu()
     mappaToSave = composer.getVariable( "mappa" ),
     mapxToSave = composer.getVariable( "mapx" ),
     mapyToSave = composer.getVariable( "mapy" ),
-    displayFunzioneToSave = composer.getVariable( "funzione" )
+    --displayFunzioneToSave = composer.getVariable( "funzione" )
   }
   fileHandler.saveTable(salvataggio, "saves.json")
- 		composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
+ 	composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
  end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione che gestisce la pressione dei tasti delle freccette. Anche questo è momentaneo, non rappresenta la versione finale
@@ -205,8 +205,8 @@ local function handleButtonEvent( event )
         -- print("MOVIMENTO DA ", stanzaCorrente.TESTO, " a ", stanzaCorrente[direzione].TESTO)
         stanzaCorrente.corrente=false
         composer.setVariable( "prossimaStanza", stanzaCorrente[direzione] )
-      --  stanzaCorrente[direzione].corrente=true
-      --  composer.setVariable( "stanzaCorrente", stanzaCorrente[direzione] )
+       --stanzaCorrente[direzione].corrente=true
+       --composer.setVariable( "stanzaCorrente", stanzaCorrente[direzione] )
       --  composer.removeScene( "livello1" )
       -- for i = mainGroup.numChildren, 1, -1 do
       --   mainGroup[i]:removeSelf()
@@ -230,6 +230,7 @@ function scene:create( event )
   funzione(self,  mappaloc, invloc)
   --composer.removeScene( "livello2")
   local numero = stanzaCorrente.seedBackground
+  print(stanzaCorrente, "STANZA CORRENTE")
   local immagine = "Images/Backgrounds/proceduralBack/Stanze/back"..numero..".jpg"
   -- print(immagine)
   local background=display.newImageRect(backGroup, immagine, lunghezza, altezza-300)
