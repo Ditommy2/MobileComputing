@@ -236,6 +236,17 @@ function scene:create( event )
 --local freccia = display.newImageRect(sceneGroup, objectSheet, 4, 50, 50)
 --freccia.x=display.contentCenterX
 --freccia.y=display.contentCenterY
+
+  --Barre nere laterali
+  local barLeft = display.newRect(display.screenOriginX, display.screenOriginY, (display.actualContentWidth/2) - (lunghezza/2), altezza)
+  local barRight = display.newRect(display.contentCenterX + (lunghezza/2), 0, (display.actualContentWidth/2) - (lunghezza/2), altezza)
+  barLeft.anchorX = 0
+  barLeft.anchorY = 0
+  barRight.anchorX = 0
+  barRight.anchorY = 0
+
+  barLeft:setFillColor(0,0,0)
+  barRight:setFillColor(0,0,0)
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
