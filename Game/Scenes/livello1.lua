@@ -21,7 +21,7 @@ physics.start()
 local character
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---sheet options per le freccette direzionali. è momentaneo dato che il movimento non verrà implementato cosìi
+--sheet options per le freccette direzionali. è momentaneo dato che il movimento non verrà implementato così
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sheetOptions=
 {
@@ -100,8 +100,8 @@ local function handleButtonEvent( event )
         -- print("MOVIMENTO DA ", stanzaCorrente.TESTO, " a ", stanzaCorrente[direzione].TESTO)
         stanzaCorrente.corrente=false
         composer.setVariable( "prossimaStanza", stanzaCorrente[direzione] )
-       --stanzaCorrente[direzione].corrente=true
-       --composer.setVariable( "stanzaCorrente", stanzaCorrente[direzione] )
+      --  stanzaCorrente[direzione].corrente=true
+      --  composer.setVariable( "stanzaCorrente", stanzaCorrente[direzione] )
       --  composer.removeScene( "livello1" )
       composer.removeScene("Scenes.livello1")
       composer.gotoScene("Scenes.corridoio")
@@ -120,7 +120,6 @@ function scene:create( event )
   funzioneEseguiDisplay(self,  mappaloc, invloc)
   --composer.removeScene( "livello2")
   local numero = stanzaCorrente.seedBackground
-  print(stanzaCorrente, "STANZA CORRENTE")
   local immagine = "Images/Backgrounds/proceduralBack/Stanze/back"..numero..".jpg"
   -- print(immagine)
   local background=display.newImageRect(backGroup, immagine, lunghezza, altezza-300)

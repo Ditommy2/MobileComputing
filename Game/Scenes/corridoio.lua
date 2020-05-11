@@ -197,7 +197,6 @@ function scene:create( event )
   funzione(self,  mappaloc, invloc)
   local direzioneCorridoio = composer.getVariable( "direzione" )
   local seedDirezionale = "seed"..direzioneCorridoio
-  print("CERCO SEED RANDOMICO IN ", seedDirezionale)
   local numeroRandomico = stanzaCorrente[seedDirezionale]
   local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back"..numeroRandomico..".jpg", lunghezza, altezza-300)
 
