@@ -44,6 +44,7 @@ local function handleButtonEvent( event )
 			--a quel punto la scelta di un salvataggio porterà a riprendere quella partita da dove è stat lasciata
 			--------------------------------------------------------------------------------------------------------------------------------------
 			if bottone.id=="carica" then
+			local lowerFixedMenu = require("lowerFixedMenu")
 			local fileHandler = require("fileHandler")
 			local salvataggi = fileHandler.loadTable("saves.json")
 			print(salvataggi.stanzaCorrenteToSave)
@@ -56,7 +57,9 @@ local function handleButtonEvent( event )
 			composer.setVariable( "mappa", salvataggi.mappaToSave )
 			composer.setVariable( "mapx", salvataggi.mapxToSave )
 			composer.setVariable( "mapy", salvataggi.mapyToSave )
-			composer.setVariable( "funzione", salvataggi.displayFunzioneToSave )
+			funzione=lowerFixedMenu.display
+			composer.setVariable( "funzione", funzione )
+			--composer.setVariable( "funzione", salvataggi.displayFunzioneToSave )
 			composer.removeScene( "Scenes.nuovaCarica" )
 			composer.gotoScene("Scenes.livello1")
 			end

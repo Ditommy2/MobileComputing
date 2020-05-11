@@ -30,6 +30,67 @@ function M.saveTable( t, filename, location )
     end
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--funzione per risolvere i cicli di ricorsione che si generano sul file
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function antiReferenceCycle(t)
+local startingTable = t
+print("antireference system", t)
+print("antireference system", startingTable)
+print("NUMERO STANZE: ", #startingTable)
+  -- for i = 1, #startingTable, 1 do
+  --   if
+  --   if startingTable[i]=="<reference cycle>" then
+  --     print("swappato il reference")
+  --     startingTable[i]=startingTable
+  --   else
+  --     print("non era ciclato")
+  --     t=antiReferenceCycle(startingTable[i])
+  --   end
+  -- end
+
+  if not (startingTable.NORD == nil) then
+    if startingTable.NORD=="<reference cycle>" then
+      print("swappato il reference")
+      startingTable.NORD=startingTable
+    else
+      print("non era ciclato")
+      t=antiReferenceCycle(startingTable.NORD)
+    end
+  end
+
+  if not (startingTable.SUD == nil) then
+  if startingTable.SUD=="<reference cycle>" then
+    print("swappato il reference")
+    startingTable.SUD=startingTable
+  else
+    print("non era ciclato")
+    t=antiReferenceCycle(startingTable.SUD)
+  end
+  end
+
+  if not (startingTable.EST == nil) then
+  if startingTable.EST=="<reference cycle>" then
+    print("swappato il reference")
+    startingTable.EST=startingTable
+  else
+    print("non era ciclato")
+    t=antiReferenceCycle(startingTable.EST)
+  end
+  end
+
+  if not (startingTable.OVEST == nil) then
+  if startingTable.OVEST=="<reference cycle>" then
+    print("swappato il reference")
+    startingTable.OVEST=startingTable
+  else
+    print("non era ciclato")
+    t=antiReferenceCycle(startingTable.OVEST)
+  end
+  end
+
+  return startingTable
+end
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione per caricare da filepath una tabella
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -55,6 +116,9 @@ function M.loadTable( filename, location )
         -- Decode JSON data into Lua table
         local t = json.decode( contents )
         -- Close the file handle
+        print( t.mappaToSave.NORD)
+        t.mappaToSave=antiReferenceCycle(t.mappaToSave)
+        t.stanzaCorrenteToSave=antiReferenceCycle(t.stanzaCorrenteToSave)
         io.close( file )
         -- Return table
         return t

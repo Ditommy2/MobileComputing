@@ -6,7 +6,7 @@ local characterInterface = require("characterInterface")
 local scene = composer.newScene()
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
-local funzione= composer.getVariable( "funzione" )
+local funzioneEseguiDisplay= composer.getVariable( "funzione" )
 local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
@@ -81,7 +81,7 @@ local function gotoMenu()
     mappaToSave = composer.getVariable( "mappa" ),
     mapxToSave = composer.getVariable( "mapx" ),
     mapyToSave = composer.getVariable( "mapy" ),
-    displayFunzioneToSave = composer.getVariable( "funzione" )
+    --displayFunzioneToSave = composer.getVariable( "funzione" )
   }
   fileHandler.saveTable(salvataggio, "saves.json")
 
@@ -117,7 +117,7 @@ function scene:create( event )
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
   local phase = event.phase
-  funzione(self,  mappaloc, invloc)
+  funzioneEseguiDisplay(self,  mappaloc, invloc)
   --composer.removeScene( "livello2")
   local numero = stanzaCorrente.seedBackground
   local immagine = "Images/Backgrounds/proceduralBack/Stanze/back"..numero..".jpg"
