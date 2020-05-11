@@ -178,7 +178,10 @@ end
 -- destroy()
 function scene:destroy( event )
 	local sceneGroup = self.view
-
+	for i = sceneGroup.numChildren, 1, -1 do
+		sceneGroup[i]:removeSelf()
+		sceneGroup[i] = nil
+	end
 end
 
 scene:addEventListener( "create", scene )
