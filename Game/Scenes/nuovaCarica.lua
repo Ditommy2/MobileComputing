@@ -44,6 +44,9 @@ local function handleButtonEvent( event )
 			--a quel punto la scelta di un salvataggio porterà a riprendere quella partita da dove è stat lasciata
 			--------------------------------------------------------------------------------------------------------------------------------------
 			if bottone.id=="carica" then
+			local table = {}
+			table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
+			composer.setVariable( "tabellaOgegttiInventario", table )
 			local lowerFixedMenu = require("lowerFixedMenu")
 			local fileHandler = require("fileHandler")
 			local salvataggi = fileHandler.loadTable("saves.json")
