@@ -10,6 +10,123 @@ local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 local prossimaStanza=composer.getVariable( "prossimaStanza" )
+
+--Physics (necessaria per il movimento del personaggio)
+local physics = require("physics")
+physics.start()
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Variabili personaggio
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local character
+local animationTimer
+local moveTimer
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Walking sheet options personaggio
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local sheet_walking_Options =
+{
+  width=144,
+  height=256,
+  numFrames=9,
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Walking sprite sheet personaggio
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local sheet_walking = graphics.newImageSheet( "Images/Characters/TrumpPiccolo.png", sheet_walking_Options )
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Walking sequences table personaggio
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local sequences_walking =
+{
+    --Right walking sequence
+    {
+        name = "rightWalk",
+        start = 7,
+        count = 3,
+        time = 1000,
+        loopCount = 0,
+        loopDirection = "forward"
+    },
+
+    --Left walking sequence
+    {
+        name = "leftWalk",
+        start = 4,
+        count = 3,
+        time = 1000,
+        loopCount = 0,
+        loopDirection = "forward"
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Handle del movimento del personaggio
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--Perform movement
+local function move(event)
+  local dir = event.source.params.direction
+
+  if(not(dir==nil)) then
+    if(dir=="r") then
+      character.x = character.x + 5
+    elseif(dir=="l") then
+      character.x = character.x - 5
+    end
+  end
+end
+
+--Movement Listener
+local function moveListener(event)
+  local phase = event.phase
+  local target = event.target
+  local dir
+
+  if(phase=="began") then
+    display.getCurrentStage():setFocus(target)
+
+    --Touch in the movement area, starting the right movement sprite animation
+    if((event.x < target.nonMovementArea.minX) and (event.y < target.nonMovementArea.maxY)) then
+      dir = "l"
+      character:setSequence( "leftWalk" )
+    elseif((event.x > target.nonMovementArea.maxX) and (event.y < target.nonMovementArea.maxY)) then
+      dir = "r"
+      character:setSequence( "rightWalk" )
+    end
+
+    --Start movement
+    character:play()
+    moveTimer = timer.performWithDelay( 30, move, 0)
+    moveTimer.isPaused = false
+    moveTimer.params = {direction=dir}
+  elseif(phase=="moved") then   --Touch moved
+    --Touch falls in the non-movement area
+    if((event.x > target.nonMovementArea.minX and event.x < target.nonMovementArea.maxX) or (event.y > target.nonMovementArea.maxY)) then
+      --Ending movement, canceling focus and stopping animation
+      display.getCurrentStage():setFocus(nil)
+      timer.cancel( moveTimer )
+      character:pause()
+
+      --Facing the right direction
+      character:setFrame(1)
+      return true
+    end
+  elseif (phase=="ended" or phase=="cancelled") then
+    --Ending movement, canceling focus and stopping animation
+    display.getCurrentStage():setFocus(nil)
+    timer.cancel( moveTimer )
+    character:pause()
+
+    --Facing the right direction
+    character:setFrame(1)
+  end
+
+  return true
+end
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --opzioni immagini freccete non definitivo
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -87,9 +204,24 @@ function scene:create( event )
 
   background.x=display.contentCenterX
   background.y=display.contentCenterY-170
+  physics.addBody(background, "static", {shape={ 0, 0, lunghezza, 0, lunghezza, altezza-300, 0, altezza-300}})
+  background:addEventListener("touch", moveListener)
+
+  --Setting non-movement area
+  local area = {minX=lunghezza*0.2, minY=0, maxX=lunghezza-(lunghezza*0.2), maxY= altezza-300}
+  background.nonMovementArea = area
+
+  --Displaying character and setting sprite sheets
+  character = display.newSprite( sheet_walking, sequences_walking )
+  character:setSequence(rightWalk)
+  character:setFrame(1)
+  character.anchorY = 1
+  character.x = lunghezza * 0.1
+  character.y = altezza-320
+
 --  sceneGroup:insert(background)
   mainGroup=display.newGroup()
-
+    mainGroup:insert(character)
     local frecciaEST  = display.newImageRect(mainGroup, objectSheet, 3, 50, 50)
     frecciaEST.id="EST"
     frecciaEST:addEventListener("tap", handleButtonEvent)
