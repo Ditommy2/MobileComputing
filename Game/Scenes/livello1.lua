@@ -192,6 +192,8 @@ local function gotoMenu()
     displayFunzioneToSave = composer.getVariable( "funzione" )
   }
   fileHandler.saveTable(salvataggio, "saves.json")
+
+  composer.removeScene("Scenes.livello1")
  		composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
  end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
