@@ -21,7 +21,7 @@ physics.start()
 local character
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---sheet options per le freccette direzionali. è momentaneo dato che il movimento non verrà implementato così
+--sheet options per le freccette direzionali. è momentaneo dato che il movimento non verrà implementato cosìi
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sheetOptions=
 {
