@@ -23,20 +23,19 @@ function M.saveTable( t, filename, location )
         return false
     else
         -- Write encoded JSON data to file
-        file:write( json.encode( t ) )
+        file:write( json.encode( t , {indent=true}) )
         -- Close the file handle
         io.close( file )
         return true
     end
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---funzione per risolvere i cicli di ricorsione che si generano sul file
+--funzione per risolvere i cicli di ricorsione che si generano sul file-----------------------------------ERRORE
+--annotazioni: le back cycling sono assolutamente insensate, puntano a se stesse o a stanze casuali, è per questo che si rompe tutto
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function antiReferenceCycle(t)
 local startingTable = t
-print("antireference system", t)
-print("antireference system", startingTable)
-print("NUMERO STANZE: ", #startingTable)
+print("ITERAZIONE ANTICICLO SU STANZA ", startingTable.TESTO)
   -- for i = 1, #startingTable, 1 do
   --   if
   --   if startingTable[i]=="<reference cycle>" then
@@ -116,8 +115,10 @@ function M.loadTable( filename, location )
         -- Decode JSON data into Lua table
         local t = json.decode( contents )
         -- Close the file handle
-        print( t.mappaToSave.NORD)
+        print("ANTICICLO SULLA MAPPA")
+
         t.mappaToSave=antiReferenceCycle(t.mappaToSave)
+        print("ANTICICLO SULLA STANZA")
         t.stanzaCorrenteToSave=antiReferenceCycle(t.stanzaCorrenteToSave)
         io.close( file )
         -- Return table
