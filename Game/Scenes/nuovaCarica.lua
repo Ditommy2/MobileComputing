@@ -1,7 +1,7 @@
 local composer = require("composer")
 local widget = require("widget")
 local scene = composer.newScene( )
-
+local interfaccia = require("interfaceConfig")
 --Game window (16:9 aspect ratio)
 local width = display.contentWidth
 local height = display.contentWidth * (9/16)
@@ -9,6 +9,9 @@ local height = display.contentWidth * (9/16)
 local buttonNuova
 local buttonCarica
 local serverAnswer
+local numeroStanze=interfaccia.numeroStanze
+local numero = numeroStanze
+local tabella = interfaccia.tabellaFunction(numero)
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --handle dei bottoni. ha due azioni differenti in caso si prema il bottone nuova o il bottone carica
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -24,7 +27,7 @@ local function handleButtonEvent( event )
 				composer.setVariable( "tabellaOgegttiInventario", table )
 				local lowerFixedMenu = require("lowerFixedMenu")
 				inv = lowerFixedMenu.create.inventario
-				mappa = lowerFixedMenu.create.mappaGenerata
+				mappa = lowerFixedMenu.create.mappaGenerata(0, {}, numero, tabella, numero+1, numero+1)
 				mappa.corrente=true
 				funzione=lowerFixedMenu.display
 				composer.setVariable( "stanzaCorrente", mappa )
@@ -41,6 +44,21 @@ local function handleButtonEvent( event )
 			--a quel punto la scelta di un salvataggio porterà a riprendere quella partita da dove è stat lasciata
 			--------------------------------------------------------------------------------------------------------------------------------------
 			if bottone.id=="carica" then
+			local fileHandler = require("fileHandler")
+			local salvataggi = fileHandler.loadTable("saves.json")
+			print(salvataggi.stanzaCorrenteToSave)
+			print(salvataggi.invToSave)
+			print(salvataggi.mappaToSave)
+			print(salvataggi.mapxToSave)
+			print(salvataggi.mapyToSave)
+			composer.setVariable( "stanzaCorrente", salvataggi.stanzaCorrenteToSave )
+			composer.setVariable( "inv", salvataggi.invToSave )
+			composer.setVariable( "mappa", salvataggi.mappaToSave )
+			composer.setVariable( "mapx", salvataggi.mapxToSave )
+			composer.setVariable( "mapy", salvataggi.mapyToSave )
+			composer.setVariable( "funzione", salvataggi.displayFunzioneToSave )
+			composer.removeScene( "Scenes.nuovaCarica" )
+			composer.gotoScene("Scenes.livello1")
 			end
 		end
 end
@@ -107,7 +125,7 @@ function scene:create( event )
       width=width*0.3,
       height= height * 0.2,
       id = "nuova",
-      label = "Nuova Partita",
+      label = "New Game",
       labelColor={default={0.5, 0, 0}},
       fontSize=50,
       onEvent = handleButtonEvent
@@ -122,7 +140,7 @@ function scene:create( event )
       width=width*0.3,
       height= height * 0.2,
       id = "carica",
-      label = "Carica Partita",
+      label = "Load Game",
       labelColor={default={0.5, 0, 0}},
       fontSize=50,
       onEvent = handleButtonEvent

@@ -120,6 +120,10 @@ end),
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --coppia di valori da costruire: uno è l'inventario e l'altro è la mappa generata
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-create={inventario={"ITEM", "ITEM", "ITEM", "ITEM", "ITEM"}, mappaGenerata = interfaccia.proceduraleMappa(0, {}, numero, tabella, numero+1, numero+1)}
+create={
+  inventario={"ITEM", "ITEM", "ITEM", "ITEM", "ITEM"},
+  mappaGenerata = interfaccia.proceduraleMappa
+  }
+  -- mappaGenerata = interfaccia.proceduraleMappa(0, {}, numero, tabella, numero+1, numero+1)}
 }
 return inventario

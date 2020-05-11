@@ -6,10 +6,12 @@ local widget = require("widget")
 local scene = composer.newScene()
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
-local funzione= composer.getVariable( "funzione" )
+--local funzione= composer.getVariable( "funzione" )
 local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
+local funzioneDisplay=lowerFixedMenu.display
+local funzione = funzioneDisplay
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --sheet options per le freccette direzionali. è momentaneo dato che il movimento non verrà implementato così
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -48,19 +50,32 @@ local objectSheet=graphics.newImageSheet( "Images/Utility/directionArrow.png", s
 --funzione per tornare al menu. Quando chiamata deve salvare tutti i dati in maniera persistente per poter recuperare la partita in qualsiasi momento
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function gotoMenu()
-  -- local json=require("json")
-  -- local filePathSalvataggio=system.pathForFile("salvataggi.json", system.DocumentsDirectory)
-  -- local file = io.open( filePathComandi, "w" )
-  -- if file then
-  --   local stringa = "false"
-  --   file:write(json.encode(stringa))
-  --   io.close(file)
-  -- end
-  for i = sceneGroup.numChildren, 1, -1 do
-    sceneGroup[i]:removeSelf()
-    -- print("FRECCIA RIMOSSA")
-    sceneGroup[i] = nil
-  end
+  --print("scrittura salvataggi")
+  -- local stanzaCorrenteToSave = composer.getVariable( "stanzaCorrente" )
+  -- composer.setVariable( "stanzaCorrente", nil )
+  -- file:write(json.encode(stanzaCorrenteToSave))
+  -- local invToSave = composer.getVariable( "inv" )
+  -- composer.setVariable( "inv", nil )
+  -- file:write(json.encode(invToSave))
+  -- local mappaToSave = composer.getVariable( "mappa" )
+  -- composer.setVariable( "mappa", nil )
+  -- file:write(json.encode(mappaToSave))
+  -- local mapxToSave = composer.getVariable( "mapx" )
+  -- composer.setVariable( "mapx", nil )
+  -- file:write(json.encode(mapxToSave))
+  -- local mapyToSave = composer.getVariable( "mapy" )
+  -- composer.setVariable( "mapy", nil )
+  -- file:write(json.encode(mapyToSave))
+  local fileHandler = require("fileHandler")
+  local salvataggio = {
+    stanzaCorrenteToSave = composer.getVariable( "stanzaCorrente" ),
+    invToSave = composer.getVariable( "inv" ),
+    mappaToSave = composer.getVariable( "mappa" ),
+    mapxToSave = composer.getVariable( "mapx" ),
+    mapyToSave = composer.getVariable( "mapy" ),
+    displayFunzioneToSave = composer.getVariable( "funzione" )
+  }
+  fileHandler.saveTable(salvataggio, "saves.json")
  		composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
  end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -78,12 +93,12 @@ local function handleButtonEvent( event )
       --  stanzaCorrente[direzione].corrente=true
       --  composer.setVariable( "stanzaCorrente", stanzaCorrente[direzione] )
       --  composer.removeScene( "livello1" )
-      for i = mainGroup.numChildren, 1, -1 do
-        mainGroup[i]:removeSelf()
-        -- print("FRECCIA RIMOSSA")
-        mainGroup[i] = nil
-      end
-      composer.removeScene("Scenes.livello1")
+      -- for i = mainGroup.numChildren, 1, -1 do
+      --   mainGroup[i]:removeSelf()
+      --   -- print("FRECCIA RIMOSSA")
+      --   mainGroup[i] = nil
+      -- end
+
       composer.gotoScene("Scenes.corridoio")
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -91,6 +106,7 @@ end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- create()
 function scene:create( event )
+--  print("CREAZIONE SCENA")
   -- print("SEED DIREZIONALE DEL CORRIDOIOOOO", stanzaCorrente.seedNORD)
   -- print("SEED DIREZIONALE DEL CORRIDOIOOOO", stanzaCorrente.seedSUD)
 	local sceneGroup = self.view
@@ -185,12 +201,20 @@ function scene:hide( event )
 
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is on screen (but is about to go off screen)
-
+    for i = sceneGroup.numChildren, 1, -1 do
+      sceneGroup[i]:removeSelf()
+      sceneGroup[i] = nil
+    end
+    for i = mainGroup.numChildren, 1, -1 do
+      mainGroup[i]:removeSelf()
+      mainGroup[i] = nil
+    end
 --composer.removeScene("livello1")
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
    ---
 
+   composer.removeScene("Scenes.livello1")
 
 	end
 end
