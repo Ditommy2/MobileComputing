@@ -10,6 +10,7 @@ local altezza=  lunghezza*(9/16)
 local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
+composer.recycleOnSceneChange = true
 
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
@@ -26,15 +27,15 @@ local moveTimer
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sheet_walking_Options =
 {
-  width=144,
-  height=256,
+  width=72,
+  height=128,
   numFrames=9,
 }
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sprite sheet personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local sheet_walking = graphics.newImageSheet( "Images/Characters/TrumpPiccolo.png", sheet_walking_Options )
+local sheet_walking = graphics.newImageSheet( "Images/Characters/Trump.png", sheet_walking_Options )
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sequences table personaggio
@@ -191,7 +192,9 @@ local function gotoMenu()
     --displayFunzioneToSave = composer.getVariable( "funzione" )
   }
   fileHandler.saveTable(salvataggio, "saves.json")
- 	composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
+
+  composer.removeScene("Scenes.livello1")
+ 		composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
  end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione che gestisce la pressione dei tasti delle freccette. Anche questo è momentaneo, non rappresenta la versione finale
@@ -208,12 +211,7 @@ local function handleButtonEvent( event )
        --stanzaCorrente[direzione].corrente=true
        --composer.setVariable( "stanzaCorrente", stanzaCorrente[direzione] )
       --  composer.removeScene( "livello1" )
-      -- for i = mainGroup.numChildren, 1, -1 do
-      --   mainGroup[i]:removeSelf()
-      --   -- print("FRECCIA RIMOSSA")
-      --   mainGroup[i] = nil
-      -- end
-
+      composer.removeScene("Scenes.livello1")
       composer.gotoScene("Scenes.corridoio")
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -249,7 +247,7 @@ function scene:create( event )
   character:setFrame(1)
   character.anchorY = 1
   character.x = lunghezza * 0.1
-  character.y = altezza-320
+  character.y = altezza-310
 
 --  sceneGroup:insert(background)
   mainGroup=display.newGroup()
@@ -292,16 +290,37 @@ function scene:create( event )
     freccia.y=display.contentCenterY-150
   end
 
-  --Barre nere laterali
-  local barLeft = display.newRect(display.screenOriginX, display.screenOriginY, (display.actualContentWidth/2) - (lunghezza/2), altezza)
-  local barRight = display.newRect(display.contentCenterX + (lunghezza/2), 0, (display.actualContentWidth/2) - (lunghezza/2), altezza)
-  barLeft.anchorX = 0
-  barLeft.anchorY = 0
-  barRight.anchorX = 0
-  barRight.anchorY = 0
+  --Barre nere
+  local hidingGroup = display.newGroup()
 
-  barLeft:setFillColor(0,0,0)
-  barRight:setFillColor(0,0,0)
+  if(display.actualContentWidth > lunghezza) then
+    local barLeft = display.newRect(display.screenOriginX, display.screenOriginY, (display.actualContentWidth/2) - (lunghezza/2), altezza)
+    local barRight = display.newRect(display.contentCenterX + (lunghezza/2), 0, (display.actualContentWidth/2) - (lunghezza/2), altezza)
+
+    barLeft.anchorX = 0
+    barLeft.anchorY = 0
+    barRight.anchorX = 0
+    barRight.anchorY = 0
+
+    barLeft:setFillColor(0,0,0)
+    barRight:setFillColor(0,0,0)
+
+    hidingGroup:insert(barLeft)
+    hidingGroup:insert(barRight)
+  elseif(display.actualContentHeight > altezza) then
+    local barUp = display.newRect(display.screenOriginX, display.screenOriginY, display.actualContentWidth, (display.actualContentHeight - altezza)/2)
+    local barDown = display.newRect(display.screenOriginX, altezza, display.actualContentWidth, (display.actualContentHeight - altezza)/2)
+    barUp.anchorX = 0
+    barUp.anchorY = 0
+    barDown.anchorX = 0
+    barDown.anchorY = 0
+
+    barUp:setFillColor(0,0,0)
+    barDown:setFillColor(0,0,0)
+
+    hidingGroup:insert(barUp)
+    hidingGroup:insert(barDown)
+  end
 
   local returnButton = display.newImageRect( mainGroup, "Images/Utility/returnArrow.png", 150, 150 )
   mainGroup:insert(returnButton)
@@ -311,6 +330,8 @@ function scene:create( event )
 --local freccia = display.newImageRect(sceneGroup, objectSheet, 4, 50, 50)
 --freccia.x=display.contentCenterX
 --freccia.y=display.contentCenterY
+  sceneGroup:insert(mainGroup)
+  sceneGroup:insert(hidingGroup)
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --fase show del display
@@ -369,9 +390,13 @@ end
 -- destroy()
 function scene:destroy( event )
 
-	local sceneGroup = self.view
+  local sceneGroup = scene.view
+  print("Scena 'livello1' rimossa")
 	-- Code here runs prior to the removal of scene's view
-
+  for i = sceneGroup.numChildren, 1, -1 do
+    sceneGroup[i]:removeSelf()
+    sceneGroup[i] = nil
+  end
 end
 
 

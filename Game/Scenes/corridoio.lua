@@ -26,16 +26,16 @@ local moveTimer
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sheet_walking_Options =
 {
-  width=144,
-  height=256,
+  width=72,
+  height=128,
   numFrames=9,
 }
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sprite sheet personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local sheet_walking = graphics.newImageSheet( "Images/Characters/TrumpPiccolo.png", sheet_walking_Options )
-
+local sheet_walking = graphics.newImageSheet( "Images/Characters/Trump.png", sheet_walking_Options )
+print( display.pixelWidth / display.actualContentWidth )
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sequences table personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -179,10 +179,7 @@ local function handleButtonEvent( event )
           stanzaCorrente.corrente=true
           composer.setVariable("stanzaCorrente", stanzaCorrente)
         end
-        for i = mainGroup.numChildren, 1, -1 do
-        mainGroup[i]:removeSelf()
-        mainGroup[i] = nil
-        end
+
         composer.removeScene( "Scenes.corridoio")
         composer.gotoScene( "Scenes.livello1" )
 end
@@ -218,7 +215,7 @@ function scene:create( event )
   character:setFrame(1)
   character.anchorY = 1
   character.x = lunghezza * 0.1
-  character.y = altezza-320
+  character.y = altezza-310
 
 --  sceneGroup:insert(background)
   mainGroup=display.newGroup()
@@ -239,15 +236,39 @@ function scene:create( event )
 --freccia.y=display.contentCenterY
 
   --Barre nere laterali
-  local barLeft = display.newRect(display.screenOriginX, display.screenOriginY, (display.actualContentWidth/2) - (lunghezza/2), altezza)
-  local barRight = display.newRect(display.contentCenterX + (lunghezza/2), 0, (display.actualContentWidth/2) - (lunghezza/2), altezza)
-  barLeft.anchorX = 0
-  barLeft.anchorY = 0
-  barRight.anchorX = 0
-  barRight.anchorY = 0
+  local hidingGroup = display.newGroup()
 
-  barLeft:setFillColor(0,0,0)
-  barRight:setFillColor(0,0,0)
+  if(display.actualContentWidth > lunghezza) then
+    local barLeft = display.newRect(display.screenOriginX, display.screenOriginY, (display.actualContentWidth/2) - (lunghezza/2), altezza)
+    local barRight = display.newRect(display.contentCenterX + (lunghezza/2), 0, (display.actualContentWidth/2) - (lunghezza/2), altezza)
+
+    barLeft.anchorX = 0
+    barLeft.anchorY = 0
+    barRight.anchorX = 0
+    barRight.anchorY = 0
+
+    barLeft:setFillColor(0,0,0)
+    barRight:setFillColor(0,0,0)
+
+    hidingGroup:insert(barLeft)
+    hidingGroup:insert(barRight)
+  elseif(display.actualContentHeight > altezza) then
+    local barUp = display.newRect(display.screenOriginX, display.screenOriginY, display.actualContentWidth, (display.actualContentHeight - altezza)/2)
+    local barDown = display.newRect(display.screenOriginX, altezza, display.actualContentWidth, (display.actualContentHeight - altezza)/2)
+    barUp.anchorX = 0
+    barUp.anchorY = 0
+    barDown.anchorX = 0
+    barDown.anchorY = 0
+
+    barUp:setFillColor(0,0,0)
+    barDown:setFillColor(0,0,0)
+
+    hidingGroup:insert(barUp)
+    hidingGroup:insert(barDown)
+  end
+
+  sceneGroup:insert(mainGroup)
+  sceneGroup:insert(hidingGroup)
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -298,9 +319,13 @@ end
 -- destroy()
 function scene:destroy( event )
 
-	local sceneGroup = self.view
+  local sceneGroup = scene.view
+  print("Scena 'livello1' rimossa")
 	-- Code here runs prior to the removal of scene's view
-
+  for i = sceneGroup.numChildren, 1, -1 do
+    sceneGroup[i]:removeSelf()
+    sceneGroup[i] = nil
+  end
 end
 
 
