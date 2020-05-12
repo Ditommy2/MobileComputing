@@ -13,6 +13,10 @@ local widget = require("widget")
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
 
+local backgroundGroup
+local textGroup
+local midGroup
+
 --Physics (necessaria per il movimento del personaggio(attacco e difesa))
 local physics = require("physics")
 physics.start()
@@ -32,9 +36,31 @@ physics.start()
 function scene:create( event )
 
 	local sceneGroup = self.view
+
+	backgroundGroup = display.newGroup()
+	sceneGroup:insert(backgroundGroup)
+
+	textGroup = display.newGroup()
+	sceneGroup:insert(textGroup)
+
+	midGroup = display.newGroup()
+	sceneGroup:insert(midGroup)
+
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 
-local testoMossa = display.newText( "" ,1050, 585, 450, 0, native.systemFont, 26 )
+--****************BACKGROUND GROUP********************************
+
+ local background = display.newImageRect( backgroundGroup, "Images/Backgrounds/proceduralBack/Stanze/back1.jpg", 1280, 720 )
+ background.x = display.contentCenterX
+ background.y = display.contentCenterY - 200
+
+ local underBar = display.newImageRect( backgroundGroup, "Images/Backgrounds/FightBar.png", 1280, 720)
+ underBar.x = display.contentCenterX
+ underBar.y = display.contentCenterY
+
+ --*******************TEXT GROUP************************************
+
+local testoMossa = display.newText( textGroup, "" ,1050, 585, 450, 0, native.systemFont, 20 )
 testoMossa:setFillColor( 1, 1, 1 )
 
 local function infoMossa1()
@@ -53,30 +79,24 @@ local function infoMossa4()
   testoMossa.text = "Mossa4 : Questa mossa genera gettere & settere\nAttacco = 20%\nDifesa = 50%\nVelocità = 20%"
 end
 
-	local background = display.newImageRect( sceneGroup, "Images/Backgrounds/proceduralBack/Stanze/back1.jpg", 1280, 720 )
-	 background.x = display.contentCenterX
-	 background.y = display.contentCenterY
-
-   local underBar = display.newImageRect( sceneGroup, "Images/Backgrounds/FightBar.png", 1280, 720)
-   underBar.x = display.contentCenterX
-   underBar.y = display.contentCenterY
-
-		local mossa1 = display.newText( sceneGroup, "Mossa1", 200, 515, native.systemFont, 50 )
+		local mossa1 = display.newText( textGroup, "Mossa1", 200, 515, native.systemFont, 50 )
     mossa1:setFillColor( 0.82, 0.86, 1 )
 
-    local mossa2 = display.newText( sceneGroup, "Mossa2", 560, 515, native.systemFont, 50 )
+    local mossa2 = display.newText( textGroup, "Mossa2", 560, 515, native.systemFont, 50 )
     mossa2:setFillColor( 0.82, 0.86, 1 )
 
-    local mossa3 = display.newText( sceneGroup, "Mossa3", 200, 650, native.systemFont, 50 )
+    local mossa3 = display.newText( textGroup, "Mossa3", 200, 650, native.systemFont, 50 )
     mossa3:setFillColor( 0.82, 0.86, 1 )
 
-    local mossa4 = display.newText( sceneGroup, "Mossa4", 560, 650, native.systemFont, 50 )
+    local mossa4 = display.newText( textGroup, "Mossa4", 560, 650, native.systemFont, 50 )
     mossa4:setFillColor( 0.82, 0.86, 1 )
 
     mossa1:addEventListener( "tap", infoMossa1 )
     mossa2:addEventListener( "tap", infoMossa2 )
     mossa3:addEventListener( "tap", infoMossa3 )
     mossa4:addEventListener( "tap", infoMossa4 )
+
+		--*************MID GROUP*************************************************
 
 end
 
