@@ -33,9 +33,8 @@ end
 --funzione per risolvere i cicli di ricorsione che si generano sul file-----------------------------------ERRORE
 --annotazioni: le back cycling sono assolutamente insensate, puntano a se stesse o a stanze casuali, è per questo che si rompe tutto
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local function antiReferenceCycle(t)
-local startingTable = t
-print("ITERAZIONE ANTICICLO SU STANZA ", startingTable.TESTO)
+local function antiReferenceCycle(precedente, attuale)
+-- print("ITERAZIONE ANTICICLO SU STANZA ", attuale.TESTO)
   -- for i = 1, #startingTable, 1 do
   --   if
   --   if startingTable[i]=="<reference cycle>" then
@@ -46,48 +45,52 @@ print("ITERAZIONE ANTICICLO SU STANZA ", startingTable.TESTO)
   --     t=antiReferenceCycle(startingTable[i])
   --   end
   -- end
-
-  if not (startingTable.NORD == nil) then
-    if startingTable.NORD=="<reference cycle>" then
-      print("swappato il reference")
-      startingTable.NORD=startingTable
+  local t = attuale
+  if not (attuale.NORD == nil) then
+    if attuale.NORD=="<reference cycle>" then
+      -- print("swappato il reference")
+      attuale.NORD=precedente
     else
-      print("non era ciclato")
-      t=antiReferenceCycle(startingTable.NORD)
+      -- print("non era ciclato")
+      -- t=
+      antiReferenceCycle(attuale, attuale.NORD)
     end
   end
 
-  if not (startingTable.SUD == nil) then
-  if startingTable.SUD=="<reference cycle>" then
-    print("swappato il reference")
-    startingTable.SUD=startingTable
-  else
-    print("non era ciclato")
-    t=antiReferenceCycle(startingTable.SUD)
-  end
-  end
-
-  if not (startingTable.EST == nil) then
-  if startingTable.EST=="<reference cycle>" then
-    print("swappato il reference")
-    startingTable.EST=startingTable
-  else
-    print("non era ciclato")
-    t=antiReferenceCycle(startingTable.EST)
-  end
+  if not (attuale.SUD == nil) then
+    if attuale.SUD=="<reference cycle>" then
+      -- print("swappato il reference")
+      attuale.SUD=precedente
+    else
+      -- print("non era ciclato")
+      -- t=
+      antiReferenceCycle(attuale, attuale.SUD)
+    end
   end
 
-  if not (startingTable.OVEST == nil) then
-  if startingTable.OVEST=="<reference cycle>" then
-    print("swappato il reference")
-    startingTable.OVEST=startingTable
-  else
-    print("non era ciclato")
-    t=antiReferenceCycle(startingTable.OVEST)
-  end
+  if not (attuale.EST == nil) then
+    if attuale.EST=="<reference cycle>" then
+      -- print("swappato il reference")
+      attuale.EST=precedente
+    else
+      -- print("non era ciclato")
+      -- t=
+      antiReferenceCycle(attuale, attuale.EST)
+    end
   end
 
-  return startingTable
+  if not (attuale.OVEST == nil) then
+    if attuale.OVEST=="<reference cycle>" then
+      -- print("swappato il reference")
+      attuale.OVEST=precedente
+    else
+      -- print("non era ciclato")
+      -- t=
+      antiReferenceCycle(attuale, attuale.OVEST)
+    end
+  end
+
+  -- return t
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione per caricare da filepath una tabella
@@ -115,11 +118,13 @@ function M.loadTable( filename, location )
         -- Decode JSON data into Lua table
         local t = json.decode( contents )
         -- Close the file handle
-        print("ANTICICLO SULLA MAPPA")
+        -- print("ANTICICLO SULLA MAPPA")
 
-        t.mappaToSave=antiReferenceCycle(t.mappaToSave)
-        print("ANTICICLO SULLA STANZA")
-        t.stanzaCorrenteToSave=antiReferenceCycle(t.stanzaCorrenteToSave)
+        -- t.mappaToSave=
+        antiReferenceCycle(t.mappaToSave, t.mappaToSave)
+        -- print("ANTICICLO SULLA STANZA")
+        -- t.stanzaCorrenteToSave=
+        antiReferenceCycle(t.stanzaCorrenteToSave, t.stanzaCorrenteToSave)
         io.close( file )
         -- Return table
         return t

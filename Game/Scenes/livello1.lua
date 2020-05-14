@@ -117,7 +117,7 @@ function scene:create( event )
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
   local phase = event.phase
-  funzioneEseguiDisplay(self,  mappaloc, invloc)
+  funzioneEseguiDisplay(self,  stanzaCorrente, invloc)
   --composer.removeScene( "livello2")
   local numero = stanzaCorrente.seedBackground
   local immagine = "Images/Backgrounds/proceduralBack/Stanze/back"..numero..".jpg"

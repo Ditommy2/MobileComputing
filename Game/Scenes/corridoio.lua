@@ -6,7 +6,7 @@ local characterInterface = require("characterInterface")
 local scene = composer.newScene()
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
-local funzione= composer.getVariable( "funzione" )
+local funzioneEseguiDisplay= composer.getVariable( "funzione" )
 local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
@@ -194,7 +194,7 @@ function scene:create( event )
 	-- Code here runs when the scene is first created but has not yet appeared on screen
   local phase = event.phase
 
-  funzione(self,  mappaloc, invloc)
+  funzioneEseguiDisplay(self,  stanzaCorrente, invloc)
   local direzioneCorridoio = composer.getVariable( "direzione" )
   local seedDirezionale = "seed"..direzioneCorridoio
   local numeroRandomico = stanzaCorrente[seedDirezionale]
