@@ -83,7 +83,8 @@ local function gotoMenu()
     mapyToSave = composer.getVariable( "mapy" ),
     --displayFunzioneToSave = composer.getVariable( "funzione" )
   }
-  fileHandler.saveTable(salvataggio, "saves.json")
+  print( "saves"..composer.getVariable("username")..composer.getVariable("nomePartita")..".json")
+  fileHandler.saveTable(salvataggio, "saves"..composer.getVariable("username")..composer.getVariable("nomePartita")..".json")
 
   composer.removeScene("Scenes.livello1")
  		composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )

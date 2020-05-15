@@ -76,7 +76,8 @@ local function networkListener( event )
           loginGroup[i]:removeSelf()
           loginGroup[i] = nil
         end
-				composer.gotoScene( "Scenes.livello1" )
+        composer.setVariable( "username", username.text )
+				composer.gotoScene( "Scenes.nuovaCarica" )
 				--composer.gotoScene("register")
 			elseif event.response == ("Duplicate entry '"..username.text.."' for key 'PRIMARY'") then
 			print("Username gia in uso")

@@ -30,6 +30,7 @@ local function networkListener( event )
         serverAnswer.alpha = 1
         transition.to( serverAnswer, { time=4000, alpha=0 } )
       else
+				composer.setVariable( "username", utenteTextField.text )
         composer.gotoScene("Scenes.nuovaCarica")
       end
     end
