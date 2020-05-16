@@ -62,7 +62,7 @@ local function networkListener( event )
     if ( event.isError ) then
 			print("Cozzio che è successo?")
     else
-    	print( event.response .."EVENTO")
+    	print( event.response .." EVENTO")
 			if event.response=="" then
 				saveDatas(username.text, password.text)
 				loadDatas()
@@ -109,7 +109,8 @@ local function handleButtonEvent( event )
 				end
 				composer.gotoScene("Scenes.register")
 else
-    	local URL = "https://appmcsite.000webhostapp.com/insert.php?username=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
+      --local URL = "http://127.0.0.1/mobilecomputing/insert.php?name=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)   --PROVA LOCALE
+    	local URL = "https://appmcsite.000webhostapp.com/insert.php?username=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)  --QUELLO VERO
 			--local URL = "".. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
         network.request(URL, "GET", networkListener)
 

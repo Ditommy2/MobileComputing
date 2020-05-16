@@ -133,7 +133,9 @@ local function displayStanzaFunzione(stanza, offx, offy)
   local coloreCorridoio={1, 0, 0}
 local item = display.newRect( offx, offy, dimensioniStanza, dimensioniStanza )
 item:setFillColor(coloreStanza[1], coloreStanza[2], coloreStanza[3])
-if(stanza.corrente==true) then item:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
+if(stanza.corrente==true) then
+  item:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
+  --print("CAMBIATO COLORE SU STANZA CORRENTE:", stanza.TESTO)
 end
 mapGroup:insert(item)
 -- print("stanza stampata: ")
