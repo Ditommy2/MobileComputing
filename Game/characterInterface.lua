@@ -12,7 +12,7 @@ physics.setGravity(0, 0)
 local character
 local animationTimer
 local moveTimer
-
+local scene
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sheet options personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -68,6 +68,14 @@ local function move(event)
     elseif(dir=="l") then
       character.x = character.x - 5
     end
+
+    if(character.x < 0) then
+      scene.goBack()
+    end
+
+    if(character.x > lunghezza) then
+      scene.changeRoom()
+    end
   end
 end
 
@@ -119,7 +127,10 @@ local function moveListener(event)
   return true
 end
 
-local function create()
+local function create(scena)
+  --Memorizing scene context
+  scene = scena
+
   --Displaying character and setting sprite sheets
   character = display.newSprite( sheet_walking, sequences_walking )
   character:setSequence(rightWalk)
@@ -133,33 +144,13 @@ local function create()
   return character
 end
 
-local function exit(self, event)
-  local ogg1 = self.myName
-  local ogg2 = event.other.myName
-
-  -- if(ogg1 == "character") then
-  --   if(ogg2 == "BarRight") then
-  --     print("Ogg1=character and ogg2=BarRight")
-  --   else
-  --     print("Ogg1=character and ogg2=BarLeft")
-  --   end
-  -- end
-  --
-  -- if(ogg1 == "BarRight") then
-  --   print("Ogg1=BarRight and ogg2=character")
-  -- else
-  --   print("Ogg1=BarLeft and ogg2=character")
-  -- end
-
-  print("Called 'exit': ogg1=" .. ogg1 .. ", ogg2=" .. ogg2)
-end
-
 local interfacciaPersonaggio =
 {
   creaPersonaggio = (create),
   muovi = (move),
   listener = (moveListener),
-  exitRoom = (exit)
+  changeRoom = (exitRight),
+  goBack = (exitLeft)
 }
 
 return interfacciaPersonaggio

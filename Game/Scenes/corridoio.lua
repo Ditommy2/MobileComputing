@@ -165,6 +165,26 @@ local objectSheet=graphics.newImageSheet( "Images/Utility/directionArrow.png", s
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione gestione delle ferccette
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function opposite(dir)
+  if(prec=="SUD") then
+    dir="NORD"
+  end
+
+  if(prec=="NORD") then
+    dir="SUD"
+  end
+
+  if(prec=="EST") then
+    dir="OVEST"
+  end
+
+  if(prec=="OVEST") then
+    dir="EST"
+  end
+
+  return dir
+end
+
 local function handleButtonEvent( event )
         local item=event.target
         local direzione = item.id
@@ -181,9 +201,34 @@ local function handleButtonEvent( event )
           composer.setVariable("stanzaCorrente", stanzaCorrente)
         end
 
+        composer.setVariable( "prec", opposite(direzione) )
         composer.removeScene( "Scenes.corridoio")
         composer.gotoScene( "Scenes.livello1" )
 end
+
+function goBack()
+  local stanzaPrec = composer.getVariable("prec")
+
+  if(stanzaPrec==nil) then
+    --Show error tab
+    print("Non si può andare indietro (prec=nil)")
+  else
+    --Go to previous room
+    stanzaCorrente.corrente=true
+    composer.setVariable("stanzaCorrente", stanzaCorrente)
+    composer.setVariable( "prossimaStanza", stanzaCorrente[prec] )
+    composer.removeScene("Scenes.corridoio")
+    composer.gotoScene("Scenes.livello1")
+  end
+end
+
+function changeRoom()
+  prossimaStanza.corrente=true
+  composer.setVariable( "stanzaCorrente", prossimaStanza)
+  composer.removeScene( "Scenes.corridoio")
+  composer.gotoScene( "Scenes.livello1")
+end
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --fase create del display
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -210,7 +255,7 @@ function scene:create( event )
   background.nonMovementArea = area
 
   --Displaying character and setting sprite sheets
-  character =  characterInterface.creaPersonaggio()
+  character =  characterInterface.creaPersonaggio(self)
 
 --  sceneGroup:insert(background)
   mainGroup=display.newGroup()
@@ -332,5 +377,8 @@ scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
 -- -----------------------------------------------------------------------------------
+
+scene.goBack = (goBack)
+scene.changeRoom = (changeRoom)
 
 return scene

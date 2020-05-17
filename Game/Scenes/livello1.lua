@@ -91,6 +91,26 @@ local function gotoMenu()
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione che gestisce la pressione dei tasti delle freccette. Anche questo è momentaneo, non rappresenta la versione finale
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function opposite(dir)
+  if(prec=="SUD") then
+    dir="NORD"
+  end
+
+  if(prec=="NORD") then
+    dir="SUD"
+  end
+
+  if(prec=="EST") then
+    dir="OVEST"
+  end
+
+  if(prec=="OVEST") then
+    dir="EST"
+  end
+
+  return dir
+end
+
 local function handleButtonEvent( event )
         local item=event.target
         local direzione = item.id
@@ -100,12 +120,35 @@ local function handleButtonEvent( event )
         -- print("MOVIMENTO DA ", stanzaCorrente.TESTO, " a ", stanzaCorrente[direzione].TESTO)
         stanzaCorrente.corrente=false
         composer.setVariable( "prossimaStanza", stanzaCorrente[direzione] )
+        composer.setVariable( "prec", opposite(direzione) )
       --  stanzaCorrente[direzione].corrente=true
       --  composer.setVariable( "stanzaCorrente", stanzaCorrente[direzione] )
       --  composer.removeScene( "livello1" )
       composer.removeScene("Scenes.livello1")
       composer.gotoScene("Scenes.corridoio")
 end
+
+function goBack()
+  local stanzaPrec = composer.getVariable("prec")
+
+  if(stanzaPrec==nil) then
+    --Show error tab
+    print("Non si può andare indietro (prec=nil)")
+  else
+    --Go to previous room
+    composer.setVariable( "direzione", direzione )
+    stanzaCorrente.corrente = false
+    composer.setVariable( "prossimaStanza", stanzaCorrente[prec] )
+    composer.setVariable( "prec", opposite(prec) )
+    composer.removeScene("Scenes.livello1")
+    composer.gotoScene("Scenes.corridoio")
+  end
+end
+
+function changeRoom()
+  print("Called changeRoom")
+end
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --fase create del display
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -114,6 +157,7 @@ function scene:create( event )
 --  print("CREAZIONE SCENA")
   -- print("SEED DIREZIONALE DEL CORRIDOIOOOO", stanzaCorrente.seedNORD)
   -- print("SEED DIREZIONALE DEL CORRIDOIOOOO", stanzaCorrente.seedSUD)
+
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
   local phase = event.phase
@@ -133,7 +177,7 @@ function scene:create( event )
   background.nonMovementArea = area
 
   --Displaying character and setting sprite sheets
-  character = characterInterface.creaPersonaggio()
+  character = characterInterface.creaPersonaggio(self)
 
 --  sceneGroup:insert(background)
   mainGroup=display.newGroup()
@@ -191,15 +235,8 @@ function scene:create( event )
     barLeft:setFillColor(0,0,0)
     barRight:setFillColor(0,0,0)
 
-    physics.addBody(barLeft, "static", {shape={display.screenOriginX, 0, 0, 0, 0, altezza, display.screenOriginX, altezza}, filter={categoryBits=2, maskBits=1}})
-    physics.addBody(barRight, "static", {shape={lunghezza, 0, display.actualContentWidth, 0, display.actualContentWidth, altezza, 0, altezza}, filter={categoryBits=4, maskBits=1}})
     barLeft.myName = "BarLeft"
     barRight.myName = "BarRight"
-
-    barLeft.collision = characterInterface.exitRoom
-    barLeft:addEventListener( "collision" )
-    barRight.collision = characterInterface.exitRoom
-    barRight:addEventListener( "collision" )
 
     hidingGroup:insert(barLeft)
     hidingGroup:insert(barRight)
@@ -307,5 +344,7 @@ scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
 -- -----------------------------------------------------------------------------------
+scene.goBack = (goBack)
+scene.changeRoom = (changeRoom)
 
 return scene
