@@ -111,49 +111,32 @@ local function opposite(dir)
   return dir
 end
 
-local function handleButtonEvent( event )
-        local item=event.target
-        local direzione = item.id
-        composer.setVariable( "direzione", direzione )
-      --  item:removeEventListener("tap", handleButtonEvent)
-        -- print("DIREZIONE: ----------------------------------------------------------------------", direzione)
-        -- print("MOVIMENTO DA ", stanzaCorrente.TESTO, " a ", stanzaCorrente[direzione].TESTO)
-        stanzaCorrente.corrente=false
-        composer.setVariable( "prossimaStanza", stanzaCorrente[direzione] )
-        composer.setVariable( "prec", opposite(direzione) )
-      --  stanzaCorrente[direzione].corrente=true
-      --  composer.setVariable( "stanzaCorrente", stanzaCorrente[direzione] )
-      --  composer.removeScene( "livello1" )
-      composer.removeScene("Scenes.livello1")
-      composer.gotoScene("Scenes.corridoio")
-end
+-- local function handleButtonEvent( event )
+--         local item=event.target
+--         local direzione = item.id
+--         composer.setVariable( "direzione", direzione )
+--       --  item:removeEventListener("tap", handleButtonEvent)
+--         -- print("DIREZIONE: ----------------------------------------------------------------------", direzione)
+--         -- print("MOVIMENTO DA ", stanzaCorrente.TESTO, " a ", stanzaCorrente[direzione].TESTO)
+--         stanzaCorrente.corrente=false
+--         composer.setVariable( "prossimaStanza", stanzaCorrente[direzione] )
+--         composer.setVariable( "prec", opposite(direzione) )
+--       --  stanzaCorrente[direzione].corrente=true
+--       --  composer.setVariable( "stanzaCorrente", stanzaCorrente[direzione] )
+--       --  composer.removeScene( "livello1" )
+--       composer.removeScene("Scenes.livello1")
+--       composer.gotoScene("Scenes.corridoio")
+-- end
 
 local function handleDirectionChoose(event)
   local source = event.target
   local direction = source.id
 
-  if(direction == "NORD" and stanzaCorrente.NORD ~= nil) then
-    composer.setVariable( "direzione", direction )
-    stanzaCorrente.corrente=false
-    composer.setVariable( "prossimaStanza", stanzaCorrente[direction] )
-    composer.setVariable( "prec", opposite(direction) )
-    composer.removeScene("Scenes.livello1")
-    composer.gotoScene("Scenes.corridoio")
-  elseif(direction == "SUD" and stanzaCorrente.SUD ~= nil) then
-    composer.setVariable( "direzione", direction )
-    stanzaCorrente.corrente=false
-    composer.setVariable( "prossimaStanza", stanzaCorrente[direction] )
-    composer.setVariable( "prec", opposite(direction) )
-    composer.removeScene("Scenes.livello1")
-    composer.gotoScene("Scenes.corridoio")
-  elseif(direction == "EST" and stanzaCorrente.EST ~= nil) then
-    composer.setVariable( "direzione", direction )
-    stanzaCorrente.corrente=false
-    composer.setVariable( "prossimaStanza", stanzaCorrente[direction] )
-    composer.setVariable( "prec", opposite(direction) )
-    composer.removeScene("Scenes.livello1")
-    composer.gotoScene("Scenes.corridoio")
-  elseif(direction == "OVEST" and stanzaCorrente.OVEST ~= nil) then
+  if(((direction == "NORD") and (stanzaCorrente.NORD ~= nil)) or
+     ((direction == "SUD") and (stanzaCorrente.SUD ~= nil)) or
+     ((direction == "EST") and (stanzaCorrente.EST ~= nil)) or
+     ((direction == "OVEST") and (stanzaCorrente.OVEST ~= nil))) then
+       
     composer.setVariable( "direzione", direction )
     stanzaCorrente.corrente=false
     composer.setVariable( "prossimaStanza", stanzaCorrente[direction] )
@@ -284,41 +267,41 @@ function scene:create( event )
 
   mainGroup:insert(character)
   -- print("stanza Corrente: ", stanzaCorrente.TESTO)
-  if stanzaCorrente.NORD~=nil then
-    local freccia = display.newImageRect(objectSheet, 1, 50, 50)
-    freccia.id="NORD"
-    freccia:addEventListener("tap", handleButtonEvent)
-    mainGroup:insert(freccia)
-    freccia.x=display.contentCenterX
-    freccia.y=display.contentCenterY-325
-  end
-
-  if stanzaCorrente.SUD~=nil then
-    local freccia = display.newImageRect(objectSheet, 2, 50, 50)
-    freccia.id="SUD"
-    freccia:addEventListener("tap", handleButtonEvent)
-    mainGroup:insert(freccia)
-    freccia.x=display.contentCenterX
-    freccia.y=display.contentCenterY
-  end
-
-  if stanzaCorrente.EST~=nil then
-    local freccia = display.newImageRect(objectSheet, 3, 50, 50)
-    freccia.id="EST"
-    freccia:addEventListener("tap", handleButtonEvent)
-    mainGroup:insert(freccia)
-    freccia.x=display.contentCenterX+600
-    freccia.y=display.contentCenterY-150
-  end
-
-  if stanzaCorrente.OVEST~=nil then
-    local freccia = display.newImageRect(objectSheet, 4, 50, 50)
-    freccia.id="OVEST"
-    freccia:addEventListener("tap", handleButtonEvent)
-    mainGroup:insert(freccia)
-    freccia.x=display.contentCenterX-600
-    freccia.y=display.contentCenterY-150
-  end
+  -- if stanzaCorrente.NORD~=nil then
+  --   local freccia = display.newImageRect(objectSheet, 1, 50, 50)
+  --   freccia.id="NORD"
+  --   freccia:addEventListener("tap", handleButtonEvent)
+  --   mainGroup:insert(freccia)
+  --   freccia.x=display.contentCenterX
+  --   freccia.y=display.contentCenterY-325
+  -- end
+  --
+  -- if stanzaCorrente.SUD~=nil then
+  --   local freccia = display.newImageRect(objectSheet, 2, 50, 50)
+  --   freccia.id="SUD"
+  --   freccia:addEventListener("tap", handleButtonEvent)
+  --   mainGroup:insert(freccia)
+  --   freccia.x=display.contentCenterX
+  --   freccia.y=display.contentCenterY
+  -- end
+  --
+  -- if stanzaCorrente.EST~=nil then
+  --   local freccia = display.newImageRect(objectSheet, 3, 50, 50)
+  --   freccia.id="EST"
+  --   freccia:addEventListener("tap", handleButtonEvent)
+  --   mainGroup:insert(freccia)
+  --   freccia.x=display.contentCenterX+600
+  --   freccia.y=display.contentCenterY-150
+  -- end
+  --
+  -- if stanzaCorrente.OVEST~=nil then
+  --   local freccia = display.newImageRect(objectSheet, 4, 50, 50)
+  --   freccia.id="OVEST"
+  --   freccia:addEventListener("tap", handleButtonEvent)
+  --   mainGroup:insert(freccia)
+  --   freccia.x=display.contentCenterX-600
+  --   freccia.y=display.contentCenterY-150
+  -- end
 
   --Barre nere
   local hidingGroup = display.newGroup()
