@@ -209,17 +209,11 @@ end
 function goBack()
   local stanzaPrec = composer.getVariable("prec")
 
-  if(stanzaPrec==nil) then
-    --Show error tab
-    print("Non si può andare indietro (prec=nil)")
-  else
-    --Go to previous room
-    stanzaCorrente.corrente=true
-    composer.setVariable("stanzaCorrente", stanzaCorrente)
-    composer.setVariable( "prossimaStanza", stanzaCorrente[prec] )
-    composer.removeScene("Scenes.corridoio")
-    composer.gotoScene("Scenes.livello1")
-  end
+  stanzaCorrente.corrente=true
+  composer.setVariable("stanzaCorrente", stanzaCorrente)
+  composer.setVariable( "prossimaStanza", stanzaCorrente[stanzaPrec] )
+  composer.removeScene("Scenes.corridoio")
+  composer.gotoScene("Scenes.livello1")
 end
 
 function changeRoom()

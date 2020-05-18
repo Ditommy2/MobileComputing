@@ -128,25 +128,125 @@ local function handleButtonEvent( event )
       composer.gotoScene("Scenes.corridoio")
 end
 
-function goBack()
-  local stanzaPrec = composer.getVariable("prec")
+local function handleDirectionChoose(event)
+  local source = event.target
+  local direction = source.id
 
-  if(stanzaPrec==nil) then
-    --Show error tab
-    print("Non si può andare indietro (prec=nil)")
-  else
-    --Go to previous room
-    composer.setVariable( "direzione", direzione )
-    stanzaCorrente.corrente = false
-    composer.setVariable( "prossimaStanza", stanzaCorrente[prec] )
-    composer.setVariable( "prec", opposite(prec) )
+  if(direction == "NORD" and stanzaCorrente.NORD ~= nil) then
+    composer.setVariable( "direzione", direction )
+    stanzaCorrente.corrente=false
+    composer.setVariable( "prossimaStanza", stanzaCorrente[direction] )
+    composer.setVariable( "prec", opposite(direction) )
     composer.removeScene("Scenes.livello1")
     composer.gotoScene("Scenes.corridoio")
+  elseif(direction == "SUD" and stanzaCorrente.SUD ~= nil) then
+    composer.setVariable( "direzione", direction )
+    stanzaCorrente.corrente=false
+    composer.setVariable( "prossimaStanza", stanzaCorrente[direction] )
+    composer.setVariable( "prec", opposite(direction) )
+    composer.removeScene("Scenes.livello1")
+    composer.gotoScene("Scenes.corridoio")
+  elseif(direction == "EST" and stanzaCorrente.EST ~= nil) then
+    composer.setVariable( "direzione", direction )
+    stanzaCorrente.corrente=false
+    composer.setVariable( "prossimaStanza", stanzaCorrente[direction] )
+    composer.setVariable( "prec", opposite(direction) )
+    composer.removeScene("Scenes.livello1")
+    composer.gotoScene("Scenes.corridoio")
+  elseif(direction == "OVEST" and stanzaCorrente.OVEST ~= nil) then
+    composer.setVariable( "direzione", direction )
+    stanzaCorrente.corrente=false
+    composer.setVariable( "prossimaStanza", stanzaCorrente[direction] )
+    composer.setVariable( "prec", opposite(direction) )
+    composer.removeScene("Scenes.livello1")
+    composer.gotoScene("Scenes.corridoio")
+  else
+    --Show error tab
+    local errorText = display.newText( "Direzione inesistente", display.contentCenterX, display.contentCenterY + 50, native.systemFont, 40 )
+    errorText:setFillColor(1,0,0)
+    transition.to(errorText, {time=2000, alpha=0, onColmplete= function() display.remove( errorText) end})
   end
 end
 
+function goBack()
+
+end
+
 function changeRoom()
-  print("Called changeRoom")
+  local sceneGroup = scene.view
+
+  --Menu di scelta della direzione
+  local lunghezzaFinestra=lunghezza-400
+	local altezzaFinestra=lunghezzaFinestra*(9/16)
+
+  local menuGroup = display.newGroup()
+
+  local menuScelta = display.newRect( display.contentCenterX, display.contentCenterY, lunghezzaFinestra, altezzaFinestra )
+	menuScelta:setFillColor(0.18, 0.18, 0.23)
+	menuGroup:insert(menuScelta)
+
+  local titolo = display.newText("Scegli una direzione", menuScelta.x, menuScelta.y - (altezzaFinestra/2), native.systemFontBold, 80)
+  titolo:setFillColor(1,0,0)
+  titolo.anchorY = 0
+  menuGroup:insert(titolo)
+
+  buttonNord = widget.newButton({
+      shape = "roundedRect",
+      x = menuScelta.x,
+      y =  menuScelta.y - 100,
+      width=150,
+      height= 75,
+      id = "NORD",
+      label = "NORD",
+      labelColor={default={0.5, 0, 0}},
+      fontSize=20,
+      onEvent = handleDirectionChoose
+  })
+
+  buttonSud = widget.newButton({
+      shape = "roundedRect",
+      x = menuScelta.x,
+      y =  menuScelta.y + 200,
+      width=150,
+      height= 75,
+      id = "SUD",
+      label = "SUD",
+      labelColor={default={0.5, 0, 0}},
+      fontSize=20,
+      onEvent = handleDirectionChoose
+  })
+
+  buttonEst = widget.newButton({
+      shape = "roundedRect",
+      x = menuScelta.x + 275,
+      y =  menuScelta.y + 50,
+      width=150,
+      height= 75,
+      id = "EST",
+      label = "EST",
+      labelColor={default={0.5, 0, 0}},
+      fontSize=20,
+      onEvent = handleDirectionChoose
+  })
+
+  buttonOvest = widget.newButton({
+      shape = "roundedRect",
+      x = menuScelta.x - 275,
+      y =  menuScelta.y + 50,
+      width=150,
+      height= 75,
+      id = "OVEST",
+      label = "OVEST",
+      labelColor={default={0.5, 0, 0}},
+      fontSize=20,
+      onEvent = handleDirectionChoose
+  })
+
+  menuGroup:insert(buttonNord)
+  menuGroup:insert(buttonSud)
+  menuGroup:insert(buttonEst)
+  menuGroup:insert(buttonOvest)
+  sceneGroup:insert(menuGroup)
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

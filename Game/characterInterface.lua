@@ -64,16 +64,20 @@ local function move(event)
 
   if(not(dir==nil)) then
     if(dir=="r") then
-      character.x = character.x + 5
+      character.x = character.x + 10
     elseif(dir=="l") then
-      character.x = character.x - 5
+      character.x = character.x - 10
     end
 
     if(character.x < 0) then
+      timer.pause( moveTimer )
+      character:pause()
       scene.goBack()
     end
 
     if(character.x > lunghezza) then
+      timer.pause( moveTimer )
+      character:pause()
       scene.changeRoom()
     end
   end
