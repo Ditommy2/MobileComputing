@@ -8,6 +8,7 @@ local customFont="MadnessHyperactive.otf"
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function M.caricaSave(stringaSalvataggio)
 local function networkListener( event )
+  print("FASE DOWNLOAD: "..event.phase)
     if ( event.isError ) then
         print( "Network error: ", event.response )
     elseif ( event.phase == "ended" ) then
@@ -19,7 +20,8 @@ local loc = defaultLocation
   print("PROVA DI UPLOAD DEL FILE "..stringaSalvataggio.." NELL URL "..URL)
   local path = system.pathForFile( stringaSalvataggio, loc )
   print("IL FILE HA PATH "..path)
-network.upload(URL, "POST", networkListener, {bodyType="text"}, path, loc, "application/json")
+--network.request(URL, "POST", networkListener, stringaSalvataggio, system.DocumentsDirectory, "application/json")
+network.request(URL, "POST", networkListener, {body={filename=stringaSalvataggio, baseDirectory=system.DocumentsDirectory}, bodyType="text", timeout=100})
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione per salvare su filepath una tabella
