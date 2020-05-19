@@ -2,12 +2,31 @@ local M = {}
 local json = require( "json" )
 local defaultLocation = system.DocumentsDirectory
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--carica save: si occupa di caricare il salvataggio sullo script php e quindi sul database
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function M.caricaSave(stringaSalvataggio)
+local function networkListener( event )
+    if ( event.isError ) then
+        print( "Network error: ", event.response )
+    elseif ( event.phase == "ended" ) then
+        print ( "Upload complete!" )
+    end
+end
+local loc = defaultLocation
+  local URL = "https://appmcsite.000webhostapp.com/caricaSave.php"
+  print("PROVA DI UPLOAD DEL FILE "..stringaSalvataggio.." NELL URL "..URL)
+  local path = system.pathForFile( stringaSalvataggio, loc )
+  print("IL FILE HA PATH "..path)
+network.upload(URL, "POST", networkListener, {bodyType="text"}, path, loc, "application/json")
+end
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione per salvare su filepath una tabella
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function M.saveTable( t, filename, location )
 
     local loc = location
     if not location then
+      print("IMPOSTATA LA DEF LOC")
         loc = defaultLocation
     end
 

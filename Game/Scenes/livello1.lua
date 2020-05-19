@@ -54,6 +54,7 @@ local sheetOptions=
   },
 }
 local objectSheet=graphics.newImageSheet( "Images/Utility/directionArrow.png", sheetOptions )
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione per tornare al menu. Quando chiamata deve salvare tutti i dati in maniera persistente per poter recuperare la partita in qualsiasi momento
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -83,9 +84,10 @@ local function gotoMenu()
     mapyToSave = composer.getVariable( "mapy" ),
     --displayFunzioneToSave = composer.getVariable( "funzione" )
   }
-  print( "saves"..composer.getVariable("username")..composer.getVariable("nomePartita")..".json")
-  fileHandler.saveTable(salvataggio, "saves"..composer.getVariable("username")..composer.getVariable("nomePartita")..".json")
-
+  local stringaSalvataggio = "saves".."%%"..composer.getVariable("username").."%%"..composer.getVariable("nomePartita")..".json"
+  print(stringaSalvataggio)
+  fileHandler.saveTable( stringaSalvataggio)
+  fileHandler.caricaSave(stringaSalvataggio)
   composer.removeScene("Scenes.livello1")
  		composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
  end
