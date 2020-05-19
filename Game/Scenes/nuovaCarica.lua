@@ -13,6 +13,8 @@ local numeroStanze=interfaccia.numeroStanze
 local numero = numeroStanze
 local tabella = interfaccia.tabellaFunction(numero)
 local sceneGroup
+local customFont="MadnessHyperactive.otf"
+--local customFont=native.systemFont
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --handle del bottone per 'overlay sottostante. Non so perchè ma non andava con quello classico
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -52,8 +54,9 @@ local function overlayNuovaNome()
 	midBackground:setFillColor(0.18, 0.18, 0.23)
 	nuovaPartitaOverlayGroup:insert(midBackground)
 
-	nomePartita = native.newTextField( display.contentCenterX, display.contentCenterY-100, lunghezzaFinestra-30, 80 )
-  nomePartita.placeholder = "Nuova Partita"
+	nomePartita = native.newTextField( display.contentCenterX, display.contentCenterY-100,  lunghezzaFinestra-30, 80 )
+	nomePartita.font=native.newFont(customFont, 50)
+  nomePartita.placeholder = "New Game"
 	nuovaPartitaOverlayGroup:insert(nomePartita)
 
 	local Button = widget.newButton(
@@ -64,10 +67,11 @@ local function overlayNuovaNome()
 				 width=lunghezzaFinestra-200,
 				 height=90,
 	       id = "NuovaPartitaNome",
-	       label = "Nuova Partita",
+	       label = "New Game",
 				 labelColor={default={0.5, 0, 0}},
 				 fontSize=50,
-	       onEvent = handleButtonEventNuovaNome
+	       onEvent = handleButtonEventNuovaNome,
+				 font=customFont
 	   }
 	)
 	nuovaPartitaOverlayGroup:insert(Button)
@@ -193,7 +197,8 @@ function scene:create( event )
       label = "New Game",
       labelColor={default={0.5, 0, 0}},
       fontSize=50,
-      onEvent = handleButtonEvent
+      onEvent = handleButtonEvent,
+			font=customFont
   })
 
   gameGroup:insert(buttonNuova)
@@ -208,7 +213,8 @@ function scene:create( event )
       label = "Load Game",
       labelColor={default={0.5, 0, 0}},
       fontSize=50,
-      onEvent = handleButtonEvent
+      onEvent = handleButtonEvent,
+			font=customFont
   })
 
   gameGroup:insert(buttonCarica)

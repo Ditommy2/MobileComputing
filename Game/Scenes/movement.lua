@@ -1,6 +1,7 @@
 local composer = require("composer")
 local scene = composer.newScene()
-
+local customFont="MadnessHyperactive.otf"
+--local customFont=native.systemFont
 --Physics
 local physics = require("physics")
 physics.start()

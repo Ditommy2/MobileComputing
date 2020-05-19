@@ -11,7 +11,8 @@ local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 composer.recycleOnSceneChange = true
-
+local customFont="MadnessHyperactive.otf"
+--local customFont=native.systemFont
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
 physics.start()
@@ -221,6 +222,7 @@ function scene:create( event )
 --freccia.y=display.contentCenterY
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
+
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --fase show del display

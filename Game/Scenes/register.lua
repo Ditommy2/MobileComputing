@@ -11,6 +11,8 @@ local contents
 local confermapassword
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
+local customFont="MadnessHyperactive.otf"
+--local customFont=native.systemFont
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione che torna al menù dopo che viene premuta la freccia
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -140,16 +142,19 @@ function scene:create( event )
 
  username = native.newTextField( display.contentCenterX, display.contentCenterY-350, lunghezzaFinestra-30, 80 )
 username.placeholder = "Username"
+username.font=native.newFont( customFont, 50 )
 loginGroup:insert(username)
 
  password = native.newTextField( display.contentCenterX, display.contentCenterY-250, lunghezzaFinestra-30, 80 )
 password.isSecure = true
+password.font=native.newFont( customFont, 50 )
 password.placeholder = "Password"
 loginGroup:insert(password)
 
 confermapassword = native.newTextField( display.contentCenterX, display.contentCenterY-150, lunghezzaFinestra-30, 80 )
 confermapassword.isSecure = true
-confermapassword.placeholder = "Conferma Password"
+confermapassword.font=native.newFont( customFont, 50)
+confermapassword.placeholder = "Confirm Password"
 loginGroup:insert(confermapassword)
 
 local file = io.open( filePathComandi, "r" )
@@ -162,13 +167,13 @@ if file then
 		print(contents)
 		io.close( file )
 		if contents=="\"true\"" then
-			local risposta = display.newText( sceneGroup, "Username già in uso",display.contentCenterX, display.contentCenterY-160, native.systemFont, 40)
+			local risposta = display.newText( sceneGroup, "Username già in uso",display.contentCenterX, display.contentCenterY-160, native.newFont( customFont ), 40)
 			risposta.x=display.contentCenterX
 			risposta.y = username.y+450
 			risposta:setFillColor(0.5, 0, 0)
 		end
 		if contents=="\"confermapassword\"" then
-			local risposta = display.newText( loginGroup, "Le password sono diverse",display.contentCenterX, display.contentCenterY-160, native.systemFont, 40)
+			local risposta = display.newText( sceneGroup, "Le password sono diverse",display.contentCenterX, display.contentCenterY-160, native.newFont( customFont ), 40)
 			risposta.x=display.contentCenterX
 			risposta.y = username.y+450
 			risposta:setFillColor(0.5, 0, 0)
@@ -191,10 +196,11 @@ local Button = widget.newButton(
 			 width=lunghezzaFinestra-200,
 			 height=90,
        id = "Nuova",
-       label = "Nuova Partita",
+       label = "New Game",
 			 labelColor={default={0.5, 0, 0}},
 			 fontSize=50,
-       onEvent = handleButtonEvent
+       onEvent = handleButtonEvent,
+       font=customFont
    }
 )
 loginGroup:insert(Button)
