@@ -207,16 +207,18 @@ local function handleButtonEvent( event )
 end
 
 function goBack()
-  local stanzaPrec = composer.getVariable("prec")
+  local direction = composer.getVariable("direzione")
 
   stanzaCorrente.corrente=true
   composer.setVariable("stanzaCorrente", stanzaCorrente)
-  composer.setVariable( "prossimaStanza", stanzaCorrente[stanzaPrec] )
+  composer.setVariable( "direction", opposite(direction) )
   composer.removeScene("Scenes.corridoio")
   composer.gotoScene("Scenes.livello1")
 end
 
 function changeRoom()
+  local direction = composer.getVariable( "direzione" )
+  local prossimaStanza = stanzaCorrente[direction]
   prossimaStanza.corrente=true
   composer.setVariable( "stanzaCorrente", prossimaStanza)
   composer.removeScene( "Scenes.corridoio")
@@ -234,10 +236,11 @@ function scene:create( event )
   local phase = event.phase
 
   funzioneEseguiDisplay(self,  stanzaCorrente, invloc)
-  local direzioneCorridoio = composer.getVariable( "direzione" )
-  local seedDirezionale = "seed"..direzioneCorridoio
-  local numeroRandomico = stanzaCorrente[seedDirezionale]
-  local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back"..numeroRandomico..".jpg", lunghezza, altezza-300)
+  -- local direzioneCorridoio = composer.getVariable( "direzione" )
+  -- local seedDirezionale = "seed"..direzioneCorridoio
+  -- local numeroRandomico = stanzaCorrente[seedDirezionale]
+  -- local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back"..numeroRandomico..".jpg", lunghezza, altezza-300)
+  local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.jpg", lunghezza, altezza-300)
 
   background.x=display.contentCenterX
   background.y=display.contentCenterY-170

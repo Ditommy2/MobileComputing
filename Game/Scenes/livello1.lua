@@ -128,6 +128,21 @@ end
 --       composer.gotoScene("Scenes.corridoio")
 -- end
 
+local function goTo(direction)
+  print("Stanza corrente=" .. stanzaCorrente.TESTO .. "Vado verso: " .. stanzaCorrente[direction].TESTO)
+
+  composer.setVariable( "direzione", direction )
+  stanzaCorrente.corrente=false
+  composer.removeScene("Scenes.livello1")
+  composer.gotoScene("Scenes.corridoio")
+end
+
+local function errorTab(message)
+  local errorText = display.newText( message, display.contentCenterX, display.contentCenterY + 50, native.systemFont, 40 )
+  errorText:setFillColor(1,0,0)
+  transition.to(errorText, {time=2000, alpha=0, onColmplete= function() display.remove( errorText) end})
+end
+
 local function handleDirectionChoose(event)
   local source = event.target
   local direction = source.id
@@ -136,23 +151,23 @@ local function handleDirectionChoose(event)
      ((direction == "SUD") and (stanzaCorrente.SUD ~= nil)) or
      ((direction == "EST") and (stanzaCorrente.EST ~= nil)) or
      ((direction == "OVEST") and (stanzaCorrente.OVEST ~= nil))) then
-       
-    composer.setVariable( "direzione", direction )
-    stanzaCorrente.corrente=false
-    composer.setVariable( "prossimaStanza", stanzaCorrente[direction] )
-    composer.setVariable( "prec", opposite(direction) )
-    composer.removeScene("Scenes.livello1")
-    composer.gotoScene("Scenes.corridoio")
+
+    goTo(direction)
   else
     --Show error tab
-    local errorText = display.newText( "Direzione inesistente", display.contentCenterX, display.contentCenterY + 50, native.systemFont, 40 )
-    errorText:setFillColor(1,0,0)
-    transition.to(errorText, {time=2000, alpha=0, onColmplete= function() display.remove( errorText) end})
+    errorTab("Direzione Inesistente")
   end
 end
 
 function goBack()
+  local direction = composer.getVariable( "direzione" )
 
+  if(direction~=nil) then
+    goTo(opposite(direction))
+  else
+    --Show error tab
+    errorTab("Non puoi tornare indietro")
+  end
 end
 
 function changeRoom()
