@@ -36,7 +36,6 @@ local sheet_walking_Options =
 --Walking sprite sheet personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sheet_walking = graphics.newImageSheet( "Images/Characters/Trump.png", sheet_walking_Options )
-print( display.pixelWidth / display.actualContentWidth )
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sequences table personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -131,11 +130,34 @@ end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione gestione cambio stanza
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function opposite(dir)
+  local res = nil
+
+  if(dir=="SUD") then
+    res="NORD"
+  end
+
+  if(dir=="NORD") then
+    res="SUD"
+  end
+
+  if(dir=="EST") then
+    res="OVEST"
+  end
+
+  if(dir=="OVEST") then
+    res="EST"
+  end
+
+  return res
+end
+
 function goBack()
   local direction = composer.getVariable("direzione")
-
   stanzaCorrente.corrente=true
   composer.setVariable("stanzaCorrente", stanzaCorrente)
+  composer.setVariable( "direzione", opposite(direction) )
+
   composer.removeScene("Scenes.corridoio")
   composer.gotoScene("Scenes.livello1")
 end
@@ -145,6 +167,7 @@ function changeRoom()
   composer.setVariable( "stanzaCorrente", stanzaCorrente[direction])
   local prossimaStanza =composer.getVariable( "stanzaCorrente" )
   prossimaStanza.corrente=true
+
   composer.removeScene( "Scenes.corridoio")
   composer.gotoScene( "Scenes.livello1")
 end
@@ -264,7 +287,6 @@ end
 function scene:destroy( event )
 
   local sceneGroup = scene.view
-  print("Scena 'livello1' rimossa")
 	-- Code here runs prior to the removal of scene's view
   for i = sceneGroup.numChildren, 1, -1 do
     sceneGroup[i]:removeSelf()

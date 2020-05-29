@@ -64,7 +64,6 @@ local function opposite(dir)
 end
 
 local function goTo(direction)
-  composer.setVariable( "direzione", direction )
   stanzaCorrente.corrente=false
   composer.removeScene("Scenes.livello1")
   composer.gotoScene("Scenes.corridoio")
@@ -85,6 +84,7 @@ local function handleDirectionChoose(event)
      ((direction == "EST") and (stanzaCorrente.EST ~= nil)) or
      ((direction == "OVEST") and (stanzaCorrente.OVEST ~= nil))) then
 
+    composer.setVariable( "direzione", direction )
     goTo(direction)
   else
     --Show error tab
@@ -96,6 +96,7 @@ function goBack()
   local direction = composer.getVariable( "direzione" )
 
   if(direction~=nil) then
+    composer.setVariable( "direzione", opposite(direction) )
     goTo(opposite(direction))
   else
     --Show error tab
@@ -299,9 +300,7 @@ end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- destroy()
 function scene:destroy( event )
-
   local sceneGroup = scene.view
-  print("Scena 'livello1' rimossa")
 	-- Code here runs prior to the removal of scene's view
   for i = sceneGroup.numChildren, 1, -1 do
     sceneGroup[i]:removeSelf()
