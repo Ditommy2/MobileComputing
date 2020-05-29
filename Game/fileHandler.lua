@@ -7,21 +7,59 @@ local customFont="MadnessHyperactive.otf"
 --carica save: si occupa di caricare il salvataggio sullo script php e quindi sul database
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function M.caricaSave(stringaSalvataggio)
-local function networkListener( event )
-  print("FASE DOWNLOAD: "..event.phase)
-    if ( event.isError ) then
-        print( "Network error: ", event.response )
-    elseif ( event.phase == "ended" ) then
-        print ( "Upload complete!" )
-    end
+
+local function uploadListener( event )
+  if ( event.isError ) then
+     print( "Network Error." )
+
+     -- This is likely a time out or server being down. In other words,
+     -- It was unable to communicate with the web server. Now if the
+     -- connection to the web server worked, but the request is bad, this
+     -- will be false and you need to look at event.status and event.response
+     -- to see why the web server failed to do what you want.
+  else
+     if ( event.phase == "began" ) then
+        print( "Upload started" )
+     elseif ( event.phase == "progress" ) then
+        print( "Uploading... bytes transferred ", event.bytesTransferred )
+     elseif ( event.phase == "ended" ) then
+        print( "Upload ended..." )
+        print( "Status:", event.status )
+        print( "Response:", event.response )
+     end
+  end
 end
-local loc = defaultLocation
-  local URL = "https://appmcsite.000webhostapp.com/caricaSave.php"
-  print("PROVA DI UPLOAD DEL FILE "..stringaSalvataggio.." NELL URL "..URL)
-  local path = system.pathForFile( stringaSalvataggio, loc )
-  print("IL FILE HA PATH "..path)
---network.request(URL, "POST", networkListener, stringaSalvataggio, system.DocumentsDirectory, "application/json")
-network.request(URL, "POST", networkListener, {body={filename=stringaSalvataggio, baseDirectory=system.DocumentsDirectory}, bodyType="text", timeout=100})
+
+-- Sepcify the URL of the PHP script to upload to. Do this on your own server.
+-- Also define the method as "PUT".
+local url = "https://appmcsite.000webhostapp.com/caricaSave.php"
+local method = "PUT"
+
+-- Set some reasonable parameters for the upload process:
+local params = {
+  timeout = 60,
+  progress = true,
+  bodyType = "binary"
+}
+
+-- Specify what file to upload and where to upload it from.
+-- Also, set the MIME type of the file so that the server knows what to expect.
+local filename = stringaSalvataggio
+local baseDirectory = system.DocumentsDirectory
+local contentType = "text/plain"  --another option is "text/plain"
+print(system.pathForFile(filename))
+-- There is no standard way of using HTTP PUT to tell the remote host what
+-- to name the file. We'll make up our own header here so that our PHP script
+-- expects to look for that and provides the name of the file. Your PHP script
+-- needs to be "hardened" because this is a security risk. For example, someone
+-- could pass in a path name that might try to write arbitrary files to your
+-- server and overwrite critical system files with malicious code.
+-- Don't assume "This won't happen to me!" because it very well could.
+local headers = {}
+headers.filename = filename
+params.headers = headers
+
+network.upload( url , method, uploadListener, params, filename, baseDirectory, contentType )
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione per salvare su filepath una tabella
@@ -36,7 +74,6 @@ function M.saveTable( t, filename, location )
 
     -- Path for the file to write
     local path = system.pathForFile( filename, loc )
-
     -- Open the file handle
     local file, errorString = io.open( path, "w" )
 
@@ -46,7 +83,8 @@ function M.saveTable( t, filename, location )
         return false
     else
         -- Write encoded JSON data to file
-        file:write( json.encode( t , {indent=true}) )
+        file:write( json.encode( t ) )
+        print("File written successfullt into: ", path)
         -- Close the file handle
         io.close( file )
         return true
@@ -138,6 +176,7 @@ function M.loadTable( filename, location )
     else
         -- Read data from file
         local contents = file:read( "*a" )
+        print("legegndo file da: ", path)
         -- Decode JSON data into Lua table
         local t = json.decode( contents )
         -- Close the file handle

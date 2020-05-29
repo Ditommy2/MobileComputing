@@ -14,6 +14,7 @@ local numero = numeroStanze
 local tabella = interfaccia.tabellaFunction(numero)
 local sceneGroup
 local customFont="MadnessHyperactive.otf"
+composer.setVariable( "nomeSalvataggio", "prova1" )
 --local customFont=native.systemFont
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --handle del bottone per 'overlay sottostante. Non so perchè ma non andava con quello classico
@@ -109,7 +110,7 @@ local function handleButtonEvent( event )
 			composer.setVariable( "tabellaOgegttiInventario", table )
 			local lowerFixedMenu = require("lowerFixedMenu")
 			local fileHandler = require("fileHandler")
-			local salvataggi = fileHandler.loadTable("saves"..composer.getVariable("username")..".json")
+			local salvataggi = fileHandler.loadTable("save".."$$"..composer.getVariable("username").."$$"..composer.getVariable("nomePartita")..".json")
 			print(salvataggi.stanzaCorrenteToSave)
 			print(salvataggi.invToSave)
 			print(salvataggi.mappaToSave)
