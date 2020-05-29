@@ -1,6 +1,8 @@
 
 local composer = require("composer")
 local interfaccia = require("interfaceConfig")
+local customFont="MadnessHyperactive.otf"
+--local customFont=native.systemFont
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --tutto il file lo chiama numero, ma numeroStanze è meglio quindi per non cambiare tutto ho usato sto metodo
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
