@@ -10,11 +10,11 @@ local funzioneEseguiDisplay= composer.getVariable( "funzione" )
 local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
-local prossimaStanza=composer.getVariable( "prossimaStanza" )
 
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
 physics.start()
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Variabili personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -129,98 +129,22 @@ local function moveListener(event)
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---opzioni immagini freccete non definitivo
+--funzione gestione cambio stanza
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local sheetOptions=
-{
-  frames=
-  {
-    {--freccia nord
-      x=53,
-      y=56,
-      width=909,
-      height=624
-    },
-    {--freccia sud
-      x=53,
-      y=1357,
-      width=963,
-      height=641
-    },
-    {--freccia est
-      x=1358,
-      y=1,
-      width=678,
-      height=959
-    },
-    {--freccia ovest
-      x=1074,
-      y=1073,
-      width=680,
-      height=967
-    },
-  },
-}
-local objectSheet=graphics.newImageSheet( "Images/Utility/directionArrow.png", sheetOptions )
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---funzione gestione delle ferccette
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local function opposite(dir)
-  if(prec=="SUD") then
-    dir="NORD"
-  end
-
-  if(prec=="NORD") then
-    dir="SUD"
-  end
-
-  if(prec=="EST") then
-    dir="OVEST"
-  end
-
-  if(prec=="OVEST") then
-    dir="EST"
-  end
-
-  return dir
-end
-
-local function handleButtonEvent( event )
-        local item=event.target
-        local direzione = item.id
-
-      --  item:removeEventListener("tap", handleButtonEvent)
-
-        if direzione=="EST" then
-          prossimaStanza.corrente=true
-          composer.setVariable( "stanzaCorrente", prossimaStanza)
-        end
-
-        if direzione=="OVEST" then
-          stanzaCorrente.corrente=true
-          composer.setVariable("stanzaCorrente", stanzaCorrente)
-        end
-
-        composer.setVariable( "prec", opposite(direzione) )
-        composer.removeScene( "Scenes.corridoio")
-        composer.gotoScene( "Scenes.livello1" )
-end
-
 function goBack()
   local direction = composer.getVariable("direzione")
 
   stanzaCorrente.corrente=true
   composer.setVariable("stanzaCorrente", stanzaCorrente)
-  composer.setVariable( "direction", opposite(direction) )
   composer.removeScene("Scenes.corridoio")
   composer.gotoScene("Scenes.livello1")
 end
 
 function changeRoom()
   local direction = composer.getVariable( "direzione" )
-  local prossimaStanza = stanzaCorrente[direction]
+  composer.setVariable( "stanzaCorrente", stanzaCorrente[direction])
+  local prossimaStanza =composer.getVariable( "stanzaCorrente" )
   prossimaStanza.corrente=true
-  composer.setVariable( "stanzaCorrente", prossimaStanza)
   composer.removeScene( "Scenes.corridoio")
   composer.gotoScene( "Scenes.livello1")
 end
@@ -236,11 +160,11 @@ function scene:create( event )
   local phase = event.phase
 
   funzioneEseguiDisplay(self,  stanzaCorrente, invloc)
-  -- local direzioneCorridoio = composer.getVariable( "direzione" )
-  -- local seedDirezionale = "seed"..direzioneCorridoio
-  -- local numeroRandomico = stanzaCorrente[seedDirezionale]
-  -- local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back"..numeroRandomico..".jpg", lunghezza, altezza-300)
-  local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.jpg", lunghezza, altezza-300)
+  local direzioneCorridoio = composer.getVariable( "direzione" )
+  local seedDirezionale = "seed"..direzioneCorridoio
+  local numeroRandomico = stanzaCorrente[seedDirezionale]
+  local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back"..numeroRandomico..".jpg", lunghezza, altezza-300)
+  -- local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.jpg", lunghezza, altezza-300)
 
   background.x=display.contentCenterX
   background.y=display.contentCenterY-170
@@ -257,20 +181,6 @@ function scene:create( event )
 --  sceneGroup:insert(background)
   mainGroup=display.newGroup()
   mainGroup:insert(character)
-  local frecciaEST  = display.newImageRect(mainGroup, objectSheet, 3, 50, 50)
-  frecciaEST.id="EST"
-  frecciaEST:addEventListener("tap", handleButtonEvent)
-  frecciaEST.x=display.contentCenterX+520
-  frecciaEST.y=display.contentCenterY-100
-
-  local frecciaOVEST  = display.newImageRect(mainGroup, objectSheet, 4, 50, 50)
-  frecciaOVEST.id="OVEST"
-  frecciaOVEST:addEventListener("tap", handleButtonEvent)
-  frecciaOVEST.x=display.contentCenterX-520
-  frecciaOVEST.y=display.contentCenterY-100
---local freccia = display.newImageRect(sceneGroup, objectSheet, 4, 50, 50)
---freccia.x=display.contentCenterX
---freccia.y=display.contentCenterY
 
   --Barre nere laterali
   local hidingGroup = display.newGroup()
@@ -340,12 +250,9 @@ function scene:hide( event )
 
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is on screen (but is about to go off screen)
---composer.removeScene("livello1")
 
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-   --composer.removeScene("livello1")
-
 
 	end
 end
