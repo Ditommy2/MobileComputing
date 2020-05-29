@@ -1,7 +1,8 @@
 local composer = require("composer")
 local widget = require("widget")
 local scene = composer.newScene( )
-
+local customFont="MadnessHyperactive.otf"
+--local customFont=native.systemFont
 --Game window (16:9 aspect ratio)
 local width = display.contentWidth
 local height = display.contentWidth * (9/16)
@@ -30,6 +31,7 @@ local function networkListener( event )
         serverAnswer.alpha = 1
         transition.to( serverAnswer, { time=4000, alpha=0 } )
       else
+				composer.setVariable( "username", utenteTextField.text )
         composer.gotoScene("Scenes.nuovaCarica")
       end
     end
@@ -70,10 +72,13 @@ function scene:create( event )
 
   utenteTextField = native.newTextField( 0, height*0.1, width*0.4, height * 0.1)
   utenteTextField.placeholder = "username"
+	utenteTextField.font=native.newFont( customFont, 50)
   loginGroup:insert(utenteTextField)
 
   passTextField = native.newTextField( 0, utenteTextField.height + utenteTextField.height*2, width*0.4, utenteTextField.height)
   passTextField.placeholder = "password"
+	passTextField.isSecure=true
+	passTextField.font=native.newFont( customFont, 50)
   loginGroup:insert(passTextField)
 
   button = widget.newButton({
@@ -86,7 +91,8 @@ function scene:create( event )
       label = "Login",
       labelColor={default={0.5, 0, 0}},
       fontSize=50,
-      onEvent = handleButtonEvent
+      onEvent = handleButtonEvent,
+			font=customFont
   })
   loginGroup:insert(button)
 

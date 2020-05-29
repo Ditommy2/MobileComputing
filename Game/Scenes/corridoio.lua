@@ -10,7 +10,9 @@ local funzioneEseguiDisplay= composer.getVariable( "funzione" )
 local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
-
+local prossimaStanza=composer.getVariable( "prossimaStanza" )
+local customFont="MadnessHyperactive.otf"
+--local customFont=native.systemFont
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
 physics.start()

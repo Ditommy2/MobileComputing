@@ -5,6 +5,8 @@
 -----------------------------------------------------------------------------------------
 
 -- Your code here
+local customFont="MadnessHyperactive.otf"
+--local customFont=native.systemFont
 local composer = require("composer")
 -- local table = {}
 -- table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}

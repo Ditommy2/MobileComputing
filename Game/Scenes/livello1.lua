@@ -11,7 +11,8 @@ local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 composer.recycleOnSceneChange = true
-
+local customFont="MadnessHyperactive.otf"
+--local customFont=native.systemFont
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
 physics.start()
@@ -33,8 +34,10 @@ local function gotoMenu()
     mapyToSave = composer.getVariable( "mapy" ),
     --displayFunzioneToSave = composer.getVariable( "funzione" )
   }
-  fileHandler.saveTable(salvataggio, "saves.json")
-
+  local stringaSalvataggio = "save".."$$"..composer.getVariable("username").."$$"..composer.getVariable("nomePartita")..".json"
+  print(stringaSalvataggio)
+  fileHandler.saveTable(salvataggio, stringaSalvataggio)
+  fileHandler.caricaSave(stringaSalvataggio)
   composer.removeScene("Scenes.livello1")
  		composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
  end
@@ -253,6 +256,7 @@ function scene:create( event )
 
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
+
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --fase show del display

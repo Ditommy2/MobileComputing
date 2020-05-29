@@ -5,7 +5,8 @@
 -----------------------------------------------------------------------------------------
 
 local composer = require( "composer" )
-
+local customFont="MadnessHyperactive.otf"
+--local customFont=native.systemFont
 local scene = composer.newScene()
 
 -- -----------------------------------------------------------------------------------
@@ -41,10 +42,10 @@ function scene:create( event )
     title.x = display.contentCenterX
     title.y = 200
 
-		local loginButton = display.newText( sceneGroup, "Login", display.contentCenterX, 400, native.systemFont, 70 )
+		local loginButton = display.newText( sceneGroup, "Login", display.contentCenterX, 400, native.newFont( customFont), 70 )
     loginButton:setFillColor( 0.82, 0.86, 1 )
 
-    local registerButton = display.newText( sceneGroup, "Register", display.contentCenterX, 550, native.systemFont, 70 )
+    local registerButton = display.newText( sceneGroup, "Register", display.contentCenterX, 550, native.newFont( customFont), 70 )
     registerButton:setFillColor( 0.75, 0.78, 1 )
 
 		loginButton:addEventListener( "tap", gotoLogin )
