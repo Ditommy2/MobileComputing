@@ -62,7 +62,7 @@ end
 local function networkListener( event )
 
     if ( event.isError ) then
-			print("Cozzio che è successo?")
+			print("network Error")
     else
     	print( event.response .." EVENTO")
 			if event.response=="" then

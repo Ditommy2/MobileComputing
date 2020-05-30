@@ -6,12 +6,12 @@ local customFont="MadnessHyperactive.otf"
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --carica save: si occupa di caricare il salvataggio sullo script php e quindi sul database
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function M.caricaSave(stringaSalvataggio)
+function M.caricaSave(salvataggio, stringaSalvataggio)
 
 local function uploadListener( event )
   if ( event.isError ) then
      print( "Network Error." )
-
+     print(event.response)
      -- This is likely a time out or server being down. In other words,
      -- It was unable to communicate with the web server. Now if the
      -- connection to the web server worked, but the request is bad, this
@@ -58,8 +58,8 @@ print(system.pathForFile(filename))
 local headers = {}
 headers.filename = filename
 params.headers = headers
-
-network.upload( url , method, uploadListener, params, filename, baseDirectory, contentType )
+print(salvataggio)
+--network.upload( url , method, uploadListener, params, filename, baseDirectory, contentType )
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione per salvare su filepath una tabella

@@ -37,7 +37,7 @@ local function gotoMenu()
   local stringaSalvataggio = "save".."$$"..composer.getVariable("username").."$$"..composer.getVariable("nomePartita")..".json"
   print(stringaSalvataggio)
   fileHandler.saveTable(salvataggio, stringaSalvataggio)
-  fileHandler.caricaSave(stringaSalvataggio)
+  fileHandler.caricaSave(salvataggio, stringaSalvataggio)
   composer.removeScene("Scenes.livello1")
  		composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
  end
