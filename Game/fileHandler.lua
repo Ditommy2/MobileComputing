@@ -37,7 +37,7 @@ local method = "PUT"
 
 -- Set some reasonable parameters for the upload process:
 local params = {
-  timeout = 60,
+  timeout = 12000000, 
   progress = true,
   bodyType = "binary"
 }
@@ -46,7 +46,7 @@ local params = {
 -- Also, set the MIME type of the file so that the server knows what to expect.
 local filename = stringaSalvataggio
 local baseDirectory = system.DocumentsDirectory
-local contentType = "text/plain"  --another option is "text/plain"
+local contentType = "application/json"  --another option is "text/plain"
 print(system.pathForFile(filename))
 -- There is no standard way of using HTTP PUT to tell the remote host what
 -- to name the file. We'll make up our own header here so that our PHP script
@@ -59,7 +59,7 @@ local headers = {}
 headers.filename = filename
 params.headers = headers
 print(salvataggio)
---network.upload( url , method, uploadListener, params, filename, baseDirectory, contentType )
+network.upload( url , method, uploadListener, params, filename, baseDirectory, contentType )
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione per salvare su filepath una tabella
