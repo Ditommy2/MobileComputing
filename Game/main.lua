@@ -33,12 +33,6 @@ end
  -- composer.setVariable( "inv", inv )
  -- composer.setVariable( "mappa", mappa )
  composer.setVariable( "funzione", funzione )
-<<<<<<< HEAD
  -- composer.setVariable( "mapx", 352 )
  -- composer.setVariable( "mapy", 200 )
  composer.gotoScene("Scenes.menu")
-=======
- composer.setVariable( "mapx", 352 )
- composer.setVariable( "mapy", 200 )
- composer.gotoScene("nuova")
->>>>>>> parent of 171875f... grafica ancora smarmellosa merda
