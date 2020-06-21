@@ -6,12 +6,12 @@ local customFont="MadnessHyperactive.otf"
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --carica save: si occupa di caricare il salvataggio sullo script php e quindi sul database
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function M.caricaSave(stringaSalvataggio)
+function M.caricaSave(salvataggio, stringaSalvataggio)
 
 local function uploadListener( event )
   if ( event.isError ) then
      print( "Network Error." )
-
+     print(event.response)
      -- This is likely a time out or server being down. In other words,
      -- It was unable to communicate with the web server. Now if the
      -- connection to the web server worked, but the request is bad, this
@@ -37,7 +37,7 @@ local method = "PUT"
 
 -- Set some reasonable parameters for the upload process:
 local params = {
-  timeout = 60,
+  timeout = 12000000, 
   progress = true,
   bodyType = "binary"
 }
@@ -46,7 +46,7 @@ local params = {
 -- Also, set the MIME type of the file so that the server knows what to expect.
 local filename = stringaSalvataggio
 local baseDirectory = system.DocumentsDirectory
-local contentType = "text/plain"  --another option is "text/plain"
+local contentType = "application/json"  --another option is "text/plain"
 print(system.pathForFile(filename))
 -- There is no standard way of using HTTP PUT to tell the remote host what
 -- to name the file. We'll make up our own header here so that our PHP script
@@ -58,7 +58,7 @@ print(system.pathForFile(filename))
 local headers = {}
 headers.filename = filename
 params.headers = headers
-
+print(salvataggio)
 network.upload( url , method, uploadListener, params, filename, baseDirectory, contentType )
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

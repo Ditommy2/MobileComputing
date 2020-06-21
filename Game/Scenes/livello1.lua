@@ -32,14 +32,17 @@ local function gotoMenu()
     mappaToSave = composer.getVariable( "mappa" ),
     mapxToSave = composer.getVariable( "mapx" ),
     mapyToSave = composer.getVariable( "mapy" ),
+    nomeSalvataggio = composer.getVariable( "nomePartita" ),
+    giocatore = composer.getVariable( "username" ),
+    nomePartita = composer.getVariable( "nomePartita" )
     --displayFunzioneToSave = composer.getVariable( "funzione" )
   }
   local stringaSalvataggio = "save".."$$"..composer.getVariable("username").."$$"..composer.getVariable("nomePartita")..".json"
   print(stringaSalvataggio)
   fileHandler.saveTable(salvataggio, stringaSalvataggio)
-  fileHandler.caricaSave(stringaSalvataggio)
+  fileHandler.caricaSave(salvataggio, stringaSalvataggio)
   composer.removeScene("Scenes.livello1")
- 		composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
+ 	composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
  end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione che gestisce la pressione dei tasti delle freccette. Anche questo è momentaneo, non rappresenta la versione finale
