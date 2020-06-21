@@ -3,9 +3,7 @@
 -- menu.lua
 --
 -----------------------------------------------------------------------------------------
-
 local composer = require( "composer" )
-
 local scene = composer.newScene()
 
 composer.recycleAutomatically=false
@@ -21,7 +19,6 @@ local testoMossa
 --Physics (necessaria per il movimento del personaggio(attacco e difesa))
 local physics = require("physics")
 physics.start()
-
 
 -- -----------------------------------------------------------------------------------
 -- Code outside of the scene event functions below will only be executed ONCE unless
@@ -98,7 +95,6 @@ function scene:create( event )
 	--*************MID GROUP*************************************************
 end
 
-
 -- show()
 function scene:show( event )
 
@@ -110,7 +106,6 @@ function scene:show( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs when the scene is entirely on screen
-    -- audio.play( menuTrack, {channel =1 , loops = -1})
 	end
 end
 
@@ -139,7 +134,6 @@ function scene:destroy( event )
 	-- Code here runs prior to the removal of scene's view
 
 end
-
 
 -- -----------------------------------------------------------------------------------
 -- Scene event function listeners

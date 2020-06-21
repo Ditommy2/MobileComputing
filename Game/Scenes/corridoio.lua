@@ -12,7 +12,7 @@ local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 local prossimaStanza=composer.getVariable( "prossimaStanza" )
 local customFont="MadnessHyperactive.otf"
---local customFont=native.systemFont
+
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
 physics.start()
@@ -189,7 +189,6 @@ function scene:create( event )
   local seedDirezionale = "seed"..direzioneCorridoio
   local numeroRandomico = stanzaCorrente[seedDirezionale]
   local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back"..numeroRandomico..".jpg", lunghezza, altezza-300)
-  -- local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.jpg", lunghezza, altezza-300)
 
   background.x=display.contentCenterX
   background.y=display.contentCenterY-170
@@ -202,8 +201,6 @@ function scene:create( event )
 
   --Displaying character and setting sprite sheets
   character =  characterInterface.creaPersonaggio(self)
-
---  sceneGroup:insert(background)
   mainGroup=display.newGroup()
   mainGroup:insert(character)
 
@@ -255,9 +252,6 @@ function scene:show( event )
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
 
-
-
-
 	elseif ( phase == "did" ) then
 		-- Code here runs when the scene is entirely on screen
 
@@ -295,7 +289,6 @@ function scene:destroy( event )
     sceneGroup[i] = nil
   end
 end
-
 
 -- -----------------------------------------------------------------------------------
 -- Scene event function listeners
