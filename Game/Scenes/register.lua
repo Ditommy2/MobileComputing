@@ -113,7 +113,7 @@ local function handleButtonEvent( event )
 				composer.gotoScene("Scenes.register")
 else
       --local URL = "http://127.0.0.1/mobilecomputing/insert.php?name=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)   --PROVA LOCALE
-    	local URL = "https://appmcsite.000webhostapp.com/insert.php?username=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)  --QUELLO VERO
+    	local URL = "https://appmcsite.000webhostapp.com/insert.php?name=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)  --QUELLO VERO
 			--local URL = "".. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
         network.request(URL, "GET", networkListener)
 
