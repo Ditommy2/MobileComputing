@@ -3,7 +3,10 @@
 -- menu.lua
 --
 -----------------------------------------------------------------------------------------
+
 local composer = require( "composer" )
+local characterInterface = require("characterInterface")
+
 local scene = composer.newScene()
 
 composer.recycleAutomatically=false
@@ -11,34 +14,25 @@ local widget = require("widget")
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
 
+--Mosse e descrizione
 local backgroundGroup
 local textGroup
 local midGroup
-local testoMossa
+
+--Game objects
+local character
+local enemy
 
 --Physics (necessaria per il movimento del personaggio(attacco e difesa))
 local physics = require("physics")
 physics.start()
 
+
 -- -----------------------------------------------------------------------------------
 -- Code outside of the scene event functions below will only be executed ONCE unless
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
 -- -----------------------------------------------------------------------------------
-local function infoMossa1()
-  testoMossa.text = "Mossa1 : Questa mossa ti apre l'ano\nAttacco = 60%\nDifesa = 20%\nVelocità = 40%"
-end
 
-local function infoMossa2()
-  testoMossa.text = "Mossa2 : Questa mossa ti fa il caffè\nAttacco = 30%\nDifesa = 50%\nVelocità = 80%"
-end
-
-local function infoMossa3()
-  testoMossa.text = "Mossa3 : Questa mossa ti fa accarezzare il gatto di titto\nAttacco = 20%\nDifesa = 90%\nVelocità = 60%"
-end
-
-local function infoMossa4()
-  testoMossa.text = "Mossa4 : Questa mossa genera gettere & settere\nAttacco = 20%\nDifesa = 50%\nVelocità = 20%"
-end
 
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
@@ -60,40 +54,70 @@ function scene:create( event )
 
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 
-	--****************BACKGROUND GROUP********************************
+--****************BACKGROUND GROUP********************************
 
-	local background = display.newImageRect( backgroundGroup, "Images/Backgrounds/proceduralBack/Stanze/back1.jpg", 1280, 720 )
-	background.x = display.contentCenterX
-	background.y = display.contentCenterY - 200
+ local background = display.newImageRect( backgroundGroup, "Images/Backgrounds/proceduralBack/Stanze/back1.jpg", 1280, 720 )
+ background.x = display.contentCenterX
+ background.y = display.contentCenterY - 200
 
-	local underBar = display.newImageRect( backgroundGroup, "Images/Backgrounds/FightBar.png", 1280, 720)
-	underBar.x = display.contentCenterX
-	underBar.y = display.contentCenterY
+ local underBar = display.newImageRect( backgroundGroup, "Images/Backgrounds/FightBar.png", 1280, 720)
+ underBar.x = display.contentCenterX
+ underBar.y = display.contentCenterY
 
-	--*******************TEXT GROUP************************************
+ --*******************TEXT GROUP************************************
 
-	testoMossa = display.newText( textGroup, "" ,1050, 585, 450, 0, native.systemFont, 20 )
-	testoMossa:setFillColor( 1, 1, 1 )
+local testoMossa = display.newText( textGroup, "" ,1050, 585, 450, 0, native.systemFont, 20 )
+testoMossa:setFillColor( 1, 1, 1 )
 
-	local mossa1 = display.newText( textGroup, "Mossa1", 200, 515, native.systemFont, 50 )
-  mossa1:setFillColor( 0.82, 0.86, 1 )
-
-  local mossa2 = display.newText( textGroup, "Mossa2", 560, 515, native.systemFont, 50 )
-  mossa2:setFillColor( 0.82, 0.86, 1 )
-
-  local mossa3 = display.newText( textGroup, "Mossa3", 200, 650, native.systemFont, 50 )
-  mossa3:setFillColor( 0.82, 0.86, 1 )
-
-  local mossa4 = display.newText( textGroup, "Mossa4", 560, 650, native.systemFont, 50 )
-  mossa4:setFillColor( 0.82, 0.86, 1 )
-
-  mossa1:addEventListener( "tap", infoMossa1 )
-  mossa2:addEventListener( "tap", infoMossa2 )
-  mossa3:addEventListener( "tap", infoMossa3 )
-  mossa4:addEventListener( "tap", infoMossa4 )
-
-	--*************MID GROUP*************************************************
+local function infoMossa1()
+  testoMossa.text = "Pugno : Stordisci il tuo avversario \nDamage = 60%\nHit chance = 20%\n"
 end
+
+local function infoMossa2()
+  testoMossa.text = "Mossa2 : Questa mossa ti fa il caffè\nAttacco = 30%\nDifesa = 50%\nVelocità = 80%"
+end
+
+local function infoMossa3()
+  testoMossa.text = "Mossa3 : Questa mossa ti fa accarezzare il gatto di titto\nAttacco = 20%\nDifesa = 90%\nVelocità = 60%"
+end
+
+local function infoMossa4()
+  testoMossa.text = "Mossa4 : Questa mossa genera gettere & settere\nAttacco = 20%\nDifesa = 50%\nVelocità = 20%"
+end
+
+		local mossa1 = display.newText( textGroup, "Mossa1", 200, 515, native.systemFont, 50 )
+    mossa1:setFillColor( 0.82, 0.86, 1 )
+
+    local mossa2 = display.newText( textGroup, "Mossa2", 560, 515, native.systemFont, 50 )
+    mossa2:setFillColor( 0.82, 0.86, 1 )
+
+    local mossa3 = display.newText( textGroup, "Mossa3", 200, 650, native.systemFont, 50 )
+    mossa3:setFillColor( 0.82, 0.86, 1 )
+
+    local mossa4 = display.newText( textGroup, "Mossa4", 560, 650, native.systemFont, 50 )
+    mossa4:setFillColor( 0.82, 0.86, 1 )
+
+    mossa1:addEventListener( "tap", infoMossa1 )
+    mossa2:addEventListener( "tap", infoMossa2 )
+    mossa3:addEventListener( "tap", infoMossa3 )
+    mossa4:addEventListener( "tap", infoMossa4 )
+
+		--*************MID GROUP*************************************************
+
+		--Displaying character
+	  character = characterInterface.creaPersonaggio(self)
+		midGroup:insert(character)
+		character.x = display.contentCenterX - 250
+		character.y = display.contentCenterY + 100
+
+		--Displaying enemy
+	  enemy = display.newImageRect( midGroup, "Images/Characters/joker.png", 200, 200)
+		enemy.x = display.contentCenterX + 250
+		enemy.y = display.contentCenterY
+
+
+end
+
 
 -- show()
 function scene:show( event )
@@ -106,6 +130,7 @@ function scene:show( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs when the scene is entirely on screen
+    -- audio.play( menuTrack, {channel =1 , loops = -1})
 	end
 end
 
@@ -134,6 +159,7 @@ function scene:destroy( event )
 	-- Code here runs prior to the removal of scene's view
 
 end
+
 
 -- -----------------------------------------------------------------------------------
 -- Scene event function listeners
