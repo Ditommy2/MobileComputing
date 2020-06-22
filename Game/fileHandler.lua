@@ -3,6 +3,16 @@ local json = require( "json" )
 local defaultLocation = system.DocumentsDirectory
 local customFont="MadnessHyperactive.otf"
 --local customFont=native.systemFont
+
+local function urlencode(str)
+	if (str) then
+		str = string.gsub (str, "\n", "\r\n")
+		str = string.gsub (str, "([^%w ])",
+		function (c) return string.format ("%%%02X", string.byte(c)) end)
+		str = string.gsub (str, " ", "+")
+	end
+	return str
+end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --carica save: si occupa di caricare il salvataggio sullo script php e quindi sul database
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -12,11 +22,6 @@ local function uploadListener( event )
   if ( event.isError ) then
      print( "Network Error." )
      print(event.response)
-     -- This is likely a time out or server being down. In other words,
-     -- It was unable to communicate with the web server. Now if the
-     -- connection to the web server worked, but the request is bad, this
-     -- will be false and you need to look at event.status and event.response
-     -- to see why the web server failed to do what you want.
   else
      if ( event.phase == "began" ) then
         print( "Upload started" )
@@ -30,31 +35,19 @@ local function uploadListener( event )
   end
 end
 
--- Sepcify the URL of the PHP script to upload to. Do this on your own server.
--- Also define the method as "PUT".
-local url = "https://appmcsite.000webhostapp.com/caricaSave.php"
-local method = "PUT"
+local url = "https://appmcsite.000webhostapp.com/caricaSave.php?name=".. urlencode( stringaSalvataggio )
+local method = "POST"
 
--- Set some reasonable parameters for the upload process:
 local params = {
-  timeout = 12000000, 
+  timeout = 120,
   progress = true,
   bodyType = "binary"
 }
 
--- Specify what file to upload and where to upload it from.
--- Also, set the MIME type of the file so that the server knows what to expect.
 local filename = stringaSalvataggio
 local baseDirectory = system.DocumentsDirectory
-local contentType = "application/json"  --another option is "text/plain"
+local contentType = "application/json"
 print(system.pathForFile(filename))
--- There is no standard way of using HTTP PUT to tell the remote host what
--- to name the file. We'll make up our own header here so that our PHP script
--- expects to look for that and provides the name of the file. Your PHP script
--- needs to be "hardened" because this is a security risk. For example, someone
--- could pass in a path name that might try to write arbitrary files to your
--- server and overwrite critical system files with malicious code.
--- Don't assume "This won't happen to me!" because it very well could.
 local headers = {}
 headers.filename = filename
 params.headers = headers

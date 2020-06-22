@@ -1,15 +1,17 @@
 <?php
-$con = mysqli_connect('localhost','id13097986_supercafoni','2QM{-&[Yfev|J=Jk', 'id13097986_appmcdata') or die("Error connecting to database");;
+$conn = new mysqli("localhost", "id13097986_supercafoni", "2QM{-&[Yfev|J=Jk", "id13097986_appmcdata") or die("Error connecting to database");
 
-$File = $_FILES['userfile'];
+$uploaddir = '/var/www/uploads/';
+$uploadfile = $uploaddir . basename($_FILES[0]['name']);
 
-$jsonString = file_get_contents($file);
-$data = json_decode($jsonString, true);
+$fileName = $_POST['name'];
+print($fileName);
+$temp = explode('$$', $fileName);
+$username = $temp[1];
+$nomePartita = $temp[2];
 
+$sql = "INSERT INTO Partita (Giocatore, FilePartita, nomePartita) VALUES ('$username','$file','$nomePartita')";
 
-$sql = "INSERT INTO Partita (nomePartita, Giocatore, FilePartita) VALUES ('$idfile','$ext','$File')";
-
-
-mysqli_query($con,$sql) or die (mysqli_error($con));
+mysqli_query($conn,$sql) or die (mysqli_error($conn));
 
 ?>

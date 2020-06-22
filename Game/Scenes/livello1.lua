@@ -21,6 +21,8 @@ physics.start()
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local character
 
+
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione per tornare al menu. Quando chiamata deve salvare tutti i dati in maniera persistente per poter recuperare la partita in qualsiasi momento
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -256,6 +258,21 @@ function scene:create( event )
   returnButton.x = display.contentCenterX-550
   returnButton.y = display.contentCenterY-300
   returnButton:addEventListener("tap", gotoMenu)
+
+  local function goToTutorial()
+    local scrollOverlayRequired = require("tutorial")
+    local lunghezza =  display.contentWidth
+    local lunghezzaFinestra=lunghezza-400
+  	local altezzzaFinestra=lunghezzaFinestra*(9/16)
+    scrollOverlayRequired.handleButton(display, lunghezzaFinestra, altezzaFinestra)
+
+  end
+
+  local tutorialButton = display.newText( mainGroup, "How to Play", 150, 150 )
+  mainGroup:insert(returnButton)
+  tutorialButton.x = display.contentCenterX+550
+  tutorialButton.y = display.contentCenterY-300
+  tutorialButton:addEventListener("tap", goToTutorial)
 
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
