@@ -131,6 +131,28 @@ local function moveListener(event)
   return true
 end
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mosse del personaggio
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function move1(target)
+
+end
+
+local function move2(target)
+
+end
+
+local function move3(target)
+
+end
+
+local function move4(target)
+
+end
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Creazione del personaggio
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function create(scena)
   --Memorizing scene context
   scene = scena
@@ -144,17 +166,28 @@ local function create(scena)
   character.y = altezza-310
   physics.addBody(character, "dynamic", {radius=sheet_walking_Options.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
   character.myName = "Character"
+  character.life = 500
+  character.armor = 50
+  character.damage = 100
+  character.speed = 20
 
   return character
 end
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Interfaccia del personaggio
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local interfacciaPersonaggio =
 {
   creaPersonaggio = (create),
   muovi = (move),
   listener = (moveListener),
   changeRoom = (exitRight),
-  goBack = (exitLeft)
+  goBack = (exitLeft),
+  mossa1 = (move1),
+  mossa2 = (move2),
+  mossa3 = (move3),
+  mossa4 = (move4)
 }
 
 return interfacciaPersonaggio

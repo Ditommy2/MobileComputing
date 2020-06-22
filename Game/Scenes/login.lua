@@ -2,7 +2,7 @@ local composer = require("composer")
 local widget = require("widget")
 local scene = composer.newScene( )
 local customFont="MadnessHyperactive.otf"
---local customFont=native.systemFont
+
 --Game window (16:9 aspect ratio)
 local width = display.contentWidth
 local height = display.contentWidth * (9/16)
@@ -59,65 +59,65 @@ end
 function scene:create( event )
 	local sceneGroup = self.view
 
-  local background=display.newImageRect(sceneGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.jpg", width, height)
-  background.x=display.contentCenterX
-  background.y=display.contentCenterY
-  sceneGroup:insert(background)
+	local background=display.newImageRect(sceneGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.jpg", width, height)
+	background.x=display.contentCenterX
+	background.y=display.contentCenterY
+	sceneGroup:insert(background)
 
-  local title = display.newImageRect( sceneGroup, "Images/Utility/title.png", 600, 100 )
-   title.x = display.contentCenterX
-   title.y = 200
+	local title = display.newImageRect( sceneGroup, "Images/Utility/title.png", 600, 100 )
+	title.x = display.contentCenterX
+	title.y = 200
 
-   loginGroup = display.newGroup()
+	loginGroup = display.newGroup()
 
-  utenteTextField = native.newTextField( 0, height*0.1, width*0.4, height * 0.1)
-  utenteTextField.placeholder = "username"
+	utenteTextField = native.newTextField( 0, height*0.1, width*0.4, height * 0.1)
+	utenteTextField.placeholder = "username"
 	utenteTextField.font=native.newFont( customFont, 50)
-  loginGroup:insert(utenteTextField)
+	loginGroup:insert(utenteTextField)
 
-  passTextField = native.newTextField( 0, utenteTextField.height + utenteTextField.height*2, width*0.4, utenteTextField.height)
-  passTextField.placeholder = "password"
+	passTextField = native.newTextField( 0, utenteTextField.height + utenteTextField.height*2, width*0.4, utenteTextField.height)
+	passTextField.placeholder = "password"
 	passTextField.isSecure=true
 	passTextField.font=native.newFont( customFont, 50)
-  loginGroup:insert(passTextField)
+	loginGroup:insert(passTextField)
 
-  button = widget.newButton({
-      shape = "roundedRect",
-      x = width*0.6,
-      y = height*0.25,
-      width=width*0.3,
-      height= height * 0.2,
-      id = "login",
-      label = "Login",
-      labelColor={default={0.5, 0, 0}},
-      fontSize=50,
-      onEvent = handleButtonEvent,
-			font=customFont
-  })
-  loginGroup:insert(button)
+	button = widget.newButton({
+	  shape = "roundedRect",
+	  x = width*0.6,
+	  y = height*0.25,
+	  width=width*0.3,
+	  height= height * 0.2,
+	  id = "login",
+	  label = "Login",
+	  labelColor={default={0.5, 0, 0}},
+	  fontSize=50,
+	  onEvent = handleButtonEvent,
+		font=customFont
+	})
+	loginGroup:insert(button)
 
-  utenteTextField.anchorX = 0
-  utenteTextField.anchorY = 0
-  passTextField.anchorX = 0
-  passTextField.anchorY = 0
-  passTextField.anchorX = 0
-  passTextField.anchorY = 0
-  button.anchorX = 0
+	utenteTextField.anchorX = 0
+	utenteTextField.anchorY = 0
+	passTextField.anchorX = 0
+	passTextField.anchorY = 0
+	passTextField.anchorX = 0
+	passTextField.anchorY = 0
+	button.anchorX = 0
 
-  loginGroup.y = height * 0.35
+	loginGroup.y = height * 0.35
 
-  button:addEventListener("tap", getSavings)
+	button:addEventListener("tap", getSavings)
 
-  sceneGroup:insert(loginGroup)
+	sceneGroup:insert(loginGroup)
 
-  serverAnswer = display.newText("", display.contentCenterX, height*0.85, native.systemFont, height*0.1)
-  serverAnswer.alpha=0
-  sceneGroup:insert(serverAnswer)
+	serverAnswer = display.newText("", display.contentCenterX, height*0.85, native.systemFont, height*0.1)
+	serverAnswer.alpha=0
+	sceneGroup:insert(serverAnswer)
 
-  local returnButton = display.newImageRect( loginGroup, "images/Utility/returnArrow.png", 200, 200 )
-  returnButton.x = display.contentCenterX-550
-  returnButton.y = display.contentCenterY-550
-  returnButton:addEventListener("tap", gotoMenu)
+	local returnButton = display.newImageRect( loginGroup, "images/Utility/returnArrow.png", 200, 200 )
+	returnButton.x = display.contentCenterX-550
+	returnButton.y = display.contentCenterY-550
+	returnButton:addEventListener("tap", gotoMenu)
 end
 
 -- show()
@@ -145,7 +145,7 @@ function scene:hide( event )
       loginGroup[i]:removeSelf()
       loginGroup[i] = nil
     end
-composer.removeScene("Scenes.login")
+		composer.removeScene("Scenes.login")
 	end
 end
 

@@ -2,7 +2,6 @@ local M = {}
 local json = require( "json" )
 local defaultLocation = system.DocumentsDirectory
 local customFont="MadnessHyperactive.otf"
---local customFont=native.systemFont
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --carica save: si occupa di caricare il salvataggio sullo script php e quindi sul database
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -37,7 +36,7 @@ local method = "PUT"
 
 -- Set some reasonable parameters for the upload process:
 local params = {
-  timeout = 12000000, 
+  timeout = 12000000,
   progress = true,
   bodyType = "binary"
 }
