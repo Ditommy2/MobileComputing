@@ -163,25 +163,28 @@ local interfacciaConfig = {
     local index=1
     local partenzax = display.contentCenterX-370
     local partenzay= display.contentCenterY-150
-  for x=1, colonne, 1 do
-    for y=1, righe, 1 do
-      local positioningX = partenzax+(x*150)
-      local positioningY = partenzay+(y*100)
-      local tabella = composer.getVariable( "tabellaOgegttiInventario" )
-      tabella[index]={positioningX, positioningY}
-      composer.setVariable( "tabellaOggettiInventario",  tabella)
-      local item = (display.newText( input[index], positioningX, positioningY,  native.systemFont, 30))
-      item.id=index
-      item:setFillColor(1, 0, 0)
-      item:addEventListener("touch", handler)
-      inventoryGroup:insert(item)
-      index=index+1
-      if (index > #input) then
-        return
+    for x=1, colonne, 1 do
+      for y=1, righe, 1 do
+        local positioningX = partenzax+(x*150)
+        local positioningY = partenzay+(y*100)
+        local tabella = composer.getVariable( "tabellaOgegttiInventario" )
+        tabella[index]={positioningX, positioningY}
+        composer.setVariable( "tabellaOggettiInventario",  tabella)
+        -- local item = (display.newText( input[index], positioningX, positioningY,  native.systemFont, 30))
+        local item = display.newImageRect( inventoryGroup, input[index], 50, 50)
+        item.x = positioningX
+        item.y = positioningY
+        item.id=index
+        -- item:setFillColor(1, 0, 0)
+        item:addEventListener("touch", handler)
+        -- inventoryGroup:insert(item)
+        index=index+1
+        if (index > #input) then
+          return
+        end
       end
     end
-  end
-end),
+  end),
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --questa funzione si riferisce a quella sopra e qui può essere usata da funzioni esterne. Si deve fare così per via della ricorsività
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

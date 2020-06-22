@@ -70,7 +70,7 @@ end),
 --coppia di valori da costruire: uno è l'inventario e l'altro è la mappa generata
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 create={
-  inventario={"ITEM", "ITEM", "ITEM", "ITEM", "ITEM"},
+  inventario={"Images/Objects/lifePotion.png", "Images/Objects/armorPotion.png", "Images/Objects/attackPotion.png", "Images/Objects/key.png", "Images/Objects/shovel.png"},
   mappaGenerata = interfaccia.proceduraleMappa
   }
 }
