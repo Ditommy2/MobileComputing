@@ -32,7 +32,9 @@ local function gotoMenu()
     mappaToSave = composer.getVariable( "mappa" ),
     mapxToSave = composer.getVariable( "mapx" ),
     mapyToSave = composer.getVariable( "mapy" ),
-    nomeSalvataggio = composer.getVariable( "nomePartita" )
+    nomeSalvataggio = composer.getVariable( "nomePartita" ),
+    giocatore = composer.getVariable( "username" ),
+    nomePartita = composer.getVariable( "nomePartita" )
     --displayFunzioneToSave = composer.getVariable( "funzione" )
   }
   local stringaSalvataggio = "save".."$$"..composer.getVariable("username").."$$"..composer.getVariable("nomePartita")..".json"
