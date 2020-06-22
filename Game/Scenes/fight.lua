@@ -12,16 +12,32 @@ local scene = composer.newScene()
 composer.recycleAutomatically=false
 local widget = require("widget")
 local lunghezza =  display.contentWidth
-local altezza=  lunghezza*(9/16)
+local altezza = lunghezza*(9/16)
 
 --Mosse e descrizione
 local backgroundGroup
 local textGroup
 local midGroup
+local testoMossa
+local mossa1
+local mossa2
+local mossa3
+local mossa4
 
 --Game objects
 local character
-local enemy
+local numeroMossa
+local chanceRandom
+local totChance
+local attackRandom
+local totAttacco
+local enemyImage
+local enemy = {life = 250, armor = 2, damage = 50, speed = 10}
+
+local lifeBarCharacter
+local lifeBarCharacterBlack
+local lifeBarEnemy
+local lifeBarEnemyBlack
 
 --Physics (necessaria per il movimento del personaggio(attacco e difesa))
 local physics = require("physics")
@@ -37,6 +53,43 @@ physics.start()
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
+
+local function infoMossa1()
+	numeroMossa = 1
+  testoMossa.text = "Pugno : Stordisci il tuo avversario \nDamage = 60%\nHit chance = 20%\n"
+end
+
+local function infoMossa2()
+	numeroMossa = 2
+  testoMossa.text = "Mossa2 : Questa mossa ti fa il caffè\nAttacco = 30%\nDifesa = 50%\nVelocità = 80%"
+end
+
+local function infoMossa3()
+	numeroMossa = 3
+  testoMossa.text = "Mossa3 : Questa mossa ti fa accarezzare il gatto di titto\nAttacco = 20%\nDifesa = 90%\nVelocità = 60%"
+end
+
+local function infoMossa4()
+	numeroMossa = 4
+  testoMossa.text = "Mossa4 : Questa mossa genera gettere & settere\nAttacco = 20%\nDifesa = 50%\nVelocità = 20%"
+end
+
+
+local function eseguiMossa()
+	if(numeroMossa == 1) then
+	chanceRandom = math.random(1, 6)
+	totChance = chanceRandom + mossa1.hitChance
+end
+
+	if(totChance > enemy.armor) then
+		attackRandom = math.random(1, 30)
+		totAttacco = (attackRandom + character.damage) * mossa1.damage
+		enemy.life = enemy.life - totAttacco
+		local x = enemy.life - totAttacco
+		lifeBarEnemy.width = lifeBarEnemy.width - x
+		lifeBarEnemy.x = lifeBarEnemy.x - x/2
+	end
+end
 
 -- create()
 function scene:create( event )
@@ -66,41 +119,33 @@ function scene:create( event )
 
  --*******************TEXT GROUP************************************
 
-local testoMossa = display.newText( textGroup, "" ,1050, 585, 450, 0, native.systemFont, 20 )
-testoMossa:setFillColor( 1, 1, 1 )
+ testoMossa = display.newText( textGroup, "" ,1050, 585, 450, 0, native.systemFont, 20 )
+ testoMossa:setFillColor( 1, 1, 1 )
 
-local function infoMossa1()
-  testoMossa.text = "Pugno : Stordisci il tuo avversario \nDamage = 60%\nHit chance = 20%\n"
-end
+ mossa1 = display.newText( textGroup, "Mossa1", 200, 515, native.systemFont, 50 )
+ mossa1.hitChance = 5
+ mossa1.damage = 1
+ mossa1:setFillColor( 0.82, 0.86, 1 )
 
-local function infoMossa2()
-  testoMossa.text = "Mossa2 : Questa mossa ti fa il caffè\nAttacco = 30%\nDifesa = 50%\nVelocità = 80%"
-end
+ mossa2 = display.newText( textGroup, "Mossa2", 560, 515, native.systemFont, 50 )
+ mossa2.hitChance = 2
+ mossa2.damage = 20
+ mossa2:setFillColor( 0.82, 0.86, 1 )
 
-local function infoMossa3()
-  testoMossa.text = "Mossa3 : Questa mossa ti fa accarezzare il gatto di titto\nAttacco = 20%\nDifesa = 90%\nVelocità = 60%"
-end
+ mossa3 = display.newText( textGroup, "Mossa3", 200, 650, native.systemFont, 50 )
+ mossa3.hitChance = 3
+ mossa3.damage = 30
+ mossa3:setFillColor( 0.82, 0.86, 1 )
 
-local function infoMossa4()
-  testoMossa.text = "Mossa4 : Questa mossa genera gettere & settere\nAttacco = 20%\nDifesa = 50%\nVelocità = 20%"
-end
+ mossa4 = display.newText( textGroup, "Mossa4", 560, 650, native.systemFont, 50 )
+ mossa4.hitChance = 4
+ mossa4.damage = 40
+ mossa4:setFillColor( 0.82, 0.86, 1 )
 
-		local mossa1 = display.newText( textGroup, "Mossa1", 200, 515, native.systemFont, 50 )
-    mossa1:setFillColor( 0.82, 0.86, 1 )
-
-    local mossa2 = display.newText( textGroup, "Mossa2", 560, 515, native.systemFont, 50 )
-    mossa2:setFillColor( 0.82, 0.86, 1 )
-
-    local mossa3 = display.newText( textGroup, "Mossa3", 200, 650, native.systemFont, 50 )
-    mossa3:setFillColor( 0.82, 0.86, 1 )
-
-    local mossa4 = display.newText( textGroup, "Mossa4", 560, 650, native.systemFont, 50 )
-    mossa4:setFillColor( 0.82, 0.86, 1 )
-
-    mossa1:addEventListener( "tap", infoMossa1 )
-    mossa2:addEventListener( "tap", infoMossa2 )
-    mossa3:addEventListener( "tap", infoMossa3 )
-    mossa4:addEventListener( "tap", infoMossa4 )
+ mossa1:addEventListener( "tap", infoMossa1 )
+ mossa2:addEventListener( "tap", infoMossa2 )
+ mossa3:addEventListener( "tap", infoMossa3 )
+ mossa4:addEventListener( "tap", infoMossa4 )
 
 		--*************MID GROUP*************************************************
 
@@ -109,12 +154,26 @@ end
 		midGroup:insert(character)
 		character.x = display.contentCenterX - 250
 		character.y = display.contentCenterY + 100
+		lifeBarCharacterBlack = display.newImageRect( midGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
+		lifeBarCharacterBlack.x = display.contentCenterX - 250
+		lifeBarCharacterBlack.y = display.contentCenterY - 250
+		lifeBarCharacter = display.newImageRect( midGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
+		lifeBarCharacter.x = display.contentCenterX - 250
+		lifeBarCharacter.y = display.contentCenterY - 250
+
 
 		--Displaying enemy
-	  enemy = display.newImageRect( midGroup, "Images/Characters/joker.png", 200, 200)
-		enemy.x = display.contentCenterX + 250
-		enemy.y = display.contentCenterY
+	  enemyImage = display.newImageRect( midGroup, "Images/Characters/joker.png", 200, 200)
+		enemyImage.x = display.contentCenterX + 250
+		enemyImage.y = display.contentCenterY
+		lifeBarEnemyBlack = display.newImageRect( midGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
+		lifeBarEnemyBlack.x = display.contentCenterX + 250
+		lifeBarEnemyBlack.y = display.contentCenterY - 250
+		lifeBarEnemy = display.newImageRect( midGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
+		lifeBarEnemy.x = display.contentCenterX + 250
+		lifeBarEnemy.y = display.contentCenterY - 250
 
+		enemyImage:addEventListener("tap", eseguiMossa)
 
 end
 
