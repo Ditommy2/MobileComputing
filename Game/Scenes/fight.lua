@@ -5,6 +5,7 @@
 -----------------------------------------------------------------------------------------
 
 local composer = require( "composer" )
+local characterInterface = require("characterInterface")
 
 local scene = composer.newScene()
 
@@ -13,9 +14,14 @@ local widget = require("widget")
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
 
+--Mosse e descrizione
 local backgroundGroup
 local textGroup
 local midGroup
+
+--Game objects
+local character
+local enemy
 
 --Physics (necessaria per il movimento del personaggio(attacco e difesa))
 local physics = require("physics")
@@ -64,7 +70,7 @@ local testoMossa = display.newText( textGroup, "" ,1050, 585, 450, 0, native.sys
 testoMossa:setFillColor( 1, 1, 1 )
 
 local function infoMossa1()
-  testoMossa.text = "Mossa1 : Questa mossa ti apre l'ano\nAttacco = 60%\nDifesa = 20%\nVelocità = 40%"
+  testoMossa.text = "Pugno : Stordisci il tuo avversario \nDamage = 60%\nHit chance = 20%\n"
 end
 
 local function infoMossa2()
@@ -97,6 +103,18 @@ end
     mossa4:addEventListener( "tap", infoMossa4 )
 
 		--*************MID GROUP*************************************************
+
+		--Displaying character
+	  character = characterInterface.creaPersonaggio(self)
+		midGroup:insert(character)
+		character.x = display.contentCenterX - 250
+		character.y = display.contentCenterY + 100
+
+		--Displaying enemy
+	  enemy = display.newImageRect( midGroup, "Images/Characters/joker.png", 200, 200)
+		enemy.x = display.contentCenterX + 250
+		enemy.y = display.contentCenterY
+
 
 end
 
