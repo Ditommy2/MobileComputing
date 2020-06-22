@@ -2,18 +2,21 @@
 local composer = require( "composer" )
 local lowerFixedMenu= require("lowerFixedMenu")
 local widget = require("widget")
+local characterInterface = require("characterInterface")
 local scene = composer.newScene()
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
-local funzione= composer.getVariable( "funzione" )
+local funzioneEseguiDisplay= composer.getVariable( "funzione" )
 local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 local prossimaStanza=composer.getVariable( "prossimaStanza" )
-
+local customFont="MadnessHyperactive.otf"
+--local customFont=native.systemFont
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
 physics.start()
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Variabili personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -26,16 +29,15 @@ local moveTimer
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sheet_walking_Options =
 {
-  width=144,
-  height=256,
+  width=72,
+  height=128,
   numFrames=9,
 }
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sprite sheet personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local sheet_walking = graphics.newImageSheet( "Images/Characters/TrumpPiccolo.png", sheet_walking_Options )
-
+local sheet_walking = graphics.newImageSheet( "Images/Characters/Trump.png", sheet_walking_Options )
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sequences table personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -128,64 +130,50 @@ local function moveListener(event)
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---opzioni immagini freccete non definitivo
+--funzione gestione cambio stanza
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local sheetOptions=
-{
-  frames=
-  {
-    {--freccia nord
-      x=53,
-      y=56,
-      width=909,
-      height=624
-    },
-    {--freccia sud
-      x=53,
-      y=1357,
-      width=963,
-      height=641
-    },
-    {--freccia est
-      x=1358,
-      y=1,
-      width=678,
-      height=959
-    },
-    {--freccia ovest
-      x=1074,
-      y=1073,
-      width=680,
-      height=967
-    },
-  },
-}
-local objectSheet=graphics.newImageSheet( "Images/Utility/directionArrow.png", sheetOptions )
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---funzione gestione delle ferccette
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local function handleButtonEvent( event )
-        local item=event.target
-        local direzione = item.id
+local function opposite(dir)
+  local res = nil
 
-      --  item:removeEventListener("tap", handleButtonEvent)
+  if(dir=="SUD") then
+    res="NORD"
+  end
 
-        if direzione=="EST" then
-          prossimaStanza.corrente=true
-          composer.setVariable( "stanzaCorrente", prossimaStanza)
-        end
+  if(dir=="NORD") then
+    res="SUD"
+  end
 
-        if direzione=="OVEST" then
-          stanzaCorrente.corrente=true
-          composer.setVariable("stanzaCorrente", stanzaCorrente)
-        end
-        for i = mainGroup.numChildren, 1, -1 do
-        mainGroup[i]:removeSelf()
-        mainGroup[i] = nil
-        end
-        composer.removeScene( "Scenes.corridoio")
-        composer.gotoScene( "Scenes.livello1" )
+  if(dir=="EST") then
+    res="OVEST"
+  end
+
+  if(dir=="OVEST") then
+    res="EST"
+  end
+
+  return res
 end
+
+function goBack()
+  local direction = composer.getVariable("direzione")
+  stanzaCorrente.corrente=true
+  composer.setVariable("stanzaCorrente", stanzaCorrente)
+  composer.setVariable( "direzione", opposite(direction) )
+
+  composer.removeScene("Scenes.corridoio")
+  composer.gotoScene("Scenes.livello1")
+end
+
+function changeRoom()
+  local direction = composer.getVariable( "direzione" )
+  composer.setVariable( "stanzaCorrente", stanzaCorrente[direction])
+  local prossimaStanza =composer.getVariable( "stanzaCorrente" )
+  prossimaStanza.corrente=true
+
+  composer.removeScene( "Scenes.corridoio")
+  composer.gotoScene( "Scenes.livello1")
+end
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --fase create del display
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -196,57 +184,63 @@ function scene:create( event )
 	-- Code here runs when the scene is first created but has not yet appeared on screen
   local phase = event.phase
 
-  funzione(self,  mappaloc, invloc)
+  funzioneEseguiDisplay(self,  stanzaCorrente, invloc)
   local direzioneCorridoio = composer.getVariable( "direzione" )
   local seedDirezionale = "seed"..direzioneCorridoio
   local numeroRandomico = stanzaCorrente[seedDirezionale]
   local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back"..numeroRandomico..".jpg", lunghezza, altezza-300)
+  -- local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.jpg", lunghezza, altezza-300)
 
   background.x=display.contentCenterX
   background.y=display.contentCenterY-170
   physics.addBody(background, "static", {shape={ 0, 0, lunghezza, 0, lunghezza, altezza-300, 0, altezza-300}})
-  background:addEventListener("touch", moveListener)
+  background:addEventListener("touch", characterInterface.listener)
 
   --Setting non-movement area
   local area = {minX=lunghezza*0.2, minY=0, maxX=lunghezza-(lunghezza*0.2), maxY= altezza-300}
   background.nonMovementArea = area
 
   --Displaying character and setting sprite sheets
-  character = display.newSprite( sheet_walking, sequences_walking )
-  character:setSequence(rightWalk)
-  character:setFrame(1)
-  character.anchorY = 1
-  character.x = lunghezza * 0.1
-  character.y = altezza-320
+  character =  characterInterface.creaPersonaggio(self)
 
 --  sceneGroup:insert(background)
   mainGroup=display.newGroup()
-    mainGroup:insert(character)
-    local frecciaEST  = display.newImageRect(mainGroup, objectSheet, 3, 50, 50)
-    frecciaEST.id="EST"
-    frecciaEST:addEventListener("tap", handleButtonEvent)
-    frecciaEST.x=display.contentCenterX+520
-    frecciaEST.y=display.contentCenterY-100
-
-    local frecciaOVEST  = display.newImageRect(mainGroup, objectSheet, 4, 50, 50)
-    frecciaOVEST.id="OVEST"
-    frecciaOVEST:addEventListener("tap", handleButtonEvent)
-    frecciaOVEST.x=display.contentCenterX-520
-    frecciaOVEST.y=display.contentCenterY-100
---local freccia = display.newImageRect(sceneGroup, objectSheet, 4, 50, 50)
---freccia.x=display.contentCenterX
---freccia.y=display.contentCenterY
+  mainGroup:insert(character)
 
   --Barre nere laterali
-  local barLeft = display.newRect(display.screenOriginX, display.screenOriginY, (display.actualContentWidth/2) - (lunghezza/2), altezza)
-  local barRight = display.newRect(display.contentCenterX + (lunghezza/2), 0, (display.actualContentWidth/2) - (lunghezza/2), altezza)
-  barLeft.anchorX = 0
-  barLeft.anchorY = 0
-  barRight.anchorX = 0
-  barRight.anchorY = 0
+  local hidingGroup = display.newGroup()
 
-  barLeft:setFillColor(0,0,0)
-  barRight:setFillColor(0,0,0)
+  if(display.actualContentWidth > lunghezza) then
+    local barLeft = display.newRect(display.screenOriginX, display.screenOriginY, (display.actualContentWidth/2) - (lunghezza/2), altezza)
+    local barRight = display.newRect(display.contentCenterX + (lunghezza/2), 0, (display.actualContentWidth/2) - (lunghezza/2), altezza)
+
+    barLeft.anchorX = 0
+    barLeft.anchorY = 0
+    barRight.anchorX = 0
+    barRight.anchorY = 0
+
+    barLeft:setFillColor(0,0,0)
+    barRight:setFillColor(0,0,0)
+
+    hidingGroup:insert(barLeft)
+    hidingGroup:insert(barRight)
+  elseif(display.actualContentHeight > altezza) then
+    local barUp = display.newRect(display.screenOriginX, display.screenOriginY, display.actualContentWidth, (display.actualContentHeight - altezza)/2)
+    local barDown = display.newRect(display.screenOriginX, altezza, display.actualContentWidth, (display.actualContentHeight - altezza)/2)
+    barUp.anchorX = 0
+    barUp.anchorY = 0
+    barDown.anchorX = 0
+    barDown.anchorY = 0
+
+    barUp:setFillColor(0,0,0)
+    barDown:setFillColor(0,0,0)
+
+    hidingGroup:insert(barUp)
+    hidingGroup:insert(barDown)
+  end
+
+  sceneGroup:insert(mainGroup)
+  sceneGroup:insert(hidingGroup)
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -281,12 +275,9 @@ function scene:hide( event )
 
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is on screen (but is about to go off screen)
---composer.removeScene("livello1")
 
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-   --composer.removeScene("livello1")
-
 
 	end
 end
@@ -297,9 +288,12 @@ end
 -- destroy()
 function scene:destroy( event )
 
-	local sceneGroup = self.view
+  local sceneGroup = scene.view
 	-- Code here runs prior to the removal of scene's view
-
+  for i = sceneGroup.numChildren, 1, -1 do
+    sceneGroup[i]:removeSelf()
+    sceneGroup[i] = nil
+  end
 end
 
 
@@ -311,5 +305,8 @@ scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
 -- -----------------------------------------------------------------------------------
+
+scene.goBack = (goBack)
+scene.changeRoom = (changeRoom)
 
 return scene

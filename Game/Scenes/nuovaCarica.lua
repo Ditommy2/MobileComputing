@@ -5,13 +5,99 @@ local interfaccia = require("interfaceConfig")
 --Game window (16:9 aspect ratio)
 local width = display.contentWidth
 local height = display.contentWidth * (9/16)
-
+local nomePartita
 local buttonNuova
 local buttonCarica
 local serverAnswer
 local numeroStanze=interfaccia.numeroStanze
 local numero = numeroStanze
 local tabella = interfaccia.tabellaFunction(numero)
+local sceneGroup
+local customFont="MadnessHyperactive.otf"
+composer.setVariable( "nomeSalvataggio", "prova1" )
+--local customFont=native.systemFont
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--handle del bottone per 'overlay sottostante. Non so perchè ma non andava con quello classico
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function handleButtonEventNuovaNome(event)
+	local bottone = event.target
+    if ( "ended" == event.phase ) then
+	if bottone.id=="NuovaPartitaNome" then
+		composer.setVariable( "nomePartita", nomePartita.text )
+		local table = {}
+		table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
+		composer.setVariable( "tabellaOgegttiInventario", table )
+		local lowerFixedMenu = require("lowerFixedMenu")
+		inv = lowerFixedMenu.create.inventario
+		mappa = lowerFixedMenu.create.mappaGenerata(0, {}, numero, tabella, numero+1, numero+1)
+		mappa.corrente=true
+		funzione=lowerFixedMenu.display
+		composer.setVariable( "stanzaCorrente", mappa )
+		composer.setVariable( "inv", inv )
+		composer.setVariable( "mappa", mappa )
+		composer.setVariable( "funzione", funzione )
+		composer.setVariable( "mapx", 352 )
+		composer.setVariable( "mapy", 200 )
+		composer.removeScene( "Scenes.nuovaCarica" )
+		composer.gotoScene("Scenes.livello1")
+	end
+end
+end
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--crea una finestra di dialogo per far inserire un nome al salvataggio che sis ta per creare
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function overlayNuovaNome()
+	local nuovaPartitaOverlayGroup = display.newGroup()
+	local lunghezza =  display.contentWidth
+  local lunghezzaFinestra=lunghezza-400
+	local altezzzaFinestra=lunghezzaFinestra*(9/16)
+	local midBackground = display.newRect( display.contentCenterX, display.contentCenterY, lunghezzaFinestra, altezzzaFinestra )
+	midBackground:setFillColor(0.18, 0.18, 0.23)
+	nuovaPartitaOverlayGroup:insert(midBackground)
+
+	nomePartita = native.newTextField( display.contentCenterX, display.contentCenterY-100,  lunghezzaFinestra-30, 80 )
+	nomePartita.font=native.newFont(customFont, 50)
+  nomePartita.placeholder = "New Game"
+	nuovaPartitaOverlayGroup:insert(nomePartita)
+
+	local Button = widget.newButton(
+	   {
+	       shape = "roundedRect",
+	       left = 70,
+	       top = 360,
+				 width=lunghezzaFinestra-200,
+				 height=90,
+	       id = "NuovaPartitaNome",
+	       label = "New Game",
+				 labelColor={default={0.5, 0, 0}},
+				 fontSize=50,
+	       onEvent = handleButtonEventNuovaNome,
+				 font=customFont
+	   }
+	)
+	nuovaPartitaOverlayGroup:insert(Button)
+	Button.x=display.contentCenterX
+	Button.y=display.contentCenterY+100
+	nuovaPartitaOverlayGroup.x=display.contentCenterX-650
+	nuovaPartitaOverlayGroup.y=display.contentCenterY-300
+	sceneGroup:insert(nuovaPartitaOverlayGroup)
+
+end
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--crea la finestra di overlay per scegliere quale salvataggio caricare
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function overlayCaricaSalvataggi()
+	local fileHandler = require("fileHandler")
+	local salvataggi = fileHandler.loadTable("save".."$$"..composer.getVariable("username").."$$"..".+"..".json")
+
+	print("Questo è il salvataggio")
+	print(salvataggi.nomeSalvataggio)
+
+end
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--crea una finestra di dialogo in cui è possibile scegliere tutti i vari salvataggi
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --handle dei bottoni. ha due azioni differenti in caso si prema il bottone nuova o il bottone carica
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -22,46 +108,42 @@ local function handleButtonEvent( event )
 			--se il bottone premuto è la nuova partita allora si deve generare una mappa e partire dal livello 1. il gioco ha inizio
 			--------------------------------------------------------------------------------------------------------------------------------------
 			if bottone.id=="nuova" then
-				local table = {}
-				table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
-				composer.setVariable( "tabellaOgegttiInventario", table )
-				local lowerFixedMenu = require("lowerFixedMenu")
-				inv = lowerFixedMenu.create.inventario
-				mappa = lowerFixedMenu.create.mappaGenerata(0, {}, numero, tabella, numero+1, numero+1)
-				mappa.corrente=true
-				funzione=lowerFixedMenu.display
-				composer.setVariable( "stanzaCorrente", mappa )
-				composer.setVariable( "inv", inv )
-				composer.setVariable( "mappa", mappa )
-				composer.setVariable( "funzione", funzione )
-				composer.setVariable( "mapx", 352 )
-				composer.setVariable( "mapy", 200 )
-				composer.removeScene( "Scenes.nuovaCarica" )
-				composer.gotoScene("Scenes.livello1")
+				overlayNuovaNome()
+
 			end
 			--------------------------------------------------------------------------------------------------------------------------------------
 			--se il bottone premuto è il carica si deve mostrare una lista di salvataggi collegati all'account che ha eseguito il login.
 			--a quel punto la scelta di un salvataggio porterà a riprendere quella partita da dove è stat lasciata
 			--------------------------------------------------------------------------------------------------------------------------------------
 			if bottone.id=="carica" then
-			local fileHandler = require("fileHandler")
-			local salvataggi = fileHandler.loadTable("saves.json")
-			print(salvataggi.stanzaCorrenteToSave)
-			print(salvataggi.invToSave)
-			print(salvataggi.mappaToSave)
-			print(salvataggi.mapxToSave)
-			print(salvataggi.mapyToSave)
-			composer.setVariable( "stanzaCorrente", salvataggi.stanzaCorrenteToSave )
-			composer.setVariable( "inv", salvataggi.invToSave )
-			composer.setVariable( "mappa", salvataggi.mappaToSave )
-			composer.setVariable( "mapx", salvataggi.mapxToSave )
-			composer.setVariable( "mapy", salvataggi.mapyToSave )
-			composer.setVariable( "funzione", salvataggi.displayFunzioneToSave )
-			composer.removeScene( "Scenes.nuovaCarica" )
-			composer.gotoScene("Scenes.livello1")
+				local table = {}
+				table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
+				composer.setVariable( "tabellaOgegttiInventario", table )
+				local lowerFixedMenu = require("lowerFixedMenu")
+				local fileHandler = require("fileHandler")
+				--overlayCaricaSalvataggi()
+				local salvataggi = fileHandler.loadTable("save".."$$"..composer.getVariable("username").."$$"..composer.getVariable("nomePartita")..".json")
+				print(salvataggi.stanzaCorrenteToSave)
+				print(salvataggi.invToSave)
+				print(salvataggi.mappaToSave)
+				print(salvataggi.mapxToSave)
+				print(salvataggi.mapyToSave)
+				composer.setVariable( "stanzaCorrente", salvataggi.stanzaCorrenteToSave )
+				composer.setVariable( "inv", salvataggi.invToSave )
+				composer.setVariable( "mappa", salvataggi.mappaToSave )
+				composer.setVariable( "mapx", salvataggi.mapxToSave )
+				composer.setVariable( "mapy", salvataggi.mapyToSave )
+				funzione=lowerFixedMenu.display
+				composer.setVariable( "funzione", funzione )
+				--composer.setVariable( "funzione", salvataggi.displayFunzioneToSave )
+				composer.removeScene( "Scenes.nuovaCarica" )
+				composer.gotoScene("Scenes.livello1")
 			end
+
+
 		end
 end
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function gotoMenu()
 		composer.gotoScene( "Scenes.menu", {time=800, effect="crossFade"} )
@@ -105,7 +187,7 @@ end
 
 -- create()
 function scene:create( event )
-	local sceneGroup = self.view
+	sceneGroup = self.view
 
   local background=display.newImageRect(sceneGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.jpg", width, height)
   background.x=display.contentCenterX
@@ -128,7 +210,8 @@ function scene:create( event )
       label = "New Game",
       labelColor={default={0.5, 0, 0}},
       fontSize=50,
-      onEvent = handleButtonEvent
+      onEvent = handleButtonEvent,
+			font=customFont
   })
 
   gameGroup:insert(buttonNuova)
@@ -143,7 +226,8 @@ function scene:create( event )
       label = "Load Game",
       labelColor={default={0.5, 0, 0}},
       fontSize=50,
-      onEvent = handleButtonEvent
+      onEvent = handleButtonEvent,
+			font=customFont
   })
 
   gameGroup:insert(buttonCarica)
@@ -196,7 +280,10 @@ end
 -- destroy()
 function scene:destroy( event )
 	local sceneGroup = self.view
-
+	for i = sceneGroup.numChildren, 1, -1 do
+		sceneGroup[i]:removeSelf()
+		sceneGroup[i] = nil
+	end
 end
 
 scene:addEventListener( "create", scene )
