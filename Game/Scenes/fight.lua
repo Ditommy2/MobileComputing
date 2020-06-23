@@ -79,15 +79,24 @@ local function eseguiMossa()
 	if(numeroMossa == 1) then
 	chanceRandom = math.random(1, 6)
 	totChance = chanceRandom + mossa1.hitChance
-end
+	end
 
 	if(totChance > enemy.armor) then
 		attackRandom = math.random(1, 30)
 		totAttacco = (attackRandom + character.damage) * mossa1.damage
-		enemy.life = enemy.life - totAttacco
-		local x = enemy.life - totAttacco
-		lifeBarEnemy.width = lifeBarEnemy.width - x
-		lifeBarEnemy.x = lifeBarEnemy.x - x/2
+
+		if(enemy.life > totAttacco) then
+			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
+			local rapporto = lifeBarEnemy.width / enemy.life
+			local x = totAttacco * rapporto		--Pixel dal levare
+
+			enemy.life = enemy.life - totAttacco
+			lifeBarEnemy.width = lifeBarEnemy.width - x
+			lifeBarEnemy.x = lifeBarEnemy.x - x/2
+		else --Danno > vita => nemico morto
+			enemy.life = 0
+			display.remove( lifeBarEnemy )
+		end
 	end
 end
 
