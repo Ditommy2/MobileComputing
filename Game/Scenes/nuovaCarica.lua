@@ -38,6 +38,7 @@ local function handleButtonEventNuovaNome(event)
 		composer.setVariable( "funzione", funzione )
 		composer.setVariable( "mapx", 352 )
 		composer.setVariable( "mapy", 200 )
+		composer.setVariable( "statoPartita", {stato = "nuova"} )
 		composer.removeScene( "Scenes.nuovaCarica" )
 		composer.gotoScene("Scenes.livello1")
 	end
@@ -88,11 +89,125 @@ end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function overlayCaricaSalvataggi()
 	local fileHandler = require("fileHandler")
-	local salvataggi = fileHandler.loadTable("save".."$$"..composer.getVariable("username").."$$"..".+"..".json")
+	local salvataggi = fileHandler.loadTable("save".."$$"..composer.getVariable("username")..".json")
+	local caricaPartitaOverlayGroup = display.newGroup()
+	local lunghezza =  display.contentWidth
+  local lunghezzaFinestra=lunghezza-400
+	local altezzzaFinestra=lunghezzaFinestra*(9/16)
+	-- ScrollView listener
+  local function scrollListener( event )
 
-	print("Questo è il salvataggio")
-	print(salvataggi.nomeSalvataggio)
+      local phase = event.phase
+      if ( phase == "began" ) then print( "Scroll view was touched" )
+      elseif ( phase == "moved" ) then print( "Scroll view was moved" )
+      elseif ( phase == "ended" ) then print( "Scroll view was released" )
+      end
 
+      -- In the event a scroll limit is reached...
+      if ( event.limitReached ) then
+          if ( event.direction == "up" ) then print( "Reached bottom limit" )
+          elseif ( event.direction == "down" ) then print( "Reached top limit" )
+          elseif ( event.direction == "left" ) then print( "Reached right limit" )
+          elseif ( event.direction == "right" ) then print( "Reached left limit" )
+          end
+      end
+
+      return true
+  end
+
+  -- Create the widget
+  local scrollView = widget.newScrollView(
+      {
+          horizontalScrollDisabled = true,
+          width = lunghezzaFinestra,
+          height = altezzzaFinestra,
+          scrollWidth = lunghezzaFinestra,
+          scrollHeight = 2,
+          listener = scrollListener
+      }
+  )
+	scrollView.x=display.contentCenterX
+  scrollView.y=display.contentCenterY
+	local background1 = display.newImageRect(  "Images/Backgrounds/brickWall.jpg", lunghezza, 920)
+  background1.x=scrollView.x-200
+  background1.y=scrollView.y
+  scrollView:insert( background1 )
+  local background2 = display.newImageRect(  "Images/Backgrounds/brickWall.jpg", lunghezza, 920)
+  background2.x=scrollView.x-200
+  background2.y=scrollView.y+920
+
+  scrollView:insert( background2 )
+
+	local function handleBackButtonEvent(event)
+	  if ( "ended" == event.phase ) then
+	    print("cancellato")
+	caricaPartitaOverlayGroup:remove( scrollView )
+	end
+	end
+
+	local function handleSaveButtonEvent(event)
+		if ( "ended" == event.phase ) then
+			local table = {}
+			table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
+			composer.setVariable( "tabellaOgegttiInventario", table )
+			local lowerFixedMenu = require("lowerFixedMenu")
+			local fileHandler = require("fileHandler")
+			--overlayCaricaSalvataggi()
+			local salvataggio = salvataggi[event.target.id]
+			composer.setVariable( "statoPartita", {stato = "salvata", indice = event.target.id} )
+			composer.setVariable( "stanzaCorrente", salvataggio.stanzaCorrenteToSave )
+			composer.setVariable( "inv", salvataggio.invToSave )
+			composer.setVariable( "mappa", salvataggio.mappaToSave )
+			composer.setVariable( "mapx", salvataggio.mapxToSave )
+			composer.setVariable( "mapy", salvataggio.mapyToSave )
+			composer.setVariable("nomePartita", salvataggio.nomeSalvataggio)
+			funzione=lowerFixedMenu.display
+			composer.setVariable( "funzione", funzione )
+			--composer.setVariable( "funzione", salvataggi.displayFunzioneToSave )
+			composer.removeScene( "Scenes.nuovaCarica" )
+			composer.gotoScene("Scenes.livello1")
+		end
+	end
+
+	local backButton = widget.newButton({
+	    shape = "roundedRect",
+	    x = background1.x * 0.3,
+	    y = background1.y * 0.2,
+	    width=background1.width*0.09,
+	    height=background1.height * 0.07,
+	    id = "back",
+	    label = "BACK",
+	    labelColor={default={0.5, 0, 0}},
+	    fontSize=50,
+	    onEvent = handleBackButtonEvent,
+	    font=customFont
+	})
+	  scrollView:insert(backButton)
+
+
+
+
+	for i = #salvataggi, 1, -1 do
+		print("nome del salvataggio: ")
+		print (salvataggi[i].nomeSalvataggio)
+		local saveButton = widget.newButton({
+				shape = "roundedRect",
+				x = background1.x * 0.3,
+				y = background1.y * 0.2 * i,
+				width=background1.width*0.99999,
+				height=background1.height * 0.07,
+				id = i,
+				label = "SAVE "..i..":"..salvataggi[i].nomeSalvataggio,
+				labelColor={default={0.5, 0, 0}},
+				fontSize=50,
+				onEvent = handleSaveButtonEvent,
+				font=customFont
+		})
+		scrollView:insert(saveButton)
+  end
+	caricaPartitaOverlayGroup:insert(scrollView)
+	sceneGroup:insert(caricaPartitaOverlayGroup)
+	scrollView:setScrollHeight(1500)
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --crea una finestra di dialogo in cui è possibile scegliere tutti i vari salvataggi
@@ -116,28 +231,29 @@ local function handleButtonEvent( event )
 			--a quel punto la scelta di un salvataggio porterà a riprendere quella partita da dove è stat lasciata
 			--------------------------------------------------------------------------------------------------------------------------------------
 			if bottone.id=="carica" then
-				local table = {}
-				table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
-				composer.setVariable( "tabellaOgegttiInventario", table )
-				local lowerFixedMenu = require("lowerFixedMenu")
-				local fileHandler = require("fileHandler")
-				--overlayCaricaSalvataggi()
-				local salvataggi = fileHandler.loadTable("save".."$$"..composer.getVariable("username").."$$"..composer.getVariable("nomePartita")..".json")
-				print(salvataggi.stanzaCorrenteToSave)
-				print(salvataggi.invToSave)
-				print(salvataggi.mappaToSave)
-				print(salvataggi.mapxToSave)
-				print(salvataggi.mapyToSave)
-				composer.setVariable( "stanzaCorrente", salvataggi.stanzaCorrenteToSave )
-				composer.setVariable( "inv", salvataggi.invToSave )
-				composer.setVariable( "mappa", salvataggi.mappaToSave )
-				composer.setVariable( "mapx", salvataggi.mapxToSave )
-				composer.setVariable( "mapy", salvataggi.mapyToSave )
-				funzione=lowerFixedMenu.display
-				composer.setVariable( "funzione", funzione )
-				--composer.setVariable( "funzione", salvataggi.displayFunzioneToSave )
-				composer.removeScene( "Scenes.nuovaCarica" )
-				composer.gotoScene("Scenes.livello1")
+				-- local table = {}
+				-- table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
+				-- composer.setVariable( "tabellaOgegttiInventario", table )
+				-- local lowerFixedMenu = require("lowerFixedMenu")
+				-- local fileHandler = require("fileHandler")
+				-- --overlayCaricaSalvataggi()
+				-- local salvataggi = fileHandler.loadTable("save".."$$"..composer.getVariable("username").."$$"..composer.getVariable("nomePartita")..".json")
+				-- print(salvataggi.stanzaCorrenteToSave)
+				-- print(salvataggi.invToSave)
+				-- print(salvataggi.mappaToSave)
+				-- print(salvataggi.mapxToSave)
+				-- print(salvataggi.mapyToSave)
+				-- composer.setVariable( "stanzaCorrente", salvataggi.stanzaCorrenteToSave )
+				-- composer.setVariable( "inv", salvataggi.invToSave )
+				-- composer.setVariable( "mappa", salvataggi.mappaToSave )
+				-- composer.setVariable( "mapx", salvataggi.mapxToSave )
+				-- composer.setVariable( "mapy", salvataggi.mapyToSave )
+				-- funzione=lowerFixedMenu.display
+				-- composer.setVariable( "funzione", funzione )
+				-- --composer.setVariable( "funzione", salvataggi.displayFunzioneToSave )
+				-- composer.removeScene( "Scenes.nuovaCarica" )
+				-- composer.gotoScene("Scenes.livello1")
+				overlayCaricaSalvataggi()
 			end
 
 

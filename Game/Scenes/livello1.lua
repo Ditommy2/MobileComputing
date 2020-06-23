@@ -38,9 +38,28 @@ local function gotoMenu()
     giocatore = composer.getVariable( "username" ),
     --displayFunzioneToSave = composer.getVariable( "funzione" )
   }
-  local stringaSalvataggio = "save".."$$"..composer.getVariable("username").."$$"..composer.getVariable("nomePartita")..".json"
+
+  local stringaSalvataggio = "save".."$$"..composer.getVariable("username")..".json"
+  print("caricando da ")
   print(stringaSalvataggio)
-  fileHandler.saveTable(salvataggio, stringaSalvataggio)
+  local tabelloneSalvataggi = fileHandler.loadTable(stringaSalvataggio)
+  if(tabelloneSalvataggi == nil) then
+    print("primoSalvataggio")
+    tabelloneSalvataggi = {}
+    table.insert(tabelloneSalvataggi, salvataggio)
+  else
+    print("seguenti salvataggi")
+    local statoPartita = composer.getVariable( "statoPartita" )
+    if(statoPartita.stato == "salvata") then
+      tabelloneSalvataggi[statoPartita.indice] = salvataggio
+    else
+    table.insert(tabelloneSalvataggi, salvataggio)
+    end
+  end
+
+  print("salvando")
+  print(tabelloneSalvataggi)
+  fileHandler.saveTable(tabelloneSalvataggi, stringaSalvataggio)
   fileHandler.caricaSave(salvataggio, stringaSalvataggio)
   composer.removeScene("Scenes.livello1")
  	composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )

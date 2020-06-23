@@ -151,7 +151,6 @@ end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function M.loadTable( filename, location )
-
     local loc = location
     if not location then
         loc = defaultLocation
@@ -169,17 +168,19 @@ function M.loadTable( filename, location )
     else
         -- Read data from file
         local contents = file:read( "*a" )
-        print("legegndo file da: ", path)
+        print("leggendo file da: ", path)
         -- Decode JSON data into Lua table
         local t = json.decode( contents )
         -- Close the file handle
         -- print("ANTICICLO SULLA MAPPA")
-
+				print(t)
         -- t.mappaToSave=
-        antiReferenceCycle(t.mappaToSave, t.mappaToSave)
+				for i=#t, 1, -1 do
+				antiReferenceCycle(t[i].mappaToSave, t[i].mappaToSave)
         -- print("ANTICICLO SULLA STANZA")
         -- t.stanzaCorrenteToSave=
-        antiReferenceCycle(t.stanzaCorrenteToSave, t.stanzaCorrenteToSave)
+        antiReferenceCycle(t[i].stanzaCorrenteToSave, t[i].stanzaCorrenteToSave)
+			end
         io.close( file )
         -- Return table
         return t
