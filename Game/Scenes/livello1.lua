@@ -36,7 +36,6 @@ local function gotoMenu()
     mapyToSave = composer.getVariable( "mapy" ),
     nomeSalvataggio = composer.getVariable( "nomePartita" ),
     giocatore = composer.getVariable( "username" ),
-    nomePartita = composer.getVariable( "nomePartita" )
     --displayFunzioneToSave = composer.getVariable( "funzione" )
   }
   local stringaSalvataggio = "save".."$$"..composer.getVariable("username").."$$"..composer.getVariable("nomePartita")..".json"
@@ -264,7 +263,7 @@ function scene:create( event )
     local lunghezza =  display.contentWidth
     local lunghezzaFinestra=lunghezza-400
   	local altezzzaFinestra=lunghezzaFinestra*(9/16)
-    scrollOverlayRequired.handleButton(display, lunghezzaFinestra, altezzaFinestra)
+    scrollOverlayRequired.handleButton(display, lunghezzaFinestra, altezzaFinestra, sceneGroup)
 
   end
 

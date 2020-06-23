@@ -76,7 +76,7 @@ function M.saveTable( t, filename, location )
         return false
     else
         -- Write encoded JSON data to file
-        file:write( json.encode( t ) )
+        file:write( json.encode( t, {indent = true} ) )
         print("File written successfullt into: ", path)
         -- Close the file handle
         io.close( file )

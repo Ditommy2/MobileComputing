@@ -84,7 +84,7 @@ local function overlayNuovaNome()
 
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---crea la finestra di overlay per scegliere quale salvataggio caricare
+--crea la finestra di overlay per scegliere quale salvataggio caricare da file locali
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function overlayCaricaSalvataggi()
 	local fileHandler = require("fileHandler")
