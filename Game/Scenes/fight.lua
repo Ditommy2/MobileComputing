@@ -24,6 +24,7 @@ local mossa1
 local mossa2
 local mossa3
 local mossa4
+local textDamage
 
 --Game objects
 local numeroMossa
@@ -51,6 +52,8 @@ physics.start()
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
+
+
 local function infoMossa1()
   numeroMossa = 1
   testoMossa.text = character.testoMossa1
@@ -81,6 +84,11 @@ local function eseguiMossa()
 	if(totChance > enemy.armor) then
 		attackRandom = math.random(1, 30)
 		totAttacco = (attackRandom + character.damage) * character.mossa1.damage
+		textDamage.text = totAttacco
+		local function removeText()
+	  		display.remove( textDamage )
+	  end
+	  timer.performWithDelay(1000, removeText)
 
 		if(enemy.life > totAttacco) then
 			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
@@ -105,6 +113,11 @@ local function eseguiMossa()
 	if(totChance > enemy.armor) then
 		attackRandom = math.random(1, 30)
 		totAttacco = (attackRandom + character.damage) * character.mossa2.damage
+		textDamage.text = totAttacco
+		local function removeText()
+	  		display.remove( textDamage )
+	  end
+	  timer.performWithDelay(1000, removeText)
 
 		if(enemy.life > totAttacco) then
 			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
@@ -122,13 +135,18 @@ local function eseguiMossa()
 	end
 
 
-	if(numeroMossa == 1) then
+	if(numeroMossa == 3) then
 	chanceRandom = math.random(1, 6)
 	totChance = chanceRandom + character.mossa3.hitChance
 
 	if(totChance > enemy.armor) then
 		attackRandom = math.random(1, 30)
 		totAttacco = (attackRandom + character.damage) * character.mossa3.damage
+		textDamage.text = totAttacco
+		local function removeText()
+	  		display.remove( textDamage )
+	  end
+	  timer.performWithDelay(1000, removeText)
 
 		if(enemy.life > totAttacco) then
 			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
@@ -146,13 +164,18 @@ local function eseguiMossa()
 	end
 
 
-	if(numeroMossa == 1) then
+	if(numeroMossa == 4) then
 	chanceRandom = math.random(1, 6)
 	totChance = chanceRandom + character.mossa4.hitChance
 
 	if(totChance > enemy.armor) then
 		attackRandom = math.random(1, 30)
 		totAttacco = (attackRandom + character.damage) * character.mossa4.damage
+		textDamage.text = totAttacco
+		local function removeText()
+	  		display.remove( textDamage )
+	  end
+	  timer.performWithDelay(1000, removeText)
 
 		if(enemy.life > totAttacco) then
 			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
@@ -227,6 +250,9 @@ function scene:create ( event )
  mossa2:addEventListener( "tap", infoMossa2 )
  mossa3:addEventListener( "tap", infoMossa3 )
  mossa4:addEventListener( "tap", infoMossa4 )
+
+ textDamage = display.newText(textGroup, "", 800, 200, native.systemFont, 50)
+ textDamage:setFillColor(1, 0, 0)
 
 		--*************MID GROUP*************************************************
 
