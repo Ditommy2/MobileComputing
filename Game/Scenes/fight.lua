@@ -43,12 +43,10 @@ local lifeBarEnemyBlack
 local physics = require("physics")
 physics.start()
 
-
 -- -----------------------------------------------------------------------------------
 -- Code outside of the scene event functions below will only be executed ONCE unless
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
 -- -----------------------------------------------------------------------------------
-
 
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
@@ -156,34 +154,33 @@ function scene:create( event )
  mossa3:addEventListener( "tap", infoMossa3 )
  mossa4:addEventListener( "tap", infoMossa4 )
 
-		--*************MID GROUP*************************************************
+	--*************MID GROUP*************************************************
 
-		--Displaying character
-	  character = characterInterface.creaPersonaggio(self)
-		midGroup:insert(character)
-		character.x = display.contentCenterX - 250
-		character.y = display.contentCenterY + 100
-		lifeBarCharacterBlack = display.newImageRect( midGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
-		lifeBarCharacterBlack.x = display.contentCenterX - 250
-		lifeBarCharacterBlack.y = display.contentCenterY - 250
-		lifeBarCharacter = display.newImageRect( midGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
-		lifeBarCharacter.x = display.contentCenterX - 250
-		lifeBarCharacter.y = display.contentCenterY - 250
+	--Displaying character
+  character = characterInterface.creaPersonaggio(self)
+	midGroup:insert(character)
+	character.x = display.contentCenterX - 250
+	character.y = display.contentCenterY + 100
+	lifeBarCharacterBlack = display.newImageRect( midGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
+	lifeBarCharacterBlack.x = display.contentCenterX - 250
+	lifeBarCharacterBlack.y = display.contentCenterY - 250
+	lifeBarCharacter = display.newImageRect( midGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
+	lifeBarCharacter.x = display.contentCenterX - 250
+	lifeBarCharacter.y = display.contentCenterY - 250
 
 
-		--Displaying enemy
-	  enemyImage = display.newImageRect( midGroup, "Images/Characters/joker.png", 200, 200)
-		enemyImage.x = display.contentCenterX + 250
-		enemyImage.y = display.contentCenterY
-		lifeBarEnemyBlack = display.newImageRect( midGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
-		lifeBarEnemyBlack.x = display.contentCenterX + 250
-		lifeBarEnemyBlack.y = display.contentCenterY - 250
-		lifeBarEnemy = display.newImageRect( midGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
-		lifeBarEnemy.x = display.contentCenterX + 250
-		lifeBarEnemy.y = display.contentCenterY - 250
+	--Displaying enemy
+  enemyImage = display.newImageRect( midGroup, "Images/Characters/joker.png", 200, 200)
+	enemyImage.x = display.contentCenterX + 250
+	enemyImage.y = display.contentCenterY
+	lifeBarEnemyBlack = display.newImageRect( midGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
+	lifeBarEnemyBlack.x = display.contentCenterX + 250
+	lifeBarEnemyBlack.y = display.contentCenterY - 250
+	lifeBarEnemy = display.newImageRect( midGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
+	lifeBarEnemy.x = display.contentCenterX + 250
+	lifeBarEnemy.y = display.contentCenterY - 250
 
-		enemyImage:addEventListener("tap", eseguiMossa)
-
+	enemyImage:addEventListener("tap", eseguiMossa)
 end
 
 

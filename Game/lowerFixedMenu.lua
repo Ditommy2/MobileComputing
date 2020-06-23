@@ -2,6 +2,8 @@
 local composer = require("composer")
 local interfaccia = require("interfaceConfig")
 local customFont="MadnessHyperactive.otf"
+local lunghezza =  display.contentWidth
+local altezza=  lunghezza*(9/16)
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --tutto il file lo chiama numero, ma numeroStanze è meglio quindi per non cambiare tutto ho usato sto metodo
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -19,53 +21,42 @@ local inventario =
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   display=
   (function (self, mappaGenerata, inventario)
-    local lunghezza =  display.contentWidth
-    local altezza=  lunghezza*(9/16)
     local sceneGroup = self.view
-    inventoryGroup=display.newGroup()
-    mapGroup=display.newGroup()
-    backGroup=display.newGroup()
-    overlayGroup=display.newGroup()
-    midBackGroup=display.newGroup()
-    lowerOverlay=display.newGroup()
-    local altezzaMidBackground=altezza-400
-    local lunghezzaMidBackground=lunghezza-510
-    local midBackground = display.newRect( display.contentCenterX, display.contentCenterY, lunghezzaMidBackground, altezzaMidBackground )
-    midBackground:setFillColor(0.18, 0.18, 0.23)
-    midBackGroup:insert(midBackground)
 
-    local spessore = 5
-    local lunghezzaInventario=lunghezza-700
-    local altezzaInventario=altezza-500
+    mapGroup=display.newGroup()         --Ne fa parte la mappa
+    backGroup=display.newGroup()        --Ne fa parte il background
+    lowerOverlay=display.newGroup()     --Ne fa parte il background dell'inventario
+    inventoryGroup=display.newGroup()   --Ne fanno parte gli oggetti dell'inventario
 
-    local handler=interfaccia.dragItem
-    interfaccia.displayGrid(inventario, 4, 2, handler)
+    local handler=interfaccia.dragItem                    --Handler del movimento degli oggeti
+    interfaccia.displayGrid(inventario,handler, inventoryGroup)    --Crea la tabella degli ogetti
 
+    --Creazionde della mappa
     local map = display.newRect( display.contentCenterX, display.contentCenterY, lunghezza+1000, altezza+1000 )
     map:setFillColor(0.18, 0.18, 0.23)
     mapGroup:insert(map)
     interfaccia.annullaVisite(mappaGenerata, mappaGenerata)
     interfaccia.displayStanza(mappaGenerata, display.contentCenterX, display.contentCenterY)-- -60, -30
+
+    --Creazione del background dell'inventario
     local overlayBackground = display.newImageRect(lowerOverlay, "Images/Backgrounds/lowerBackground.png", lunghezza, altezza+150)
     overlayBackground.x=display.contentCenterX
     overlayBackground.y=display.contentCenterY-70
+
+    --Posizionamento di mappa e inventario
     mapGroup.x=composer.getVariable( "mapx" )
     mapGroup.y=composer.getVariable( "mapy" )
-    overlayGroup.x=352
-    overlayGroup.y=200
     inventoryGroup.x=-250
     inventoryGroup.y=200
-    midBackGroup.x=inventoryGroup.x-20
-    midBackGroup.y=inventoryGroup.y
+
+    --Listener per il drag della mappa
     mapGroup:addEventListener("touch", interfaccia.dragMapSet)
 
     sceneGroup:insert(mapGroup)
-    sceneGroup:insert(midBackGroup)
     sceneGroup:insert(backGroup)
-    sceneGroup:insert(overlayGroup)
     sceneGroup:insert(lowerOverlay)
     sceneGroup:insert(inventoryGroup)
-end),
+  end),
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --coppia di valori da costruire: uno è l'inventario e l'altro è la mappa generata
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
