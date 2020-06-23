@@ -132,25 +132,6 @@ local function moveListener(event)
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Mosse del personaggio
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local function move1(target)
-
-end
-
-local function move2(target)
-
-end
-
-local function move3(target)
-
-end
-
-local function move4(target)
-
-end
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Creazione del personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function create(scena)
@@ -170,6 +151,19 @@ local function create(scena)
   character.armor = 50
   character.damage = 100
   character.speed = 20
+  character.testoMossa1 = "Pugno : Stordisci il tuo avversario \nDamage = 60%\nHit chance = 20%\n"
+  character.testoMossa2 = "Mossa2 : Questa mossa ti fa il caffè\nAttacco = 30%\nDifesa = 50%\nVelocità = 80%"
+  character.testoMossa3 = "Mossa3 : Questa mossa ti fa accarezzare il gatto di titto\nAttacco = 20%\nDifesa = 90%\nVelocità = 60%"
+  character.testoMossa4 = "Mossa4 : Questa mossa genera gettere & settere\nAttacco = 20%\nDifesa = 50%\nVelocità = 20%"
+  character.nomeMossa1 = "Pugno"
+  character.nomeMossa2 = "Calcio"
+  character.nomeMossa3 = "Cinta"
+  character.nomeMossa4 = "Laccio"
+  character.mossa1 = {hitChance = 3, damage = 10}
+  character.mossa2 = {hitChance = 2, damage = 30}
+  character.mossa3 = {hitChance = 1, damage = 20}
+  character.mossa4 = {hitChance = 4, damage = 40}
+
 
   return character
 end
@@ -184,10 +178,6 @@ local interfacciaPersonaggio =
   listener = (moveListener),
   changeRoom = (exitRight),
   goBack = (exitLeft),
-  mossa1 = (move1),
-  mossa2 = (move2),
-  mossa3 = (move3),
-  mossa4 = (move4)
 }
 
 return interfacciaPersonaggio

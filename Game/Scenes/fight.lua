@@ -6,6 +6,7 @@
 
 local composer = require( "composer" )
 local characterInterface = require("characterInterface")
+local enemyInterface = require("enemyInterface")
 
 local scene = composer.newScene()
 
@@ -25,14 +26,11 @@ local mossa3
 local mossa4
 
 --Game objects
-local character
 local numeroMossa
 local chanceRandom
 local totChance
 local attackRandom
 local totAttacco
-local enemyImage
-local enemy = {life = 250, armor = 2, damage = 50, speed = 10}
 
 local lifeBarCharacter
 local lifeBarCharacterBlack
@@ -53,37 +51,36 @@ physics.start()
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
-
 local function infoMossa1()
-	numeroMossa = 1
-  testoMossa.text = "Pugno : Stordisci il tuo avversario \nDamage = 60%\nHit chance = 20%\n"
+  numeroMossa = 1
+  testoMossa.text = character.testoMossa1
 end
 
 local function infoMossa2()
 	numeroMossa = 2
-  testoMossa.text = "Mossa2 : Questa mossa ti fa il caffè\nAttacco = 30%\nDifesa = 50%\nVelocità = 80%"
+	testoMossa.text = character.testoMossa2
 end
 
 local function infoMossa3()
 	numeroMossa = 3
-  testoMossa.text = "Mossa3 : Questa mossa ti fa accarezzare il gatto di titto\nAttacco = 20%\nDifesa = 90%\nVelocità = 60%"
+	testoMossa.text = character.testoMossa3
 end
 
 local function infoMossa4()
 	numeroMossa = 4
-  testoMossa.text = "Mossa4 : Questa mossa genera gettere & settere\nAttacco = 20%\nDifesa = 50%\nVelocità = 20%"
+	testoMossa.text = character.testoMossa4
 end
 
 
 local function eseguiMossa()
+
 	if(numeroMossa == 1) then
 	chanceRandom = math.random(1, 6)
-	totChance = chanceRandom + mossa1.hitChance
-	end
+	totChance = chanceRandom + character.mossa1.hitChance
 
 	if(totChance > enemy.armor) then
 		attackRandom = math.random(1, 30)
-		totAttacco = (attackRandom + character.damage) * mossa1.damage
+		totAttacco = (attackRandom + character.damage) * character.mossa1.damage
 
 		if(enemy.life > totAttacco) then
 			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
@@ -96,12 +93,88 @@ local function eseguiMossa()
 		else --Danno > vita => nemico morto
 			enemy.life = 0
 			display.remove( lifeBarEnemy )
+			end
 		end
 	end
+
+
+	if(numeroMossa == 2) then
+	chanceRandom = math.random(1, 6)
+	totChance = chanceRandom + character.mossa2.hitChance
+
+	if(totChance > enemy.armor) then
+		attackRandom = math.random(1, 30)
+		totAttacco = (attackRandom + character.damage) * character.mossa2.damage
+
+		if(enemy.life > totAttacco) then
+			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
+			local rapporto = lifeBarEnemy.width / enemy.life
+			local x = totAttacco * rapporto		--Pixel dal levare
+
+			enemy.life = enemy.life - totAttacco
+			lifeBarEnemy.width = lifeBarEnemy.width - x
+			lifeBarEnemy.x = lifeBarEnemy.x - x/2
+		else --Danno > vita => nemico morto
+			enemy.life = 0
+			display.remove( lifeBarEnemy )
+			end
+		end
+	end
+
+
+	if(numeroMossa == 1) then
+	chanceRandom = math.random(1, 6)
+	totChance = chanceRandom + character.mossa3.hitChance
+
+	if(totChance > enemy.armor) then
+		attackRandom = math.random(1, 30)
+		totAttacco = (attackRandom + character.damage) * character.mossa3.damage
+
+		if(enemy.life > totAttacco) then
+			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
+			local rapporto = lifeBarEnemy.width / enemy.life
+			local x = totAttacco * rapporto		--Pixel dal levare
+
+			enemy.life = enemy.life - totAttacco
+			lifeBarEnemy.width = lifeBarEnemy.width - x
+			lifeBarEnemy.x = lifeBarEnemy.x - x/2
+		else --Danno > vita => nemico morto
+			enemy.life = 0
+			display.remove( lifeBarEnemy )
+			end
+		end
+	end
+
+
+	if(numeroMossa == 1) then
+	chanceRandom = math.random(1, 6)
+	totChance = chanceRandom + character.mossa4.hitChance
+
+	if(totChance > enemy.armor) then
+		attackRandom = math.random(1, 30)
+		totAttacco = (attackRandom + character.damage) * character.mossa4.damage
+
+		if(enemy.life > totAttacco) then
+			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
+			local rapporto = lifeBarEnemy.width / enemy.life
+			local x = totAttacco * rapporto		--Pixel dal levare
+
+			enemy.life = enemy.life - totAttacco
+			lifeBarEnemy.width = lifeBarEnemy.width - x
+			lifeBarEnemy.x = lifeBarEnemy.x - x/2
+		else --Danno > vita => nemico morto
+			enemy.life = 0
+			display.remove( lifeBarEnemy )
+			end
+		end
+	end
+
 end
 
+
+
 -- create()
-function scene:create( event )
+function scene:create ( event )
 
 	local sceneGroup = self.view
 
@@ -131,22 +204,21 @@ function scene:create( event )
  testoMossa = display.newText( textGroup, "" ,1050, 585, 450, 0, native.systemFont, 20 )
  testoMossa:setFillColor( 1, 1, 1 )
 
- mossa1 = display.newText( textGroup, "Mossa1", 200, 515, native.systemFont, 50 )
- mossa1.hitChance = 5
- mossa1.damage = 1
+ mossa1 = display.newText( textGroup, "" , 200, 515, native.systemFont, 50 )
  mossa1:setFillColor( 0.82, 0.86, 1 )
 
- mossa2 = display.newText( textGroup, "Mossa2", 560, 515, native.systemFont, 50 )
+
+ mossa2 = display.newText( textGroup, "", 560, 515, native.systemFont, 50 )
  mossa2.hitChance = 2
  mossa2.damage = 20
  mossa2:setFillColor( 0.82, 0.86, 1 )
 
- mossa3 = display.newText( textGroup, "Mossa3", 200, 650, native.systemFont, 50 )
+ mossa3 = display.newText( textGroup, "", 200, 650, native.systemFont, 50 )
  mossa3.hitChance = 3
  mossa3.damage = 30
  mossa3:setFillColor( 0.82, 0.86, 1 )
 
- mossa4 = display.newText( textGroup, "Mossa4", 560, 650, native.systemFont, 50 )
+ mossa4 = display.newText( textGroup, "", 560, 650, native.systemFont, 50 )
  mossa4.hitChance = 4
  mossa4.damage = 40
  mossa4:setFillColor( 0.82, 0.86, 1 )
@@ -169,12 +241,16 @@ function scene:create( event )
 		lifeBarCharacter = display.newImageRect( midGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
 		lifeBarCharacter.x = display.contentCenterX - 250
 		lifeBarCharacter.y = display.contentCenterY - 250
+		mossa1.text = character.nomeMossa1
+		mossa2.text = character.nomeMossa2
+		mossa3.text = character.nomeMossa3
+		mossa4.text = character.nomeMossa4
+
 
 
 		--Displaying enemy
-	  enemyImage = display.newImageRect( midGroup, "Images/Characters/joker.png", 200, 200)
-		enemyImage.x = display.contentCenterX + 250
-		enemyImage.y = display.contentCenterY
+		enemy = enemyInterface.createEnemy(self)
+		midGroup:insert(enemy)
 		lifeBarEnemyBlack = display.newImageRect( midGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
 		lifeBarEnemyBlack.x = display.contentCenterX + 250
 		lifeBarEnemyBlack.y = display.contentCenterY - 250
@@ -182,7 +258,7 @@ function scene:create( event )
 		lifeBarEnemy.x = display.contentCenterX + 250
 		lifeBarEnemy.y = display.contentCenterY - 250
 
-		enemyImage:addEventListener("tap", eseguiMossa)
+		enemy:addEventListener("tap", eseguiMossa)
 
 end
 
