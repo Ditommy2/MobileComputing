@@ -25,6 +25,9 @@ local mossa2
 local mossa3
 local mossa4
 local textDamage
+local turnoText
+local character = characterInterface.creaPersonaggio(self)
+local enemy = enemyInterface.createEnemy(self)
 
 --Game objects
 local numeroMossa
@@ -52,6 +55,18 @@ physics.start()
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
+local function gameLoop()
+
+if(enemy.speed < character.speed) then
+	turnoText.text = "Il tuo turno"
+	enemy:addEventListener("tap", eseguiMossa)
+
+else
+	turnoText.text = "Turno avversario"
+	--enemy:removeEventListener("tap", eseguiMossa)
+end
+end
+
 
 
 local function infoMossa1()
@@ -232,18 +247,12 @@ function scene:create ( event )
 
 
  mossa2 = display.newText( textGroup, "", 560, 515, native.systemFont, 50 )
- mossa2.hitChance = 2
- mossa2.damage = 20
  mossa2:setFillColor( 0.82, 0.86, 1 )
 
  mossa3 = display.newText( textGroup, "", 200, 650, native.systemFont, 50 )
- mossa3.hitChance = 3
- mossa3.damage = 30
  mossa3:setFillColor( 0.82, 0.86, 1 )
 
  mossa4 = display.newText( textGroup, "", 560, 650, native.systemFont, 50 )
- mossa4.hitChance = 4
- mossa4.damage = 40
  mossa4:setFillColor( 0.82, 0.86, 1 )
 
  mossa1:addEventListener( "tap", infoMossa1 )
@@ -254,10 +263,12 @@ function scene:create ( event )
  textDamage = display.newText(textGroup, "", 800, 200, native.systemFont, 50)
  textDamage:setFillColor(1, 0, 0)
 
+ turnoText = display.newText(textGroup, "", 500, 100, native.systemFont, 50)
+ turnoText:setFillColor(1, 0, 0)
+
 		--*************MID GROUP*************************************************
 
 		--Displaying character
-	  character = characterInterface.creaPersonaggio(self)
 		midGroup:insert(character)
 		character.x = display.contentCenterX - 250
 		character.y = display.contentCenterY + 100
@@ -275,7 +286,6 @@ function scene:create ( event )
 
 
 		--Displaying enemy
-		enemy = enemyInterface.createEnemy(self)
 		midGroup:insert(enemy)
 		lifeBarEnemyBlack = display.newImageRect( midGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
 		lifeBarEnemyBlack.x = display.contentCenterX + 250
@@ -284,9 +294,10 @@ function scene:create ( event )
 		lifeBarEnemy.x = display.contentCenterX + 250
 		lifeBarEnemy.y = display.contentCenterY - 250
 
-		enemy:addEventListener("tap", eseguiMossa)
 
+		gameLoop()
 end
+
 
 
 -- show()
