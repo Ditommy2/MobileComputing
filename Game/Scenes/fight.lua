@@ -25,9 +25,11 @@ local mossa2
 local mossa3
 local mossa4
 local textDamage
+local textDamageEnemy
 local turnoText
 local character = characterInterface.creaPersonaggio(self)
 local enemy = enemyInterface.createEnemy(self)
+local turno
 
 --Game objects
 local numeroMossa
@@ -55,16 +57,55 @@ physics.start()
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
-local function gameLoop()
 
+
+
+local function turnEnemy()
+	chanceRandom = math.random(1, 6)
+	totChance = chanceRandom + 2000
+		if(totChance > character.armor) then
+		attackRandom = math.random(1, 30)
+		totAttacco = (attackRandom + enemy.damage) * 20
+		textDamageEnemy.text = totAttacco
+		local function removeText()
+				textDamageEnemy.alpha = 0
+		end
+		timer.performWithDelay(1000, removeText)
+		if(character.life > totAttacco) then
+			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
+			local rapporto = lifeBarCharacter.width / character.life
+			local x = totAttacco * rapporto		--Pixel dal levare
+
+			character.life = character.life - totAttacco
+			lifeBarCharacter.width = lifeBarCharacter.width - x
+			lifeBarCharacter.x = lifeBarCharacter.x - x/2
+		else --Danno > vita => nemico morto
+			character.life = 0
+			display.remove( lifeBarCharacter )
+			end
+		end
+		if(character.life > 0) then
+		local function changeText()
+		turnoText.text = "Il tuo turno"
+		end
+		timer.performWithDelay( 2000, changeText)
+		timer.performWithDelay(5000, eseguiMossa)
+		timer.performWithDelay(5000, addTasto)
+		textDamageEnemy.alpha = 1
+
+		end
+end
+
+
+
+local function gameLoop()
 if(enemy.speed < character.speed) then
 	turnoText.text = "Il tuo turno"
-	enemy:addEventListener("tap", eseguiMossa)
-
+	turno = "personaggio"
 else
-	turnoText.text = "Turno avversario"
-	--enemy:removeEventListener("tap", eseguiMossa)
-end
+	turno = "nemico"
+	 turnEnemy()
+	end
 end
 
 
@@ -92,6 +133,8 @@ end
 
 local function eseguiMossa()
 
+	if(turno == "personaggio") then
+
 	if(numeroMossa == 1) then
 	chanceRandom = math.random(1, 6)
 	totChance = chanceRandom + character.mossa1.hitChance
@@ -101,7 +144,7 @@ local function eseguiMossa()
 		totAttacco = (attackRandom + character.damage) * character.mossa1.damage
 		textDamage.text = totAttacco
 		local function removeText()
-	  		display.remove( textDamage )
+			textDamage.alpha = 0
 	  end
 	  timer.performWithDelay(1000, removeText)
 
@@ -130,7 +173,7 @@ local function eseguiMossa()
 		totAttacco = (attackRandom + character.damage) * character.mossa2.damage
 		textDamage.text = totAttacco
 		local function removeText()
-	  		display.remove( textDamage )
+			textDamage.alpha = 0
 	  end
 	  timer.performWithDelay(1000, removeText)
 
@@ -159,7 +202,7 @@ local function eseguiMossa()
 		totAttacco = (attackRandom + character.damage) * character.mossa3.damage
 		textDamage.text = totAttacco
 		local function removeText()
-	  		display.remove( textDamage )
+			textDamage.alpha = 0
 	  end
 	  timer.performWithDelay(1000, removeText)
 
@@ -188,7 +231,7 @@ local function eseguiMossa()
 		totAttacco = (attackRandom + character.damage) * character.mossa4.damage
 		textDamage.text = totAttacco
 		local function removeText()
-	  		display.remove( textDamage )
+	  		textDamage.alpha = 0
 	  end
 	  timer.performWithDelay(1000, removeText)
 
@@ -207,8 +250,24 @@ local function eseguiMossa()
 		end
 	end
 
+if(enemy.life > 0) then
+local function changeTextAvv()
+turnoText.text = "Turno avversario"
+end
+timer.performWithDelay( 2000, changeTextAvv)
+timer.performWithDelay(5000, turnEnemy)
+textDamage.alpha = 1
+enemy:removeEventListener("tap", eseguiMossa)
+
 end
 
+end
+
+end
+
+function addTasto()
+	enemy:addEventListener("tap", eseguiMossa)
+end
 
 
 -- create()
@@ -263,8 +322,11 @@ function scene:create ( event )
  textDamage = display.newText(textGroup, "", 800, 200, native.systemFont, 50)
  textDamage:setFillColor(1, 0, 0)
 
- turnoText = display.newText(textGroup, "", 500, 100, native.systemFont, 50)
- turnoText:setFillColor(1, 0, 0)
+ textDamageEnemy = display.newText(textGroup, "", 500, 200, native.systemFont, 50)
+ textDamageEnemy:setFillColor(1, 0, 0)
+
+ turnoText = display.newText(textGroup, "", 600, 50, native.systemFont, 50)
+ turnoText:setFillColor(1, 0, 1)
 
 		--*************MID GROUP*************************************************
 
@@ -293,7 +355,7 @@ function scene:create ( event )
 		lifeBarEnemy = display.newImageRect( midGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
 		lifeBarEnemy.x = display.contentCenterX + 250
 		lifeBarEnemy.y = display.contentCenterY - 250
-
+		enemy:addEventListener("tap", eseguiMossa)
 
 		gameLoop()
 end

@@ -20,10 +20,10 @@ local function create(scena)
   enemy.x = lunghezza * 0.7
   enemy.y = altezza-370
   enemy.myName = "Enemy"
-  enemy.life = 600
+  enemy.life = 60000
   enemy.armor = 1
   enemy.damage = 80
-  enemy.speed = 15
+  enemy.speed = 5
 
   return enemy
 end
