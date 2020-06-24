@@ -30,6 +30,7 @@ local turnoText
 local character = characterInterface.creaPersonaggio(self)
 local enemy = enemyInterface.createEnemy(self)
 local turno
+local sommaChance = 0
 
 --Game objects
 local numeroMossa
@@ -60,10 +61,16 @@ physics.start()
 
 local function turnEnemy()
 	chanceRandom = math.random(1, 6)
-	totChance = chanceRandom + 2000
+	while(chanceRandom == 6) do
+		sommaChance = sommaChance + chanceRandom
+		chanceRandom = math.random(1, 6)
+	end
+		sommaChance = sommaChance + chanceRandom
+
+	totChance = chanceRandom + sommaChance + 2000 -- mossa.hitChance
 		if(totChance > character.armor) then
 		attackRandom = math.random(1, 30)
-		totAttacco = (attackRandom + enemy.damage) * 20
+		totAttacco = (attackRandom + enemy.damage) * 20 --mossa.damage
 		textDamageEnemy.text = totAttacco
 		local function removeText()
 				textDamageEnemy.alpha = 0
@@ -134,8 +141,14 @@ local function eseguiMossa()
 	if(turno == "personaggio") then
 
 	if(numeroMossa == 1) then
-	chanceRandom = math.random(1, 6)
-	totChance = chanceRandom + character.mossa1.hitChance
+		chanceRandom = math.random(1, 6)
+		while(chanceRandom == 6) do
+			sommaChance = sommaChance + chanceRandom
+			chanceRandom = math.random(1, 6)
+		end
+			sommaChance = sommaChance + chanceRandom
+
+	totChance = chanceRandom + sommaChance + character.mossa1.hitChance
 
 	if(totChance > enemy.armor) then
 		attackRandom = math.random(1, 30)
@@ -163,8 +176,14 @@ local function eseguiMossa()
 
 
 	if(numeroMossa == 2) then
-	chanceRandom = math.random(1, 6)
-	totChance = chanceRandom + character.mossa2.hitChance
+			chanceRandom = math.random(1, 6)
+			while(chanceRandom == 6) do
+				sommaChance = sommaChance + chanceRandom
+				chanceRandom = math.random(1, 6)
+			end
+				sommaChance = sommaChance + chanceRandom
+
+		totChance = chanceRandom + sommaChance + character.mossa2.hitChance
 
 	if(totChance > enemy.armor) then
 		attackRandom = math.random(1, 30)
@@ -192,8 +211,14 @@ local function eseguiMossa()
 
 
 	if(numeroMossa == 3) then
-	chanceRandom = math.random(1, 6)
-	totChance = chanceRandom + character.mossa3.hitChance
+			chanceRandom = math.random(1, 6)
+			while(chanceRandom == 6) do
+				sommaChance = sommaChance + chanceRandom
+				chanceRandom = math.random(1, 6)
+			end
+				sommaChance = sommaChance + chanceRandom
+
+		totChance = chanceRandom + sommaChance + character.mossa3.hitChance
 
 	if(totChance > enemy.armor) then
 		attackRandom = math.random(1, 30)
@@ -221,8 +246,14 @@ local function eseguiMossa()
 
 
 	if(numeroMossa == 4) then
-	chanceRandom = math.random(1, 6)
-	totChance = chanceRandom + character.mossa4.hitChance
+			chanceRandom = math.random(1, 6)
+			while(chanceRandom == 6) do
+				sommaChance = sommaChance + chanceRandom
+				chanceRandom = math.random(1, 6)
+			end
+				sommaChance = sommaChance + chanceRandom
+
+		totChance = chanceRandom + sommaChance + character.mossa4.hitChance
 
 	if(totChance > enemy.armor) then
 		attackRandom = math.random(1, 30)
