@@ -2,6 +2,7 @@ local composer= require("composer")
 local customFont="MadnessHyperactive.otf"
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
+local math = require("math")
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- classe che si occupa di fornire tutte le funzioni tecniche per generare e costruire l'interfaccia bassa del gioco
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -184,7 +185,8 @@ local interfacciaConfig = {
         local casellaY = posizioneY + 35
         local griglia = composer.getVariable( "grigliaOggetti" )
 
-        griglia[index]={casellaX, casellaY}
+        --Ogni casella della griglia è composta dalle coordinate centrali della casella e da un booleano che inidica se la casella è occupata o meno
+        griglia[index]={casellaX, casellaY, false, nil}
         composer.setVariable( "grigliaOggetti",  griglia)
 
         posizioneX = posizioneX + 100
@@ -202,6 +204,8 @@ local interfacciaConfig = {
       item.x = griglia[x][1]
       item.y = griglia[x][2]
       item.id = x
+      griglia[x][3] = true
+      griglia[x][4] = item
       inventoryGroup:insert(item)
       item:addEventListener("touch", handler)
     end
@@ -268,33 +272,61 @@ dragItem=
     item.x=event.x-item.touchOffsetX
     item.y=event.y-item.touchOffsetY
   elseif("ended"==phase or "cancelled"==phase) then
-
     --Oggetto fuori dall'inventario (tentativo di rimozione)
     if( (item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140)) ) then
       display.remove( item )
-      table.remove( inventario, item.id )
+      table.remove( inventario, idItem )
+      griglia[idItem][3] = false
+      griglia[idItem][4] = nil
     else
       -- VA IMPLEMENTATO L'AUTO POSIZIONAMENTO DEGLI ITEM E LO SCAMBIO DI POSTO
-      -- local xRel = item.x - invx
-      -- local yRel = item.y - invy
-      --
-      -- local numCol = xRel/100 + 1
-      -- local numRiga = yRel/70 + 1
+      local xRel = item.x - invx
+      local yRel = item.y - invy
+      local numCol, restCol = math.modf(xRel/100)
+      local numRiga, restRiga = math.modf(yRel/70)
+      local numCasella = 0
 
+      numCol = numCol + 1
+      numRiga = numRiga + 1
 
-      --rilascio del tocco
-      -- local bordoXSUP=partenza[1]+70
-      -- local bordoXINF=partenza[1]-70
-      -- local bordoYSUP=partenza[2]+70
-      -- local bordoYINF=partenza[2]-70
-      --
-      -- if(item.x<bordoXSUP and item.x>bordoXINF) then
-      --  if(item.y<bordoYSUP and item.y>bordoYINF) then
-      --    item.y=partenza[2]
-      --    item.x=partenza[1]
-      --  end
-      --
-      -- end
+      --Prendo il numero della casella dove si trova l'oggetto
+      if(numRiga < 2) then
+        numCasella = numCol
+      else
+        numCasella = numCol + 5
+      end
+
+      --Casella uguale a quella di partenza
+      if(numCasella == idItem) then
+        item.x = partenza[1]
+        item.y = partenza[2]
+      else
+        --Casella diversa
+        if(griglia[numCasella][3] == true) then
+          --Casella occupata
+          griglia[numCasella][4].x = partenza[1]
+          griglia[numCasella][4].y = partenza[2]
+          griglia[numCasella][4].id = idItem
+
+          item.x = griglia[numCasella][1]
+          item.y = griglia[numCasella][2]
+          item.id = numCasella
+
+          griglia[idItem][4] = griglia[numCasella][4]
+          griglia[numCasella][4] = item
+          composer.setVariable( "grigliaOggetti", griglia )
+        else
+          --Casella non occupata
+          griglia[idItem][3] = false
+          griglia[idItem][4] = nil
+          item.x = griglia[numCasella][1]
+          item.y = griglia[numCasella][2]
+          item.id = numCasella
+          griglia[numCasella][3] = true
+          griglia[numCasella][4] = item
+          composer.setVariable( "grigliaOggetti", griglia )
+        end
+      end
     end
 
     display.currentStage:setFocus(nil)
