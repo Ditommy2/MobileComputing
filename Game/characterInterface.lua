@@ -147,7 +147,7 @@ local function create(scena)
   character.y = altezza-310
   physics.addBody(character, "dynamic", {radius=sheet_walking_Options.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
   character.myName = "Character"
-  character.life = 500
+  character.life = 50000
   character.armor = 50
   character.damage = 100
   character.speed = 10
