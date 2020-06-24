@@ -24,4 +24,4 @@ end
 
  funzione=lowerFixedMenu.display
  composer.setVariable( "funzione", funzione )
- composer.gotoScene("Scenes.fight")
+ composer.gotoScene("Scenes.menu")

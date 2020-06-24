@@ -45,12 +45,10 @@ local lifeBarEnemyBlack
 local physics = require("physics")
 physics.start()
 
-
 -- -----------------------------------------------------------------------------------
 -- Code outside of the scene event functions below will only be executed ONCE unless
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
 -- -----------------------------------------------------------------------------------
-
 
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
