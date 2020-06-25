@@ -230,8 +230,8 @@ function scene:create( event )
 
     for i = #stanzaCorrente.nemici, 1, -1 do
         if(not(stanzaCorrente.nemici[i]==nil))then
-          print("tabella nemico (in teoria)")
-          print(stanzaCorrente.nemici[i].immagine)
+          -- print("tabella nemico (in teoria)")
+          -- print(stanzaCorrente.nemici[i].immagine)
           enemy = enemyInterface.createEnemy(self, stanzaCorrente.nemici[i])
           mainGroup:insert(enemy)
         end

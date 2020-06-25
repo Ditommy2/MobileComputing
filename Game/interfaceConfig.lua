@@ -230,7 +230,7 @@ local interfacciaConfig = {
         griglia[x][3] = true
         griglia[x][4] = item
 
-        print("Visualizzato oggetto: " .. inventario[x] .. " in posizione (" .. griglia[x][1] .. ", " .. griglia[x][2] .. ") della griglia")
+        -- print("Visualizzato oggetto: " .. inventario[x] .. " in posizione (" .. griglia[x][1] .. ", " .. griglia[x][2] .. ") della griglia")
 
         inventoryGroup:insert(item)
         item:addEventListener("touch", handler)
@@ -263,7 +263,7 @@ dragMapSet=
   if("began"==phase) then
     display.currentStage:setFocus(item)
 
-    print("coordinate mappa: (" .. (display.contentCenterX+150) .. ", " .. (display.contentCenterY+100) .. ")")
+    -- print("coordinate mappa: (" .. (display.contentCenterX+150) .. ", " .. (display.contentCenterY+100) .. ")")
 
     if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-125)) and (event.y > (display.contentCenterY+100) and event.y < (altezza-75))) then
       item.touchOffsetX=event.x-item.x
@@ -300,7 +300,7 @@ dragItem=
   if("began"==phase) then
     display.currentStage:setFocus(item)
 
-    print("coordinate mappa: (" .. invx .. ", " .. invy .. ")")
+    -- print("coordinate mappa: (" .. invx .. ", " .. invy .. ")")
 
     if( not((item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140))) ) then
       item.touchOffsetX=event.x-item.x
