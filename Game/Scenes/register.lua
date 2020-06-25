@@ -12,7 +12,6 @@ local confermapassword
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
 local customFont="MadnessHyperactive.otf"
---local customFont=native.systemFont
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione che torna al menù dopo che viene premuta la freccia
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -51,7 +50,6 @@ local function loadDatas()
 
     if file then
         contents = file:read( "*a" )
-				--local printare = json.decode(cotents)
 				print(contents)
         io.close( file )
 		end
@@ -80,7 +78,6 @@ local function networkListener( event )
         end
         composer.setVariable( "username", username.text )
 				composer.gotoScene( "Scenes.nuovaCarica" )
-				--composer.gotoScene("register")
 			elseif event.response == ("Duplicate entry '"..username.text.."' for key 'PRIMARY'") then
 			print("Username gia in uso")
 
@@ -96,7 +93,6 @@ local function networkListener( event )
     end
 end
 
---https://mobilecompfra.000webhostapp.com/public_html/insert.php
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --gestisce l'attivazione del pulsante registrazione. Controlla anche che la conferma della password non sia errata. Qualora lo fosse utilizza il file per comunicare questo alla prossima scena
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -111,12 +107,9 @@ local function handleButtonEvent( event )
 					io.close(file)
 				end
 				composer.gotoScene("Scenes.register")
-else
-      --local URL = "http://127.0.0.1/mobilecomputing/insert.php?name=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)   --PROVA LOCALE
+    else
     	local URL = "https://appmcsite.000webhostapp.com/insert.php?name=" .. urlencode( username.text ) .. "&password=" ..urlencode(password.text)  --QUELLO VERO
-			--local URL = "".. urlencode( username.text ) .. "&password=" ..urlencode(password.text)
         network.request(URL, "GET", networkListener)
-
 			end
 	end
 end
@@ -125,9 +118,7 @@ end
 --fase create del display
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function scene:create( event )
-
 	local sceneGroup = self.view
-	-- Code here runs when the scene is first created but has not yet appeared on screen
 	loginGroup=display.newGroup()
 
 	local background=display.newImageRect(sceneGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.jpg", lunghezza, altezza)
@@ -140,88 +131,80 @@ function scene:create( event )
 	midBackground:setFillColor(0.18, 0.18, 0.23)
 	loginGroup:insert(midBackground)
 
- username = native.newTextField( display.contentCenterX, display.contentCenterY-350, lunghezzaFinestra-30, 80 )
-username.placeholder = "Username"
-username.font=native.newFont( customFont, 50 )
-loginGroup:insert(username)
+  username = native.newTextField( display.contentCenterX, display.contentCenterY-350, lunghezzaFinestra-30, 80 )
+  username.placeholder = "Username"
+  username.font=native.newFont( customFont, 50 )
+  loginGroup:insert(username)
 
- password = native.newTextField( display.contentCenterX, display.contentCenterY-250, lunghezzaFinestra-30, 80 )
-password.isSecure = true
-password.font=native.newFont( customFont, 50 )
-password.placeholder = "Password"
-loginGroup:insert(password)
+  password = native.newTextField( display.contentCenterX, display.contentCenterY-250, lunghezzaFinestra-30, 80 )
+  password.isSecure = true
+  password.font=native.newFont( customFont, 50 )
+  password.placeholder = "Password"
+  loginGroup:insert(password)
 
-confermapassword = native.newTextField( display.contentCenterX, display.contentCenterY-150, lunghezzaFinestra-30, 80 )
-confermapassword.isSecure = true
-confermapassword.font=native.newFont( customFont, 50)
-confermapassword.placeholder = "Confirm Password"
-loginGroup:insert(confermapassword)
+  confermapassword = native.newTextField( display.contentCenterX, display.contentCenterY-150, lunghezzaFinestra-30, 80 )
+  confermapassword.isSecure = true
+  confermapassword.font=native.newFont( customFont, 50)
+  confermapassword.placeholder = "Confirm Password"
+  loginGroup:insert(confermapassword)
 
-local file = io.open( filePathComandi, "r" )
---------------------------------------------------------------------------------
---questa prima implementazione utilizza il file per controllare i risultati dell'eventuale inserimento fallito dei dati nel database
---sul file sono presenti messaggi che comunicano alla funzione se creare o meno i messaggi di controllo come "username in uso" e varie
-if file then
-		local contents = file:read( "*a" )
-		--local printare = json.decode(cotents)
-		print(contents)
-		io.close( file )
-		if contents=="\"true\"" then
-			local risposta = display.newText( sceneGroup, "Username già in uso",display.contentCenterX, display.contentCenterY-160, native.newFont( customFont ), 40)
-			risposta.x=display.contentCenterX
-			risposta.y = username.y+450
-			risposta:setFillColor(0.5, 0, 0)
-		end
-		if contents=="\"confermapassword\"" then
-			local risposta = display.newText( sceneGroup, "Le password sono diverse",display.contentCenterX, display.contentCenterY-160, native.newFont( customFont ), 40)
-			risposta.x=display.contentCenterX
-			risposta.y = username.y+450
-			risposta:setFillColor(0.5, 0, 0)
-		end
-end
---if(json.decode(contents)=="false") then
---local risposta = diaplay.newText(sceneGroup, "Password gia in uso")
---risposta.x = display.contentCenterX
---risposta.y = display.contentCenterY
---end
-local title = display.newImageRect( sceneGroup, "Images/Utility/title.png", 600, 100 )
- title.x = display.contentCenterX
- title.y = display.contentCenterY-500
- loginGroup:insert(title)
-local Button = widget.newButton(
+  local file = io.open( filePathComandi, "r" )
+  --------------------------------------------------------------------------------
+  --questa prima implementazione utilizza il file per controllare i risultati dell'eventuale inserimento fallito dei dati nel database
+  --sul file sono presenti messaggi che comunicano alla funzione se creare o meno i messaggi di controllo come "username in uso" e varie
+  if file then
+  	local contents = file:read( "*a" )
+  	--local printare = json.decode(cotents)
+  	print(contents)
+  	io.close( file )
+  	if contents=="\"true\"" then
+  		local risposta = display.newText( sceneGroup, "Username già in uso",display.contentCenterX, display.contentCenterY-160, native.newFont( customFont ), 40)
+  		risposta.x=display.contentCenterX
+  		risposta.y = username.y+450
+  		risposta:setFillColor(0.5, 0, 0)
+  	end
+  	if contents=="\"confermapassword\"" then
+  		local risposta = display.newText( sceneGroup, "Le password sono diverse",display.contentCenterX, display.contentCenterY-160, native.newFont( customFont ), 40)
+  		risposta.x=display.contentCenterX
+  		risposta.y = username.y+450
+  		risposta:setFillColor(0.5, 0, 0)
+  	end
+  end
+
+  local title = display.newImageRect( sceneGroup, "Images/Utility/title.png", 600, 100 )
+  title.x = display.contentCenterX
+  title.y = display.contentCenterY-500
+  loginGroup:insert(title)
+  local Button = widget.newButton(
    {
        shape = "roundedRect",
        left = 70,
        top = 360,
-			 width=lunghezzaFinestra-200,
-			 height=90,
+  		 width=lunghezzaFinestra-200,
+  		 height=90,
        id = "Nuova",
        label = "New Game",
-			 labelColor={default={0.5, 0, 0}},
-			 fontSize=50,
+  		 labelColor={default={0.5, 0, 0}},
+  		 fontSize=50,
        onEvent = handleButtonEvent,
        font=customFont
    }
-)
-loginGroup:insert(Button)
-Button.x=display.contentCenterX
-Button.y=display.contentCenterY
--- loginGroup.x=500
- loginGroup.y=display.contentCenterY-150
+  )
+  loginGroup:insert(Button)
+  Button.x=display.contentCenterX
+  Button.y=display.contentCenterY
+  loginGroup.y=display.contentCenterY-150
 
-
-local returnButton = display.newImageRect( loginGroup, "Images/Utility/returnArrow.png", 200, 200 )
-returnButton.x = display.contentCenterX-550
-returnButton.y = display.contentCenterY-500
-returnButton:addEventListener("tap", gotoMenu)
+  local returnButton = display.newImageRect( loginGroup, "Images/Utility/returnArrow.png", 200, 200 )
+  returnButton.x = display.contentCenterX-550
+  returnButton.y = display.contentCenterY-500
+  returnButton:addEventListener("tap", gotoMenu)
 end
-
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --fase show dedl display
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function scene:show( event )
-
 	local sceneGroup = self.view
 	local phase = event.phase
 
@@ -239,7 +222,6 @@ end
 --fase hide del display
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function scene:hide( event )
-
 	local sceneGroup = self.view
 	local phase = event.phase
 
@@ -253,16 +235,13 @@ function scene:hide( event )
       loginGroup[i] = nil
     end
 		composer.removeScene("Scenes.register")
-
 	end
 end
-
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --fase destroy del display
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function scene:destroy( event )
-
 	local sceneGroup = self.view
 	-- Code here runs prior to the removal of scene's view
   for i = sceneGroup.numChildren, 1, -1 do
@@ -270,7 +249,6 @@ function scene:destroy( event )
     sceneGroup[i] = nil
   end
 end
-
 
 -- -----------------------------------------------------------------------------------
 -- Scene event function listeners

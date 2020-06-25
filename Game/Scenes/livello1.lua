@@ -1,4 +1,3 @@
-
 local composer = require( "composer" )
 local lowerFixedMenu= require("lowerFixedMenu")
 local widget = require("widget")
@@ -12,7 +11,7 @@ local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 composer.recycleOnSceneChange = true
 local customFont="MadnessHyperactive.otf"
---local customFont=native.systemFont
+
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
 physics.start()
@@ -20,9 +19,6 @@ physics.start()
 --Variabili personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local character
-
-
-
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione per tornare al menu. Quando chiamata deve salvare tutti i dati in maniera persistente per poter recuperare la partita in qualsiasi momento
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -36,7 +32,7 @@ local function gotoMenu()
     mapyToSave = composer.getVariable( "mapy" ),
     nomeSalvataggio = composer.getVariable( "nomePartita" ),
     giocatore = composer.getVariable( "username" ),
-    --displayFunzioneToSave = composer.getVariable( "funzione" )
+    nomePartita = composer.getVariable( "nomePartita" )
   }
 
   local stringaSalvataggio = "save".."$$"..composer.getVariable("username")..".json"
@@ -213,7 +209,6 @@ end
 -- create()
 function scene:create( event )
 	local sceneGroup = self.view
-	-- Code here runs when the scene is first created but has not yet appeared on screen
   local phase = event.phase
   funzioneEseguiDisplay(self,  stanzaCorrente, invloc)
   local numero = stanzaCorrente.seedBackground
@@ -230,10 +225,7 @@ function scene:create( event )
 
   --Displaying character and setting sprite sheets
   character = characterInterface.creaPersonaggio(self)
-
---  sceneGroup:insert(background)
   mainGroup=display.newGroup()
-
   mainGroup:insert(character)
 
   --Barre nere
@@ -294,12 +286,10 @@ function scene:create( event )
 
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
-
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --fase show del display
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 -- show()
 function scene:show( event )
 
@@ -307,15 +297,9 @@ function scene:show( event )
   local phase=event.phase
 
 	if ( phase == "will" ) then
-		-- Code here runs when the scene is still off screen (but is about to come on screen)
-
-
-
 
 	elseif ( phase == "did" ) then
-		-- Code here runs when the scene is entirely on screen
     physics.start()
-
 	end
 end
 
@@ -349,7 +333,6 @@ function scene:destroy( event )
     sceneGroup[i] = nil
   end
 end
-
 
 -- -----------------------------------------------------------------------------------
 -- Scene event function listeners

@@ -6,13 +6,9 @@
 
 -- Your code here
 local customFont="MadnessHyperactive.otf"
---local customFont=native.systemFont
 local composer = require("composer")
--- local table = {}
--- table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
--- composer.setVariable( "tabellaOgegttiInventario", table )
 local lowerFixedMenu = require("lowerFixedMenu")
--- local support = require("interfaceConfig")
+
 display.setStatusBar(display.HiddenStatusBar)
 math.randomseed(os.time())
 local filePathComandi=system.pathForFile("binario.json", system.DocumentsDirectory)
@@ -25,14 +21,7 @@ if file then
   file:write(json.encode(stringa))
   io.close(file)
 end
- -- inv = lowerFixedMenu.create.inventario
- -- mappa = lowerFixedMenu.create.mappaGenerata
- -- mappa.corrente=true
+
  funzione=lowerFixedMenu.display
- -- composer.setVariable( "stanzaCorrente", mappa )
- -- composer.setVariable( "inv", inv )
- -- composer.setVariable( "mappa", mappa )
  composer.setVariable( "funzione", funzione )
- -- composer.setVariable( "mapx", 352 )
- -- composer.setVariable( "mapy", 200 )
  composer.gotoScene("Scenes.menu")
