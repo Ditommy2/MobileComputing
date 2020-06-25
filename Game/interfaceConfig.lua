@@ -3,6 +3,8 @@ local customFont="MadnessHyperactive.otf"
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
 local math = require("math")
+local nemici = require("nemici")
+local spawnRatioNemici = 4
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- classe che si occupa di fornire tutte le funzioni tecniche per generare e costruire l'interfaccia bassa del gioco
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -26,7 +28,11 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     x=1
     a=primaX
     b=primaY
-    local stanza={NORD=nil, SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b}
+    local spawnNemico = math.random(1, spawnRatioNemici)
+    local stringaNemico = "nemico"..spawnNemico
+    local nemico = nemici[stringaNemico]
+
+    local stanza={NORD=nil, SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b, nemici={nemico}, oggetti={}}
     mappa[x]=stanza
     trovato=true
     tabella[a][b]=true
@@ -37,7 +43,11 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     cardinale=math.random(1, 4)
     if (cardinale == 1) and (mappa[x].NORD == nil) and (tabella[a][b+1]==false) then
       mappa[x].seedNORD=seed
-      local stanza = {NORD=nil, SUD=mappa[x], EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b+1, seedSUD=seed}
+      local spawnNemico = math.random(1, spawnRatioNemici)
+      local stringaNemico = "nemico"..spawnNemico
+      local nemico = nemici[stringaNemico]
+
+      local stanza = {NORD=nil, SUD=mappa[x], EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b+1, seedSUD=seed, nemici={nemico}, oggetti={}}
       mappa[x].NORD = stanza
       index=index+1
       mappa[index]=stanza
@@ -48,7 +58,11 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
 
     if (cardinale == 2) and (mappa[x].SUD == nil) and (tabella[a][b-1]==false) then
       mappa[x].seedSUD=seed
-      local stanza = {NORD=mappa[x], SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false,  seedBackground=seed, x=a, y=b-1, seedNORD=seed}
+      local spawnNemico = math.random(1, spawnRatioNemici)
+      local stringaNemico = "nemico"..spawnNemico
+      local nemico = nemici[stringaNemico]
+
+      local stanza = {NORD=mappa[x], SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false,  seedBackground=seed, x=a, y=b-1, seedNORD=seed, nemici={nemico}, oggetti={}}
       mappa[x].SUD = stanza
       index=index+1
       mappa[index]=stanza
@@ -59,7 +73,11 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
 
     if (cardinale == 3) and (mappa[x].EST == nil) and (tabella[a+1][b]==false) then
       mappa[x].seedEST=seed
-      local stanza = {NORD=nil, SUD=nil, EST=nil, OVEST=mappa[x], TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a+1, y=b, seedOVEST=seed}
+      local spawnNemico = math.random(1, spawnRatioNemici)
+      local stringaNemico = "nemico"..spawnNemico
+      local nemico = nemici[stringaNemico]
+
+      local stanza = {NORD=nil, SUD=nil, EST=nil, OVEST=mappa[x], TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a+1, y=b, seedOVEST=seed,nemici={nemico}, oggetti={}}
       mappa[x].EST = stanza
       index=index+1
       mappa[index]=stanza
@@ -70,7 +88,11 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
 
     if (cardinale == 4) and (mappa[x].OVEST == nil) and (tabella[a-1][b]==false) then
       mappa[x].seedOVEST=seed
-      local stanza = {NORD=nil, SUD=nil, EST=mappa[x], OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a-1, y=b, seedEST=seed}
+      local spawnNemico = math.random(1, spawnRatioNemici)
+      local stringaNemico = "nemico"..spawnNemico
+      local nemico = nemici[stringaNemico]
+
+      local stanza = {NORD=nil, SUD=nil, EST=mappa[x], OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a-1, y=b, seedEST=seed, nemici={nemico}, oggetti={}}
       mappa[x].OVEST = stanza
       index=index+1
       mappa[index]=stanza

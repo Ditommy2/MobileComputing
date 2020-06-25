@@ -11,19 +11,19 @@ local scene
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Creation enemy
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local function create(scena)
+local function create(scena, nemico)
   --Memorizing scene context
   scene = scena
 
   --Displaying enemy
-  enemy = display.newImageRect( "Images/Characters/joker.png", 200, 200)
+  print("prova a visualizzare nemico")
+  print(nemico.immagine)
+  enemy = display.newImageRect( nemico.immagine, 100, 175)
+  enemy.anchorY = 1
   enemy.x = lunghezza * 0.7
-  enemy.y = altezza-370
+  enemy.y = altezza-310
   enemy.myName = "Enemy"
-  enemy.life = 60000
-  enemy.armor = 1
-  enemy.damage = 80
-  enemy.speed = 5
+
 
   return enemy
 end

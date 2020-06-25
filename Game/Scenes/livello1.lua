@@ -9,6 +9,7 @@ local funzioneEseguiDisplay= composer.getVariable( "funzione" )
 local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
+local enemyInterface = require("enemyInterface")
 composer.recycleOnSceneChange = true
 local customFont="MadnessHyperactive.otf"
 
@@ -209,6 +210,7 @@ end
 -- create()
 function scene:create( event )
 	local sceneGroup = self.view
+  local mainGroup=display.newGroup()
   local phase = event.phase
   funzioneEseguiDisplay(self,  stanzaCorrente, invloc)
   local numero = stanzaCorrente.seedBackground
@@ -225,8 +227,19 @@ function scene:create( event )
 
   --Displaying character and setting sprite sheets
   character = characterInterface.creaPersonaggio(self)
-  mainGroup=display.newGroup()
+
+    for i = #stanzaCorrente.nemici, 1, -1 do
+        if(not(stanzaCorrente.nemici[i]==nil))then
+          print("tabella nemico (in teoria)")
+          print(stanzaCorrente.nemici[i].immagine)
+          enemy = enemyInterface.createEnemy(self, stanzaCorrente.nemici[i])
+          mainGroup:insert(enemy)
+        end
+    end
+
+
   mainGroup:insert(character)
+
 
   --Barre nere
   local hidingGroup = display.newGroup()
