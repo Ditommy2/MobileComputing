@@ -199,15 +199,20 @@ local interfacciaConfig = {
 
     --Ciclo di visualizzazione degli oggetti dell'inventario
     local griglia = composer.getVariable( "grigliaOggetti" )
-    for x=1, #inventario, 1 do
-      local item = display.newImageRect( inventoryGroup, inventario[x], 50, 50)
-      item.x = griglia[x][1]
-      item.y = griglia[x][2]
-      item.id = x
-      griglia[x][3] = true
-      griglia[x][4] = item
-      inventoryGroup:insert(item)
-      item:addEventListener("touch", handler)
+    for x=1, 10, 1 do
+      if(not(inventario[x] == "vuoto")) then
+        local item = display.newImageRect( inventoryGroup, inventario[x], 50, 50)
+        item.x = griglia[x][1]
+        item.y = griglia[x][2]
+        item.id = x
+        griglia[x][3] = true
+        griglia[x][4] = item
+
+        print("Visualizzato oggetto: " .. inventario[x] .. " in posizione (" .. griglia[x][1] .. ", " .. griglia[x][2] .. ") della griglia")
+
+        inventoryGroup:insert(item)
+        item:addEventListener("touch", handler)
+      end
     end
   end),
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -275,7 +280,7 @@ dragItem=
     --Oggetto fuori dall'inventario (tentativo di rimozione)
     if( (item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140)) ) then
       display.remove( item )
-      table.remove( inventario, idItem )
+      inventario[idItem] = "vuoto"
       griglia[idItem][3] = false
       griglia[idItem][4] = nil
     else
@@ -314,6 +319,12 @@ dragItem=
 
           griglia[idItem][4] = griglia[numCasella][4]
           griglia[numCasella][4] = item
+
+          local altroOggetto = inventario[numCasella]
+          inventario[numCasella] = inventario[idItem]
+          inventario[idItem] = altroOggetto
+
+          composer.setVariable( "inv", inventario )
           composer.setVariable( "grigliaOggetti", griglia )
         else
           --Casella non occupata
@@ -324,6 +335,11 @@ dragItem=
           item.id = numCasella
           griglia[numCasella][3] = true
           griglia[numCasella][4] = item
+
+          inventario[numCasella] = inventario[idItem]
+          inventario[idItem] = "vuoto"
+
+          composer.setVariable( "inv", inventario )
           composer.setVariable( "grigliaOggetti", griglia )
         end
       end
