@@ -90,6 +90,9 @@ end
 local function overlayCaricaSalvataggi()
 	local fileHandler = require("fileHandler")
 	local salvataggi = fileHandler.loadTable("save".."$$"..composer.getVariable("username")..".json")
+	if salvataggi == nil then
+		salvataggi = {}
+	end
 	local caricaPartitaOverlayGroup = display.newGroup()
 	local lunghezza =  display.contentWidth
   local lunghezzaFinestra=lunghezza-400
@@ -145,7 +148,7 @@ local function overlayCaricaSalvataggi()
 	end
 	end
 
-	local function handleSaveButtonEvent(event)
+	local function handleLoadButtonEvent(event)
 		if ( "ended" == event.phase ) then
 			local table = {}
 			table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
@@ -200,7 +203,7 @@ local function overlayCaricaSalvataggi()
 				label = "SAVE "..i..":"..salvataggi[i].nomeSalvataggio,
 				labelColor={default={0.5, 0, 0}},
 				fontSize=50,
-				onEvent = handleSaveButtonEvent,
+				onEvent = handleLoadButtonEvent,
 				font=customFont
 		})
 		scrollView:insert(saveButton)
@@ -231,28 +234,6 @@ local function handleButtonEvent( event )
 			--a quel punto la scelta di un salvataggio porterà a riprendere quella partita da dove è stat lasciata
 			--------------------------------------------------------------------------------------------------------------------------------------
 			if bottone.id=="carica" then
-				-- local table = {}
-				-- table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
-				-- composer.setVariable( "tabellaOgegttiInventario", table )
-				-- local lowerFixedMenu = require("lowerFixedMenu")
-				-- local fileHandler = require("fileHandler")
-				-- --overlayCaricaSalvataggi()
-				-- local salvataggi = fileHandler.loadTable("save".."$$"..composer.getVariable("username").."$$"..composer.getVariable("nomePartita")..".json")
-				-- print(salvataggi.stanzaCorrenteToSave)
-				-- print(salvataggi.invToSave)
-				-- print(salvataggi.mappaToSave)
-				-- print(salvataggi.mapxToSave)
-				-- print(salvataggi.mapyToSave)
-				-- composer.setVariable( "stanzaCorrente", salvataggi.stanzaCorrenteToSave )
-				-- composer.setVariable( "inv", salvataggi.invToSave )
-				-- composer.setVariable( "mappa", salvataggi.mappaToSave )
-				-- composer.setVariable( "mapx", salvataggi.mapxToSave )
-				-- composer.setVariable( "mapy", salvataggi.mapyToSave )
-				-- funzione=lowerFixedMenu.display
-				-- composer.setVariable( "funzione", funzione )
-				-- --composer.setVariable( "funzione", salvataggi.displayFunzioneToSave )
-				-- composer.removeScene( "Scenes.nuovaCarica" )
-				-- composer.gotoScene("Scenes.livello1")
 				overlayCaricaSalvataggi()
 			end
 
