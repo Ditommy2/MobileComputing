@@ -91,19 +91,22 @@ local function moveListener(event)
 
   if(phase=="began") then
     display.getCurrentStage():setFocus(target)
+    moveTimer = timer.performWithDelay( 30, move, 0)
 
-    --Touch in the movement area, starting the right movement sprite animation
-    if((event.x < target.nonMovementArea.minX) and (event.y < target.nonMovementArea.maxY)) then
-      dir = "l"
-      character:setSequence( "leftWalk" )
-    elseif((event.x > target.nonMovementArea.maxX) and (event.y < target.nonMovementArea.maxY)) then
-      dir = "r"
-      character:setSequence( "rightWalk" )
+    if(not((event.x > target.nonMovementArea.minX and event.x < target.nonMovementArea.maxX) or (event.y > target.nonMovementArea.maxY))) then
+      --Touch in the movement area, starting the right movement sprite animation
+      if((event.x < target.nonMovementArea.minX) and (event.y < target.nonMovementArea.maxY)) then
+        dir = "l"
+        character:setSequence( "leftWalk" )
+      elseif((event.x > target.nonMovementArea.maxX) and (event.y < target.nonMovementArea.maxY)) then
+        dir = "r"
+        character:setSequence( "rightWalk" )
+      end
+
+      --Start movement
+      character:play()
     end
 
-    --Start movement
-    character:play()
-    moveTimer = timer.performWithDelay( 30, move, 0)
     moveTimer.isPaused = false
     moveTimer.params = {direction=dir}
   elseif(phase=="moved") then   --Touch moved

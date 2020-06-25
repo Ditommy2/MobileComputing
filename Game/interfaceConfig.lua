@@ -239,13 +239,20 @@ dragMapSet=
   local item=event.target
   local phase=event.phase
   if("began"==phase) then
-      display.currentStage:setFocus(item)
+    display.currentStage:setFocus(item)
+
+    print("coordinate mappa: (" .. (display.contentCenterX+150) .. ", " .. (display.contentCenterY+100) .. ")")
+
+    if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-125)) and (event.y > (display.contentCenterY+100) and event.y < (altezza-75))) then
       item.touchOffsetX=event.x-item.x
       item.touchOffsetY=event.y-item.y
-    elseif("moved"==phase) then
+    end
+  elseif("moved"==phase) then
       -- Muove la nave
+    if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-125)) and (event.y > (display.contentCenterY+100) and event.y < (altezza-75))) then
       item.x=event.x-item.touchOffsetX
       item.y=event.y-item.touchOffsetY
+    end
    elseif("ended"==phase or "cancelled"==phase) then
      --rilascio del tocco
      composer.setVariable( "mapx", item.x )
@@ -270,12 +277,17 @@ dragItem=
 
   if("began"==phase) then
     display.currentStage:setFocus(item)
-    item.touchOffsetX=event.x-item.x
-    item.touchOffsetY=event.y-item.y
+
+    print("coordinate mappa: (" .. invx .. ", " .. invy .. ")")
+
+    if( not((item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140))) ) then
+      item.touchOffsetX=event.x-item.x
+      item.touchOffsetY=event.y-item.y
+    end
   elseif("moved"==phase) then
-    -- Muove la nave
-    item.x=event.x-item.touchOffsetX
-    item.y=event.y-item.touchOffsetY
+      -- Muove la nave
+      item.x=event.x-item.touchOffsetX
+      item.y=event.y-item.touchOffsetY
   elseif("ended"==phase or "cancelled"==phase) then
     --Oggetto fuori dall'inventario (tentativo di rimozione)
     if( (item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140)) ) then
