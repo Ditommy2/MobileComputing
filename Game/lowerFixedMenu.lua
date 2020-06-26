@@ -61,7 +61,6 @@ local inventario =
 --coppia di valori da costruire: uno è l'inventario e l'altro è la mappa generata
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 create={
-  inventario={"Images/Objects/lifePotion.png", "Images/Objects/armorPotion.png", "Images/Objects/attackPotion.png", "Images/Objects/key.png", "Images/Objects/shovel.png", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto"},
   mappaGenerata = interfaccia.proceduraleMappa
   }
 }

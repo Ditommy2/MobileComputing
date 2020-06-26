@@ -14,35 +14,62 @@ local numero = numeroStanze
 local tabella = interfaccia.tabellaFunction(numero)
 local sceneGroup
 local customFont="MadnessHyperactive.otf"
-composer.setVariable( "nomeSalvataggio", "prova1" )
+
 --local customFont=native.systemFont
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --handle del bottone per 'overlay sottostante. Non so perchè ma non andava con quello classico
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function handleButtonEventNuovaNome(event)
 	local bottone = event.target
-    if ( "ended" == event.phase ) then
-	if bottone.id=="NuovaPartitaNome" then
-		composer.setVariable( "nomePartita", nomePartita.text )
-		local table = {}
-		table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
-		composer.setVariable( "tabellaOgegttiInventario", table )
-		local lowerFixedMenu = require("lowerFixedMenu")
-		inv = lowerFixedMenu.create.inventario
-		mappa = lowerFixedMenu.create.mappaGenerata(0, {}, numero, tabella, numero+1, numero+1)
-		mappa.corrente=true
-		funzione=lowerFixedMenu.display
-		composer.setVariable( "stanzaCorrente", mappa )
-		composer.setVariable( "inv", inv )
-		composer.setVariable( "mappa", mappa )
-		composer.setVariable( "funzione", funzione )
-		composer.setVariable( "mapx", 352 )
-		composer.setVariable( "mapy", 200 )
-		composer.setVariable( "statoPartita", {stato = "nuova"} )
-		composer.removeScene( "Scenes.nuovaCarica" )
-		composer.gotoScene("Scenes.livello1")
+  if ( "ended" == event.phase ) then
+		if bottone.id=="NuovaPartitaNome" then
+			composer.setVariable( "nomePartita", nomePartita.text )
+			-- local table = {}
+			-- table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
+			-- composer.setVariable( "tabellaOgegttiInventario", table )
+			local lowerFixedMenu = require("lowerFixedMenu")
+			local inv = {"Images/Objects/lifePotion.png", "Images/Objects/armorPotion.png", "Images/Objects/attackPotion.png", "Images/Objects/key.png", "Images/Objects/shovel.png", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto"}
+
+			print("inventario caricato: " )
+			for x=1, #inv, 1 do
+				print(inv[x])
+			end
+
+			local invComp = composer.getVariable( "inv" )
+
+			print("inventario composer prima: " )
+			if(not(invComp ==nil)) then
+				for x=1, #invComp, 1 do
+					print(invComp[x])
+				end
+			end
+
+			mappa = lowerFixedMenu.create.mappaGenerata(0, {}, numero, tabella, numero+1, numero+1)
+			mappa.corrente=true
+			funzione=lowerFixedMenu.display
+			composer.setVariable( "stanzaCorrente", mappa )
+			composer.setVariable( "inv", inv )
+
+			invComp = composer.getVariable( "inv" )
+
+			print("inventario composer dopo: " )
+			if(not(invComp ==nil)) then
+				for x=1, #invComp, 1 do
+					print(invComp[x])
+				end
+			end
+
+
+
+			composer.setVariable( "mappa", mappa )
+			composer.setVariable( "funzione", funzione )
+			composer.setVariable( "mapx", 352 )
+			composer.setVariable( "mapy", 200 )
+			composer.setVariable( "statoPartita", {stato = "nuova"} )
+			composer.removeScene( "Scenes.nuovaCarica" )
+			composer.gotoScene("Scenes.livello1")
+		end
 	end
-end
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --crea una finestra di dialogo per far inserire un nome al salvataggio che sis ta per creare
@@ -152,7 +179,7 @@ local function overlayCaricaSalvataggi()
 		if ( "ended" == event.phase ) then
 			local table = {}
 			table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
-			composer.setVariable( "tabellaOgegttiInventario", table )
+			-- composer.setVariable( "tabellaOgegttiInventario", table )
 			local lowerFixedMenu = require("lowerFixedMenu")
 			local fileHandler = require("fileHandler")
 			--overlayCaricaSalvataggi()

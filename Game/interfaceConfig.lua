@@ -317,6 +317,9 @@ dragItem=
       inventario[idItem] = "vuoto"
       griglia[idItem][3] = false
       griglia[idItem][4] = nil
+
+      composer.setVariable( "inv", inventario )
+      composer.setVariable( "grigliaOggetti", griglia )
     else
       -- VA IMPLEMENTATO L'AUTO POSIZIONAMENTO DEGLI ITEM E LO SCAMBIO DI POSTO
       local xRel = item.x - invx

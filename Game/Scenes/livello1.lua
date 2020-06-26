@@ -58,6 +58,7 @@ local function gotoMenu()
   print(tabelloneSalvataggi)
   fileHandler.saveTable(tabelloneSalvataggi, stringaSalvataggio)
   fileHandler.caricaSave(salvataggio, stringaSalvataggio)
+
   composer.removeScene("Scenes.livello1")
  	composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
  end
