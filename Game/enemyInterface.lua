@@ -21,7 +21,7 @@ local function create(scena, nemico)
   enemy = display.newImageRect( nemico.immagine, 100, 175)
   enemy.anchorY = 1
   enemy.x = lunghezza * 0.7
-  enemy.y = altezza-310
+  enemy.y = altezza-270
   enemy.myName = "Enemy"
 
 
