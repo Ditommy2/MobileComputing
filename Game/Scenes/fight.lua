@@ -7,6 +7,8 @@
 local composer = require( "composer" )
 local characterInterface = require("characterInterface")
 local enemyInterface = require("enemyInterface")
+local nemici = require("nemici")
+
 
 local scene = composer.newScene()
 
@@ -27,8 +29,9 @@ local mossa4
 local textDamage
 local textDamageEnemy
 local turnoText
+local fightText
 local character = characterInterface.creaPersonaggio(self)
-local enemy = enemyInterface.createEnemy(self)
+local enemy1 = enemyInterface.createEnemy(self, nemici["nemico1"])
 local turno
 local sommaChance = 0
 
@@ -43,6 +46,13 @@ local lifeBarCharacter
 local lifeBarCharacterBlack
 local lifeBarEnemy
 local lifeBarEnemyBlack
+
+local enemy = {
+	speed = nemici.nemico1.velocita,
+	armor = nemici.nemico1.armatura,
+	damage = nemici.nemico1.danno,
+	life = nemici.nemico1.vita
+}
 
 --Physics (necessaria per il movimento del personaggio(attacco e difesa))
 local physics = require("physics")
@@ -67,15 +77,15 @@ local function turnEnemy()
 	end
 		sommaChance = sommaChance + chanceRandom
 
-	totChance = chanceRandom + sommaChance + 2000 -- mossa.hitChance
+	totChance = chanceRandom + sommaChance + math.random(1, 4) -- mossa.hitChance
 		if(totChance > character.armor) then
+		fightText.alpha = 1
+		fightText.text = "Il colpo del nemico ha effetto!"
+		timer.performWithDelay( 2000, removeTextFight )
 		attackRandom = math.random(1, 30)
-		totAttacco = (attackRandom + enemy.damage) * 20 --mossa.damage
+		totAttacco = (attackRandom + enemy.damage) * math.random(10, 40) --mossa.damage
 		textDamageEnemy.text = totAttacco
-		local function removeText()
-				textDamageEnemy.alpha = 0
-		end
-		timer.performWithDelay(1000, removeText)
+		timer.performWithDelay(3000, removeTextDamageEnemy)
 		if(character.life > totAttacco) then
 			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
 			local rapporto = lifeBarCharacter.width / character.life
@@ -88,28 +98,60 @@ local function turnEnemy()
 			character.life = 0
 			display.remove( lifeBarCharacter )
 			end
+		else
+			fightText.alpha = 1
+			fightText.text = "Colpo nemico schivato!"
+			timer.performWithDelay( 3000, removeTextFight )
 		end
-		if(character.life > 0) then
-		local function changeText()
-		turnoText.text = "Il tuo turno"
-		end
-		timer.performWithDelay( 2000, changeText)
-		timer.performWithDelay(5000, eseguiMossa)
-		timer.performWithDelay(5000, addTasto)
-		textDamageEnemy.alpha = 1
 
-		end
+		if(character.life > 0) then
+		timer.performWithDelay( 5000, changeTextTuo)
+		timer.performWithDelay(6000, eseguiMossa)
+		timer.performWithDelay(6000, addTasto)
+		textDamageEnemy.alpha = 1
+	else
+		local gameOverBack = display.newImageRect( backgroundGroup, "Images/Backgrounds/Black.jpg", 1280, 720)
+	  gameOverBack.x = display.contentCenterX
+	  gameOverBack.y = display.contentCenterY
+		local gameOver = display.newText(textGroup, "GAME OVER", 600, 200, native.systemFont, 100)
+	  fightText:setFillColor(0, 0, 0)
+	end
+
 end
 
+function changeTextAvv()
+turnoText.text = "Turno avversario"
+end
+
+function changeTextTuo()
+turnoText.text = "Il tuo turno"
+end
+
+function removeTextDamageEnemy()
+		textDamageEnemy.alpha = 0
+end
+
+function removeTextFight()
+	fightText.alpha = 0
+end
+
+function removeTextDamageCharacter()
+	textDamage.alpha = 0
+end
 
 
 local function gameLoop()
 if(enemy.speed < character.speed) then
 	turnoText.text = "Il tuo turno"
+	fightText.text = "Sei più veloce del nemico, è il tuo turno!"
+	timer.performWithDelay(2000, removeTextFight)
 	turno = "personaggio"
 else
+	turnoText.text = "Turno avversario"
+	fightText.text = "Il nemico è più veloce di te, è il suo turno!"
 	turno = "nemico"
-	 turnEnemy()
+	timer.performWithDelay(2000, removeTextFight)
+	timer.performWithDelay( 4000, turnEnemy )
 	end
 end
 
@@ -151,13 +193,13 @@ local function eseguiMossa()
 	totChance = chanceRandom + sommaChance + character.mossa1.hitChance
 
 	if(totChance > enemy.armor) then
+		fightText.alpha = 1
+		fightText.text = "Il tuo colpo ha effetto!"
+		timer.performWithDelay( 2000, removeTextFight )
 		attackRandom = math.random(1, 30)
 		totAttacco = (attackRandom + character.damage) * character.mossa1.damage
 		textDamage.text = totAttacco
-		local function removeText()
-			textDamage.alpha = 0
-	  end
-	  timer.performWithDelay(1000, removeText)
+	  timer.performWithDelay(3000, removeTextDamageCharacter)
 
 		if(enemy.life > totAttacco) then
 			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
@@ -172,6 +214,10 @@ local function eseguiMossa()
 			display.remove( lifeBarEnemy )
 			end
 		end
+	else
+		fightText.alpha = 1
+		fightText.text = "Il nemico ha schivato il colpo!"
+		timer.performWithDelay( 3000, removeTextFight )
 	end
 
 
@@ -186,13 +232,13 @@ local function eseguiMossa()
 		totChance = chanceRandom + sommaChance + character.mossa2.hitChance
 
 	if(totChance > enemy.armor) then
+		fightText.alpha = 1
+		fightText.text = "Il tuo colpo ha effetto!"
+		timer.performWithDelay( 2000, removeTextFight )
 		attackRandom = math.random(1, 30)
 		totAttacco = (attackRandom + character.damage) * character.mossa2.damage
 		textDamage.text = totAttacco
-		local function removeText()
-			textDamage.alpha = 0
-	  end
-	  timer.performWithDelay(1000, removeText)
+	  timer.performWithDelay(3000, removeTextDamageCharacter)
 
 		if(enemy.life > totAttacco) then
 			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
@@ -206,6 +252,10 @@ local function eseguiMossa()
 			enemy.life = 0
 			display.remove( lifeBarEnemy )
 			end
+		else
+			fightText.alpha = 1
+			fightText.text = "Il nemico ha schivato il colpo!"
+			timer.performWithDelay( 3000, removeTextFight )
 		end
 	end
 
@@ -221,13 +271,13 @@ local function eseguiMossa()
 		totChance = chanceRandom + sommaChance + character.mossa3.hitChance
 
 	if(totChance > enemy.armor) then
+		fightText.alpha = 1
+		fightText.text = "Il tuo colpo ha effetto!"
+		timer.performWithDelay( 2000, removeTextFight )
 		attackRandom = math.random(1, 30)
 		totAttacco = (attackRandom + character.damage) * character.mossa3.damage
 		textDamage.text = totAttacco
-		local function removeText()
-			textDamage.alpha = 0
-	  end
-	  timer.performWithDelay(1000, removeText)
+	  timer.performWithDelay(3000, removeTextDamageCharacter)
 
 		if(enemy.life > totAttacco) then
 			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
@@ -241,7 +291,12 @@ local function eseguiMossa()
 			enemy.life = 0
 			display.remove( lifeBarEnemy )
 			end
+		else
+			fightText.alpha = 1
+			fightText.text = "Il nemico ha schivato il colpo!"
+			timer.performWithDelay( 3000, removeTextFight )
 		end
+
 	end
 
 
@@ -256,13 +311,13 @@ local function eseguiMossa()
 		totChance = chanceRandom + sommaChance + character.mossa4.hitChance
 
 	if(totChance > enemy.armor) then
+		fightText.alpha = 1
+		fightText.text = "Il tuo colpo ha effetto!"
+		timer.performWithDelay( 2000, removeTextFight )
 		attackRandom = math.random(1, 30)
 		totAttacco = (attackRandom + character.damage) * character.mossa4.damage
 		textDamage.text = totAttacco
-		local function removeText()
-	  		textDamage.alpha = 0
-	  end
-	  timer.performWithDelay(1000, removeText)
+	  timer.performWithDelay(3000, removeTextDamageCharacter)
 
 		if(enemy.life > totAttacco) then
 			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
@@ -276,17 +331,23 @@ local function eseguiMossa()
 			enemy.life = 0
 			display.remove( lifeBarEnemy )
 			end
+		else
+			fightText.alpha = 1
+			fightText.text = "Il nemico ha schivato il colpo!"
+			timer.performWithDelay( 3000, removeTextFight )
 		end
+
 	end
 
 if(enemy.life > 0) then
-local function changeTextAvv()
-turnoText.text = "Turno avversario"
-end
-timer.performWithDelay( 2000, changeTextAvv)
-timer.performWithDelay(5000, turnEnemy)
+turno = "nemico"
+timer.performWithDelay( 5000, changeTextAvv)
+timer.performWithDelay(7000, turnEnemy)
 textDamage.alpha = 1
-enemy:removeEventListener("tap", eseguiMossa)
+enemy1:removeEventListener("tap", eseguiMossa)
+else
+
+	enemy1.alpha = 0
 
 end
 
@@ -295,7 +356,8 @@ end
 end
 
 function addTasto()
-	enemy:addEventListener("tap", eseguiMossa)
+	enemy1:addEventListener("tap", eseguiMossa)
+	turno = "personaggio"
 end
 
 
@@ -357,6 +419,9 @@ function scene:create ( event )
  turnoText = display.newText(textGroup, "", 600, 50, native.systemFont, 50)
  turnoText:setFillColor(1, 0, 1)
 
+ fightText = display.newText(textGroup, "", 600, 150, native.systemFont, 50)
+ fightText:setFillColor(0, 1, 1)
+
 		--*************MID GROUP*************************************************
 
 		--Displaying character
@@ -377,14 +442,14 @@ function scene:create ( event )
 
 
 		--Displaying enemy
-		midGroup:insert(enemy)
+		midGroup:insert(enemy1)
 		lifeBarEnemyBlack = display.newImageRect( midGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
 		lifeBarEnemyBlack.x = display.contentCenterX + 250
 		lifeBarEnemyBlack.y = display.contentCenterY - 250
 		lifeBarEnemy = display.newImageRect( midGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
 		lifeBarEnemy.x = display.contentCenterX + 250
 		lifeBarEnemy.y = display.contentCenterY - 250
-		enemy:addEventListener("tap", eseguiMossa)
+		enemy1:addEventListener("tap", eseguiMossa)
 
 		gameLoop()
 end
