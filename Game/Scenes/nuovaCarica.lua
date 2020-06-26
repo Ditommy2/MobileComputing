@@ -128,17 +128,17 @@ local function overlayCaricaSalvataggi()
   local function scrollListener( event )
 
       local phase = event.phase
-      if ( phase == "began" ) then print( "Scroll view was touched" )
-      elseif ( phase == "moved" ) then print( "Scroll view was moved" )
-      elseif ( phase == "ended" ) then print( "Scroll view was released" )
+      if ( phase == "began" ) then
+      elseif ( phase == "moved" ) then
+      elseif ( phase == "ended" ) then
       end
 
       -- In the event a scroll limit is reached...
       if ( event.limitReached ) then
-          if ( event.direction == "up" ) then print( "Reached bottom limit" )
-          elseif ( event.direction == "down" ) then print( "Reached top limit" )
-          elseif ( event.direction == "left" ) then print( "Reached right limit" )
-          elseif ( event.direction == "right" ) then print( "Reached left limit" )
+          if ( event.direction == "up" ) then
+          elseif ( event.direction == "down" ) then
+          elseif ( event.direction == "left" ) then
+          elseif ( event.direction == "right" ) then
           end
       end
 
