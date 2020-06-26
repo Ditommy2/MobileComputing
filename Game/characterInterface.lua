@@ -156,7 +156,7 @@ local function create(scena)
   character.speed = math.random(1, 10)
   character.testoMossa1 = "Pugno : Stordisci il tuo avversario \nDamage = 60%\nHit chance = 20%\n"
   character.testoMossa2 = "Mossa2 : Questa mossa ti fa il caffè\nAttacco = 30%\nDifesa = 50%\nVelocità = 80%"
-  character.testoMossa3 = "Mossa3 : Questa mossa ti fa accarezzare il gatto di titto\nAttacco = 20%\nDifesa = 90%\nVelocità = 60%"
+  character.testoMossa3 = "Mossa3 : Questa mossa mammt\nAttacco = 20%\nDifesa = 90%\nVelocità = 60%"
   character.testoMossa4 = "Mossa4 : Questa mossa genera gettere & settere\nAttacco = 20%\nDifesa = 50%\nVelocità = 20%"
   character.nomeMossa1 = "Pugno"
   character.nomeMossa2 = "Calcio"

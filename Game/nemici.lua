@@ -2,7 +2,7 @@ local nemici ={
 
   nemico1={
     immagine ="Images/Characters/joker.png",
-    vita = 5,
+    vita = 50000,
     danno = 100,
     armatura = 10,
     velocita = math.random(1, 10),

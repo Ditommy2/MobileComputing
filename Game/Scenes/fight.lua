@@ -9,6 +9,8 @@ local characterInterface = require("characterInterface")
 local enemyInterface = require("enemyInterface")
 local nemici = require("nemici")
 
+local customFont="MadnessHyperactive.otf"
+
 
 local scene = composer.newScene()
 
@@ -28,7 +30,7 @@ local mossa3
 local mossa4
 local textDamage
 local textDamageEnemy
-local turnoText
+local turnoStar
 local fightText
 local character = characterInterface.creaPersonaggio(self)
 local enemy1 = enemyInterface.createEnemy(self, nemici["nemico1"])
@@ -67,6 +69,13 @@ physics.start()
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
 
+local function gotoMenu()
+		composer.gotoScene( "Scenes.menu", {time=800, effect="crossFade"} )
+end
+
+local function gotoLivello1()
+		composer.gotoScene( "Scenes.livello1", {time=800, effect="crossFade"} )
+end
 
 
 local function turnEnemy()
@@ -80,7 +89,8 @@ local function turnEnemy()
 	totChance = chanceRandom + sommaChance + math.random(1, 4) -- mossa.hitChance
 		if(totChance > character.armor) then
 		fightText.alpha = 1
-		fightText.text = "Il colpo del nemico ha effetto!"
+		fightText.x = 250
+		fightText.text = "Hit!"
 		timer.performWithDelay( 2000, removeTextFight )
 		attackRandom = math.random(1, 30)
 		totAttacco = (attackRandom + enemy.damage) * math.random(10, 40) --mossa.damage
@@ -100,12 +110,13 @@ local function turnEnemy()
 			end
 		else
 			fightText.alpha = 1
-			fightText.text = "Colpo nemico schivato!"
+			fightText.x = 250
+			fightText.text = "Missed!"
 			timer.performWithDelay( 3000, removeTextFight )
 		end
 
 		if(character.life > 0) then
-		timer.performWithDelay( 5000, changeTextTuo)
+		timer.performWithDelay( 2000, changeStarTuo)
 		timer.performWithDelay(6000, eseguiMossa)
 		timer.performWithDelay(6000, addTasto)
 		textDamageEnemy.alpha = 1
@@ -115,16 +126,17 @@ local function turnEnemy()
 	  gameOverBack.y = display.contentCenterY
 		local gameOver = display.newText(textGroup, "GAME OVER", 600, 200, native.systemFont, 100)
 	  fightText:setFillColor(0, 0, 0)
+		timer.performWithDelay( 5000, gotoMenu )
 	end
 
 end
 
-function changeTextAvv()
-turnoText.text = "Turno avversario"
+function changeStarAvv()
+transition.to( turnoStar , { time=3000, alpha=1, x=890, y=250 } )
 end
 
-function changeTextTuo()
-turnoText.text = "Il tuo turno"
+function changeStarTuo()
+transition.to( turnoStar , { time=3000, alpha=1, x=380, y=250 } )
 end
 
 function removeTextDamageEnemy()
@@ -142,16 +154,12 @@ end
 
 local function gameLoop()
 if(enemy.speed < character.speed) then
-	turnoText.text = "Il tuo turno"
-	fightText.text = "Sei più veloce del nemico, è il tuo turno!"
-	timer.performWithDelay(2000, removeTextFight)
+	transition.to( turnoStar , { time=3000, alpha=1, x=380, y=250 } )
 	turno = "personaggio"
 else
-	turnoText.text = "Turno avversario"
-	fightText.text = "Il nemico è più veloce di te, è il suo turno!"
+	transition.to( turnoStar , { time=3000, alpha=1, x=890, y=250 } )
 	turno = "nemico"
-	timer.performWithDelay(2000, removeTextFight)
-	timer.performWithDelay( 4000, turnEnemy )
+	timer.performWithDelay( 6000, turnEnemy )
 	end
 end
 
@@ -194,7 +202,8 @@ local function eseguiMossa()
 
 	if(totChance > enemy.armor) then
 		fightText.alpha = 1
-		fightText.text = "Il tuo colpo ha effetto!"
+		fightText.x = 1000
+		fightText.text = "Hit!"
 		timer.performWithDelay( 2000, removeTextFight )
 		attackRandom = math.random(1, 30)
 		totAttacco = (attackRandom + character.damage) * character.mossa1.damage
@@ -216,7 +225,8 @@ local function eseguiMossa()
 		end
 	else
 		fightText.alpha = 1
-		fightText.text = "Il nemico ha schivato il colpo!"
+		fightText.x = 1000
+		fightText.text = "Missed!"
 		timer.performWithDelay( 3000, removeTextFight )
 	end
 
@@ -233,7 +243,8 @@ local function eseguiMossa()
 
 	if(totChance > enemy.armor) then
 		fightText.alpha = 1
-		fightText.text = "Il tuo colpo ha effetto!"
+		fightText.x = 1000
+		fightText.text = "Hit!"
 		timer.performWithDelay( 2000, removeTextFight )
 		attackRandom = math.random(1, 30)
 		totAttacco = (attackRandom + character.damage) * character.mossa2.damage
@@ -254,7 +265,8 @@ local function eseguiMossa()
 			end
 		else
 			fightText.alpha = 1
-			fightText.text = "Il nemico ha schivato il colpo!"
+			fightText.x = 1000
+			fightText.text = "Missed!"
 			timer.performWithDelay( 3000, removeTextFight )
 		end
 	end
@@ -272,7 +284,8 @@ local function eseguiMossa()
 
 	if(totChance > enemy.armor) then
 		fightText.alpha = 1
-		fightText.text = "Il tuo colpo ha effetto!"
+		fightText.x = 1000
+		fightText.text = "Hit!"
 		timer.performWithDelay( 2000, removeTextFight )
 		attackRandom = math.random(1, 30)
 		totAttacco = (attackRandom + character.damage) * character.mossa3.damage
@@ -293,7 +306,8 @@ local function eseguiMossa()
 			end
 		else
 			fightText.alpha = 1
-			fightText.text = "Il nemico ha schivato il colpo!"
+			fightText.x = 1000
+			fightText.text = "Missed!"
 			timer.performWithDelay( 3000, removeTextFight )
 		end
 
@@ -312,7 +326,8 @@ local function eseguiMossa()
 
 	if(totChance > enemy.armor) then
 		fightText.alpha = 1
-		fightText.text = "Il tuo colpo ha effetto!"
+		fightText.x = 1000
+		fightText.text = "Hit!"
 		timer.performWithDelay( 2000, removeTextFight )
 		attackRandom = math.random(1, 30)
 		totAttacco = (attackRandom + character.damage) * character.mossa4.damage
@@ -333,7 +348,8 @@ local function eseguiMossa()
 			end
 		else
 			fightText.alpha = 1
-			fightText.text = "Il nemico ha schivato il colpo!"
+			fightText.x = 1000
+			fightText.text = "Missed!"
 			timer.performWithDelay( 3000, removeTextFight )
 		end
 
@@ -341,13 +357,15 @@ local function eseguiMossa()
 
 if(enemy.life > 0) then
 turno = "nemico"
-timer.performWithDelay( 5000, changeTextAvv)
-timer.performWithDelay(7000, turnEnemy)
+timer.performWithDelay( 2000, changeStarAvv)
+timer.performWithDelay(8000, turnEnemy)
 textDamage.alpha = 1
 enemy1:removeEventListener("tap", eseguiMossa)
 else
 
-	enemy1.alpha = 0
+transition.to( enemy1 , { time=3000, alpha=0 } )
+timer.performWithDelay( 5000, gotoLivello1 )
+
 
 end
 
@@ -389,20 +407,20 @@ function scene:create ( event )
 
  --*******************TEXT GROUP************************************
 
- testoMossa = display.newText( textGroup, "" ,1050, 585, 450, 0, native.systemFont, 20 )
+ testoMossa = display.newText( textGroup, "" ,1050, 585, 450, 0, native.newFont( customFont), 30 )
  testoMossa:setFillColor( 1, 1, 1 )
 
- mossa1 = display.newText( textGroup, "" , 200, 515, native.systemFont, 50 )
+ mossa1 = display.newText( textGroup, "" , 200, 515, native.newFont( customFont), 50 )
  mossa1:setFillColor( 0.82, 0.86, 1 )
 
 
- mossa2 = display.newText( textGroup, "", 560, 515, native.systemFont, 50 )
+ mossa2 = display.newText( textGroup, "", 560, 515, native.newFont( customFont), 50 )
  mossa2:setFillColor( 0.82, 0.86, 1 )
 
- mossa3 = display.newText( textGroup, "", 200, 650, native.systemFont, 50 )
+ mossa3 = display.newText( textGroup, "", 200, 650, native.newFont( customFont), 50 )
  mossa3:setFillColor( 0.82, 0.86, 1 )
 
- mossa4 = display.newText( textGroup, "", 560, 650, native.systemFont, 50 )
+ mossa4 = display.newText( textGroup, "", 560, 650, native.newFont( customFont), 50 )
  mossa4:setFillColor( 0.82, 0.86, 1 )
 
  mossa1:addEventListener( "tap", infoMossa1 )
@@ -410,17 +428,17 @@ function scene:create ( event )
  mossa3:addEventListener( "tap", infoMossa3 )
  mossa4:addEventListener( "tap", infoMossa4 )
 
- textDamage = display.newText(textGroup, "", 800, 200, native.systemFont, 50)
+ textDamage = display.newText(textGroup, "", 800, 200, native.newFont( customFont), 100)
  textDamage:setFillColor(1, 0, 0)
 
- textDamageEnemy = display.newText(textGroup, "", 500, 200, native.systemFont, 50)
+ textDamageEnemy = display.newText(textGroup, "", 500, 200, native.newFont( customFont), 100)
  textDamageEnemy:setFillColor(1, 0, 0)
 
- turnoText = display.newText(textGroup, "", 600, 50, native.systemFont, 50)
- turnoText:setFillColor(1, 0, 1)
+ turnoStar = display.newImageRect( midGroup, "Images/Utility/star.png", 50, 50)
+ turnoStar.alpha = 0
 
- fightText = display.newText(textGroup, "", 600, 150, native.systemFont, 50)
- fightText:setFillColor(0, 1, 1)
+ fightText = display.newText(textGroup, "", 2500000, 250, native.newFont( customFont), 150)
+ fightText:setFillColor(255, 153, 0)
 
 		--*************MID GROUP*************************************************
 
