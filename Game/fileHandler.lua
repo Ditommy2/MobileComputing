@@ -1,4 +1,5 @@
 local M = {}
+local composer= require("composer")
 local json = require( "json" )
 local defaultLocation = system.DocumentsDirectory
 local customFont="MadnessHyperactive.otf"
@@ -34,8 +35,8 @@ local function uploadListener( event )
      end
   end
 end
-
-local url = "https://appmcsite.000webhostapp.com/caricaSave.php?name=".. urlencode( stringaSalvataggio )
+local username = composer.getVariable( "username" )
+local url = "https://appmcsite.000webhostapp.com/caricaSave.php?"
 local method = "POST"
 
 local params = {

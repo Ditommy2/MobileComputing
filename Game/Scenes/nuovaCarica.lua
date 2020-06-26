@@ -30,19 +30,19 @@ local function handleButtonEventNuovaNome(event)
 			local lowerFixedMenu = require("lowerFixedMenu")
 			local inv = {"Images/Objects/lifePotion.png", "Images/Objects/armorPotion.png", "Images/Objects/attackPotion.png", "Images/Objects/key.png", "Images/Objects/shovel.png", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto"}
 
-			print("inventario caricato: " )
-			for x=1, #inv, 1 do
-				print(inv[x])
-			end
-
-			local invComp = composer.getVariable( "inv" )
-
-			print("inventario composer prima: " )
-			if(not(invComp ==nil)) then
-				for x=1, #invComp, 1 do
-					print(invComp[x])
-				end
-			end
+			-- print("inventario caricato: " )
+			-- for x=1, #inv, 1 do
+			-- 	print(inv[x])
+			-- end
+			--
+			-- local invComp = composer.getVariable( "inv" )
+			--
+			-- print("inventario composer prima: " )
+			-- if(not(invComp ==nil)) then
+			-- 	for x=1, #invComp, 1 do
+			-- 		print(invComp[x])
+			-- 	end
+			-- end
 
 			mappa = lowerFixedMenu.create.mappaGenerata(0, {}, numero, tabella, numero+1, numero+1)
 			mappa.corrente=true
