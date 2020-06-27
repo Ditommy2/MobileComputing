@@ -113,7 +113,7 @@ function scene:create( event )
 
 	sceneGroup:insert(loginGroup)
 
-	serverAnswer = display.newText("", display.contentCenterX, height*0.85, native.systemFont, height*0.1)
+	serverAnswer = display.newText("", display.contentCenterX, height*0.85, customFont, height*0.1)
 	serverAnswer.alpha=0
 	sceneGroup:insert(serverAnswer)
 
