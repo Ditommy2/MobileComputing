@@ -187,8 +187,8 @@ local interfacciaConfig = {
   displayGrid=
   (function(inventario, handler, inventoryGroup)
     local index=1
-    local partenzax = display.contentCenterX-260
-    local partenzay= display.contentCenterY-70
+    local partenzax = display.contentCenterX-310
+    local partenzay= display.contentCenterY-85
     local griglia = {}
 
     composer.setVariable( "grigliaOggetti", griglia )
@@ -212,12 +212,12 @@ local interfacciaConfig = {
         griglia[index]={casellaX, casellaY, false, nil}
         composer.setVariable( "grigliaOggetti",  griglia)
 
-        posizioneX = posizioneX + 100
+        posizioneX = posizioneX + 112
         index=index+1
       end
 
       posizioneX = partenzax
-      posizioneY = posizioneY + 70
+      posizioneY = posizioneY + 75
     end
 
     --Ciclo di visualizzazione degli oggetti dell'inventario
