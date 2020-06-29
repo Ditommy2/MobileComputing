@@ -32,7 +32,10 @@ local function networkListener( event )
         serverAnswer.alpha = 1
         transition.to( serverAnswer, { time=4000, alpha=0 } )
       else
-				composer.setVariable( "username", utenteTextField.text )
+				local username = utenteTextField.text
+				composer.setVariable( "username",  username)
+				local fileHandler = require("fileHandler")
+				fileHandler.scaricaSave("save$$"..username..".json")
         composer.gotoScene("Scenes.nuovaCarica")
       end
     end
@@ -108,7 +111,7 @@ function scene:create( event )
 
 	sceneGroup:insert(loginGroup)
 
-	serverAnswer = display.newText("", display.contentCenterX, height*0.85, native.systemFont, height*0.1)
+	serverAnswer = display.newText("", display.contentCenterX, height*0.85, customFont, height*0.1)
 	serverAnswer.alpha=0
 	sceneGroup:insert(serverAnswer)
 

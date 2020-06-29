@@ -14,6 +14,35 @@ local function urlencode(str)
 	end
 	return str
 end
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--scarica save: si occupa di scaricare il salvataggio dal database
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function M.scaricaSave(stringaSalvataggio)
+local function networkListener( event )
+    if ( event.isError ) then
+        print( "Network error - download failed: ", event.response )
+    elseif ( event.phase == "began" ) then
+        print( "Progress Phase: began" )
+    elseif ( event.phase == "ended" ) then
+        print( "Download completed" )
+				print(event.response.filename)
+				-- local t = M.loadTable(event.response.filename, event.response.baseDirectory)
+				-- M.saveTable(t, event.response.filename, system.documentsDirectory)
+    end
+end
+print("Stringa Salvataggio: "..stringaSalvataggio)
+local params = {}
+params.progress = true
+network.download(
+    "https://appmcsite.000webhostapp.com/upload/"..stringaSalvataggio,
+    "GET",
+    networkListener,
+    params,
+    stringaSalvataggio,
+    defaultLocation
+)
+end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --carica save: si occupa di caricare il salvataggio sullo script php e quindi sul database
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -36,7 +65,7 @@ local function uploadListener( event )
   end
 end
 local username = composer.getVariable( "username" )
-local url = "https://appmcsite.000webhostapp.com/caricaSave.php?"
+local url = "https://appmcsite.000webhostapp.com/caricaSave.php"
 local method = "POST"
 
 local params = {

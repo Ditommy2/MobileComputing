@@ -30,14 +30,14 @@ if (!function_exists('http_response_code'))
                 fwrite($fp, $data);
             }
 
-            $conn = new mysqli("localhost", "id13097986_supercafoni", "2QM{-&[Yfev|J=Jk", "id13097986_appmcdata") or die("Error connecting to database");
-            $sql = "INSERT INTO Salvataggio (ChiaveSalvataggio, Salvataggio) VALUES ('" . $filename . "', '" . $fp . "')";
-            mysqli_query($conn,$sql) or die (mysqli_error($conn));
-            $app = explode("$$", $filename);
-            $app1 = explode(".", $app[1]);
-            $username = $app1[0];
-            $sql = "UPDATE Utente SET fk_salvataggi = '" . $filename . "' where username = '" . $username . "'";
-            mysqli_query($conn,$sql) or die (mysqli_error($conn));
+            // $conn = new mysqli("localhost", "id13097986_supercafoni", "2QM{-&[Yfev|J=Jk", "id13097986_appmcdata") or die("Error connecting to database");
+            // $sql = "INSERT INTO Salvataggio (ChiaveSalvataggio, Salvataggio) VALUES ('" . $filename . "', '" . $fp . "')";
+            // mysqli_query($conn,$sql) or die (mysqli_error($conn));
+            // $app = explode("$$", $filename);
+            // $app1 = explode(".", $app[1]);
+            // $username = $app1[0];
+            // $sql = "UPDATE Utente SET fk_salvataggi = '" . $filename . "' where username = '" . $username . "'";
+            // mysqli_query($conn,$sql) or die (mysqli_error($conn));
 
 
 

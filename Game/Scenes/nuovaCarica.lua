@@ -14,6 +14,7 @@ local numero = numeroStanze
 local tabella = interfaccia.tabellaFunction(numero)
 local sceneGroup
 local customFont="MadnessHyperactive.otf"
+local fileHandler = require("fileHandler")
 
 --local customFont=native.systemFont
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -27,6 +28,20 @@ local function handleButtonEventNuovaNome(event)
 			-- local table = {}
 			-- table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
 			-- composer.setVariable( "tabellaOgegttiInventario", table )
+			local partitaDaCercare = composer.getVariable( "nomePartita" )
+			local t = fileHandler.loadTable("save$$"..composer.getVariable("username")..".json")
+			local trovato = false
+			if t == nil then
+				t={}
+			end
+			for i=#t, 1, -1 do
+				if t[i].nomePartita==partitaDaCercare then
+					print("nome riscontrato")
+					 trovato = true
+				end
+			end
+
+			if not trovato then
 			local lowerFixedMenu = require("lowerFixedMenu")
 			local inv = {"Images/Objects/lifePotion.png", "Images/Objects/armorPotion.png", "Images/Objects/attackPotion.png", "Images/Objects/key.png", "Images/Objects/shovel.png", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto"}
 
@@ -68,6 +83,16 @@ local function handleButtonEventNuovaNome(event)
 			composer.setVariable( "statoPartita", {stato = "nuova"} )
 			composer.removeScene( "Scenes.nuovaCarica" )
 			composer.gotoScene("Scenes.livello1")
+		else
+			--il nome partia è già usato per questo utente
+			print("il nome partita è già preso per questo utente")
+			local serverAnswer = display.newText("", display.contentCenterX, height*0.85, customFont, height*0.1)
+			serverAnswer.text = "Nome partita in uso"
+			serverAnswer:setFillColor(1,0,0)
+			serverAnswer.alpha = 1
+			transition.to( serverAnswer, { time=4000, alpha=0 } )
+			sceneGroup:insert(serverAnswer)
+		end
 		end
 	end
 end
@@ -128,17 +153,17 @@ local function overlayCaricaSalvataggi()
   local function scrollListener( event )
 
       local phase = event.phase
-      if ( phase == "began" ) then print( "Scroll view was touched" )
-      elseif ( phase == "moved" ) then print( "Scroll view was moved" )
-      elseif ( phase == "ended" ) then print( "Scroll view was released" )
+      if ( phase == "began" ) then
+      elseif ( phase == "moved" ) then
+      elseif ( phase == "ended" ) then
       end
 
       -- In the event a scroll limit is reached...
       if ( event.limitReached ) then
-          if ( event.direction == "up" ) then print( "Reached bottom limit" )
-          elseif ( event.direction == "down" ) then print( "Reached top limit" )
-          elseif ( event.direction == "left" ) then print( "Reached right limit" )
-          elseif ( event.direction == "right" ) then print( "Reached left limit" )
+          if ( event.direction == "up" ) then
+          elseif ( event.direction == "down" ) then
+          elseif ( event.direction == "left" ) then
+          elseif ( event.direction == "right" ) then
           end
       end
 
@@ -212,7 +237,7 @@ local function overlayCaricaSalvataggi()
 	    onEvent = handleBackButtonEvent,
 	    font=customFont
 	})
-	  scrollView:insert(backButton)
+
 
 
 
@@ -223,7 +248,7 @@ local function overlayCaricaSalvataggi()
 		local saveButton = widget.newButton({
 				shape = "roundedRect",
 				x = background1.x * 0.3,
-				y = background1.y * 0.2 * i,
+				y = background1.y * 0.2 * (i+1),
 				width=background1.width*0.99999,
 				height=background1.height * 0.07,
 				id = i,
@@ -235,6 +260,7 @@ local function overlayCaricaSalvataggi()
 		})
 		scrollView:insert(saveButton)
   end
+	scrollView:insert(backButton)
 	caricaPartitaOverlayGroup:insert(scrollView)
 	sceneGroup:insert(caricaPartitaOverlayGroup)
 	scrollView:setScrollHeight(1500)
