@@ -18,15 +18,15 @@ local scene
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sheet_walking_Options =
 {
-  width=100,
-  height=175,
-  numFrames=9,
+  width=122,
+  height=166,
+  numFrames=120,
 }
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sprite sheet personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local sheet_walking = graphics.newImageSheet( "Images/Characters/Trump.png", sheet_walking_Options )
+local sheet_walking = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/walk.png", sheet_walking_Options )
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sequences table personaggio
@@ -36,8 +36,8 @@ local sequences_walking =
     --Right walking sequence
     {
         name = "rightWalk",
-        start = 7,
-        count = 3,
+        start = 1,
+        count = 60,
         time = 1000,
         loopCount = 0,
         loopDirection = "forward"
@@ -46,8 +46,8 @@ local sequences_walking =
     --Left walking sequence
     {
         name = "leftWalk",
-        start = 4,
-        count = 3,
+        start = 61,
+        count = 60,
         time = 1000,
         loopCount = 0,
         loopDirection = "forward"
