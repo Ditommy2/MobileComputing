@@ -2,6 +2,10 @@ local composer = require( "composer" )
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
 
+--Physics
+local physics = require("physics")
+physics.start()
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Variabili nemico
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -23,7 +27,7 @@ local function create(scena, nemico)
   enemy.x = lunghezza * 0.7
   enemy.y = altezza-270
   enemy.myName = "Enemy"
-
+  physics.addBody(enemy, "dynamic", { isSensor=true } )
 
   return enemy
 end
