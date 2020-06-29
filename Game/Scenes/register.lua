@@ -121,7 +121,7 @@ function scene:create( event )
 	local sceneGroup = self.view
 	loginGroup=display.newGroup()
 
-	local background=display.newImageRect(sceneGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.jpg", lunghezza, altezza)
+	local background=display.newImageRect(sceneGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.png", lunghezza, altezza)
 	background.x=display.contentCenterX
 	background.y=display.contentCenterY
 	local lunghezzaFinestra=lunghezza-400
