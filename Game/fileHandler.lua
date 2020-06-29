@@ -84,31 +84,6 @@ params.headers = headers
 print(salvataggio)
 network.upload( url , method, uploadListener, params, filename, baseDirectory, contentType )
 end
-
-
-function M.caricaSave(stringaSalvataggio)
-	local function uploadListener( event )
-	  print("HO FATTO")
-	end
-
-	local url = "https://appmcsite.000webhostapp.com/prendiSave.php?file=" .. stringaSalvataggio
-	local method = "GET"
-
-	local params = {
-	  timeout = 120,
-	  progress = true,
-	  bodyType = "binary"
-	}
-
-	local baseDirectory = system.DocumentsDirectory
-	local filename = baseDirectory .. stringaSalvataggio
-	local headers = {}
-
-	headers.filename = filename
-	params.headers = headers
-	
-	network.upload( url , method, uploadListener, params, filename, baseDirectory, contentType )
-end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione per salvare su filepath una tabella
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

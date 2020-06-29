@@ -2,7 +2,6 @@ local composer = require("composer")
 local widget = require("widget")
 local scene = composer.newScene( )
 local customFont="MadnessHyperactive.otf"
-local fileHandler = require("fileHandler")
 
 --Game window (16:9 aspect ratio)
 local width = display.contentWidth
@@ -52,8 +51,11 @@ local function urlencode(str)
 end
 
 local function getSavings()
-	local username = composer.getVariable( "username" )
-  fileHandler.prendiSave("save$$" .. username .. ".json")
+  local url = "https://appmcsite.000webhostapp.com/carica.php?user=".. urlencode(utenteTextField.text) .. "&passw=" ..urlencode(passTextField.text)
+
+  -- print(url)
+
+  network.request( url, "GET", networkListener)
 end
 
 -- create()
