@@ -195,7 +195,7 @@ function scene:create( event )
   Button.y=display.contentCenterY
   loginGroup.y=display.contentCenterY-150
 
-  local returnButton = display.newImageRect( loginGroup, "Images/Utility/returnArrow.png", 200, 200 )
+  local returnButton = display.newImageRect( loginGroup, "Images/Utility/returnArrow.png", 100, 100 )
   returnButton.x = display.contentCenterX-550
   returnButton.y = display.contentCenterY-500
   returnButton:addEventListener("tap", gotoMenu)

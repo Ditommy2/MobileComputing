@@ -277,7 +277,7 @@ function scene:create( event )
     hidingGroup:insert(barDown)
   end
 
-  local returnButton = display.newImageRect( mainGroup, "Images/Utility/returnArrow.png", 150, 150 )
+  local returnButton = display.newImageRect( mainGroup, "Images/Utility/returnArrow.png", 100, 100 )
   mainGroup:insert(returnButton)
   returnButton.x = display.contentCenterX-550
   returnButton.y = display.contentCenterY-300
