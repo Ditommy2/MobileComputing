@@ -19,7 +19,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
   local a, b
   local cardinale
   local trovato = false
-  local seed = math.random(1, 5)
+  local seed = math.random(1, 16)
   if index>0 then
     x=math.random(1, index)
     a=mappa[x].x

@@ -215,7 +215,7 @@ function scene:create( event )
   local phase = event.phase
   funzioneEseguiDisplay(self,  stanzaCorrente, invloc)
   local numero = stanzaCorrente.seedBackground
-  local immagine = "Images/Backgrounds/proceduralBack/Stanze/back"..numero..".jpg"
+  local immagine = "Images/Backgrounds/proceduralBack/Stanze/back"..numero..".png"
   local background=display.newImageRect(backGroup, immagine, lunghezza, altezza-300)
   background.x=display.contentCenterX
   background.y=display.contentCenterY-170
@@ -293,6 +293,7 @@ function scene:create( event )
   end
 
   local tutorialButton = display.newText( mainGroup, "How to Play", 150, 150 )
+  tutorialButton.font = customFont
   mainGroup:insert(returnButton)
   tutorialButton.x = display.contentCenterX+550
   tutorialButton.y = display.contentCenterY-300
