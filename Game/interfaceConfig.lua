@@ -5,6 +5,7 @@ local altezza=  lunghezza*(9/16)
 local math = require("math")
 local nemici = require("nemici")
 local spawnRatioNemici = 4
+local numeroBackgroundTotali = 7
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- classe che si occupa di fornire tutte le funzioni tecniche per generare e costruire l'interfaccia bassa del gioco
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -19,7 +20,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
   local a, b
   local cardinale
   local trovato = false
-  local seed = math.random(1, 16)
+  local seed = math.random(1, numeroBackgroundTotali)
   if index>0 then
     x=math.random(1, index)
     a=mappa[x].x
