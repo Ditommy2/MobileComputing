@@ -292,8 +292,7 @@ function scene:create( event )
 
   end
 
-  local tutorialButton = display.newText( mainGroup, "How to Play", 150, 150 )
-  tutorialButton.font = customFont
+  local tutorialButton = display.newText( mainGroup,   "How to Play",  150, 150, customFont)
   mainGroup:insert(returnButton)
   tutorialButton.x = display.contentCenterX+550
   tutorialButton.y = display.contentCenterY-300
