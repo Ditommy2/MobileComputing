@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------------------
 --
--- menu.lua
+-- fight.lua
 --
 -----------------------------------------------------------------------------------------
 
@@ -8,21 +8,19 @@ local composer = require( "composer" )
 local characterInterface = require("characterInterface")
 local enemyInterface = require("enemyInterface")
 local nemici = require("nemici")
-
 local customFont="MadnessHyperactive.otf"
-
-
 local scene = composer.newScene()
-
 composer.recycleAutomatically=false
 local widget = require("widget")
 local lunghezza =  display.contentWidth
 local altezza = lunghezza*(9/16)
 
---Mosse e descrizione
+--Scenes
 local backgroundGroup
 local textGroup
 local midGroup
+
+--Mosse e descrizione
 local testoMossa
 local mossa1
 local mossa2
@@ -30,25 +28,19 @@ local mossa3
 local mossa4
 local textDamage
 local textDamageEnemy
-local turnoStar
 local fightText
-local character = characterInterface.creaPersonaggio(self)
-local enemy1 = enemyInterface.createEnemy(self, nemici["nemico1"])
-local turno
-local sommaChance = 0
 
 --Game objects
+local character = characterInterface.creaPersonaggio(self)
+local enemy1 = enemyInterface.createEnemy(self, nemici["nemico1"])
 local numeroMossa
 local chanceRandom
 local totChance
 local attackRandom
 local totAttacco
-
-local lifeBarCharacter
-local lifeBarCharacterBlack
-local lifeBarEnemy
-local lifeBarEnemyBlack
-
+local sommaChance = 0
+local turno
+local turnoStar
 local enemy = {
 	speed = nemici.nemico1.velocita,
 	armor = nemici.nemico1.armatura,
@@ -56,19 +48,19 @@ local enemy = {
 	life = nemici.nemico1.vita
 }
 
+--Life bar
+local lifeBarCharacter
+local lifeBarCharacterBlack
+local lifeBarEnemy
+local lifeBarEnemyBlack
+
 --Physics (necessaria per il movimento del personaggio(attacco e difesa))
 local physics = require("physics")
 physics.start()
 
 -- -----------------------------------------------------------------------------------
--- Code outside of the scene event functions below will only be executed ONCE unless
--- the scene is removed entirely (not recycled) via "composer.removeScene()"
+-- Fine combattimento
 -- -----------------------------------------------------------------------------------
-
--- -----------------------------------------------------------------------------------
--- Scene event functions
--- -----------------------------------------------------------------------------------
-
 local function gotoMenu()
 		composer.gotoScene( "Scenes.menu", {time=800, effect="crossFade"} )
 end
@@ -77,7 +69,9 @@ local function gotoLivello1()
 		composer.gotoScene( "Scenes.livello1", {time=800, effect="crossFade"} )
 end
 
-
+-- -----------------------------------------------------------------------------------
+-- Gestione turno nemico
+-- -----------------------------------------------------------------------------------
 local function turnEnemy()
 	chanceRandom = math.random(1, 6)
 	while(chanceRandom == 6) do
@@ -131,12 +125,15 @@ local function turnEnemy()
 
 end
 
+-- -----------------------------------------------------------------------------------
+-- Gestione elementi dinamici durante il combattimento
+-- -----------------------------------------------------------------------------------
 function changeStarAvv()
-transition.to( turnoStar , { time=3000, alpha=1, x=890, y=250 } )
+transition.to( turnoStar , { time=2000, alpha=1, x=890, y=250 } )
 end
 
 function changeStarTuo()
-transition.to( turnoStar , { time=3000, alpha=1, x=380, y=250 } )
+transition.to( turnoStar , { time=2000, alpha=1, x=380, y=250 } )
 end
 
 function removeTextDamageEnemy()
@@ -150,20 +147,6 @@ end
 function removeTextDamageCharacter()
 	textDamage.alpha = 0
 end
-
-
-local function gameLoop()
-if(enemy.speed < character.speed) then
-	transition.to( turnoStar , { time=3000, alpha=1, x=380, y=250 } )
-	turno = "personaggio"
-else
-	transition.to( turnoStar , { time=3000, alpha=1, x=890, y=250 } )
-	turno = "nemico"
-	timer.performWithDelay( 6000, turnEnemy )
-	end
-end
-
-
 
 local function infoMossa1()
   numeroMossa = 1
@@ -185,7 +168,23 @@ local function infoMossa4()
 	testoMossa.text = character.testoMossa4
 end
 
+-- -----------------------------------------------------------------------------------
+-- Assegna il primo turno
+-- -----------------------------------------------------------------------------------
+local function gameLoop()
+if(enemy.speed < character.speed) then
+	transition.to( turnoStar , { time=3000, alpha=1, x=380, y=250 } )
+	turno = "personaggio"
+else
+	transition.to( turnoStar , { time=3000, alpha=1, x=890, y=250 } )
+	turno = "nemico"
+	timer.performWithDelay( 6000, turnEnemy )
+	end
+end
 
+-- -----------------------------------------------------------------------------------
+-- Gestione turno personaggio
+-- -----------------------------------------------------------------------------------
 local function eseguiMossa()
 
 	if(turno == "personaggio") then
@@ -355,22 +354,19 @@ local function eseguiMossa()
 
 	end
 
-if(enemy.life > 0) then
-turno = "nemico"
-timer.performWithDelay( 2000, changeStarAvv)
-timer.performWithDelay(8000, turnEnemy)
-textDamage.alpha = 1
-enemy1:removeEventListener("tap", eseguiMossa)
-else
+	if(enemy.life > 0) then
+	turno = "nemico"
+	timer.performWithDelay( 2000, changeStarAvv)
+	timer.performWithDelay(8000, turnEnemy)
+	textDamage.alpha = 1
+	enemy1:removeEventListener("tap", eseguiMossa)
+	else
 
-transition.to( enemy1 , { time=3000, alpha=0 } )
-timer.performWithDelay( 5000, gotoLivello1 )
+	transition.to( enemy1 , { time=3000, alpha=0 } )
+	timer.performWithDelay( 5000, gotoLivello1 )
 
-
-end
-
-end
-
+		end
+	end
 end
 
 function addTasto()
@@ -378,8 +374,9 @@ function addTasto()
 	turno = "personaggio"
 end
 
-
--- create()
+-- -----------------------------------------------------------------------------------
+-- create
+-- -----------------------------------------------------------------------------------
 function scene:create ( event )
 
 	local sceneGroup = self.view
@@ -434,7 +431,8 @@ function scene:create ( event )
  textDamageEnemy = display.newText(textGroup, "", 500, 200, native.newFont( customFont), 100)
  textDamageEnemy:setFillColor(1, 0, 0)
 
- turnoStar = display.newImageRect( midGroup, "Images/Utility/star.png", 50, 50)
+ turnoStar = display.newImageRect( midGroup, "Images/Icons/icons2/038-hourglass.png", 50, 50)
+ turnoStar.x = 600
  turnoStar.alpha = 0
 
  fightText = display.newText(textGroup, "", 2500000, 250, native.newFont( customFont), 150)
@@ -471,8 +469,6 @@ function scene:create ( event )
 
 		gameLoop()
 end
-
-
 
 -- show()
 function scene:show( event )
@@ -514,7 +510,6 @@ function scene:destroy( event )
 	-- Code here runs prior to the removal of scene's view
 
 end
-
 
 -- -----------------------------------------------------------------------------------
 -- Scene event function listeners

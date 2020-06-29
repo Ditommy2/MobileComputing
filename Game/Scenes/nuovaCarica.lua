@@ -43,7 +43,7 @@ local function handleButtonEventNuovaNome(event)
 
 			if not trovato then
 			local lowerFixedMenu = require("lowerFixedMenu")
-			local inv = {"Images/Objects/lifePotion.png", "Images/Objects/armorPotion.png", "Images/Objects/attackPotion.png", "Images/Objects/key.png", "Images/Objects/shovel.png", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto"}
+			local inv = {"Images/Icons/icons2/054-ham.png", "Images/Icons/icons3/002-shield-2.png", "Images/Icons/icons3/016-potion-1.png", "Images/Icons/icons3/017-hammer.png", "Images/Icons/icons3/029-key.png", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto"}
 
 			-- print("inventario caricato: " )
 			-- for x=1, #inv, 1 do
@@ -395,7 +395,7 @@ function scene:create( event )
   serverAnswer.alpha=0
   sceneGroup:insert(serverAnswer)
 
-local returnButton = display.newImageRect( gameGroup, "Images/Utility/returnArrow.png", 200, 200 )
+local returnButton = display.newImageRect( gameGroup, "Images/Utility/returnArrow.png", 100, 100 )
 returnButton.x = display.contentCenterX-550
 returnButton.y = display.contentCenterY-550
 returnButton:addEventListener("tap", gotoMenu)
