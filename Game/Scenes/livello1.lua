@@ -89,6 +89,7 @@ end
 
 local function goTo(direction)
   stanzaCorrente.corrente=false
+  stanzaCorrente.corridoioCorrente=direction
   composer.removeScene("Scenes.livello1")
   composer.gotoScene("Scenes.corridoio")
 end

@@ -4,8 +4,14 @@ local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
 local math = require("math")
 local nemici = require("nemici")
-local spawnRatioNemici = 21
+local spawnRatioNemiciUpper = 100--21
+local spawnRatioNemiciLower = 99
 local numeroBackgroundTotali = 9
+local token
+--Physics (necessaria per il movimento del personaggio)
+local physics = require("physics")
+physics.start()
+physics.setGravity(0, 0)
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- classe che si occupa di fornire tutte le funzioni tecniche per generare e costruire l'interfaccia bassa del gioco
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -29,11 +35,25 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     x=1
     a=primaX
     b=primaY
-    local spawnNemico = math.random(1, spawnRatioNemici)
+    local spawnNemico = math.random(spawnRatioNemiciLower, spawnRatioNemiciUpper)
     local stringaNemico = "nemico"..spawnNemico
     local nemico = nemici[stringaNemico]
 
-    local stanza={NORD=nil, SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b, nemici={nemico}, oggetti={}}
+    local stanza={
+    NORD=nil,
+    SUD=nil,
+    EST=nil,
+    OVEST=nil,
+    TESTO=index,
+    visitato=false,
+    corrente=false,
+    seedBackground=seed,
+    x=a,
+    y=b,
+    nemici={nemico},
+    oggetti={},
+    corridoioCorrente=nil
+  }
     mappa[x]=stanza
     trovato=true
     tabella[a][b]=true
@@ -44,11 +64,26 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     cardinale=math.random(1, 4)
     if (cardinale == 1) and (mappa[x].NORD == nil) and (tabella[a][b+1]==false) then
       mappa[x].seedNORD=seed
-      local spawnNemico = math.random(1, spawnRatioNemici)
+      local spawnNemico = math.random(spawnRatioNemiciLower, spawnRatioNemiciUpper)
       local stringaNemico = "nemico"..spawnNemico
       local nemico = nemici[stringaNemico]
 
-      local stanza = {NORD=nil, SUD=mappa[x], EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b+1, seedSUD=seed, nemici={nemico}, oggetti={}}
+      local stanza = {
+      NORD=nil,
+      SUD=mappa[x],
+      EST=nil,
+      OVEST=nil,
+      TESTO=index,
+      visitato=false,
+      corrente=false,
+      seedBackground=seed,
+      x=a,
+      y=b+1,
+      seedSUD=seed,
+      nemici={nemico},
+      oggetti={},
+      corridoioCorrente=nil
+     }
       mappa[x].NORD = stanza
       index=index+1
       mappa[index]=stanza
@@ -59,11 +94,26 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
 
     if (cardinale == 2) and (mappa[x].SUD == nil) and (tabella[a][b-1]==false) then
       mappa[x].seedSUD=seed
-      local spawnNemico = math.random(1, spawnRatioNemici)
+      local spawnNemico = math.random(spawnRatioNemiciLower, spawnRatioNemiciUpper)
       local stringaNemico = "nemico"..spawnNemico
       local nemico = nemici[stringaNemico]
 
-      local stanza = {NORD=mappa[x], SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false,  seedBackground=seed, x=a, y=b-1, seedNORD=seed, nemici={nemico}, oggetti={}}
+      local stanza = {
+        NORD=mappa[x],
+        SUD=nil,
+        EST=nil,
+        OVEST=nil,
+        TESTO=index,
+        visitato=false,
+        corrente=false,
+        seedBackground=seed,
+        x=a,
+        y=b-1,
+        seedNORD=seed,
+        nemici={nemico},
+        oggetti={},
+        corridoioCorrente=nil
+     }
       mappa[x].SUD = stanza
       index=index+1
       mappa[index]=stanza
@@ -74,11 +124,25 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
 
     if (cardinale == 3) and (mappa[x].EST == nil) and (tabella[a+1][b]==false) then
       mappa[x].seedEST=seed
-      local spawnNemico = math.random(1, spawnRatioNemici)
+      local spawnNemico = math.random(spawnRatioNemiciLower, spawnRatioNemiciUpper)
       local stringaNemico = "nemico"..spawnNemico
       local nemico = nemici[stringaNemico]
 
-      local stanza = {NORD=nil, SUD=nil, EST=nil, OVEST=mappa[x], TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a+1, y=b, seedOVEST=seed,nemici={nemico}, oggetti={}}
+      local stanza = {
+      NORD=nil,
+      SUD=nil,
+      EST=nil,
+      OVEST=mappa[x],
+      TESTO=index,
+      visitato=false,
+      corrente=false,
+      seedBackground=seed,
+      x=a+1, y=b,
+      seedOVEST=seed,
+      nemici={nemico},
+      oggetti={},
+      corridoioCorrente=nil
+      }
       mappa[x].EST = stanza
       index=index+1
       mappa[index]=stanza
@@ -89,11 +153,26 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
 
     if (cardinale == 4) and (mappa[x].OVEST == nil) and (tabella[a-1][b]==false) then
       mappa[x].seedOVEST=seed
-      local spawnNemico = math.random(1, spawnRatioNemici)
+      local spawnNemico = math.random(spawnRatioNemiciLower, spawnRatioNemiciUpper)
       local stringaNemico = "nemico"..spawnNemico
       local nemico = nemici[stringaNemico]
 
-      local stanza = {NORD=nil, SUD=nil, EST=mappa[x], OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a-1, y=b, seedEST=seed, nemici={nemico}, oggetti={}}
+      local stanza = {
+      NORD=nil,
+      SUD=nil,
+      EST=mappa[x],
+      OVEST=nil,
+      TESTO=index,
+      visitato=false,
+      corrente=false,
+      seedBackground=seed,
+      x=a-1,
+      y=b,
+      seedEST=seed,
+      nemici={nemico},
+      oggetti={},
+      corridoioCorrente=nil
+  }
       mappa[x].OVEST = stanza
       index=index+1
       mappa[index]=stanza
@@ -127,6 +206,119 @@ local function annullaVisitefunzione(primaStanza, stanza)
   end
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--listener per il movimento del token quando si muove il personaggio
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function move(dir)
+
+
+
+    if(dir=="dietroNORD") then
+      token.y = token.y + 10
+    elseif(dir=="dietroSUD") then
+      token.y = token.y - 10
+    elseif(dir == "dietroEST") then
+      token.x = token.x - 10
+    elseif(dir == "dietroOVEST") then
+      token.x = token.x + 10
+    elseif(dir == "avantiNORD") then
+      token.y = token.y - 10
+    elseif(dir == "avantiSUD") then
+      token.y = token.y + 10
+    elseif(dir == "avantiEST") then
+      token.x = token.x + 10
+    elseif (dir == "avantiOVEST") then
+      token.x = token.x - 10
+    end
+
+
+
+end
+
+--Movement Listener
+local function moveListener(event)
+  local phase = event.phase
+  local target = event.target
+  local dir
+
+  if(phase=="began") then
+    -- display.getCurrentStage():setFocus(target)
+     moveTimer = timer.performWithDelay( 30, move, 0)
+
+    if(not((event.x > target.nonMovementArea.minX and event.x < target.nonMovementArea.maxX) or (event.y > target.nonMovementArea.maxY))) then
+      --Touch in the movement area, starting the right movement sprite animation
+      if((event.x < target.nonMovementArea.minX) and (event.y < target.nonMovementArea.maxY)) then
+        if target.direzione == "NORD" then
+          --sta andando indietro in una strada a nord, dunque va verso sud
+          dir = "dietroNORD"
+          --token:setSequence( "leftWalk" )
+        elseif target.direzione == "SUD" then
+          --sta andando indietro in una strada a sud dunque va verso nord
+          dir = "dietroSUD"
+          --token:setSequence( "leftWalk" )
+        elseif target.direzione == "EST" then
+          --sta andando indietro in una strada a est dunque va verso ovest
+          dir = "dietroEST"
+        --  token:setSequence( "leftWalk" )
+        elseif target.direzione == "OVEST" then
+          --sta andando indietro in una strada verso ovest dunque va verso est
+          dir = "dietroOVEST"
+        --  token:setSequence( "leftWalk" )
+        end
+
+      elseif((event.x > target.nonMovementArea.maxX) and (event.y < target.nonMovementArea.maxY)) then
+        if target.direzione == "NORD" then
+          --sta andando avanti in una strada a nord, dunque va verso nord
+          dir = "avantiNORD"
+          --token:setSequence( "rightWalk" )
+        elseif target.direzione == "SUD" then
+          --sta andando avanti in una strada a sud dunque va verso sud
+          dir = "avantiSUD"
+          --token:setSequence( "rightWalk" )
+        elseif target.direzione == "EST" then
+          --sta andando avanti in una strada a est dunque va verso est
+          dir = "avantiEST"
+          --token:setSequence( "rightWalk" )
+        elseif target.direzione == "OVEST" then
+          --sta andando avanti in una strada verso ovest dunque va verso ovest
+          dir = "avantiOVEST"
+          --token:setSequence( "rightWalk" )
+        end
+
+      end
+      move(dir)
+      --Start movement
+    --  token:play()
+    end
+
+    -- moveTimer.isPaused = false
+    -- moveTimer.params = {direction=dir}
+  elseif(phase=="moved") then   --Touch moved
+    -- --Touch falls in the non-movement area
+
+    -- if((event.x > target.nonMovementArea.minX and event.x < target.nonMovementArea.maxX) or (event.y > target.nonMovementArea.maxY)) then
+    --   --Ending movement, canceling focus and stopping animation
+    --   display.getCurrentStage():setFocus(nil)
+    --   timer.cancel( moveTimer )
+    -- --  token:pause()
+    --
+    --   --Facing the right direction
+    -- --  token:setFrame(1)
+    --   return true
+    -- end
+  elseif (phase=="ended" or phase=="cancelled") then
+    target.play=false
+  --   --Ending movement, canceling focus and stopping animation
+  --   display.getCurrentStage():setFocus(nil)
+  --   timer.cancel( moveTimer )
+  -- --  token:pause()
+  --
+  --   --Facing the right direction
+  --   --token:setFrame(1)
+  end
+
+  return true
+end
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione ricorsova che si occupa di fare il display della mappa stanza dopo stanza. Parte infatti dallla stanza attuale e mano mano si porta l'offset x e y per stampare le stanze in posizione corretta
 --crea anche il corridoio tra una stanza e l'altra
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -137,19 +329,21 @@ local function displayStanzaFunzione(stanza, offx, offy)
   local coloreCorrente = {0, 1, 1}
   local coloreStanza={1, 0, 0}
   local coloreCorridoio={1, 0, 0}
+  local tokenGroup = display.newGroup()
+
   local item = display.newImageRect( "Images/Icons/stanza.png", dimensioniStanza, dimensioniStanza )
   item.x=offx
   item.y=offy
-  local diff = 7
+  local diff = 6
   mapGroup:insert(item)
 
   if(stanza.corrente==true) then
-    local token = display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
+    token = display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
 
     token.x = item.x
     token.y = item.y
     --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
-    mapGroup:insert(token)
+    tokenGroup:insert(token)
   end
 
   if stanza.NORD~=nil and stanza.NORD.visitato~=true then
@@ -160,6 +354,15 @@ local function displayStanzaFunzione(stanza, offx, offy)
     mapGroup:insert(item)
     stanza.NORD.visitato=true
     -- displayStanzaFunzione(stanza.NORD, offx, (offy-lunghezzaCorridoio))
+    if(stanza.corridoioCorrente=="NORD") then
+      token = display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
+      physics.addBody(token, "dynamic", {radius=token.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
+      token.direzione="NORD"
+      token.x = item.x
+      token.y = item.y
+      --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
+      tokenGroup:insert(token)
+    end
     displayStanzaFunzione(stanza.NORD, offx, (offy-lunghezzaCorridoio-(dimensioniStanza/2)))
   end
 
@@ -171,6 +374,15 @@ local function displayStanzaFunzione(stanza, offx, offy)
     mapGroup:insert(item)
     stanza.SUD.visitato=true
     -- displayStanzaFunzione(stanza.SUD, offx, (offy+lunghezzaCorridoio))
+    if(stanza.corridoioCorrente=="SUD") then
+        token = display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
+        physics.addBody(token, "dynamic", {radius=token.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
+        token.direzione="SUD"
+        token.x = item.x
+        token.y = item.y
+        --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
+        tokenGroup:insert(token)
+      end
     displayStanzaFunzione(stanza.SUD, offx, (offy+lunghezzaCorridoio+(dimensioniStanza/2)))
   end
 
@@ -182,6 +394,15 @@ local function displayStanzaFunzione(stanza, offx, offy)
     mapGroup:insert(item)
     stanza.EST.visitato=true
     -- displayStanzaFunzione(stanza.EST, offx+lunghezzaCorridoio, offy)
+    if(stanza.corridoioCorrente=="EST") then
+      token = display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
+      physics.addBody(token, "dynamic", {radius=token.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
+      token.direzione="EST"
+      token.x = item.x
+      token.y = item.y
+      --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
+      tokenGroup:insert(token)
+    end
     displayStanzaFunzione(stanza.EST, offx+lunghezzaCorridoio+(dimensioniStanza/2), offy)
   end
 
@@ -194,8 +415,18 @@ local function displayStanzaFunzione(stanza, offx, offy)
     mapGroup:insert(item)
     stanza.OVEST.visitato=true
     -- displayStanzaFunzione(stanza.OVEST, offx-lunghezzaCorridoio, offy)
+    if(stanza.corridoioCorrente=="OVEST") then
+      token =  display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
+      physics.addBody(token, "dynamic", {radius=token.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
+      token.direzione="OVEST"
+      token.x = item.x
+      token.y = item.y
+      --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
+      tokenGroup:insert(token)
+    end
     displayStanzaFunzione(stanza.OVEST, offx-lunghezzaCorridoio-(dimensioniStanza/2), offy)
   end
+  mapGroup:insert(tokenGroup)
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --questa è una tabella che contiene delle funzioni
@@ -422,6 +653,8 @@ tabellaFunction=
   end
   return tabella
 end),
+
+tokenListener=(moveListener),
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --numero di stanze
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
