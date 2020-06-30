@@ -9,15 +9,11 @@ local enemy
 local scene
 local animationTimer
 local sprite_sheet
+local sheet_Options
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Sprite sheet options
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local sheet_Options =
-{
-  width=119,
-  height=160,
-  numFrames=37,
-}
+
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sprite sheet personaggio
@@ -59,6 +55,13 @@ local function create(scena, nemico)
   --Displaying enemy
   -- print("prova a visualizzare nemico")
   -- print(nemico.immagine)
+  local sheet_Options =
+  {
+    width=nemico.width,  --119
+    height=nemico.height, --160
+    numFrames=37,
+  }
+
   sprite_sheet = graphics.newImageSheet( nemico.immagine, sheet_Options )
   enemy = display.newSprite( sprite_sheet, sequences )
   enemy:setSequence(idle)
