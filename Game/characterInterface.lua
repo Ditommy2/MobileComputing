@@ -83,7 +83,7 @@ local function move(event)
       scene.changeRoom()
     end
 
-    if(character.x > lunghezza - 500 and stanzaCorrente.nemici[1] ~= nill) then
+    if(character.x > lunghezza - 500 and stanzaCorrente.nemici[1] ~= nil) then
       timer.pause( moveTimer )
       character:pause()
       composer.gotoScene( "Scenes.fight", {time=1500, effect="zoomInOutFade"} )
@@ -158,7 +158,7 @@ local function create(scena)
   character.y = altezza-310
   physics.addBody(character, "dynamic", {radius=sheet_walking_Options.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
   character.myName = "Character"
-  character.life = 5
+  character.life = 50000
   character.armor = 10
   character.damage = 100
   character.speed = math.random(1, 10)
