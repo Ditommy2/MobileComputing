@@ -15,6 +15,11 @@ local tabella = interfaccia.tabellaFunction(numero)
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local inventario =
 {
+--
+--   moveToken=
+--   (
+--
+--   )
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione display che si occupa del display degli oggetti dell'interfaccia bassa
 --ci sono delle parti commentate giganti che non mi sentirei di rimuovere. Fanno parte della vecchia costruzione dell'interfaccia prima del commit "implemented nuovo background"

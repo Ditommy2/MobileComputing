@@ -131,49 +131,69 @@ end
 --crea anche il corridoio tra una stanza e l'altra
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function displayStanzaFunzione(stanza, offx, offy)
-  local dimensioniStanza = 50
-  local spessoreCorridoio = 10
+  local dimensioniStanza = 70
+  local spessoreCorridoio = 100
   local lunghezzaCorridoio = 100
   local coloreCorrente = {0, 1, 1}
   local coloreStanza={1, 0, 0}
   local coloreCorridoio={1, 0, 0}
-  local item = display.newRect( offx, offy, dimensioniStanza, dimensioniStanza )
-  item:setFillColor(coloreStanza[1], coloreStanza[2], coloreStanza[3])
-
-  if(stanza.corrente==true) then
-    item:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
-  end
+  local item = display.newImageRect( "Images/Icons/stanza.png", dimensioniStanza, dimensioniStanza )
+  item.x=offx
+  item.y=offy
+  local diff = 7
   mapGroup:insert(item)
 
+  if(stanza.corrente==true) then
+    local token = display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
+
+    token.x = item.x
+    token.y = item.y
+    --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
+    mapGroup:insert(token)
+  end
+
   if stanza.NORD~=nil and stanza.NORD.visitato~=true then
-    item=display.newRect( offx, offy-(dimensioniStanza/2)-(lunghezzaCorridoio/2), spessoreCorridoio, lunghezzaCorridoio )
-    item:setFillColor(coloreCorridoio[1], coloreCorridoio[2], coloreCorridoio[3])
+    item=display.newImageRect( "Images/Icons/corridoioVert.png",  spessoreCorridoio, lunghezzaCorridoio )
+    item.x = offx
+    item.y = offy-(dimensioniStanza/2)-(lunghezzaCorridoio/2)+diff
+    --item:setFillColor(coloreCorridoio[1], coloreCorridoio[2], coloreCorridoio[3])
     mapGroup:insert(item)
     stanza.NORD.visitato=true
+    -- displayStanzaFunzione(stanza.NORD, offx, (offy-lunghezzaCorridoio))
     displayStanzaFunzione(stanza.NORD, offx, (offy-lunghezzaCorridoio-(dimensioniStanza/2)))
   end
 
   if stanza.SUD~=nil and stanza.SUD.visitato~=true then
-    item=display.newRect( offx, offy+(dimensioniStanza/2)+(lunghezzaCorridoio/2), spessoreCorridoio, lunghezzaCorridoio )
-    item:setFillColor(1, 0, 0)
+    item=display.newImageRect( "Images/Icons/corridoioVert.png",  spessoreCorridoio, lunghezzaCorridoio )
+    item.x=offx
+    item.y=offy+(dimensioniStanza/2)+(lunghezzaCorridoio/2)-diff
+  --  item:setFillColor(1, 0, 0)
     mapGroup:insert(item)
     stanza.SUD.visitato=true
+    -- displayStanzaFunzione(stanza.SUD, offx, (offy+lunghezzaCorridoio))
     displayStanzaFunzione(stanza.SUD, offx, (offy+lunghezzaCorridoio+(dimensioniStanza/2)))
   end
 
   if stanza.EST~=nil and stanza.EST.visitato~=true then
-    item=display.newRect( offx+(dimensioniStanza/2)+(lunghezzaCorridoio/2), offy, lunghezzaCorridoio, spessoreCorridoio )
-    item:setFillColor(1, 0, 0)
+    item=display.newImageRect( "Images/Icons/corridoioOriz.png",  lunghezzaCorridoio, spessoreCorridoio )
+    --item:setFillColor(1, 0, 0)
+    item.x=offx+(dimensioniStanza/2)+(lunghezzaCorridoio/2)-diff
+    item.y=offy
     mapGroup:insert(item)
     stanza.EST.visitato=true
+    -- displayStanzaFunzione(stanza.EST, offx+lunghezzaCorridoio, offy)
     displayStanzaFunzione(stanza.EST, offx+lunghezzaCorridoio+(dimensioniStanza/2), offy)
   end
 
   if stanza.OVEST~=nil and stanza.OVEST.visitato~=true then
-    item=display.newRect( offx-(dimensioniStanza/2)-(lunghezzaCorridoio/2), offy, lunghezzaCorridoio, spessoreCorridoio )
-    item:setFillColor(1, 0, 0)
+    item=display.newImageRect( "Images/Icons/corridoioOriz.png",   lunghezzaCorridoio, spessoreCorridoio )
+    item.x=offx-(dimensioniStanza/2)-(lunghezzaCorridoio/2)+diff
+    item.y=offy
+
+    --item:setFillColor(1, 0, 0)
     mapGroup:insert(item)
     stanza.OVEST.visitato=true
+    -- displayStanzaFunzione(stanza.OVEST, offx-lunghezzaCorridoio, offy)
     displayStanzaFunzione(stanza.OVEST, offx-lunghezzaCorridoio-(dimensioniStanza/2), offy)
   end
 end
