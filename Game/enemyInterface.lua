@@ -12,20 +12,21 @@ physics.start()
 local enemy
 local scene
 local animationTimer
+local sprite_sheet
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Sprite sheet options
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sheet_Options =
 {
-  width=150,
-  height=180,
-  numFrames=18,
+  width=119,
+  height=160,
+  numFrames=37,
 }
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sprite sheet personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local sprite_sheet = graphics.newImageSheet( "Images/Enemies/FallenAngel1/Idle.png", sheet_Options )
+-- local sprite_sheet = graphics.newImageSheet( "Images/Enemies/FallenAngel1/Idle.png", sheet_Options )
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sequences table personaggio
@@ -36,7 +37,7 @@ local sequences =
     {
         name = "idle",
         start = 1,
-        count = 18,
+        count = 37,
         time = 1000,
         loopCount = 0,
         loopDirection = "forward"
@@ -62,13 +63,14 @@ local function create(scena, nemico)
   --Displaying enemy
   -- print("prova a visualizzare nemico")
   -- print(nemico.immagine)
+  sprite_sheet = graphics.newImageSheet( nemico.immagine, sheet_Options )
   enemy = display.newSprite( sprite_sheet, sequences )
   enemy:setSequence(idle)
   enemy:play()
   -- enemy = display.newImageRect( nemico.immagine, 100, 175)
   enemy.anchorY = 1
   enemy.x = lunghezza * 0.7
-  enemy.y = altezza-305
+  enemy.y = altezza-313
   enemy.myName = "Enemy"
   physics.addBody(enemy, "dynamic", { isSensor=true } )
 
