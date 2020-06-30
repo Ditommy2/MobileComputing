@@ -8,6 +8,7 @@ local altezza=  lunghezza*(9/16)
 local enemy
 local scene
 local animationTimer
+local sprite_sheet
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Sprite sheet options
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -21,7 +22,7 @@ local sheet_Options =
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sprite sheet personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local sprite_sheet = graphics.newImageSheet( "Images/Enemies/FallenAngel1/Idle.png", sheet_Options )
+-- local sprite_sheet = graphics.newImageSheet( "Images/Enemies/FallenAngel1/Idle.png", sheet_Options )
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sequences table personaggio
@@ -58,6 +59,7 @@ local function create(scena, nemico)
   --Displaying enemy
   -- print("prova a visualizzare nemico")
   -- print(nemico.immagine)
+  sprite_sheet = graphics.newImageSheet( nemico.immagine, sheet_Options )
   enemy = display.newSprite( sprite_sheet, sequences )
   enemy:setSequence(idle)
   enemy:play()
