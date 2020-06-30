@@ -68,6 +68,7 @@ local function create(scena, nemico)
   -- enemy = display.newImageRect( nemico.immagine, 100, 175)
   enemy.anchorY = 1
   enemy.x = lunghezza * 0.7
+  -- print(enemy.x)
   enemy.y = altezza-305
   enemy.myName = "Enemy"
   physics.addBody(enemy, "dynamic", { isSensor=true } )

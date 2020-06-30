@@ -395,7 +395,7 @@ function scene:create ( event )
 
 --****************BACKGROUND GROUP********************************
 
- local background = display.newImageRect( backgroundGroup, "Images/Backgrounds/proceduralBack/Stanze/back1.jpg", 1280, 720 )
+ local background = display.newImageRect( backgroundGroup, "Images/Backgrounds/proceduralBack/Stanze/back1.png", 1280, 720 )
  background.x = display.contentCenterX
  background.y = display.contentCenterY - 200
 
@@ -460,6 +460,7 @@ function scene:create ( event )
 
 		--Displaying enemy
 		midGroup:insert(enemy1)
+		enemy1.y = altezza - 260
 		lifeBarEnemyBlack = display.newImageRect( midGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
 		lifeBarEnemyBlack.x = display.contentCenterX + 250
 		lifeBarEnemyBlack.y = display.contentCenterY - 250
