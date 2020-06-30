@@ -17,9 +17,9 @@ local animationTimer
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sheet_Options =
 {
-  width=150,
-  height=180,
-  numFrames=18,
+  width=119,
+  height=160,
+  numFrames=37,
 }
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ local sequences =
     {
         name = "idle",
         start = 1,
-        count = 18,
+        count = 37,
         time = 1000,
         loopCount = 0,
         loopDirection = "forward"
@@ -68,7 +68,7 @@ local function create(scena, nemico)
   -- enemy = display.newImageRect( nemico.immagine, 100, 175)
   enemy.anchorY = 1
   enemy.x = lunghezza * 0.7
-  enemy.y = altezza-305
+  enemy.y = altezza-313
   enemy.myName = "Enemy"
   physics.addBody(enemy, "dynamic", { isSensor=true } )
 
