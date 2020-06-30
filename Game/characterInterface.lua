@@ -1,6 +1,8 @@
 local composer = require( "composer" )
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
+local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
+
 
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
@@ -79,6 +81,12 @@ local function move(event)
       timer.pause( moveTimer )
       character:pause()
       scene.changeRoom()
+    end
+
+    if(character.x > lunghezza - 500 and stanzaCorrente.nemici[1] ~= nill) then
+      timer.pause( moveTimer )
+      character:pause()
+      composer.gotoScene( "Scenes.fight", {time=3000, effect="zoomInOutFade"} )
     end
   end
 end
