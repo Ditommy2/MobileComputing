@@ -7,6 +7,7 @@
 local composer = require( "composer" )
 local characterInterface = require("characterInterface")
 local enemyInterface = require("enemyInterface")
+local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 local nemici = require("nemici")
 local customFont="MadnessHyperactive.otf"
 local scene = composer.newScene()
@@ -32,7 +33,7 @@ local fightText
 
 --Game objects
 local character = characterInterface.creaPersonaggio(self)
-local enemy1 = enemyInterface.createEnemy(self, nemici["nemico1"])
+local enemy1 = enemyInterface.createEnemy(self, stanzaCorrente.nemici[1])
 local numeroMossa
 local chanceRandom
 local totChance
