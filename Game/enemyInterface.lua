@@ -52,7 +52,7 @@ local function create(scena, nemico)
   enemy:setSequence(idle)
   enemy:play()
 
-  --Posizionamento nemico 
+  --Posizionamento nemico
   enemy.anchorY = 1
   enemy.x = lunghezza * 0.7
   enemy.y = altezza-313
