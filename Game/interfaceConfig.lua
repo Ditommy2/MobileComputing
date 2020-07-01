@@ -8,6 +8,7 @@ local spawnRatioNemiciUpper = 100--21
 local spawnRatioNemiciLower = 99
 local numeroBackgroundTotali = 9
 local token
+local moveTimer
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
 physics.start()
@@ -208,29 +209,44 @@ end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --listener per il movimento del token quando si muove il personaggio
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local function move(dir)
+local function move(event)
 
-
+  local dir = event.source.params.direction
+  if not(dir==nil) then
 
     if(dir=="dietroNORD") then
-      token.y = token.y + 10
+      token.y = token.y + 1
     elseif(dir=="dietroSUD") then
-      token.y = token.y - 10
+      token.y = token.y - 1
     elseif(dir == "dietroEST") then
-      token.x = token.x - 10
+      token.x = token.x - 1
     elseif(dir == "dietroOVEST") then
-      token.x = token.x + 10
+      token.x = token.x + 1
     elseif(dir == "avantiNORD") then
-      token.y = token.y - 10
+      token.y = token.y - 1
     elseif(dir == "avantiSUD") then
-      token.y = token.y + 10
+      token.y = token.y + 1
     elseif(dir == "avantiEST") then
-      token.x = token.x + 10
+      token.x = token.x + 1
     elseif (dir == "avantiOVEST") then
-      token.x = token.x - 10
+      token.x = token.x - 1
     end
 
+    if token.x < token.partenzaX - token.movimentoMassimo or token.x > token.partenzaX + token.movimentoMassimo then
+      timer.pause(moveTimer)
+    end
 
+    if token.y < token.partenzaY - token.movimentoMassimo or token.y > token.partenzaY  + token.movimentoMassimo then
+      timer.pause(moveTimer)
+    end
+    -- if not(token.x <token.partenzaX and token.x > token.partenzaX-token.movimentoMassimo) or not(token.x > token.partenzaX and token.x < token.partenzaX+token.movimentoMassimo) then
+    --   timer.pause(moveTimer)
+    -- end
+    --
+    -- if not(token.y <token.partenzaY and token.y > token.partenzaY-token.movimentoMassimo) or not(token.y > token.partenzaY and token.y < token.partenzaY+token.movimentoMassimo) then
+    --   timer.pause(moveTimer)
+    -- end
+end
 
 end
 
@@ -239,9 +255,7 @@ local function moveListener(event)
   local phase = event.phase
   local target = event.target
   local dir
-
   if(phase=="began") then
-    -- display.getCurrentStage():setFocus(target)
      moveTimer = timer.performWithDelay( 30, move, 0)
 
     if(not((event.x > target.nonMovementArea.minX and event.x < target.nonMovementArea.maxX) or (event.y > target.nonMovementArea.maxY))) then
@@ -250,72 +264,63 @@ local function moveListener(event)
         if target.direzione == "NORD" then
           --sta andando indietro in una strada a nord, dunque va verso sud
           dir = "dietroNORD"
-          --token:setSequence( "leftWalk" )
+          moveTimer.isPaused = false
+          moveTimer.params = {direction=dir}
         elseif target.direzione == "SUD" then
           --sta andando indietro in una strada a sud dunque va verso nord
           dir = "dietroSUD"
-          --token:setSequence( "leftWalk" )
+          moveTimer.isPaused = false
+          moveTimer.params = {direction=dir}
         elseif target.direzione == "EST" then
           --sta andando indietro in una strada a est dunque va verso ovest
           dir = "dietroEST"
-        --  token:setSequence( "leftWalk" )
+          moveTimer.isPaused = false
+          moveTimer.params = {direction=dir}
         elseif target.direzione == "OVEST" then
           --sta andando indietro in una strada verso ovest dunque va verso est
           dir = "dietroOVEST"
-        --  token:setSequence( "leftWalk" )
+          moveTimer.isPaused = false
+          moveTimer.params = {direction=dir}
         end
 
       elseif((event.x > target.nonMovementArea.maxX) and (event.y < target.nonMovementArea.maxY)) then
         if target.direzione == "NORD" then
           --sta andando avanti in una strada a nord, dunque va verso nord
           dir = "avantiNORD"
-          --token:setSequence( "rightWalk" )
+          moveTimer.isPaused = false
+          moveTimer.params = {direction=dir}
         elseif target.direzione == "SUD" then
           --sta andando avanti in una strada a sud dunque va verso sud
           dir = "avantiSUD"
-          --token:setSequence( "rightWalk" )
+          moveTimer.isPaused = false
+          moveTimer.params = {direction=dir}
         elseif target.direzione == "EST" then
           --sta andando avanti in una strada a est dunque va verso est
           dir = "avantiEST"
-          --token:setSequence( "rightWalk" )
+          moveTimer.isPaused = false
+          moveTimer.params = {direction=dir}
         elseif target.direzione == "OVEST" then
           --sta andando avanti in una strada verso ovest dunque va verso ovest
           dir = "avantiOVEST"
-          --token:setSequence( "rightWalk" )
+          moveTimer.isPaused = false
+          moveTimer.params = {direction=dir}
         end
-
       end
-      move(dir)
-      --Start movement
-    --  token:play()
-    end
-
-    -- moveTimer.isPaused = false
-    -- moveTimer.params = {direction=dir}
+      end
+      
+      moveTimer.isPaused = false
+      moveTimer.params = {direction=dir}
   elseif(phase=="moved") then   --Touch moved
     -- --Touch falls in the non-movement area
-
-    -- if((event.x > target.nonMovementArea.minX and event.x < target.nonMovementArea.maxX) or (event.y > target.nonMovementArea.maxY)) then
-    --   --Ending movement, canceling focus and stopping animation
-    --   display.getCurrentStage():setFocus(nil)
-    --   timer.cancel( moveTimer )
-    -- --  token:pause()
-    --
-    --   --Facing the right direction
-    -- --  token:setFrame(1)
-    --   return true
-    -- end
+    if((event.x > target.nonMovementArea.minX and event.x < target.nonMovementArea.maxX) or (event.y > target.nonMovementArea.maxY)) then
+      timer.pause(moveTimer)
+       timer.cancel( moveTimer )
+       return true
+    end
   elseif (phase=="ended" or phase=="cancelled") then
-    target.play=false
-  --   --Ending movement, canceling focus and stopping animation
-  --   display.getCurrentStage():setFocus(nil)
-  --   timer.cancel( moveTimer )
-  -- --  token:pause()
-  --
-  --   --Facing the right direction
-  --   --token:setFrame(1)
+    timer.pause(moveTimer)
+     timer.cancel( moveTimer )
   end
-
   return true
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -339,7 +344,7 @@ local function displayStanzaFunzione(stanza, offx, offy)
 
   if(stanza.corrente==true) then
     token = display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
-
+    token.movimentoMassimo=lunghezzaCorridoio
     token.x = item.x
     token.y = item.y
     --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
@@ -356,10 +361,12 @@ local function displayStanzaFunzione(stanza, offx, offy)
     -- displayStanzaFunzione(stanza.NORD, offx, (offy-lunghezzaCorridoio))
     if(stanza.corridoioCorrente=="NORD") then
       token = display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
-      physics.addBody(token, "dynamic", {radius=token.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
+      token.movimentoMassimo=lunghezzaCorridoio
       token.direzione="NORD"
+      token.partenzaX = item.x
+      token.partenzaY = item.y + lunghezzaCorridoio/2
       token.x = item.x
-      token.y = item.y
+      token.y = item.y + lunghezzaCorridoio/2
       --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
       tokenGroup:insert(token)
     end
@@ -376,10 +383,12 @@ local function displayStanzaFunzione(stanza, offx, offy)
     -- displayStanzaFunzione(stanza.SUD, offx, (offy+lunghezzaCorridoio))
     if(stanza.corridoioCorrente=="SUD") then
         token = display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
-        physics.addBody(token, "dynamic", {radius=token.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
+        token.movimentoMassimo=lunghezzaCorridoio
         token.direzione="SUD"
+        token.partenzaX = item.x
+        token.partenzaY = item.y - lunghezzaCorridoio/2
         token.x = item.x
-        token.y = item.y
+        token.y = item.y - lunghezzaCorridoio/2
         --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
         tokenGroup:insert(token)
       end
@@ -396,9 +405,11 @@ local function displayStanzaFunzione(stanza, offx, offy)
     -- displayStanzaFunzione(stanza.EST, offx+lunghezzaCorridoio, offy)
     if(stanza.corridoioCorrente=="EST") then
       token = display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
-      physics.addBody(token, "dynamic", {radius=token.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
+      token.movimentoMassimo=lunghezzaCorridoio
       token.direzione="EST"
-      token.x = item.x
+      token.partenzaX = item.x - lunghezzaCorridoio/2
+      token.partenzaY = item.y
+      token.x = item.x - lunghezzaCorridoio/2
       token.y = item.y
       --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
       tokenGroup:insert(token)
@@ -417,9 +428,11 @@ local function displayStanzaFunzione(stanza, offx, offy)
     -- displayStanzaFunzione(stanza.OVEST, offx-lunghezzaCorridoio, offy)
     if(stanza.corridoioCorrente=="OVEST") then
       token =  display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
-      physics.addBody(token, "dynamic", {radius=token.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
+      token.movimentoMassimo=lunghezzaCorridoio
       token.direzione="OVEST"
-      token.x = item.x
+      token.partenzaX = item.x + lunghezzaCorridoio/2
+      token.partenzaY = item.y
+      token.x = item.x + lunghezzaCorridoio/2
       token.y = item.y
       --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
       tokenGroup:insert(token)
