@@ -52,15 +52,15 @@ local function create(scena, nemico)
   -- }
   --
   -- --Opzioni di visualizzazione nemico
-  -- local sheet_Options =
-  -- {
-  --   width=nemico.width,
-  --   height=nemico.height,
-  --   numFrames=nemico.frames,
-  -- }
+  local sheet_Options =
+  {
+    width=nemico.width,
+    height=nemico.height,
+    numFrames=nemico.frames,
+  }
 
   --Display nemico
-  sprite_sheet = graphics.newImageSheet( nemico.immagine, nemico.sheet_Options )
+  sprite_sheet = graphics.newImageSheet( nemico.immagine, sheet_Options )
   enemy = display.newSprite( sprite_sheet, nemico.sequences )
   enemy:setSequence(idle)
   enemy:play()

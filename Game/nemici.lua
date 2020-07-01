@@ -6,9 +6,9 @@ local nemici ={
     danno = 100,
     armatura = 10,
     velocita = math.random(1, 10),
-    -- width=117,
-    -- height=157,
-    -- frames=37,
+    width=117,
+    height=157,
+    frames=37,
     sequences =
     {
         {
@@ -19,12 +19,6 @@ local nemici ={
             loopCount = 0,
             loopDirection = "forward"
         }
-    },
-    sheet_Options =
-    {
-      width=117,
-      height=157,
-      frames=37,
     },
   },
 
@@ -37,6 +31,17 @@ local nemici ={
     width=117,
     height=147,
     frames=37,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 37,
+            time = 600,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
   },
 
   nemico3={   --OK
@@ -48,6 +53,17 @@ local nemici ={
     width=119,
     height=166,
     frames=36,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 36,
+            time = 600,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
   },
 
   nemico4={   --OK
@@ -59,7 +75,19 @@ local nemici ={
     width=104,
     height=138,
     frames=37,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 37,
+            time = 600,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
   },
+
   nemico5={   --OK
     immagine ="Images/Enemies/EarthGolem/Idle.png",
     vita = 9,
@@ -69,7 +97,19 @@ local nemici ={
     width=101,
     height=146,
     frames=36,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 36,
+            time = 600,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
   },
+
   nemico6={   --OK
     immagine ="Images/Enemies/MagmaGolem/Idle.png",
     vita = 9,
@@ -79,18 +119,42 @@ local nemici ={
     width=98,
     height=134,
     frames=37,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 37,
+            time = 600,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
   },
-  nemico7={   --Tremolicchia (prima funzionava bene ma era piccolo)
-    immagine ="Images/Enemies/StoneGolem/Idle.png",
+
+  nemico7={   --Tremolicchia                                --DA QUI IN GIU' DEVONO ESSERE SISTEMATI
+    immagine ="Images/Enemies/StoneGolem/Idle.png",         --GLI ALTRI FUNZIONANO
     vita = 9,
     danno = 3,
     armatura = 0,
     velocita = 3,
-    width=225,
-    height=182,
-    frames=37,
+    width=180,
+    height=146,
+    frames=30,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 30,
+            time = 500,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
   },
-  nemico8={   --OK
+
+  nemico8={
     immagine ="Images/Enemies/MudGolem/Idle.png",
     vita = 9,
     danno = 3,
@@ -99,6 +163,17 @@ local nemici ={
     width=182,
     height=146,
     frames=25,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 25,
+            time = 600,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
   },
   -- nemico9={
   --   immagine ="Images/Enemies/WoodGolem/Idle.png",
