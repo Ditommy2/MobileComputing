@@ -8,7 +8,6 @@ local spawnRatioNemiciUpper = 100--21
 local spawnRatioNemiciLower = 99
 local numeroBackgroundTotali = 9
 local token
-local moveTimer
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
 physics.start()
@@ -234,10 +233,12 @@ local function move(event)
 
     if token.x < token.partenzaX - token.movimentoMassimo or token.x > token.partenzaX + token.movimentoMassimo then
       timer.pause(moveTimer)
+      timer.cancel(moveTimer)
     end
 
     if token.y < token.partenzaY - token.movimentoMassimo or token.y > token.partenzaY  + token.movimentoMassimo then
       timer.pause(moveTimer)
+      timer.cancel(moveTimer)
     end
     -- if not(token.x <token.partenzaX and token.x > token.partenzaX-token.movimentoMassimo) or not(token.x > token.partenzaX and token.x < token.partenzaX+token.movimentoMassimo) then
     --   timer.pause(moveTimer)
@@ -307,7 +308,7 @@ local function moveListener(event)
         end
       end
       end
-      
+
       moveTimer.isPaused = false
       moveTimer.params = {direction=dir}
   elseif(phase=="moved") then   --Touch moved

@@ -45,10 +45,12 @@ end
 
 function goBack()
   local direction = composer.getVariable("direzione")
+  stanzaCorrente.corridoioCorrente = nil
   stanzaCorrente.corrente=true
   composer.setVariable("stanzaCorrente", stanzaCorrente)
   composer.setVariable( "direzione", opposite(direction) )
-
+  timer.pause(moveTimer)
+  timer.cancel(moveTimer)
   composer.removeScene("Scenes.corridoio")
   composer.gotoScene("Scenes.livello1")
 end
@@ -56,6 +58,8 @@ end
 function changeRoom()
   local direction = composer.getVariable( "direzione" )
   stanzaCorrente.corridoioCorrente = nil
+  timer.pause(moveTimer)
+  timer.cancel(moveTimer)
   composer.setVariable( "stanzaCorrente", stanzaCorrente[direction])
   local prossimaStanza =composer.getVariable( "stanzaCorrente" )
   prossimaStanza.corrente=true
