@@ -20,8 +20,15 @@ local scene
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sheet_walking_Options =
 {
-  width=122,
-  height=166,
+  width=137,
+  height=186,
+  numFrames=120,
+}
+
+local sheet_idle_Options =
+{
+  width=121,
+  height=178,
   numFrames=120,
 }
 
@@ -29,11 +36,11 @@ local sheet_walking_Options =
 --Walking sprite sheet personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sheet_walking = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/walk.png", sheet_walking_Options )
-
+local sheet_idle = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/idle.png", sheet_idle_Options )
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sequences table personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local sequences_walking =
+local sequences =
 {
     --Right walking sequence
     {
@@ -42,7 +49,8 @@ local sequences_walking =
         count = 60,
         time = 1000,
         loopCount = 0,
-        loopDirection = "forward"
+        loopDirection = "forward",
+        sheet = sheet_walking
     },
 
     --Left walking sequence
@@ -52,7 +60,30 @@ local sequences_walking =
         count = 60,
         time = 1000,
         loopCount = 0,
-        loopDirection = "forward"
+        loopDirection = "forward",
+        sheet = sheet_walking
+    },
+
+    --Right Idle
+    {
+        name = "rightIdle",
+        start = 1,
+        count = 60,
+        time = 1000,
+        loopCount = 0,
+        loopDirection = "forward",
+        sheet = sheet_idle
+    },
+
+    --Left Idle
+    {
+        name = "leftIdle",
+        start = 61,
+        count = 60,
+        time = 1000,
+        loopCount = 0,
+        loopDirection = "forward",
+        sheet = sheet_idle
     }
 }
 
@@ -122,21 +153,34 @@ local function moveListener(event)
     if((event.x > target.nonMovementArea.minX and event.x < target.nonMovementArea.maxX) or (event.y > target.nonMovementArea.maxY)) then
       --Ending movement, canceling focus and stopping animation
       display.getCurrentStage():setFocus(nil)
-      timer.cancel( moveTimer )
       character:pause()
 
+      if(moveTimer.params.direction == "l") then
+        character:setSequence("leftIdle")
+      elseif(moveTimer.params.direction == "r") then
+        character:setSequence("rightIdle")
+      end
+
+      timer.cancel( moveTimer )
+
       --Facing the right direction
-      character:setFrame(1)
+      character:play()
       return true
     end
   elseif (phase=="ended" or phase=="cancelled") then
     --Ending movement, canceling focus and stopping animation
     display.getCurrentStage():setFocus(nil)
-    timer.cancel( moveTimer )
     character:pause()
 
+    if(moveTimer.params.direction == "l") then
+      character:setSequence("leftIdle")
+    elseif(moveTimer.params.direction == "r") then
+      character:setSequence("rightIdle")
+    end
+    timer.cancel( moveTimer )
+
     --Facing the right direction
-    character:setFrame(1)
+    character:play()
   end
 
   return true
@@ -150,9 +194,11 @@ local function create(scena)
   scene = scena
 
   --Displaying character and setting sprite sheets
-  character = display.newSprite( sheet_walking, sequences_walking )
-  character:setSequence(rightWalk)
-  character:setFrame(1)
+  -- character = display.newSprite( sheet_walking, sequences_walking )
+  character = display.newSprite( sheet_idle, sequences )
+  character:setSequence("rightIdle")
+  -- character:setFrame(121)
+  character:play()
   character.anchorY = 1
   character.x = lunghezza * 0.1
   character.y = altezza-310
