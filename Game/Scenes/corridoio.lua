@@ -132,7 +132,6 @@ function scene:create( event )
 
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
-  print(stanzaCorrente.corridoioCorrente)
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

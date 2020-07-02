@@ -4,8 +4,11 @@ local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
 local math = require("math")
 local nemici = require("nemici")
+local curios = require("curios")
 local spawnRatioNemiciUpper = 100--21
 local spawnRatioNemiciLower = 99
+local spawnRatioCurioLower = 1
+local spawnRatioCurioUpper = 1
 local numeroBackgroundTotali = 9
 local token
 --Physics (necessaria per il movimento del personaggio)
@@ -36,9 +39,14 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     a=primaX
     b=primaY
     local spawnNemico = math.random(spawnRatioNemiciLower, spawnRatioNemiciUpper)
+    local spawnCurio = math.random(spawnRatioCurioLower, spawnRatioCurioUpper)
     local stringaNemico = "nemico"..spawnNemico
+    local stringaCurio = "curio"..spawnCurio
     local nemico = nemici[stringaNemico]
-
+    local curio
+    if (nemico==nil) then
+      curio = curios[stringaCurio]
+    end
     local stanza={
     NORD=nil,
     SUD=nil,
@@ -51,6 +59,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     x=a,
     y=b,
     nemici={nemico},
+    curios = {curio},
     oggetti={},
     corridoioCorrente=nil
   }
@@ -65,8 +74,14 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     if (cardinale == 1) and (mappa[x].NORD == nil) and (tabella[a][b+1]==false) then
       mappa[x].seedNORD=seed
       local spawnNemico = math.random(spawnRatioNemiciLower, spawnRatioNemiciUpper)
+      local spawnCurio = math.random(spawnRatioCurioLower, spawnRatioCurioUpper)
       local stringaNemico = "nemico"..spawnNemico
+      local stringaCurio = "curio"..spawnCurio
       local nemico = nemici[stringaNemico]
+      local curio
+      if (nemico==nil) then
+        curio = curios[stringaCurio]
+      end
 
       local stanza = {
       NORD=nil,
@@ -81,6 +96,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
       y=b+1,
       seedSUD=seed,
       nemici={nemico},
+      curios = {curio},
       oggetti={},
       corridoioCorrente=nil
      }
@@ -95,8 +111,14 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     if (cardinale == 2) and (mappa[x].SUD == nil) and (tabella[a][b-1]==false) then
       mappa[x].seedSUD=seed
       local spawnNemico = math.random(spawnRatioNemiciLower, spawnRatioNemiciUpper)
+      local spawnCurio = math.random(spawnRatioCurioLower, spawnRatioCurioUpper)
       local stringaNemico = "nemico"..spawnNemico
+      local stringaCurio = "curio"..spawnCurio
       local nemico = nemici[stringaNemico]
+      local curio
+      if (nemico==nil) then
+        curio = curios[stringaCurio]
+      end
 
       local stanza = {
         NORD=mappa[x],
@@ -111,6 +133,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
         y=b-1,
         seedNORD=seed,
         nemici={nemico},
+        curios = {curio},
         oggetti={},
         corridoioCorrente=nil
      }
@@ -125,8 +148,14 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     if (cardinale == 3) and (mappa[x].EST == nil) and (tabella[a+1][b]==false) then
       mappa[x].seedEST=seed
       local spawnNemico = math.random(spawnRatioNemiciLower, spawnRatioNemiciUpper)
+      local spawnCurio = math.random(spawnRatioCurioLower, spawnRatioCurioUpper)
       local stringaNemico = "nemico"..spawnNemico
+      local stringaCurio = "curio"..spawnCurio
       local nemico = nemici[stringaNemico]
+      local curio
+      if (nemico==nil) then
+        curio = curios[stringaCurio]
+      end
 
       local stanza = {
       NORD=nil,
@@ -140,6 +169,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
       x=a+1, y=b,
       seedOVEST=seed,
       nemici={nemico},
+      curios = {curio},
       oggetti={},
       corridoioCorrente=nil
       }
@@ -154,8 +184,14 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     if (cardinale == 4) and (mappa[x].OVEST == nil) and (tabella[a-1][b]==false) then
       mappa[x].seedOVEST=seed
       local spawnNemico = math.random(spawnRatioNemiciLower, spawnRatioNemiciUpper)
+      local spawnCurio = math.random(spawnRatioCurioLower, spawnRatioCurioUpper)
       local stringaNemico = "nemico"..spawnNemico
+      local stringaCurio = "curio"..spawnCurio
       local nemico = nemici[stringaNemico]
+      local curio
+      if (nemico==nil) then
+        curio = curios[stringaCurio]
+      end
 
       local stanza = {
       NORD=nil,
@@ -170,6 +206,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
       y=b,
       seedEST=seed,
       nemici={nemico},
+      curios = {curio},
       oggetti={},
       corridoioCorrente=nil
   }
@@ -537,6 +574,7 @@ dragMapSet=
     end
   elseif("moved"==phase) then
       -- Muove la nave
+
     if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-125)) and (event.y > (display.contentCenterY+100) and event.y < (altezza-75))) then
       item.x=event.x-item.touchOffsetX
       item.y=event.y-item.touchOffsetY
@@ -554,6 +592,7 @@ end),
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 dragItem=
 (function(event)
+  local curios = composer.getVariable( "stanzaCorrente" ).curios
   local item=event.target
   local phase=event.phase
   local idItem = item.id
@@ -574,11 +613,26 @@ dragItem=
     end
   elseif("moved"==phase) then
       -- Muove la nave
+      print(item.x..", "..item.y)
       item.x=event.x-item.touchOffsetX
       item.y=event.y-item.touchOffsetY
   elseif("ended"==phase or "cancelled"==phase) then
     --Oggetto fuori dall'inventario (tentativo di rimozione)
     if( (item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140)) ) then
+      for i=#curios, 1, -1 do
+        print("upper x = "..curios[i].areaXUpper)
+        print("lower x = "..curios[i].areaXLower)
+        print("upper y = "..curios[i].areaYUpper)
+        print("lower y = "..curios[i].areaYLower)
+        print("curio x ="..curios[i].x)
+        print("curio y ="..curios[i].y)
+        print("item x = "..item.x)
+        print("item y = "..item.y)
+      if (item.x < curios[i].areaXUpper and item.x > curios[i].areaXLower and item.y < curios[i].areaYUpper and item.y > curios[i].areaYLower) then
+        print("aaaaaaaaaaa")
+        print(curios[i].messaggio)
+      end
+    end
       display.remove( item )
       inventario[idItem] = "vuoto"
       griglia[idItem][3] = false

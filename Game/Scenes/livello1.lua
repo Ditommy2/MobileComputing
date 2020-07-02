@@ -10,9 +10,10 @@ local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 local enemyInterface = require("enemyInterface")
+local curiosInterface = require("curiosInterface")
 composer.recycleOnSceneChange = true
 local customFont="MadnessHyperactive.otf"
-
+local oggetti = stanzaCorrente.oggetti
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
 physics.start()
@@ -214,6 +215,15 @@ function scene:create( event )
 	local sceneGroup = self.view
   local mainGroup=display.newGroup()
   local phase = event.phase
+  local curios = stanzaCorrente.curios
+    for i=#curios, 1, -1 do
+      if not(curios==nil) then
+        local curio = curiosInterface.createCurio(self, stanzaCorrente.curios[i])
+        curios[i]=curio
+        mainGroup:insert(curio)
+      end
+    end
+    stanzaCorrente.curios=curios
   funzioneEseguiDisplay(self,  stanzaCorrente, invloc)
   local numero = stanzaCorrente.seedBackground
   local immagine = "Images/Backgrounds/proceduralBack/Stanze/back"..numero..".png"
@@ -238,6 +248,8 @@ function scene:create( event )
           mainGroup:insert(enemy)
         end
     end
+
+
 
 
   mainGroup:insert(character)
@@ -298,6 +310,8 @@ function scene:create( event )
   tutorialButton.x = display.contentCenterX+550
   tutorialButton.y = display.contentCenterY-300
   tutorialButton:addEventListener("tap", goToTutorial)
+
+
 
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)

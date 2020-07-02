@@ -15,7 +15,6 @@ local tabella = interfaccia.tabellaFunction(numero)
 local sceneGroup
 local customFont="MadnessHyperactive.otf"
 local fileHandler = require("fileHandler")
-
 --local customFont=native.systemFont
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --handle del bottone per 'overlay sottostante. Non so perchè ma non andava con quello classico
