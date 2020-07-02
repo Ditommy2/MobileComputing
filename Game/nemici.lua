@@ -88,7 +88,7 @@ local nemici ={
     },
   },
 
-  nemico5={   --OK
+  nemico5={   --TO FIX
     immagine ="Images/Enemies/EarthGolem/Idle.png",
     vita = 9,
     danno = 3,
@@ -132,29 +132,29 @@ local nemici ={
     },
   },
 
-  nemico7={   --Tremolicchia                                --DA QUI IN GIU' DEVONO ESSERE SISTEMATI
-    immagine ="Images/Enemies/StoneGolem/Idle.png",         --GLI ALTRI FUNZIONANO
+  nemico7={   --OK
+    immagine ="Images/Enemies/StoneGolem/Idle.png",
     vita = 9,
     danno = 3,
     armatura = 0,
     velocita = 3,
     width=180,
     height=146,
-    frames=30,
+    frames=26,
     sequences =
     {
         {
             name = "idle",
             start = 1,
-            count = 30,
-            time = 500,
+            count = 26,
+            time = 400,
             loopCount = 0,
             loopDirection = "forward"
         }
     },
   },
 
-  nemico8={
+  nemico8={   --OK
     immagine ="Images/Enemies/MudGolem/Idle.png",
     vita = 9,
     danno = 3,
@@ -162,135 +162,304 @@ local nemici ={
     velocita = 3,
     width=182,
     height=146,
-    frames=25,
+    frames=26,
     sequences =
     {
         {
             name = "idle",
             start = 1,
-            count = 25,
+            count = 26,
+            time = 400,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
+  },
+
+  nemico9={   --OK
+    immagine ="Images/Enemies/WoodGolem/Idle.png",
+    vita = 9,
+    danno = 3,
+    armatura = 0,
+    velocita = 3,
+    width=180,
+    height=145,
+    frames=26,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 26,
+            time = 400,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
+  },
+
+  nemico10={    --OK
+    immagine ="Images/Enemies/Goblin/Idle.png",
+    vita = 9,
+    danno = 3,
+    armatura = 0,
+    velocita = 3,
+    width=101,
+    height=134,
+    frames=40,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 40,
             time = 600,
             loopCount = 0,
             loopDirection = "forward"
         }
     },
   },
-  -- nemico9={
-  --   immagine ="Images/Enemies/WoodGolem/Idle.png",
-  --   vita = 9,
-  --   danno = 3,
-  --   armatura = 0,
-  --   velocita = 3,
-  --   width=150,
-  --   height=122,
-  -- },
-  -- nemico10={
-  --   immagine ="Images/Enemies/Goblin/Idle.png",
-  --   vita = 9,
-  --   danno = 3,
-  --   armatura = 0,
-  --   velocita = 3,
-  --   width=119,
-  --   height=160,
-  -- },
-  -- nemico11={
-  --   immagine ="Images/Enemies/Ogre/Idle.png",
-  --   vita = 9,
-  --   danno = 3,
-  --   armatura = 0,
-  --   velocita = 3,
-  --   width=119,
-  --   height=160,
-  -- },
-  -- nemico12={
-  --   immagine ="Images/Enemies/Orco/Idle.png",
-  --   vita = 9,
-  --   danno = 3,
-  --   armatura = 0,
-  --   velocita = 3,
-  --   width=119,
-  --   height=160,
-  -- },
-  -- nemico13={
-  --   immagine ="Images/Enemies/ReaperMan1/Idle.png",
-  --   vita = 9,
-  --   danno = 3,
-  --   armatura = 0,
-  --   velocita = 3,
-  --   width=119,
-  --   height=160,
-  -- },
-  -- nemico14={
-  --   immagine ="Images/Enemies/ReaperMan2/Idle.png",
-  --   vita = 9,
-  --   danno = 3,
-  --   armatura = 0,
-  --   velocita = 3,
-  --   width=119,
-  --   height=160,
-  -- },
-  -- nemico15={
-  --   immagine ="Images/Enemies/ReaperMan3/Idle.png",
-  --   vita = 9,
-  --   danno = 3,
-  --   armatura = 0,
-  --   velocita = 3,
-  --   width=119,
-  --   height=160,
-  -- },
-  -- nemico16={
-  --   immagine ="Images/Enemies/Satiro1/Idle.png",
-  --   vita = 9,
-  --   danno = 3,
-  --   armatura = 0,
-  --   velocita = 3,
-  --   width=129,
-  --   height=131,
-  -- },
-  -- nemico17={
-  --   immagine ="Images/Enemies/Satiro2/Idle.png",
-  --   vita = 9,
-  --   danno = 3,
-  --   armatura = 0,
-  --   velocita = 3,
-  --   width=129,
-  --   height=131,
-  -- },
-  -- nemico18={
-  --   immagine ="Images/Enemies/Satiro3/Idle.png",
-  --   vita = 9,
-  --   danno = 3,
-  --   armatura = 0,
-  --   velocita = 3,
-  --   width=129,
-  --   height=131,
-  -- },
-  -- nemico19={
-  --   immagine ="Images/Enemies/Troll1/Idle.png",
-  --   vita = 9,
-  --   danno = 3,
-  --   armatura = 0,
-  --   velocita = 3,
-  --   width=193,
-  --   height=133,
-  -- },
-  -- nemico20={
-  --   immagine ="Images/Enemies/Troll2/Idle.png",
-  --   vita = 9,
-  --   danno = 3,
-  --   armatura = 0,
-  --   velocita = 3,
-  --   width=193,
-  --   height=133,
-  -- },
-  -- nemico21={
-  --   immagine ="Images/Enemies/Troll3/Idle.png",
-  --   vita = 9,
-  --   danno = 3,
-  --   armatura = 0,
-  --   velocita = 3,
-  --   width=193,
-  --   height=133,
-  -- }
+
+  nemico11={    --OK
+    immagine ="Images/Enemies/Ogre/Idle.png",
+    vita = 9,
+    danno = 3,
+    armatura = 0,
+    velocita = 3,
+    width=119,
+    height=168,
+    frames=40,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 40,
+            time = 600,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
+  },
+
+  nemico12={    --OK
+    immagine ="Images/Enemies/Orco/Idle.png",
+    vita = 9,
+    danno = 3,
+    armatura = 0,
+    velocita = 3,
+    width=144,
+    height=211,
+    frames=36,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 36,
+            time = 600,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
+  },
+
+  nemico13={    --OK
+    immagine ="Images/Enemies/ReaperMan1/Idle.png",
+    vita = 9,
+    danno = 3,
+    armatura = 0,
+    velocita = 3,
+    width=128,
+    height=161,
+    frames=35,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 35,
+            time = 600,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
+  },
+
+  nemico14={    --OK
+    immagine ="Images/Enemies/ReaperMan2/Idle.png",
+    vita = 9,
+    danno = 3,
+    armatura = 0,
+    velocita = 3,
+    width=126,
+    height=161,
+    frames=35,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 35,
+            time = 600,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
+  },
+
+  nemico15={  --OK
+    immagine ="Images/Enemies/ReaperMan3/Idle.png",
+    vita = 9,
+    danno = 3,
+    armatura = 0,
+    velocita = 3,
+    width=127,
+    height=160,
+    frames=36,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 36,
+            time = 600,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
+  },
+
+  nemico16={    --OK
+    immagine ="Images/Enemies/Satiro1/Idle.png",
+    vita = 9,
+    danno = 3,
+    armatura = 0,
+    velocita = 3,
+    width=124,
+    height=125,
+    frames=24,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 24,
+            time = 400,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
+  },
+
+  nemico17={    --TO FIX
+    immagine ="Images/Enemies/Satiro2/Idle.png",
+    vita = 9,
+    danno = 3,
+    armatura = 0,
+    velocita = 3,
+    width=135,
+    height=123,
+    frames=23,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 23,
+            time = 400,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
+  },
+
+  nemico18={    --OK
+    immagine ="Images/Enemies/Satiro3/Idle.png",
+    vita = 9,
+    danno = 3,
+    armatura = 0,
+    velocita = 3,
+    width=143,
+    height=123,
+    frames=24,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 24,
+            time = 400,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
+  },
+
+  nemico19={    --TO FIX
+    immagine ="Images/Enemies/Troll1/Idle.png",
+    vita = 9,
+    danno = 3,
+    armatura = 0,
+    velocita = 3,
+    width=271,
+    height=186,
+    frames=58,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 58,
+            time = 1000,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
+  },
+
+  nemico20={    --TO FIX
+    immagine ="Images/Enemies/Troll2/Idle.png",
+    vita = 9,
+    danno = 3,
+    armatura = 0,
+    velocita = 3,
+    width=272,
+    height=194,
+    frames=60,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 60,
+            time = 1000,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
+  },
+
+  nemico21={
+    immagine ="Images/Enemies/Troll3/Idle.png",
+    vita = 9,
+    danno = 3,
+    armatura = 0,
+    velocita = 3,
+    width=263,
+    height=198,
+    frames=60,
+    sequences =
+    {
+        {
+            name = "idle",
+            start = 1,
+            count = 60,
+            time = 1000,
+            loopCount = 0,
+            loopDirection = "forward"
+        }
+    },
+  }
 }
 return nemici

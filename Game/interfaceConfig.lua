@@ -29,9 +29,9 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     x=1
     a=primaX
     b=primaY
-    -- local spawnNemico = math.random(1, spawnRatioNemici)
-    -- local stringaNemico = "nemico"..spawnNemico
-    local stringaNemico = "nemico" .. 7
+    local spawnNemico = math.random(1, spawnRatioNemici)
+    local stringaNemico = "nemico"..spawnNemico
+    -- local stringaNemico = "nemico" .. 21
     local nemico = nemici[stringaNemico]
 
     local stanza={NORD=nil, SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b, nemici={nemico}, oggetti={}}
