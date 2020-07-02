@@ -530,6 +530,7 @@ local interfacciaConfig = {
         item.x = griglia[x][1]
         item.y = griglia[x][2]
         item.id = x
+        item.nome = inventario[x]
         griglia[x][3] = true
         griglia[x][4] = item
 
@@ -592,6 +593,7 @@ end),
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 dragItem=
 (function(event)
+  local curiosInterface = require("curiosInterface")
   local curios = composer.getVariable( "stanzaCorrente" ).curios
   local item=event.target
   local phase=event.phase
@@ -613,33 +615,47 @@ dragItem=
     end
   elseif("moved"==phase) then
       -- Muove la nave
-      print(item.x..", "..item.y)
+      -- print(item.x..", "..item.y.."---"..event.x..", "..event.y)
       item.x=event.x-item.touchOffsetX
       item.y=event.y-item.touchOffsetY
   elseif("ended"==phase or "cancelled"==phase) then
     --Oggetto fuori dall'inventario (tentativo di rimozione)
     if( (item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140)) ) then
       for i=#curios, 1, -1 do
-        print("upper x = "..curios[i].areaXUpper)
-        print("lower x = "..curios[i].areaXLower)
-        print("upper y = "..curios[i].areaYUpper)
-        print("lower y = "..curios[i].areaYLower)
-        print("curio x ="..curios[i].x)
-        print("curio y ="..curios[i].y)
-        print("item x = "..item.x)
-        print("item y = "..item.y)
-      if (item.x < curios[i].areaXUpper and item.x > curios[i].areaXLower and item.y < curios[i].areaYUpper and item.y > curios[i].areaYLower) then
-        print("aaaaaaaaaaa")
-        print(curios[i].messaggio)
+        -- print("upper x = "..curios[i].areaXUpper)
+        -- print("lower x = "..curios[i].areaXLower)
+        -- print("upper y = "..curios[i].areaYUpper)
+        -- print("lower y = "..curios[i].areaYLower)
+        -- print("curio x ="..curios[i].x)
+        -- print("curio y ="..curios[i].y)
+        -- print("item x = "..item.x)
+        -- print("item y = "..item.y)
+      if (event.x < curios[i].areaXUpper and event.x > curios[i].areaXLower and event.y < curios[i].areaYUpper and event.y > curios[i].areaYLower) then
+        -- print("aaaaaaaaaaa")
+        -- print(curios[i].messaggio)
+        if curios[i].funzione(item, curios[i]) then
+          display.remove( item )
+          inventario[idItem] = "vuoto"
+          griglia[idItem][3] = false
+          griglia[idItem][4] = nil
+          composer.getVariable( "stanzaCorrente" ).curios = curios
+          composer.setVariable( "inv", inventario )
+          composer.setVariable( "grigliaOggetti", griglia )
+        else
+          item.x = partenza[1]
+          item.y = partenza[2]
+        end
+      else
+        display.remove( item )
+        inventario[idItem] = "vuoto"
+        griglia[idItem][3] = false
+        griglia[idItem][4] = nil
+
+        composer.setVariable( "inv", inventario )
+        composer.setVariable( "grigliaOggetti", griglia )
       end
     end
-      display.remove( item )
-      inventario[idItem] = "vuoto"
-      griglia[idItem][3] = false
-      griglia[idItem][4] = nil
 
-      composer.setVariable( "inv", inventario )
-      composer.setVariable( "grigliaOggetti", griglia )
     else
       -- VA IMPLEMENTATO L'AUTO POSIZIONAMENTO DEGLI ITEM E LO SCAMBIO DI POSTO
       local xRel = item.x - invx
