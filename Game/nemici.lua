@@ -2,7 +2,7 @@ local nemici ={
 
   nemico1={   --OK
     immagine ="Images/Enemies/FallenAngel1/Idle.png",
-    vita = 50000,
+    vita = 90000,
     danno = 100,
     armatura = 10,
     velocita = math.random(1, 10),
@@ -24,7 +24,7 @@ local nemici ={
 
   nemico2={   --OK
     immagine ="Images/Enemies/FallenAngel2/Idle.png",
-    vita = 9,
+    vita = 90000,
     danno = 3,
     armatura = 0,
     velocita = 3,
@@ -46,7 +46,7 @@ local nemici ={
 
   nemico3={   --OK
     immagine ="Images/Enemies/FallenAngel3/Idle.png",
-    vita = 9,
+    vita = 90000,
     danno = 3,
     armatura = 0,
     velocita = 3,
@@ -68,7 +68,7 @@ local nemici ={
 
   nemico4={   --OK
     immagine ="Images/Enemies/IceGolem/Idle.png",
-    vita = 9,
+    vita = 90000,
     danno = 3,
     armatura = 0,
     velocita = 3,
@@ -90,7 +90,7 @@ local nemici ={
 
   nemico5={   --TO FIX
     immagine ="Images/Enemies/EarthGolem/Idle.png",
-    vita = 9,
+    vita = 90000,
     danno = 3,
     armatura = 0,
     velocita = 3,
@@ -112,7 +112,7 @@ local nemici ={
 
   nemico6={   --OK
     immagine ="Images/Enemies/MagmaGolem/Idle.png",
-    vita = 9,
+    vita = 90000,
     danno = 3,
     armatura = 0,
     velocita = 3,
@@ -134,7 +134,7 @@ local nemici ={
 
   nemico7={   --OK
     immagine ="Images/Enemies/StoneGolem/Idle.png",
-    vita = 9,
+    vita = 90000,
     danno = 3,
     armatura = 0,
     velocita = 3,
@@ -156,7 +156,7 @@ local nemici ={
 
   nemico8={   --OK
     immagine ="Images/Enemies/MudGolem/Idle.png",
-    vita = 9,
+    vita = 90000,
     danno = 3,
     armatura = 0,
     velocita = 3,

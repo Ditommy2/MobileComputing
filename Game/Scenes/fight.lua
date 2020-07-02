@@ -8,6 +8,7 @@ local composer = require( "composer" )
 local characterInterface = require("characterInterface")
 local enemyInterface = require("enemyInterface")
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
+local fileHandler = require("fileHandler")
 local nemici = require("nemici")
 local customFont="MadnessHyperactive.otf"
 local scene = composer.newScene()
@@ -62,8 +63,8 @@ physics.start()
 -- -----------------------------------------------------------------------------------
 -- Fine combattimento
 -- -----------------------------------------------------------------------------------
-local function gotoMenu()
-		composer.gotoScene( "Scenes.menu", {time=800, effect="crossFade"} )
+local function gotoNuovaCarica()
+		composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
 end
 
 local function gotoLivello1()
@@ -112,8 +113,8 @@ local function turnEnemy()
 
 		if(character.life > 0) then
 		timer.performWithDelay( 2000, changeStarTuo)
-		timer.performWithDelay(6000, eseguiMossa)
-		timer.performWithDelay(6000, addTasto)
+		timer.performWithDelay(4000, eseguiMossa)
+		timer.performWithDelay(4000, addTasto)
 		textDamageEnemy.alpha = 1
 	else
 		local gameOverBack = display.newImageRect( backgroundGroup, "Images/Backgrounds/Black.jpg", 1280, 720)
@@ -121,7 +122,19 @@ local function turnEnemy()
 	  gameOverBack.y = display.contentCenterY
 		local gameOver = display.newText(textGroup, "GAME OVER", 600, 200, native.systemFont, 100)
 	  fightText:setFillColor(0, 0, 0)
-		timer.performWithDelay( 5000, gotoMenu )
+
+		local stringaSalvataggio = "save".."$$"..composer.getVariable("username")..".json"
+		local tabelloneSalvataggi = fileHandler.loadTable(stringaSalvataggio)
+		if(not(tabelloneSalvataggi == nil)) then
+		for i = #tabelloneSalvataggi, 1, -1 do
+			if(tabelloneSalvataggi[i].nome == composer.getVariable( "nomePartita" )) then
+			tabelloneSalvataggi[i] = nil
+		end
+	end
+	fileHandler.saveTable(tabelloneSalvataggi, stringaSalvataggio)
+	fileHandler.caricaSave(tabelloneSalvataggi, stringaSalvataggio)
+end
+		timer.performWithDelay( 5000, gotoNuovaCarica )
 	end
 
 end
@@ -362,9 +375,11 @@ local function eseguiMossa()
 	textDamage.alpha = 1
 	enemy1:removeEventListener("tap", eseguiMossa)
 	else
-
+	enemy1:removeEventListener("tap", eseguiMossa)
 	transition.to( enemy1 , { time=3000, alpha=0 } )
+	stanzaCorrente.nemici[1] = nil
 	timer.performWithDelay( 5000, gotoLivello1 )
+
 
 		end
 	end
@@ -395,7 +410,8 @@ function scene:create ( event )
 
 --****************BACKGROUND GROUP********************************
 
- local background = display.newImageRect( backgroundGroup, "Images/Backgrounds/proceduralBack/Stanze/back1.png", 1280, 720 )
+ local numero = stanzaCorrente.seedBackground
+ local background = display.newImageRect( backgroundGroup, "Images/Backgrounds/proceduralBack/Stanze/back"..numero..".png", 1280, 720 )
  background.x = display.contentCenterX
  background.y = display.contentCenterY - 200
 
@@ -469,7 +485,7 @@ function scene:create ( event )
 		lifeBarEnemy.y = display.contentCenterY - 250
 		enemy1:addEventListener("tap", eseguiMossa)
 
-		gameLoop()
+		timer.performWithDelay(2000, gameLoop())
 end
 
 -- show()
