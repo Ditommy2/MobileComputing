@@ -589,10 +589,10 @@ local interfacciaConfig = {
 
       -- print("coordinate mappa: (" .. invx .. ", " .. invy .. ")")
 
-      if( not((item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140))) ) then
+      -- if( not((item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140))) ) then
         item.touchOffsetX=event.x-item.x
         item.touchOffsetY=event.y-item.y
-      end
+      -- end
     elseif("moved"==phase) then
       -- Muove la nave
       -- print(item.x..", "..item.y.."---"..event.x..", "..event.y)
@@ -607,6 +607,7 @@ local interfacciaConfig = {
               local app = curios[i]
               composer.getVariable( "activeCurios" )[i]=curiosInterface.createCurio(self, app.sostitutivo)
               composer.getVariable( "mainGroup" ):insert(composer.getVariable( "activeCurios" )[i])
+              composer.getVariable( "activeCurios" )[i]:toBack()
               for j = #composer.getVariable( "stanzaCorrente" ).curios, 1, -1 do
                 print("confronto tra "..composer.getVariable( "stanzaCorrente" ).curios[j]..", "..app.nome)
                 if composer.getVariable( "stanzaCorrente" ).curios[j] == app.nome then

@@ -227,6 +227,12 @@ function scene:create( event )
     end
     composer.setVariable( "activeCurios", activeCurios )
     stanzaCorrente.curios=curios
+    for j=#stanzaCorrente.oggetti, 1, -1 do
+    local oggetto = display.newImageRect("Images/Icons/icons3/"..stanzaCorrente.oggetti[j], 50, 50)
+    oggetto.x=lunghezza * 0.7
+    oggetto.y = altezza-390
+    mainGroup:insert(oggetto)
+  end
   funzioneEseguiDisplay(self,  stanzaCorrente, invloc)
   local numero = stanzaCorrente.seedBackground
   local immagine = "Images/Backgrounds/proceduralBack/Stanze/back"..numero..".png"

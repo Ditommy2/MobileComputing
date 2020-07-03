@@ -29,6 +29,9 @@ local function create(scena, stringaCurio)
   createdCurio.sostitutivo = curio.sostitutivo
   createdCurio.nome = curio.nome
   --  physics.addBody(curio, "dynamic", { isSensor=true } )
+  if not(curio.oggettiPossibili ==nil) then
+  createdCurio.oggetto = curio.oggettiPossibili[math.random(1, #curio.oggettiPossibili)]
+end
   return createdCurio
 end
 
