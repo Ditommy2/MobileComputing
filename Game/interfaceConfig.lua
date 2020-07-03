@@ -29,9 +29,9 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     x=1
     a=primaX
     b=primaY
-    local spawnNemico = math.random(1, spawnRatioNemici)
+    -- local spawnNemico = math.random(1, spawnRatioNemici)
+    local spawnNemico = math.random(16, 16)
     local stringaNemico = "nemico"..spawnNemico
-    -- local stringaNemico = "nemico" .. 21
     local nemico = nemici[stringaNemico]
 
     local stanza={NORD=nil, SUD=nil, EST=nil, OVEST=nil, TESTO=index, visitato=false, corrente=false, seedBackground=seed, x=a, y=b, nemici={nemico}, oggetti={}}
@@ -45,7 +45,8 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     cardinale=math.random(1, 4)
     if (cardinale == 1) and (mappa[x].NORD == nil) and (tabella[a][b+1]==false) then
       mappa[x].seedNORD=seed
-      local spawnNemico = math.random(1, spawnRatioNemici)
+      -- local spawnNemico = math.random(1, spawnRatioNemici)
+      local spawnNemico = math.random(16, 16)
       local stringaNemico = "nemico"..spawnNemico
       local nemico = nemici[stringaNemico]
 
@@ -60,7 +61,8 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
 
     if (cardinale == 2) and (mappa[x].SUD == nil) and (tabella[a][b-1]==false) then
       mappa[x].seedSUD=seed
-      local spawnNemico = math.random(1, spawnRatioNemici)
+      -- local spawnNemico = math.random(1, spawnRatioNemici)
+      local spawnNemico = math.random(16, 16)
       local stringaNemico = "nemico"..spawnNemico
       local nemico = nemici[stringaNemico]
 
@@ -75,7 +77,8 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
 
     if (cardinale == 3) and (mappa[x].EST == nil) and (tabella[a+1][b]==false) then
       mappa[x].seedEST=seed
-      local spawnNemico = math.random(1, spawnRatioNemici)
+      -- local spawnNemico = math.random(1, spawnRatioNemici)
+      local spawnNemico = math.random(16, 16)
       local stringaNemico = "nemico"..spawnNemico
       local nemico = nemici[stringaNemico]
 
@@ -90,7 +93,8 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
 
     if (cardinale == 4) and (mappa[x].OVEST == nil) and (tabella[a-1][b]==false) then
       mappa[x].seedOVEST=seed
-      local spawnNemico = math.random(1, spawnRatioNemici)
+      -- local spawnNemico = math.random(1, spawnRatioNemici)
+      local spawnNemico = math.random(16, 16)
       local stringaNemico = "nemico"..spawnNemico
       local nemico = nemici[stringaNemico]
 
@@ -330,8 +334,10 @@ dragItem=
     end
   elseif("moved"==phase) then
       -- Muove la nave
+    if (not(item.touchOffsetX==nil) and not(item.touchOffsetY==nil)) then
       item.x=event.x-item.touchOffsetX
       item.y=event.y-item.touchOffsetY
+    end
   elseif("ended"==phase or "cancelled"==phase) then
     --Oggetto fuori dall'inventario (tentativo di rimozione)
     if( (item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140)) ) then

@@ -2,10 +2,10 @@ local nemici ={
 
   nemico1={   --OK
     immagine ="Images/Enemies/FallenAngel1/Idle.png",
-    vita = 90000,
-    danno = 100,
-    armatura = 10,
-    velocita = math.random(1, 10),
+    life= 900,
+    damage= 50,
+    armor= 6,
+    speed= 3,
     width=117,
     height=157,
     frames=37,
@@ -24,10 +24,10 @@ local nemici ={
 
   nemico2={   --OK
     immagine ="Images/Enemies/FallenAngel2/Idle.png",
-    vita = 90000,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 900,
+    damage= 50,
+    armor= 6,
+    speed= 3,
     width=117,
     height=147,
     frames=37,
@@ -46,10 +46,10 @@ local nemici ={
 
   nemico3={   --OK
     immagine ="Images/Enemies/FallenAngel3/Idle.png",
-    vita = 90000,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 900,
+    damage= 50,
+    armor= 6,
+    speed= 3,
     width=119,
     height=166,
     frames=36,
@@ -68,10 +68,10 @@ local nemici ={
 
   nemico4={   --OK
     immagine ="Images/Enemies/IceGolem/Idle.png",
-    vita = 90000,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 700,
+    damage= 40,
+    armor= 7,
+    speed= 3,
     width=104,
     height=138,
     frames=37,
@@ -90,10 +90,10 @@ local nemici ={
 
   nemico5={   --TO FIX
     immagine ="Images/Enemies/EarthGolem/Idle.png",
-    vita = 90000,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 700,
+    damage= 40,
+    armor= 7,
+    speed= 3,
     width=101,
     height=146,
     frames=36,
@@ -112,10 +112,10 @@ local nemici ={
 
   nemico6={   --OK
     immagine ="Images/Enemies/MagmaGolem/Idle.png",
-    vita = 90000,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 700,
+    damage= 40,
+    armor= 7,
+    speed= 3,
     width=98,
     height=134,
     frames=37,
@@ -134,10 +134,10 @@ local nemici ={
 
   nemico7={   --OK
     immagine ="Images/Enemies/StoneGolem/Idle.png",
-    vita = 90000,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 1200,
+    damage=55,
+    armor= 5,
+    speed= 2,
     width=180,
     height=146,
     frames=26,
@@ -156,10 +156,10 @@ local nemici ={
 
   nemico8={   --OK
     immagine ="Images/Enemies/MudGolem/Idle.png",
-    vita = 90000,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 1200,
+    damage=55,
+    armor= 5,
+    speed= 2,
     width=182,
     height=146,
     frames=26,
@@ -178,10 +178,10 @@ local nemici ={
 
   nemico9={   --OK
     immagine ="Images/Enemies/WoodGolem/Idle.png",
-    vita = 9,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 1200,
+    damage=55,
+    armor= 5,
+    speed= 2,
     width=180,
     height=145,
     frames=26,
@@ -200,10 +200,10 @@ local nemici ={
 
   nemico10={    --OK
     immagine ="Images/Enemies/Goblin/Idle.png",
-    vita = 9,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 500,
+    damage=30,
+    armor= 7,
+    speed= 4,
     width=101,
     height=134,
     frames=40,
@@ -222,10 +222,10 @@ local nemici ={
 
   nemico11={    --OK
     immagine ="Images/Enemies/Ogre/Idle.png",
-    vita = 9,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 1400,
+    damage=55,
+    armor= 5,
+    speed= 2,
     width=119,
     height=168,
     frames=40,
@@ -244,10 +244,10 @@ local nemici ={
 
   nemico12={    --OK
     immagine ="Images/Enemies/Orco/Idle.png",
-    vita = 9,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 1600,
+    damage=60,
+    armor= 4,
+    speed= 2,
     width=144,
     height=211,
     frames=36,
@@ -266,10 +266,10 @@ local nemici ={
 
   nemico13={    --OK
     immagine ="Images/Enemies/ReaperMan1/Idle.png",
-    vita = 9,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 1000,
+    damage=50,
+    armor= 6,
+    speed= 3,
     width=128,
     height=161,
     frames=35,
@@ -288,10 +288,10 @@ local nemici ={
 
   nemico14={    --OK
     immagine ="Images/Enemies/ReaperMan2/Idle.png",
-    vita = 9,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 1000,
+    damage=50,
+    armor= 6,
+    speed= 3,
     width=126,
     height=161,
     frames=35,
@@ -310,10 +310,10 @@ local nemici ={
 
   nemico15={  --OK
     immagine ="Images/Enemies/ReaperMan3/Idle.png",
-    vita = 9,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 1000,
+    damage=50,
+    armor= 6,
+    speed= 3,
     width=127,
     height=160,
     frames=36,
@@ -332,13 +332,29 @@ local nemici ={
 
   nemico16={    --OK
     immagine ="Images/Enemies/Satiro1/Idle.png",
-    vita = 9,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 300,
+    damage=40,
+    armor= 8,
+    speed= 5,
     width=124,
     height=125,
     frames=24,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -354,13 +370,29 @@ local nemici ={
 
   nemico17={    --TO FIX
     immagine ="Images/Enemies/Satiro2/Idle.png",
-    vita = 9,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 300,
+    damage=40,
+    armor= 8,
+    speed= 5,
     width=135,
     height=123,
     frames=23,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -376,13 +408,29 @@ local nemici ={
 
   nemico18={    --OK
     immagine ="Images/Enemies/Satiro3/Idle.png",
-    vita = 9,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 300,
+    damage=40,
+    armor= 8,
+    speed= 5,
     width=143,
     height=123,
     frames=24,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -398,10 +446,10 @@ local nemici ={
 
   nemico19={    --TO FIX
     immagine ="Images/Enemies/Troll1/Idle.png",
-    vita = 9,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 2000,
+    damage=80,
+    armor= 3,
+    speed= 1,
     width=271,
     height=186,
     frames=58,
@@ -420,10 +468,10 @@ local nemici ={
 
   nemico20={    --TO FIX
     immagine ="Images/Enemies/Troll2/Idle.png",
-    vita = 9,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 2000,
+    damage=80,
+    armor= 3,
+    speed= 1,
     width=272,
     height=194,
     frames=60,
@@ -442,10 +490,10 @@ local nemici ={
 
   nemico21={
     immagine ="Images/Enemies/Troll3/Idle.png",
-    vita = 9,
-    danno = 3,
-    armatura = 0,
-    velocita = 3,
+    life= 2000,
+    damage=80,
+    armor= 3,
+    speed= 1,
     width=263,
     height=198,
     frames=60,

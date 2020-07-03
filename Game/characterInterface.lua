@@ -42,49 +42,49 @@ local sheet_idle = graphics.newImageSheet( "Images/Characters/Personaggio/Animat
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sequences =
 {
-    --Right walking sequence
-    {
-        name = "rightWalk",
-        start = 1,
-        count = 60,
-        time = 1000,
-        loopCount = 0,
-        loopDirection = "forward",
-        sheet = sheet_walking
-    },
+  --Right walking sequence
+  {
+    name = "rightWalk",
+    start = 1,
+    count = 60,
+    time = 1000,
+    loopCount = 0,
+    loopDirection = "forward",
+    sheet = sheet_walking
+  },
 
-    --Left walking sequence
-    {
-        name = "leftWalk",
-        start = 61,
-        count = 60,
-        time = 1000,
-        loopCount = 0,
-        loopDirection = "forward",
-        sheet = sheet_walking
-    },
+  --Left walking sequence
+  {
+    name = "leftWalk",
+    start = 61,
+    count = 60,
+    time = 1000,
+    loopCount = 0,
+    loopDirection = "forward",
+    sheet = sheet_walking
+  },
 
-    --Right Idle
-    {
-        name = "rightIdle",
-        start = 1,
-        count = 60,
-        time = 1000,
-        loopCount = 0,
-        loopDirection = "forward",
-        sheet = sheet_idle
-    },
+  --Right Idle
+  {
+    name = "rightIdle",
+    start = 1,
+    count = 60,
+    time = 1000,
+    loopCount = 0,
+    loopDirection = "forward",
+    sheet = sheet_idle
+  },
 
-    --Left Idle
-    {
-        name = "leftIdle",
-        start = 61,
-        count = 60,
-        time = 1000,
-        loopCount = 0,
-        loopDirection = "forward",
-        sheet = sheet_idle
-    }
+  --Left Idle
+  {
+    name = "leftIdle",
+    start = 61,
+    count = 60,
+    time = 1000,
+    loopCount = 0,
+    loopDirection = "forward",
+    sheet = sheet_idle
+  }
 }
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -114,7 +114,10 @@ local function move(event)
       scene.changeRoom()
     end
 
-    if(character.x > lunghezza - 500 and stanzaCorrente.nemici[1] ~= nill) then
+    local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
+    local nemico = stanzaCorrente.nemici[1]
+    if(character.x > lunghezza - 500 and nemico ~= nill) then
+      print("partito combattimento con: " .. nemico.immagine)
       timer.pause( moveTimer )
       character:pause()
       composer.gotoScene( "Scenes.fight", {time=1500, effect="zoomInOutFade"} )
@@ -194,33 +197,26 @@ local function create(scena)
   scene = scena
 
   --Displaying character and setting sprite sheets
-  -- character = display.newSprite( sheet_walking, sequences_walking )
   character = display.newSprite( sheet_idle, sequences )
   character:setSequence("rightIdle")
-  -- character:setFrame(121)
   character:play()
   character.anchorY = 1
   character.x = lunghezza * 0.1
   character.y = altezza-310
   physics.addBody(character, "dynamic", {radius=sheet_walking_Options.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
   character.myName = "Character"
-  character.life = 5
-  character.armor = 10
+  character.life = 3000
+  character.armor = 8
   character.damage = 100
-  character.speed = math.random(1, 10)
-  character.testoMossa1 = "Pugno : Stordisci il tuo avversario \nDamage = 60%\nHit chance = 20%\n"
-  character.testoMossa2 = "Mossa2 : Questa mossa ti fa il caffè\nAttacco = 30%\nDifesa = 50%\nVelocità = 80%"
-  character.testoMossa3 = "Mossa3 : Questa mossa mammt\nAttacco = 20%\nDifesa = 90%\nVelocità = 60%"
-  character.testoMossa4 = "Mossa4 : Questa mossa genera gettere & settere\nAttacco = 20%\nDifesa = 50%\nVelocità = 20%"
-  character.nomeMossa1 = "Pugno"
-  character.nomeMossa2 = "Calcio"
-  character.nomeMossa3 = "Cinta"
-  character.nomeMossa4 = "Laccio"
-  character.mossa1 = {hitChance = 3, damage = 10}
-  character.mossa2 = {hitChance = 2, damage = 30}
-  character.mossa3 = {hitChance = 1, damage = 20}
-  character.mossa4 = {hitChance = 4, damage = 40}
-
+  character.speed = 3
+  character.mossa1 = {nome="Pugno", hitChance = 4, damage = 0.6}
+  character.mossa2 = {nome="Calcio", hitChance = 4, damage = 0.8}
+  character.mossa3 = {nome="Cinta", hitChance = 2, damage = 0.4}
+  character.mossa4 = {nome="Laccio", hitChance = 1, damage = 0.1}
+  character.testoMossa1 = character.mossa1.nome .. ": Stordisci il tuo avversario \nDamage = " .. (character.mossa1.damage * 100) .. "%\nHit chance = " .. character.mossa1.hitChance .. "%\n"
+  character.testoMossa2 = character.mossa2.nome .. ": : Questa mossa ti fa il caffè\nDamage = " .. (character.mossa2.damage * 100) .. "%\nHit chance = " .. character.mossa2.hitChance .. "%\n"
+  character.testoMossa3 = character.mossa3.nome .. ": Questa mossa mammt\nDamage = " .. (character.mossa3.damage * 100) .. "%\nHit chance = " .. character.mossa3.hitChance .. "%\n"
+  character.testoMossa4 = character.mossa4.nome .. ": Questa mossa genera gettere & settere\nDamage = " .. (character.mossa4.damage * 100) .. "%\nHit chance = " .. character.mossa4.hitChance .. "%\n"
 
   return character
 end
