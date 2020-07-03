@@ -351,13 +351,17 @@ local function moveListener(event)
   elseif(phase=="moved") then   --Touch moved
     -- --Touch falls in the non-movement area
     if((event.x > target.nonMovementArea.minX and event.x < target.nonMovementArea.maxX) or (event.y > target.nonMovementArea.maxY)) then
+      if not(moveTimer==nil) then
       timer.pause(moveTimer)
        timer.cancel( moveTimer )
+     end
        return true
     end
   elseif (phase=="ended" or phase=="cancelled") then
+  if not(moveTimer==nil) then
     timer.pause(moveTimer)
      timer.cancel( moveTimer )
+   end
   end
   return true
 end
