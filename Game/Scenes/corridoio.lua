@@ -132,6 +132,7 @@ function scene:create( event )
 
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
+  composer.setVariable("sceneGroup", sceneGroup)
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -43,26 +43,22 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     local stringaNemico = "nemico"..spawnNemico
     local stringaCurio = "curio"..spawnCurio
     local nemico = nemici[stringaNemico]
-    local curio
-    if (nemico==nil) then
-      curio = curios[stringaCurio]
-    end
     local stanza={
-    NORD=nil,
-    SUD=nil,
-    EST=nil,
-    OVEST=nil,
-    TESTO=index,
-    visitato=false,
-    corrente=false,
-    seedBackground=seed,
-    x=a,
-    y=b,
-    nemici={nemico},
-    curios = {curio},
-    oggetti={},
-    corridoioCorrente=nil
-  }
+      NORD=nil,
+      SUD=nil,
+      EST=nil,
+      OVEST=nil,
+      TESTO=index,
+      visitato=false,
+      corrente=false,
+      seedBackground=seed,
+      x=a,
+      y=b,
+      nemici={nemico},
+      curios = {stringaCurio},
+      oggetti={},
+      corridoioCorrente=nil
+    }
     mappa[x]=stanza
     trovato=true
     tabella[a][b]=true
@@ -78,28 +74,23 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
       local stringaNemico = "nemico"..spawnNemico
       local stringaCurio = "curio"..spawnCurio
       local nemico = nemici[stringaNemico]
-      local curio
-      if (nemico==nil) then
-        curio = curios[stringaCurio]
-      end
-
       local stanza = {
-      NORD=nil,
-      SUD=mappa[x],
-      EST=nil,
-      OVEST=nil,
-      TESTO=index,
-      visitato=false,
-      corrente=false,
-      seedBackground=seed,
-      x=a,
-      y=b+1,
-      seedSUD=seed,
-      nemici={nemico},
-      curios = {curio},
-      oggetti={},
-      corridoioCorrente=nil
-     }
+        NORD=nil,
+        SUD=mappa[x],
+        EST=nil,
+        OVEST=nil,
+        TESTO=index,
+        visitato=false,
+        corrente=false,
+        seedBackground=seed,
+        x=a,
+        y=b+1,
+        seedSUD=seed,
+        nemici={nemico},
+        curios = {stringaCurio},
+        oggetti={},
+        corridoioCorrente=nil
+      }
       mappa[x].NORD = stanza
       index=index+1
       mappa[index]=stanza
@@ -115,11 +106,6 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
       local stringaNemico = "nemico"..spawnNemico
       local stringaCurio = "curio"..spawnCurio
       local nemico = nemici[stringaNemico]
-      local curio
-      if (nemico==nil) then
-        curio = curios[stringaCurio]
-      end
-
       local stanza = {
         NORD=mappa[x],
         SUD=nil,
@@ -133,10 +119,10 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
         y=b-1,
         seedNORD=seed,
         nemici={nemico},
-        curios = {curio},
+        curios = {stringaCurio},
         oggetti={},
         corridoioCorrente=nil
-     }
+      }
       mappa[x].SUD = stanza
       index=index+1
       mappa[index]=stanza
@@ -152,26 +138,21 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
       local stringaNemico = "nemico"..spawnNemico
       local stringaCurio = "curio"..spawnCurio
       local nemico = nemici[stringaNemico]
-      local curio
-      if (nemico==nil) then
-        curio = curios[stringaCurio]
-      end
-
       local stanza = {
-      NORD=nil,
-      SUD=nil,
-      EST=nil,
-      OVEST=mappa[x],
-      TESTO=index,
-      visitato=false,
-      corrente=false,
-      seedBackground=seed,
-      x=a+1, y=b,
-      seedOVEST=seed,
-      nemici={nemico},
-      curios = {curio},
-      oggetti={},
-      corridoioCorrente=nil
+        NORD=nil,
+        SUD=nil,
+        EST=nil,
+        OVEST=mappa[x],
+        TESTO=index,
+        visitato=false,
+        corrente=false,
+        seedBackground=seed,
+        x=a+1, y=b,
+        seedOVEST=seed,
+        nemici={nemico},
+        curios = {stringaCurio},
+        oggetti={},
+        corridoioCorrente=nil
       }
       mappa[x].EST = stanza
       index=index+1
@@ -188,28 +169,23 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
       local stringaNemico = "nemico"..spawnNemico
       local stringaCurio = "curio"..spawnCurio
       local nemico = nemici[stringaNemico]
-      local curio
-      if (nemico==nil) then
-        curio = curios[stringaCurio]
-      end
-
       local stanza = {
-      NORD=nil,
-      SUD=nil,
-      EST=mappa[x],
-      OVEST=nil,
-      TESTO=index,
-      visitato=false,
-      corrente=false,
-      seedBackground=seed,
-      x=a-1,
-      y=b,
-      seedEST=seed,
-      nemici={nemico},
-      curios = {curio},
-      oggetti={},
-      corridoioCorrente=nil
-  }
+        NORD=nil,
+        SUD=nil,
+        EST=mappa[x],
+        OVEST=nil,
+        TESTO=index,
+        visitato=false,
+        corrente=false,
+        seedBackground=seed,
+        x=a-1,
+        y=b,
+        seedEST=seed,
+        nemici={nemico},
+        curios = {stringaCurio},
+        oggetti={},
+        corridoioCorrente=nil
+      }
       mappa[x].OVEST = stanza
       index=index+1
       mappa[index]=stanza
@@ -284,7 +260,7 @@ local function move(event)
     -- if not(token.y <token.partenzaY and token.y > token.partenzaY-token.movimentoMassimo) or not(token.y > token.partenzaY and token.y < token.partenzaY+token.movimentoMassimo) then
     --   timer.pause(moveTimer)
     -- end
-end
+  end
 
 end
 
@@ -294,7 +270,7 @@ local function moveListener(event)
   local target = event.target
   local dir
   if(phase=="began") then
-     moveTimer = timer.performWithDelay( 30, move, 0)
+    moveTimer = timer.performWithDelay( 30, move, 0)
 
     if(not((event.x > target.nonMovementArea.minX and event.x < target.nonMovementArea.maxX) or (event.y > target.nonMovementArea.maxY))) then
       --Touch in the movement area, starting the right movement sprite animation
@@ -344,24 +320,24 @@ local function moveListener(event)
           moveTimer.params = {direction=dir}
         end
       end
-      end
+    end
 
-      moveTimer.isPaused = false
-      moveTimer.params = {direction=dir}
+    moveTimer.isPaused = false
+    moveTimer.params = {direction=dir}
   elseif(phase=="moved") then   --Touch moved
     -- --Touch falls in the non-movement area
     if((event.x > target.nonMovementArea.minX and event.x < target.nonMovementArea.maxX) or (event.y > target.nonMovementArea.maxY)) then
       if not(moveTimer==nil) then
-      timer.pause(moveTimer)
-       timer.cancel( moveTimer )
-     end
-       return true
+        timer.pause(moveTimer)
+        timer.cancel( moveTimer )
+      end
+      return true
     end
   elseif (phase=="ended" or phase=="cancelled") then
-  if not(moveTimer==nil) then
-    timer.pause(moveTimer)
-     timer.cancel( moveTimer )
-   end
+    if not(moveTimer==nil) then
+      timer.pause(moveTimer)
+      timer.cancel( moveTimer )
+    end
   end
   return true
 end
@@ -419,21 +395,21 @@ local function displayStanzaFunzione(stanza, offx, offy)
     item=display.newImageRect( "Images/Icons/corridoioVert.png",  spessoreCorridoio, lunghezzaCorridoio )
     item.x=offx
     item.y=offy+(dimensioniStanza/2)+(lunghezzaCorridoio/2)-diff
-  --  item:setFillColor(1, 0, 0)
+    --  item:setFillColor(1, 0, 0)
     mapGroup:insert(item)
     stanza.SUD.visitato=true
     -- displayStanzaFunzione(stanza.SUD, offx, (offy+lunghezzaCorridoio))
     if(stanza.corridoioCorrente=="SUD") then
-        token = display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
-        token.movimentoMassimo=lunghezzaCorridoio
-        token.direzione="SUD"
-        token.partenzaX = item.x
-        token.partenzaY = item.y - lunghezzaCorridoio/2
-        token.x = item.x
-        token.y = item.y - lunghezzaCorridoio/2
-        --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
-        tokenGroup:insert(token)
-      end
+      token = display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
+      token.movimentoMassimo=lunghezzaCorridoio
+      token.direzione="SUD"
+      token.partenzaX = item.x
+      token.partenzaY = item.y - lunghezzaCorridoio/2
+      token.x = item.x
+      token.y = item.y - lunghezzaCorridoio/2
+      --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
+      tokenGroup:insert(token)
+    end
     displayStanzaFunzione(stanza.SUD, offx, (offy+lunghezzaCorridoio+(dimensioniStanza/2)))
   end
 
@@ -487,9 +463,9 @@ end
 --questa è una tabella che contiene delle funzioni
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local interfacciaConfig = {
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---la prima funzione, displayGrid, si occupa di stampare gli oggetti dell'inventario in ordine di righe e colonne in modo da poter rimanere nella griglia dell'inventario
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  --la prima funzione, displayGrid, si occupa di stampare gli oggetti dell'inventario in ordine di righe e colonne in modo da poter rimanere nella griglia dell'inventario
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   displayGrid=
   (function(inventario, handler, inventoryGroup)
     local index=1
@@ -545,207 +521,206 @@ local interfacciaConfig = {
       end
     end
   end),
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---questa funzione si riferisce a quella sopra e qui può essere usata da funzioni esterne. Si deve fare così per via della ricorsività
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  --questa funzione si riferisce a quella sopra e qui può essere usata da funzioni esterne. Si deve fare così per via della ricorsività
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   proceduraleMappa=
   (proceduraleMappaFunzione),
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---come sopra
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  --come sopra
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   displayStanza=
   (displayStanzaFunzione),
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---come sopra
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  --come sopra
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   annullaVisite=
   (annullaVisitefunzione),
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---funzione di handle per il movimento della mappa. è importante perchè comunica al composer l'ultima posizione della mappa dato che quando si cambia da una stanza
---all'altra la mappa non deve teletrasportarsi
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-dragMapSet=
-(function(event)
-  local item=event.target
-  local phase=event.phase
-  if("began"==phase) then
-    display.currentStage:setFocus(item)
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  --funzione di handle per il movimento della mappa. è importante perchè comunica al composer l'ultima posizione della mappa dato che quando si cambia da una stanza
+  --all'altra la mappa non deve teletrasportarsi
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  dragMapSet=
+  (function(event)
+    local item=event.target
+    local phase=event.phase
+    if("began"==phase) then
+      display.currentStage:setFocus(item)
 
-    -- print("coordinate mappa: (" .. (display.contentCenterX+150) .. ", " .. (display.contentCenterY+100) .. ")")
+      -- print("coordinate mappa: (" .. (display.contentCenterX+150) .. ", " .. (display.contentCenterY+100) .. ")")
 
-    if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-125)) and (event.y > (display.contentCenterY+100) and event.y < (altezza-75))) then
-      item.touchOffsetX=event.x-item.x
-      item.touchOffsetY=event.y-item.y
-    end
-  elseif("moved"==phase) then
+      if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-125)) and (event.y > (display.contentCenterY+100) and event.y < (altezza-75))) then
+        item.touchOffsetX=event.x-item.x
+        item.touchOffsetY=event.y-item.y
+      end
+    elseif("moved"==phase) then
       -- Muove la nave
 
-    if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-125)) and (event.y > (display.contentCenterY+100) and event.y < (altezza-75))) then
-      item.x=event.x-item.touchOffsetX
-      item.y=event.y-item.touchOffsetY
-    end
-   elseif("ended"==phase or "cancelled"==phase) then
-     --rilascio del tocco
-     composer.setVariable( "mapx", item.x )
-     composer.setVariable( "mapy", item.y )
-     display.currentStage:setFocus(nil)
+      if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-125)) and (event.y > (display.contentCenterY+100) and event.y < (altezza-75))) then
+        item.x=event.x-item.touchOffsetX
+        item.y=event.y-item.touchOffsetY
+      end
+    elseif("ended"==phase or "cancelled"==phase) then
+      --rilascio del tocco
+      composer.setVariable( "mapx", item.x )
+      composer.setVariable( "mapy", item.y )
+      display.currentStage:setFocus(nil)
     end
     return true
-end),
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---funzione per l'handle del movimento degli oggetti dell'inventario. è da rivedere dato che ancora non controlla perfettamente l'agancio degli oggetti nelle posizioni
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-dragItem=
-(function(event)
-  local curiosInterface = require("curiosInterface")
-  local curios = composer.getVariable( "stanzaCorrente" ).curios
-  local item=event.target
-  local phase=event.phase
-  local idItem = item.id
-  local griglia = composer.getVariable( "grigliaOggetti" )
-  local inventario = composer.getVariable( "inv" )
-  local invx = composer.getVariable( "invx" )
-  local invy = composer.getVariable( "invy" )
-  local partenza = griglia[idItem]
+  end),
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  --funzione per l'handle del movimento degli oggetti dell'inventario. è da rivedere dato che ancora non controlla perfettamente l'agancio degli oggetti nelle posizioni
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  dragItem=
+  (function(event)
+    local curiosInterface = require("curiosInterface")
+    local curios = composer.getVariable( "activeCurios" )
+    local item=event.target
+    local phase=event.phase
+    local idItem = item.id
+    local griglia = composer.getVariable( "grigliaOggetti" )
+    local inventario = composer.getVariable( "inv" )
+    local invx = composer.getVariable( "invx" )
+    local invy = composer.getVariable( "invy" )
+    local partenza = griglia[idItem]
 
-  if("began"==phase) then
-    display.currentStage:setFocus(item)
+    if("began"==phase) then
+      display.currentStage:setFocus(item)
 
-    -- print("coordinate mappa: (" .. invx .. ", " .. invy .. ")")
+      -- print("coordinate mappa: (" .. invx .. ", " .. invy .. ")")
 
-    if( not((item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140))) ) then
-      item.touchOffsetX=event.x-item.x
-      item.touchOffsetY=event.y-item.y
-    end
-  elseif("moved"==phase) then
+      if( not((item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140))) ) then
+        item.touchOffsetX=event.x-item.x
+        item.touchOffsetY=event.y-item.y
+      end
+    elseif("moved"==phase) then
       -- Muove la nave
       -- print(item.x..", "..item.y.."---"..event.x..", "..event.y)
       item.x=event.x-item.touchOffsetX
       item.y=event.y-item.touchOffsetY
-  elseif("ended"==phase or "cancelled"==phase) then
-    --Oggetto fuori dall'inventario (tentativo di rimozione)
-    if( (item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140)) ) then
-      for i=#curios, 1, -1 do
-        -- print("upper x = "..curios[i].areaXUpper)
-        -- print("lower x = "..curios[i].areaXLower)
-        -- print("upper y = "..curios[i].areaYUpper)
-        -- print("lower y = "..curios[i].areaYLower)
-        -- print("curio x ="..curios[i].x)
-        -- print("curio y ="..curios[i].y)
-        -- print("item x = "..item.x)
-        -- print("item y = "..item.y)
-      if (event.x < curios[i].areaXUpper and event.x > curios[i].areaXLower and event.y < curios[i].areaYUpper and event.y > curios[i].areaYLower) then
-        -- print("aaaaaaaaaaa")
-        -- print(curios[i].messaggio)
-        if curios[i].funzione(item, curios[i]) then
-          display.remove( item )
-          inventario[idItem] = "vuoto"
-          griglia[idItem][3] = false
-          griglia[idItem][4] = nil
-          composer.getVariable( "stanzaCorrente" ).curios = curios
-          composer.setVariable( "inv", inventario )
-          composer.setVariable( "grigliaOggetti", griglia )
+    elseif("ended"==phase or "cancelled"==phase) then
+      --Oggetto fuori dall'inventario (tentativo di rimozione)
+      if( (item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140)) ) then
+        for i=#curios, 1, -1 do
+          if (event.x < curios[i].areaXUpper and event.x > curios[i].areaXLower and event.y < curios[i].areaYUpper and event.y > curios[i].areaYLower) then
+            if curios[i].funzione(item, curios[i]) then
+              local app = curios[i]
+              composer.getVariable( "activeCurios" )[i]=curiosInterface.createCurio(self, app.sostitutivo)
+              composer.getVariable( "mainGroup" ):insert(composer.getVariable( "activeCurios" )[i])
+              for j = #composer.getVariable( "stanzaCorrente" ).curios, 1, -1 do
+                print("confronto tra "..composer.getVariable( "stanzaCorrente" ).curios[j]..", "..app.nome)
+                if composer.getVariable( "stanzaCorrente" ).curios[j] == app.nome then
+                  print("trovata corrisponenza")
+                  composer.getVariable( "stanzaCorrente" ).curios[j] = composer.getVariable( "activeCurios" )[i].nome
+                end
+              end
+              display.remove( item )
+              inventario[idItem] = "vuoto"
+              griglia[idItem][3] = false
+              griglia[idItem][4] = nil
+              composer.setVariable( "inv", inventario )
+              composer.setVariable( "grigliaOggetti", griglia )
+            else
+              item.x = partenza[1]
+              item.y = partenza[2]
+            end
+          else
+            display.remove( item )
+            inventario[idItem] = "vuoto"
+            griglia[idItem][3] = false
+            griglia[idItem][4] = nil
+
+            composer.setVariable( "inv", inventario )
+            composer.setVariable( "grigliaOggetti", griglia )
+          end
+        end
+
+      else
+        -- VA IMPLEMENTATO L'AUTO POSIZIONAMENTO DEGLI ITEM E LO SCAMBIO DI POSTO
+        local xRel = item.x - invx
+        local yRel = item.y - invy
+        local numCol, restCol = math.modf(xRel/100)
+        local numRiga, restRiga = math.modf(yRel/70)
+        local numCasella = 0
+
+        numCol = numCol + 1
+        numRiga = numRiga + 1
+
+        --Prendo il numero della casella dove si trova l'oggetto
+        if(numRiga < 2) then
+          numCasella = numCol
         else
+          numCasella = numCol + 5
+        end
+
+        --Casella uguale a quella di partenza
+        if(numCasella == idItem) then
           item.x = partenza[1]
           item.y = partenza[2]
-        end
-      else
-        display.remove( item )
-        inventario[idItem] = "vuoto"
-        griglia[idItem][3] = false
-        griglia[idItem][4] = nil
-
-        composer.setVariable( "inv", inventario )
-        composer.setVariable( "grigliaOggetti", griglia )
-      end
-    end
-
-    else
-      -- VA IMPLEMENTATO L'AUTO POSIZIONAMENTO DEGLI ITEM E LO SCAMBIO DI POSTO
-      local xRel = item.x - invx
-      local yRel = item.y - invy
-      local numCol, restCol = math.modf(xRel/100)
-      local numRiga, restRiga = math.modf(yRel/70)
-      local numCasella = 0
-
-      numCol = numCol + 1
-      numRiga = numRiga + 1
-
-      --Prendo il numero della casella dove si trova l'oggetto
-      if(numRiga < 2) then
-        numCasella = numCol
-      else
-        numCasella = numCol + 5
-      end
-
-      --Casella uguale a quella di partenza
-      if(numCasella == idItem) then
-        item.x = partenza[1]
-        item.y = partenza[2]
-      else
-        --Casella diversa
-        if(griglia[numCasella][3] == true) then
-          --Casella occupata
-          griglia[numCasella][4].x = partenza[1]
-          griglia[numCasella][4].y = partenza[2]
-          griglia[numCasella][4].id = idItem
-
-          item.x = griglia[numCasella][1]
-          item.y = griglia[numCasella][2]
-          item.id = numCasella
-
-          griglia[idItem][4] = griglia[numCasella][4]
-          griglia[numCasella][4] = item
-
-          local altroOggetto = inventario[numCasella]
-          inventario[numCasella] = inventario[idItem]
-          inventario[idItem] = altroOggetto
-
-          composer.setVariable( "inv", inventario )
-          composer.setVariable( "grigliaOggetti", griglia )
         else
-          --Casella non occupata
-          griglia[idItem][3] = false
-          griglia[idItem][4] = nil
-          item.x = griglia[numCasella][1]
-          item.y = griglia[numCasella][2]
-          item.id = numCasella
-          griglia[numCasella][3] = true
-          griglia[numCasella][4] = item
+          --Casella diversa
+          if(griglia[numCasella][3] == true) then
+            --Casella occupata
+            griglia[numCasella][4].x = partenza[1]
+            griglia[numCasella][4].y = partenza[2]
+            griglia[numCasella][4].id = idItem
 
-          inventario[numCasella] = inventario[idItem]
-          inventario[idItem] = "vuoto"
+            item.x = griglia[numCasella][1]
+            item.y = griglia[numCasella][2]
+            item.id = numCasella
 
-          composer.setVariable( "inv", inventario )
-          composer.setVariable( "grigliaOggetti", griglia )
+            griglia[idItem][4] = griglia[numCasella][4]
+            griglia[numCasella][4] = item
+
+            local altroOggetto = inventario[numCasella]
+            inventario[numCasella] = inventario[idItem]
+            inventario[idItem] = altroOggetto
+
+            composer.setVariable( "inv", inventario )
+            composer.setVariable( "grigliaOggetti", griglia )
+          else
+            --Casella non occupata
+            griglia[idItem][3] = false
+            griglia[idItem][4] = nil
+            item.x = griglia[numCasella][1]
+            item.y = griglia[numCasella][2]
+            item.id = numCasella
+            griglia[numCasella][3] = true
+            griglia[numCasella][4] = item
+
+            inventario[numCasella] = inventario[idItem]
+            inventario[idItem] = "vuoto"
+
+            composer.setVariable( "inv", inventario )
+            composer.setVariable( "grigliaOggetti", griglia )
+          end
         end
       end
-    end
 
-    display.currentStage:setFocus(nil)
-  end
+      display.currentStage:setFocus(nil)
+    end
     return true
-end),
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---funzione che costruisce la tabella di token per la mappa
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-tabellaFunction=
-(function (n)
-  local tabella={}
-  local numero = (2*n)+1
-  for i=1, numero, 1 do
-    tabella[i]={}
-    for j=1, numero, 1 do
-      tabella[i][j]=false
+  end),
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  --funzione che costruisce la tabella di token per la mappa
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  tabellaFunction=
+  (function (n)
+    local tabella={}
+    local numero = (2*n)+1
+    for i=1, numero, 1 do
+      tabella[i]={}
+      for j=1, numero, 1 do
+        tabella[i][j]=false
+      end
     end
-  end
-  return tabella
-end),
+    return tabella
+  end),
 
-tokenListener=(moveListener),
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---numero di stanze
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-numeroStanze=8
+  tokenListener=(moveListener),
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  --numero di stanze
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  numeroStanze=8
 }
 return interfacciaConfig

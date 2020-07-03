@@ -216,13 +216,16 @@ function scene:create( event )
   local mainGroup=display.newGroup()
   local phase = event.phase
   local curios = stanzaCorrente.curios
+  local activeCurios = {}
     for i=#curios, 1, -1 do
       if not(curios==nil) then
         local curio = curiosInterface.createCurio(self, stanzaCorrente.curios[i])
-        curios[i]=curio
+        table.insert(activeCurios, curio)
+        composer.setVariable("mainGroup", mainGroup)
         mainGroup:insert(curio)
       end
     end
+    composer.setVariable( "activeCurios", activeCurios )
     stanzaCorrente.curios=curios
   funzioneEseguiDisplay(self,  stanzaCorrente, invloc)
   local numero = stanzaCorrente.seedBackground
@@ -315,6 +318,7 @@ function scene:create( event )
 
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
+  composer.setVariable("sceneGroup", sceneGroup)
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --fase show del display
