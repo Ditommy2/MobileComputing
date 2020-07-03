@@ -6,13 +6,11 @@
 
 local composer = require( "composer" )
 local characterInterface = require("characterInterface")
-local enemyInterface
-local stanzaCorrente
+-- local enemyInterface
+-- local stanzaCorrente
 local fileHandler = require("fileHandler")
-local nemici = require("nemici")
 local customFont="MadnessHyperactive.otf"
 local scene = composer.newScene()
-composer.recycleAutomatically=false
 local widget = require("widget")
 local lunghezza =  display.contentWidth
 local altezza = lunghezza*(9/16)
@@ -255,6 +253,7 @@ end
 -- Gestione turno personaggio
 -- -----------------------------------------------------------------------------------
 local function eseguiMossa()
+	local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 	if(not(numeroMossa==nil)) then
 		if(turno == "personaggio") then
 			calcolaDanno()
@@ -269,6 +268,7 @@ local function eseguiMossa()
 				enemy1:removeEventListener("tap", eseguiMossa)
 				transition.to( enemy1 , { time=3000, alpha=0 } )
 				stanzaCorrente.nemici[1] = nil
+				composer.setVariable( "stanzaCorrente", stanzaCorrente )
 				timer.performWithDelay( 5000, gotoLivello1 )
 			end
 		end
@@ -285,8 +285,8 @@ end
 -- -----------------------------------------------------------------------------------
 function scene:create ( event )
 	local sceneGroup = self.view
-	enemyInterface = require("enemyInterface")
-	stanzaCorrente = composer.getVariable( "stanzaCorrente" )
+	local enemyInterface = require("enemyInterface")
+	local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 	enemy = stanzaCorrente.nemici[1]
 
 	backgroundGroup = display.newGroup()

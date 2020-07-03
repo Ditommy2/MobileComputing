@@ -30,7 +30,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     a=primaX
     b=primaY
     -- local spawnNemico = math.random(1, spawnRatioNemici)
-    local spawnNemico = math.random(16, 16)
+    local spawnNemico = math.random(16, 18)
     local stringaNemico = "nemico"..spawnNemico
     local nemico = nemici[stringaNemico]
 
@@ -46,7 +46,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     if (cardinale == 1) and (mappa[x].NORD == nil) and (tabella[a][b+1]==false) then
       mappa[x].seedNORD=seed
       -- local spawnNemico = math.random(1, spawnRatioNemici)
-      local spawnNemico = math.random(16, 16)
+      local spawnNemico = math.random(16, 18)
       local stringaNemico = "nemico"..spawnNemico
       local nemico = nemici[stringaNemico]
 
@@ -62,7 +62,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     if (cardinale == 2) and (mappa[x].SUD == nil) and (tabella[a][b-1]==false) then
       mappa[x].seedSUD=seed
       -- local spawnNemico = math.random(1, spawnRatioNemici)
-      local spawnNemico = math.random(16, 16)
+      local spawnNemico = math.random(16, 18)
       local stringaNemico = "nemico"..spawnNemico
       local nemico = nemici[stringaNemico]
 
@@ -78,7 +78,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     if (cardinale == 3) and (mappa[x].EST == nil) and (tabella[a+1][b]==false) then
       mappa[x].seedEST=seed
       -- local spawnNemico = math.random(1, spawnRatioNemici)
-      local spawnNemico = math.random(16, 16)
+      local spawnNemico = math.random(16, 18)
       local stringaNemico = "nemico"..spawnNemico
       local nemico = nemici[stringaNemico]
 
@@ -94,7 +94,7 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     if (cardinale == 4) and (mappa[x].OVEST == nil) and (tabella[a-1][b]==false) then
       mappa[x].seedOVEST=seed
       -- local spawnNemico = math.random(1, spawnRatioNemici)
-      local spawnNemico = math.random(16, 16)
+      local spawnNemico = math.random(16, 18)
       local stringaNemico = "nemico"..spawnNemico
       local nemico = nemici[stringaNemico]
 
