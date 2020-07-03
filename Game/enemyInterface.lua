@@ -14,22 +14,22 @@ local scene
 local animationTimer
 local sprite_sheet
 local sheet_Options
-
+local sequences
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Sequenze nemico
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local sequences =
-{
-    --Right walking sequence
-    {
-        name = "idle",
-        start = 1,
-        count = 37,
-        time = 1000,
-        loopCount = 0,
-        loopDirection = "forward"
-    }
-}
+-- local sequences =
+-- {
+--     --Right walking sequence
+--     {
+--         name = "idle",
+--         start = 1,
+--         count = 37,
+--         time = 1000,
+--         loopCount = 0,
+--         loopDirection = "forward"
+--     }
+-- }
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Creazione nemico
@@ -38,17 +38,30 @@ local function create(scena, nemico)
   --Memorizing scene context
   scene = scena
 
-  --Opzioni di visualizzazione nemico
+  -- local sequences =
+  -- {
+  --     --Right walking sequence
+  --     {
+  --         name = "idle",
+  --         start = 1,
+  --         count = nemico.frames,
+  --         time = 600,
+  --         loopCount = 0,
+  --         loopDirection = "forward"
+  --     }
+  -- }
+  --
+  -- --Opzioni di visualizzazione nemico
   local sheet_Options =
   {
-    width=nemico.width,  --119
-    height=nemico.height, --160
-    numFrames=37,
+    width=nemico.width,
+    height=nemico.height,
+    numFrames=nemico.frames,
   }
 
   --Display nemico
   sprite_sheet = graphics.newImageSheet( nemico.immagine, sheet_Options )
-  enemy = display.newSprite( sprite_sheet, sequences )
+  enemy = display.newSprite( sprite_sheet, nemico.sequences )
   enemy:setSequence(idle)
   enemy:play()
 
