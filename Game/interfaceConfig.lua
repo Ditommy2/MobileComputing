@@ -212,8 +212,8 @@ local interfacciaConfig = {
   displayGrid=
   (function(inventario, handler, inventoryGroup)
     local index=1
-    local partenzax = display.contentCenterX-310
-    local partenzay= display.contentCenterY-85
+    local partenzax = display.contentCenterX-350
+    local partenzay= display.contentCenterY-90
     local griglia = {}
 
     composer.setVariable( "grigliaOggetti", griglia )
@@ -237,7 +237,7 @@ local interfacciaConfig = {
         griglia[index]={casellaX, casellaY, false, nil}
         composer.setVariable( "grigliaOggetti",  griglia)
 
-        posizioneX = posizioneX + 112
+        posizioneX = posizioneX + 140
         index=index+1
       end
 
@@ -249,7 +249,7 @@ local interfacciaConfig = {
     local griglia = composer.getVariable( "grigliaOggetti" )
     for x=1, 10, 1 do
       if(not(inventario[x] == "vuoto")) then
-        local item = display.newImageRect( inventoryGroup, inventario[x], 50, 50)
+        local item = display.newImageRect( inventoryGroup, inventario[x], 60, 60)
         item.x = griglia[x][1]
         item.y = griglia[x][2]
         item.id = x
