@@ -36,7 +36,7 @@ local function handleButtonEventNuovaNome(event)
 			end
 			for i=#t, 1, -1 do
 				if t[i].nomePartita==partitaDaCercare then
-					print("nome riscontrato")
+					-- print("nome riscontrato")
 					 trovato = true
 				end
 			end
@@ -67,12 +67,12 @@ local function handleButtonEventNuovaNome(event)
 
 			invComp = composer.getVariable( "inv" )
 
-			print("inventario composer dopo: " )
-			if(not(invComp ==nil)) then
-				for x=1, #invComp, 1 do
-					print(invComp[x])
-				end
-			end
+			-- print("inventario composer dopo: " )
+			-- if(not(invComp ==nil)) then
+			-- 	for x=1, #invComp, 1 do
+			-- 		print(invComp[x])
+			-- 	end
+			-- end
 
 
 
@@ -218,6 +218,7 @@ local function overlayCaricaSalvataggi()
 			composer.setVariable("nomePartita", salvataggio.nomeSalvataggio)
 			funzione=lowerFixedMenu.display
 			composer.setVariable( "funzione", funzione )
+			composer.setVariable( "characterLife", salvataggio.vitaPersonaggio )
 			--composer.setVariable( "funzione", salvataggi.displayFunzioneToSave )
 			composer.removeScene( "Scenes.nuovaCarica" )
 			composer.gotoScene("Scenes.livello1")

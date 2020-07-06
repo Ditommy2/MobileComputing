@@ -205,16 +205,25 @@ local function create(scena)
   character.y = altezza-310
   physics.addBody(character, "dynamic", {radius=sheet_walking_Options.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
   character.myName = "Character"
-  character.life = 3000
+
+  local composerLife = composer.getVariable( "characterLife" )
+  if(not(composerLife==nil)) then
+    character.life = composerLife
+    composer.setVariable( "characterLife", character.life )
+  else
+    character.life = 3000
+    composer.setVariable( "characterLife", character.life )
+  end
+
   character.armor = 8
   character.damage = 100
   character.speed = 3
-  character.mossa1 = {nome="Pugno", hitChance = 4, damage = 0.6}
+  character.mossa1 = {nome="Pugno", hitChance = 18, damage = 5}
   character.mossa2 = {nome="Calcio", hitChance = 4, damage = 0.8}
   character.mossa3 = {nome="Cinta", hitChance = 2, damage = 0.4}
   character.mossa4 = {nome="Laccio", hitChance = 1, damage = 0.1}
   character.testoMossa1 = character.mossa1.nome .. ": Stordisci il tuo avversario \nDamage = " .. (character.mossa1.damage * 100) .. "%\nHit chance = " .. character.mossa1.hitChance .. "\n"
-  character.testoMossa2 = character.mossa2.nome .. ": : Questa mossa ti fa il caffè\nDamage = " .. (character.mossa2.damage * 100) .. "%\nHit chance = " .. character.mossa2.hitChance .. "\n"
+  character.testoMossa2 = character.mossa2.nome .. ": Questa mossa ti fa il caffè\nDamage = " .. (character.mossa2.damage * 100) .. "%\nHit chance = " .. character.mossa2.hitChance .. "\n"
   character.testoMossa3 = character.mossa3.nome .. ": Questa mossa mammt\nDamage = " .. (character.mossa3.damage * 100) .. "%\nHit chance = " .. character.mossa3.hitChance .. "\n"
   character.testoMossa4 = character.mossa4.nome .. ": Questa mossa genera gettere & settere\nDamage = " .. (character.mossa4.damage * 100) .. "%\nHit chance = " .. character.mossa4.hitChance .. "\n"
 

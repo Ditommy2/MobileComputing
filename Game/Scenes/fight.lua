@@ -6,8 +6,6 @@
 
 local composer = require( "composer" )
 local characterInterface = require("characterInterface")
--- local enemyInterface
--- local stanzaCorrente
 local fileHandler = require("fileHandler")
 local customFont="MadnessHyperactive.otf"
 local scene = composer.newScene()
@@ -32,7 +30,6 @@ local fightText
 
 --Game objects
 local character = characterInterface.creaPersonaggio(self)
--- local enemy1 = enemyInterface.createEnemy(self, stanzaCorrente.nemici[1])
 local enemy1
 local numeroMossa
 local chanceRandom
@@ -42,7 +39,6 @@ local totAttacco
 local sommaChance = 0
 local turno
 local turnoStar
--- local enemy = stanzaCorrente.nemici[1]
 local enemy
 
 --Life bar
@@ -59,11 +55,13 @@ physics.start()
 -- Fine combattimento
 -- -----------------------------------------------------------------------------------
 local function gotoNuovaCarica()
+	composer.setVariable( "characterLife", character.life )
 	composer.removeScene( "Scenes.fight" )
 	composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
 end
 
 local function gotoLivello1()
+	composer.setVariable( "characterLife", character.life )
 	composer.removeScene( "Scenes.fight" )
 	composer.gotoScene( "Scenes.livello1", {time=800, effect="crossFade"} )
 end
@@ -359,6 +357,11 @@ function scene:create ( event )
 	lifeBarCharacter = display.newImageRect( midGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
 	lifeBarCharacter.x = display.contentCenterX - 250
 	lifeBarCharacter.y = display.contentCenterY - 250
+	local rapporto = lifeBarCharacter.width / 3000
+	local x = character.life*rapporto
+	lifeBarCharacter.width = x
+	x = 200 - x
+	lifeBarCharacter.x = lifeBarCharacter.x - x/2
 	mossa1.text = character.mossa1.nome
 	mossa2.text = character.mossa2.nome
 	mossa3.text = character.mossa3.nome
