@@ -607,7 +607,7 @@ local interfacciaConfig = {
       if( (item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140)) ) then
         print("appoggiato")
         for i=#curios, 1, -1 do
-          if (event.x < curios[i].areaXUpper and event.x > curios[i].areaXLower and event.y < curios[i].areaYUpper and event.y > curios[i].areaYLower) then
+          if (item.x < curios[i].areaXUpper and item.x > curios[i].areaXLower and item.y < curios[i].areaYUpper and item.y > curios[i].areaYLower) then
             if curios[i].funzione(item, curios[i]) then
               local app = curios[i]
               composer.getVariable( "activeCurios" )[i]=curiosInterface.createCurio(self, app.sostitutivo)
@@ -687,17 +687,29 @@ local interfacciaConfig = {
             composer.setVariable( "grigliaOggetti", griglia )
           else
             --Casella non occupata
-            griglia[idItem][3] = false
-            griglia[idItem][4] = nil
+            if not(griglia[idItem]==nil) then
+              griglia[idItem][3] = false
+              griglia[idItem][4] = nil
+            end
             item.x = griglia[numCasella][1]
             item.y = griglia[numCasella][2]
             item.id = numCasella
+
             griglia[numCasella][3] = true
             griglia[numCasella][4] = item
-
-            inventario[numCasella] = inventario[idItem]
-            inventario[idItem] = "vuoto"
-
+            if not(griglia[idItem]==nil) then
+              inventario[numCasella] = inventario[idItem]
+              inventario[idItem] = "vuoto"
+            else
+              local curio = item.curio
+              inventario[numCasella] = "Images/Icons/icons3/"..curio.oggetto
+              local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
+              for i = #stanzaCorrente.oggetti, 1, -1 do
+                if stanzaCorrente.oggetti[i] == curio.oggetto then
+                  table.remove(stanzaCorrente.oggetti, i)
+                end
+              end
+            end
             composer.setVariable( "inv", inventario )
             composer.setVariable( "grigliaOggetti", griglia )
           end

@@ -19,6 +19,7 @@ local curios = {
         oggetto.x=curio.x-20
         oggetto.y = curio.y
         oggetto.id = 11
+        oggetto.curio = curio
         local interfaceConfig = require("interfaceConfig")
         oggetto:addEventListener("touch", interfaceConfig.dragItem)
         composer.getVariable("mainGroup"):insert(oggetto)
