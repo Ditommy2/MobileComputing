@@ -590,17 +590,18 @@ local interfacciaConfig = {
       -- print("coordinate mappa: (" .. invx .. ", " .. invy .. ")")
 
       -- if( not((item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140))) ) then
-        item.touchOffsetX=event.x-item.x
-        item.touchOffsetY=event.y-item.y
+      item.touchOffsetX=event.x-item.x
+      item.touchOffsetY=event.y-item.y
       -- end
     elseif("moved"==phase) then
       -- Muove la nave
-      -- print(item.x..", "..item.y.."---"..event.x..", "..event.y)
+      print(item.x..", "..item.y.."---"..event.x..", "..event.y)
       item.x=event.x-item.touchOffsetX
       item.y=event.y-item.touchOffsetY
     elseif("ended"==phase or "cancelled"==phase) then
       --Oggetto fuori dall'inventario (tentativo di rimozione)
       if( (item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140)) ) then
+        print("appoggiato")
         for i=#curios, 1, -1 do
           if (event.x < curios[i].areaXUpper and event.x > curios[i].areaXLower and event.y < curios[i].areaYUpper and event.y > curios[i].areaYLower) then
             if curios[i].funzione(item, curios[i]) then
@@ -609,9 +610,9 @@ local interfacciaConfig = {
               composer.getVariable( "mainGroup" ):insert(composer.getVariable( "activeCurios" )[i])
               composer.getVariable( "activeCurios" )[i]:toBack()
               for j = #composer.getVariable( "stanzaCorrente" ).curios, 1, -1 do
-                print("confronto tra "..composer.getVariable( "stanzaCorrente" ).curios[j]..", "..app.nome)
+                --print("confronto tra "..composer.getVariable( "stanzaCorrente" ).curios[j]..", "..app.nome)
                 if composer.getVariable( "stanzaCorrente" ).curios[j] == app.nome then
-                  print("trovata corrisponenza")
+                  --print("trovata corrisponenza")
                   composer.getVariable( "stanzaCorrente" ).curios[j] = composer.getVariable( "activeCurios" )[i].nome
                 end
               end
@@ -627,10 +628,11 @@ local interfacciaConfig = {
             end
           else
             display.remove( item )
-            inventario[idItem] = "vuoto"
-            griglia[idItem][3] = false
-            griglia[idItem][4] = nil
-
+            if not(inventario[idItem]==nil or not(griglia[idItem]==nil)) then
+              inventario[idItem] = "vuoto"
+              griglia[idItem][3] = false
+              griglia[idItem][4] = nil
+            end
             composer.setVariable( "inv", inventario )
             composer.setVariable( "grigliaOggetti", griglia )
           end

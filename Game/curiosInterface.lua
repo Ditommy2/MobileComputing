@@ -18,8 +18,8 @@ local function create(scena, stringaCurio)
   -- enemy = display.newImageRect( nemico.immagine, 100, 175)
 
   --  curio.anchorY = 1
-  createdCurio.x =lunghezza * 0.7
-  createdCurio.y =altezza-390
+  createdCurio.x = display.contentCenterX+350
+  createdCurio.y = display.contentCenterY-30
   createdCurio.areaXUpper = createdCurio.x + createdCurio.width/2
   createdCurio.areaXLower = createdCurio.x - createdCurio.width/2
   createdCurio.areaYUpper = createdCurio.y + createdCurio.height/2

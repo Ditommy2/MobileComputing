@@ -18,6 +18,7 @@ local curios = {
         local oggetto = display.newImageRect("Images/Icons/icons3/"..curio.oggetto, 50, 50)
         oggetto.x=curio.x-20
         oggetto.y = curio.y
+        oggetto.id = 11
         local interfaceConfig = require("interfaceConfig")
         oggetto:addEventListener("touch", interfaceConfig.dragItem)
         composer.getVariable("mainGroup"):insert(oggetto)
