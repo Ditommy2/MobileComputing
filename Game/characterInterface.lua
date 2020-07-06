@@ -15,6 +15,7 @@ local character
 local animationTimer
 local moveTimer
 local scene
+local personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sheet options personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -32,11 +33,20 @@ local sheet_idle_Options =
   numFrames=120,
 }
 
+local sheet_kick_Options =
+{
+  width=123,
+  height=177,
+  numFrames=30,
+}
+
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sprite sheet personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sheet_walking = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/walk.png", sheet_walking_Options )
 local sheet_idle = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/idle.png", sheet_idle_Options )
+local sheet_kick = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/kick.png", sheet_kick_Options )
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sequences table personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -84,6 +94,17 @@ local sequences =
     loopCount = 0,
     loopDirection = "forward",
     sheet = sheet_idle
+  },
+
+  --Left Idle
+  {
+    name = "kick",
+    start = 1,
+    count = 30,
+    time = 500,
+    loopCount = 1,
+    loopDirection = "forward",
+    sheet = sheet_kick
   }
 }
 
@@ -190,6 +211,54 @@ local function moveListener(event)
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mosse del personaggio
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function resumeIdleing(event)
+  if(event.phase == "ended") then
+    personaggio:setSequence("rightIdle")
+    personaggio:play()
+  end
+end
+
+local function mossa1()
+  print("niente")
+end
+
+local function mossa2()
+  personaggio:setSequence("kick")
+  personaggio:play()
+end
+
+local function mossa3()
+  print("niente")
+end
+
+local function mossa4()
+  print("niente")
+end
+
+local function eseguiMossa(numeroMossa, pers)
+  personaggio = pers
+  personaggio:addEventListener("sprite", resumeIdleing)
+
+  if(numeroMossa == 1) then
+    mossa1()
+  end
+
+  if(numeroMossa == 2) then
+    mossa2()
+  end
+
+  if(numeroMossa == 3) then
+    mossa3()
+  end
+
+  if(numeroMossa == 4) then
+    mossa4()
+  end
+
+end
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Creazione del personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function create(scena)
@@ -240,6 +309,7 @@ local interfacciaPersonaggio =
   listener = (moveListener),
   changeRoom = (exitRight),
   goBack = (exitLeft),
+  esegui = (eseguiMossa),
 }
 
 return interfacciaPersonaggio

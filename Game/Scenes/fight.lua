@@ -255,6 +255,10 @@ local function eseguiMossa()
 	if(not(numeroMossa==nil)) then
 		if(turno == "personaggio") then
 			calcolaDanno()
+			characterInterface.esegui(numeroMossa, character)
+
+			-- timer.performWithDelay( 5000, character:setSequence("rightIdle"))
+			-- timer.performWithDelay( 5000, character:play())
 
 			if(enemy.life > 0) then
 				turno = "nemico"
