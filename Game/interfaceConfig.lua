@@ -469,8 +469,9 @@ local interfacciaConfig = {
   displayGrid=
   (function(inventario, handler, inventoryGroup)
     local index=1
-    local partenzax = display.contentCenterX-310
-    local partenzay= display.contentCenterY-85
+    print(display.contentCenterX.."---"..display.contentCenterY)
+    local partenzax = display.contentCenterX-560
+    local partenzay= display.contentCenterY+120
     local griglia = {}
 
     composer.setVariable( "grigliaOggetti", griglia )
@@ -488,6 +489,7 @@ local interfacciaConfig = {
       for y=1, 5, 1 do
         local casellaX = posizioneX + 50
         local casellaY = posizioneY + 35
+        print("casella = "..casellaX..", "..casellaY)
         local griglia = composer.getVariable( "grigliaOggetti" )
 
         --Ogni casella della griglia è composta dalle coordinate centrali della casella e da un booleano che inidica se la casella è occupata o meno
@@ -506,9 +508,10 @@ local interfacciaConfig = {
     local griglia = composer.getVariable( "grigliaOggetti" )
     for x=1, 10, 1 do
       if(not(inventario[x] == "vuoto")) then
-        local item = display.newImageRect( inventoryGroup, inventario[x], 50, 50)
+        local item = display.newImageRect(inventoryGroup,  inventario[x], 50, 50)
         item.x = griglia[x][1]
         item.y = griglia[x][2]
+        print("item: "..item.x..", "..item.y)
         item.id = x
         item.nome = inventario[x]
         griglia[x][3] = true
@@ -595,9 +598,10 @@ local interfacciaConfig = {
       -- end
     elseif("moved"==phase) then
       -- Muove la nave
-      print(item.x..", "..item.y.."---"..event.x..", "..event.y)
+
       item.x=event.x-item.touchOffsetX
       item.y=event.y-item.touchOffsetY
+      print(item.x..", "..item.y.."---"..event.x..", "..event.y)
     elseif("ended"==phase or "cancelled"==phase) then
       --Oggetto fuori dall'inventario (tentativo di rimozione)
       if( (item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140)) ) then

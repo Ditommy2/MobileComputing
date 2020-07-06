@@ -51,8 +51,10 @@ local inventario =
     --Posizionamento di mappa e inventario
     mapGroup.x=composer.getVariable( "mapx" )
     mapGroup.y=composer.getVariable( "mapy" )
-    inventoryGroup.x=-250
-    inventoryGroup.y=200
+    -- inventoryGroup.anchorX=0.5
+    -- inventoryGroup.anchorY=0.5
+    -- inventoryGroup.x=display.contentCenterX---250
+    -- inventoryGroup.y=display.contentCenterY--200
 
     --Listener per il drag della mappa
     mapGroup:addEventListener("touch", interfaccia.dragMapSet)
