@@ -12,6 +12,7 @@ local scene = composer.newScene()
 local widget = require("widget")
 local lunghezza =  display.contentWidth
 local altezza = lunghezza*(9/16)
+local fileHandler = require("fileHandler")
 
 --Scenes
 local backgroundGroup
@@ -30,6 +31,8 @@ local fightText
 
 --Game objects
 local character = characterInterface.creaPersonaggio(self)
+local punteggioPartita = 0
+-- local enemy1 = enemyInterface.createEnemy(self, stanzaCorrente.nemici[1])
 local enemy1
 local numeroMossa
 local chanceRandom
@@ -51,6 +54,16 @@ local lifeBarEnemyBlack
 local physics = require("physics")
 physics.start()
 
+
+-- -----------------------------------------------------------------------------------
+-- Salva score sul server
+-- -----------------------------------------------------------------------------------
+function networkListener(event)
+end
+function saveScore(punteggioPartita)
+	local URL = "https://appmcsite.000webhostapp.com/insertScore.php?score=" .. punteggioPartita .. "&username=" .. composer.getVariable( "username" ) .. "&partita=" .. composer.getVariable( "nomePartita" )
+		network.request(URL, "GET", networkListener)
+end
 -- -----------------------------------------------------------------------------------
 -- Fine combattimento
 -- -----------------------------------------------------------------------------------
@@ -125,6 +138,8 @@ local function turnEnemy()
 		gameOverBack.y = display.contentCenterY
 		local gameOver = display.newText(textGroup, "GAME OVER", 600, 200, native.systemFont, 100)
 		fightText:setFillColor(0, 0, 0)
+
+		saveScore(punteggioPartita)
 
 		local stringaSalvataggio = "save".."$$"..composer.getVariable("username")..".json"
 		local tabelloneSalvataggi = fileHandler.loadTable(stringaSalvataggio)
@@ -239,6 +254,8 @@ local function calcolaDanno()
 		else --Danno > vita => nemico morto
 			enemy1.life = 0
 			display.remove( lifeBarEnemy )
+			punteggioPartita = composer.getVariable("score") + enemy.points
+			composer.setVariable( "score", punteggioPartita )
 		end
 	else
 		fightText.alpha = 1
