@@ -496,7 +496,7 @@ local interfacciaConfig = {
         griglia[index]={casellaX, casellaY, false, nil}
         composer.setVariable( "grigliaOggetti",  griglia)
 
-        posizioneX = posizioneX + 112
+        posizioneX = posizioneX + 140
         index=index+1
       end
 

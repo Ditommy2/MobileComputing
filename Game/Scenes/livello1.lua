@@ -238,7 +238,7 @@ function scene:create( event )
   local immagine = "Images/Backgrounds/proceduralBack/Stanze/back"..numero..".png"
   local background=display.newImageRect(backGroup, immagine, lunghezza, altezza-300)
   background.x=display.contentCenterX
-  background.y=display.contentCenterY-170
+  background.y=display.contentCenterY-150
   physics.addBody(background, "static", {shape={ 0, 0, lunghezza, 0, lunghezza, altezza-300, 0, altezza-300}, isSensor=false})
   background:addEventListener("touch", characterInterface.listener)
 

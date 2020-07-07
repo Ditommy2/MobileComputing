@@ -44,7 +44,7 @@ local inventario =
     interfaccia.displayStanza(mappaGenerata, display.contentCenterX, display.contentCenterY)-- -60, -30
 
     --Creazione del background dell'inventario
-    local overlayBackground = display.newImageRect(lowerOverlay, "Images/Backgrounds/lowerBackground.png", lunghezza, altezza+150)
+    local overlayBackground = display.newImageRect(lowerOverlay, "Images/Backgrounds/lowerBackground.png", lunghezza+20, altezza+200)
     overlayBackground.x=display.contentCenterX
     overlayBackground.y=display.contentCenterY-70
 

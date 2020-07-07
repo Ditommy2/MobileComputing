@@ -13,61 +13,59 @@ local enemy
 local scene
 local animationTimer
 local sprite_sheet
+local sheet_Options
+local sequences
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Sprite sheet options
+--Sequenze nemico
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local sheet_Options =
-{
-  width=119,
-  height=160,
-  numFrames=37,
-}
+-- local sequences =
+-- {
+--     --Right walking sequence
+--     {
+--         name = "idle",
+--         start = 1,
+--         count = 37,
+--         time = 1000,
+--         loopCount = 0,
+--         loopDirection = "forward"
+--     }
+-- }
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Walking sprite sheet personaggio
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--- local sprite_sheet = graphics.newImageSheet( "Images/Enemies/FallenAngel1/Idle.png", sheet_Options )
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Walking sequences table personaggio
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local sequences =
-{
-    --Right walking sequence
-    {
-        name = "idle",
-        start = 1,
-        count = 37,
-        time = 1000,
-        loopCount = 0,
-        loopDirection = "forward"
-    }
-
-    -- --Left walking sequence
-    -- {
-    --     name = "leftWalk",
-    --     start = 61,
-    --     count = 60,
-    --     time = 1000,
-    --     loopCount = 0,
-    --     loopDirection = "forward"
-    -- }
-}
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Creation enemy
+--Creazione nemico
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function create(scena, nemico)
   --Memorizing scene context
   scene = scena
 
-  --Displaying enemy
-  -- print("prova a visualizzare nemico")
-  -- print(nemico.immagine)
+  -- local sequences =
+  -- {
+  --     --Right walking sequence
+  --     {
+  --         name = "idle",
+  --         start = 1,
+  --         count = nemico.frames,
+  --         time = 600,
+  --         loopCount = 0,
+  --         loopDirection = "forward"
+  --     }
+  -- }
+  --
+  -- --Opzioni di visualizzazione nemico
+  local sheet_Options =
+  {
+    width=nemico.width,
+    height=nemico.height,
+    numFrames=nemico.frames,
+  }
+
+  --Display nemico
   sprite_sheet = graphics.newImageSheet( nemico.immagine, sheet_Options )
-  enemy = display.newSprite( sprite_sheet, sequences )
+  enemy = display.newSprite( sprite_sheet, nemico.sequences )
   enemy:setSequence(idle)
   enemy:play()
-  -- enemy = display.newImageRect( nemico.immagine, 100, 175)
+
+  --Posizionamento nemico
   enemy.anchorY = 1
   enemy.x = lunghezza * 0.7
   enemy.y = altezza-313
