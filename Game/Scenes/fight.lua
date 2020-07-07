@@ -3,7 +3,6 @@
 -- fight.lua
 --
 -----------------------------------------------------------------------------------------
-
 local composer = require( "composer" )
 local characterInterface = require("characterInterface")
 local fileHandler = require("fileHandler")
@@ -55,16 +54,25 @@ local lifeBarEnemyBlack
 local physics = require("physics")
 physics.start()
 
+local function saveScore()
+	local score = composer.getVariable( "score" )
+	local user = composer.getVariable( "username" )
+	local partita = composer.getVariable( "nomePartita" )
+	local stringaScores = "saveScore".."$$"..".json"
+	local tabellonePunteggi= fileHandler.loadTableScores(stringaScores)
+	if(tabellonePunteggi == nil) then
+		print("primoSalvataggio")
+		tabellonePunteggi = {}
+		table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
+	else
+		print("seguenti salvataggi")
+		table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
+	end
 
--- -----------------------------------------------------------------------------------
--- Salva score sul server
--- -----------------------------------------------------------------------------------
-function networkListener(event)
+	fileHandler.saveTable(tabellonePunteggi, stringaScores)
+	fileHandler.caricaSave(tabellonePunteggi, stringaScores)
 end
-function saveScore(punteggioPartita)
-	local URL = "https://appmcsite.000webhostapp.com/insertScore.php?score=" .. punteggioPartita .. "&username=" .. composer.getVariable( "username" ) .. "&partita=" .. composer.getVariable( "nomePartita" )
-		network.request(URL, "GET", networkListener)
-end
+
 -- -----------------------------------------------------------------------------------
 -- Fine combattimento
 -- -----------------------------------------------------------------------------------
@@ -142,7 +150,7 @@ local function turnEnemy()
 		local gameOverScore = display.newText(midGroup, "SCORE : "..punteggioPartita, 600, 400, native.newFont( customFont), 100)
 		gameOverScore:setFillColor(143, 0, 255)
 
-		saveScore(punteggioPartita)
+		saveScore()
 
 		local stringaSalvataggio = "save".."$$"..composer.getVariable("username")..".json"
 		local tabelloneSalvataggi = fileHandler.loadTable(stringaSalvataggio)

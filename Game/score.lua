@@ -1,5 +1,6 @@
 local customFont="MadnessHyperactive.otf"
 local composer = require( "composer" )
+local fileHandler = require "fileHandler"
 local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sceneGroup)
   local widget = require( "widget" )
 
@@ -50,40 +51,51 @@ local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sc
   local textBackground = display.newRect(background1.x, background1.y, lunghezza-40, 400)
   textBackground:setFillColor(0.32, 0.36, 0.4)
   scrollView:insert(textBackground)
-  local titleScore = display.newText(  "SCORES\n\n"..composer.getVariable( "username" ).. "  "..composer.getVariable( "username" ),
-  textBackground.x,
-  textBackground.y,
-customFont,
-30)
-scrollView:insert(titleScore)
-local function handleButtonEvent(event)
-  print("non ended")
-  if ( "ended" == event.phase ) then
-    print("cancellato")
-sceneGroup:remove( scrollView )
-end
-end
 
-local button = widget.newButton({
-    shape = "roundedRect",
-    x = background1.x * 0.3,
-    y = background1.y * 0.2,
-    width=background1.width*0.09,
-    height=background1.height * 0.07,
-    id = "back",
-    label = "BACK",
-    labelColor={default={0.5, 0, 0}},
-    fontSize=50,
-    onEvent = handleButtonEvent,
-    font=customFont
-})
-  scrollView:insert(button)
-  scrollView:setScrollHeight(1500)
-  sceneGroup:insert(scrollView)
-end
+  local stringaScores = "saveScore".."$$"..".json"
+  local tabellonePunteggi= fileHandler.loadTableScores(stringaScores)
 
-local scrollOverlay = {
-  handleButton = (handleButtonEventTutorialFunzione)
-}
+  local titleScore = display.newText(  "SCORES\n\nPunteggio               Giocatore               Partita\n",
+    textBackground.x,
+    textBackground.y,
+    customFont,
+    30)
+
+  if(not(tabellonePunteggi==nil)) then
+    for i=1, #tabellonePunteggi, 1 do
+      titleScore.text = titleScore.text .. tabellonePunteggi[i]
+    end
+  end
+
+  scrollView:insert(titleScore)
+  local function handleButtonEvent(event)
+    print("non ended")
+    if ( "ended" == event.phase ) then
+      print("cancellato")
+  sceneGroup:remove( scrollView )
+  end
+  end
+
+  local button = widget.newButton({
+      shape = "roundedRect",
+      x = background1.x * 0.3,
+      y = background1.y * 0.2,
+      width=background1.width*0.09,
+      height=background1.height * 0.07,
+      id = "back",
+      label = "BACK",
+      labelColor={default={0.5, 0, 0}},
+      fontSize=50,
+      onEvent = handleButtonEvent,
+      font=customFont
+  })
+    scrollView:insert(button)
+    scrollView:setScrollHeight(1500)
+    sceneGroup:insert(scrollView)
+  end
+
+  local scrollOverlay = {
+    handleButton = (handleButtonEventTutorialFunzione)
+  }
 
 return scrollOverlay
