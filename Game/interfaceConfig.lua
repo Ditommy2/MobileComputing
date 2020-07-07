@@ -480,8 +480,8 @@ local interfacciaConfig = {
 
     --Ciclo di creazione delle caselle dell'inventario
     --TABELLA: parte dalle coordinate {partenzaX, partenzaY} (angolo alto a sinistra)
-    --         si estende di 500*140
-    --CASELLE: ognuna ha dimensioni 100*70
+    --         si estende di 700*272
+    --CASELLE: ognuna ha dimensioni 140*136
     --         ci sono 5 caselle per riga e 2 righe
     local posizioneX = partenzax    --Posizione dell'angolo in alto a sinistra di ogni casella
     local posizioneY = partenzay
@@ -604,7 +604,7 @@ local interfacciaConfig = {
       print(item.x..", "..item.y.."---"..event.x..", "..event.y)
     elseif("ended"==phase or "cancelled"==phase) then
       --Oggetto fuori dall'inventario (tentativo di rimozione)
-      if( (item.x < invx or item.x > (invx+700)) or (item.y < invy or item.y > (invy+270)) ) then
+      if( (item.x < invx or item.x > (invx+700)) or (item.y < invy or item.y > (invy+272)) ) then
         print("appoggiato")
         for i=#curios, 1, -1 do
           if (item.x < curios[i].areaXUpper and item.x > curios[i].areaXLower and item.y < curios[i].areaYUpper and item.y > curios[i].areaYLower) then
