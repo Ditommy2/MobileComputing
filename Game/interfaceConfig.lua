@@ -6,9 +6,9 @@ local math = require("math")
 local nemici = require("nemici")
 local curios = require("curios")
 local spawnRatioNemiciUpper = 42  --50%
-local spawnRatioNemiciLower = 1
-local spawnRatioCurioLower = 3
-local spawnRatioCurioUpper = 3
+local spawnRatioNemiciLower = 42
+local spawnRatioCurioLower = 1
+local spawnRatioCurioUpper = 1
 local numeroBackgroundTotali = 9
 local token
 --Physics (necessaria per il movimento del personaggio)
@@ -511,12 +511,12 @@ local interfacciaConfig = {
       if(not(inventario[x] == "vuoto")) then
         local nomeItem = inventario[x]
 
-        item = display.newImageRect(inventoryGroup,  itemInterface[nomeItem].location..itemInterface[nomeItem].nome, 50, 50)
+        item = display.newImageRect(inventoryGroup,  itemInterface[nomeItem].location..itemInterface[nomeItem].nome, 70, 70)
         item.x = griglia[x][1]
         item.y = griglia[x][2]
         print("item: "..item.x..", "..item.y)
         item.id = x
-        item.nome = inventario[x]
+        item.nome = itemInterface[nomeItem].nome
         item.location = itemInterface[nomeItem].location
         item.activateFunction = itemInterface[nomeItem].activateFunction
         griglia[x][3] = true
@@ -610,7 +610,7 @@ local interfacciaConfig = {
     elseif("ended"==phase or "cancelled"==phase) then
       --Oggetto fuori dall'inventario (tentativo di rimozione)
       item.activateFunction(item.x, item.y)
-      if( (item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140)) ) then
+      if( (item.x < invx or item.x > (invx+700)) or (item.y < invy or item.y > (invy+272)) ) then
         print("appoggiato")
         for i=#curios, 1, -1 do
           if (item.x < curios[i].areaXUpper and item.x > curios[i].areaXLower and item.y < curios[i].areaYUpper and item.y > curios[i].areaYLower) then
@@ -647,7 +647,7 @@ local interfacciaConfig = {
             composer.setVariable( "grigliaOggetti", griglia )
           end
         end
-
+        display.remove( item )
       else
         -- VA IMPLEMENTATO L'AUTO POSIZIONAMENTO DEGLI ITEM E LO SCAMBIO DI POSTO
         local xRel = item.x - invx

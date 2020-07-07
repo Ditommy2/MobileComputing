@@ -352,7 +352,9 @@ local function create(scena)
     character.life = composerLife
     composer.setVariable( "characterLife", character.life )
   else
-    character.life = 3000
+    character.maxLife = 3000
+    composer.setVariable( "characterMaxLife", character.maxLife )
+    character.life = character.maxLife
     composer.setVariable( "characterLife", character.life )
   end
 

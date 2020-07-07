@@ -1,7 +1,7 @@
 local composer = require("composer")
 local characterWidth = 121
 local characterHeight = 178
-
+local customFont="MadnessHyperactive.otf"
 local defaultItemLocation = "Images/Icons/icons3/"
 
 local itemsTable = {
@@ -14,6 +14,27 @@ local itemsTable = {
       local characterY = composer.getVariable( "characterY" )
       if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight/2)<posy and(characterY + characterHeight/2)>posy) then
         print("curato")
+        local curaLower = 300
+        local curaUpper = 700
+        local fightText = display.newText(composer.getVariable("mainGroup"), "", characterX, characterY-100, native.newFont( customFont), 100)
+        local cura = math.random(curaLower, curaUpper)
+
+        if composer.getVariable("characterLife")+cura > composer.getVariable( "characterMaxLife" ) then
+            fightText.text=composer.getVariable( "characterMaxLife" )-composer.getVariable("characterLife")
+          composer.setVariable( "characterLife", composer.getVariable( "characterMaxLife" ) )
+        else
+          fightText.text = cura
+          composer.setVariable( "characterLife", composer.getVariable("characterLife")+cura )
+
+        end
+        fightText:setFillColor(0, 0.8, 0)
+        fightText.alpha = 1
+
+        composer.getVariable("mainGroup"):insert(fightText)
+        local function removeTextFight()
+        	fightText.alpha = 0
+        end
+    		timer.performWithDelay( 1500, removeTextFight )
       end
     end)
   },
