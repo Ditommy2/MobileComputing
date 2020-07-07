@@ -352,7 +352,7 @@ local function create(scena)
   character.armor = 8
   character.damage = 100
   character.speed = 3
-  character.mossa1 = {nome="Pugno", hitChance = 8, damage = 0.4}
+  character.mossa1 = {nome="Pugno", hitChance = 8, damage = 400}
   character.mossa2 = {nome="Calcio", hitChance = 7, damage = 0.6}
   character.mossa3 = {nome="Fendente", hitChance = 3, damage = 1}
   character.mossa4 = {nome="Laccio", hitChance = 1, damage = 0.1}

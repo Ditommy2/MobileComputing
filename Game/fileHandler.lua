@@ -216,4 +216,31 @@ function M.loadTable( filename, location )
 		return t
 	end
 end
+
+function M.loadTableScores( filename, location )
+	local loc = location
+	if not location then
+		loc = defaultLocation
+	end
+
+	-- Path for the file to read
+	local path = system.pathForFile( filename, loc )
+
+	-- Open the file handle
+	local file, errorString = io.open( path, "r" )
+
+	if not file then
+		-- Error occurred; output the cause
+	else
+		-- Read data from file
+		local contents = file:read( "*a" )
+		-- Decode JSON data into Lua table
+		local t = json.decode( contents )
+		-- Close the file handle
+
+		io.close( file )
+		return t
+	end
+end
+
 return M

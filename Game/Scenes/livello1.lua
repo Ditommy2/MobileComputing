@@ -39,24 +39,22 @@ local function gotoMenu()
     score = composer.getVariable("score")
   }
 
+  local score = composer.getVariable( "score" )
+  local user = composer.getVariable( "username" )
+  local partita = composer.getVariable( "nomePartita" )
+  local stringaScores = "saveScore".."$$"..".json"
+  local tabellonePunteggi= fileHandler.loadTableScores(stringaScores)
+  if(tabellonePunteggi == nil) then
+    print("primoSalvataggio")
+    tabellonePunteggi = {}
+    table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
+  else
+    print("seguenti salvataggi")
+    table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
+  end
 
-  -- local stringaScores = "saveScore".."$$"..".json"
-  -- local tabellonePunteggi= fileHandler.loadTable(stringaScores)
-  -- if(tabellonePunteggi == nil) then
-  --   print("primoSalvataggio")
-  --   tabellonePunteggi = {}
-  --   table.insert(tabellonePunteggi, punteggio)
-  -- else
-  --   print("seguenti salvataggi")
-  --   table.insert(tabellonePunteggi, punteggio)
-  -- end
-  --
-  -- local punteggio = {
-  --   score = composer.getVariable( "punteggioPartita" )
-  -- }
-  --
-  -- fileHandler.saveTable(tabellonePunteggi, stringaScores)
-  -- fileHandler.caricaSave(tabellonePunteggi, stringaScores)
+  fileHandler.saveTable(tabellonePunteggi, stringaScores)
+  fileHandler.caricaSave(tabellonePunteggi, stringaScores)
 
 
 
