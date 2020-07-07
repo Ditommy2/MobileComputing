@@ -470,8 +470,8 @@ local interfacciaConfig = {
   (function(inventario, handler, inventoryGroup)
     local index=1
     print(display.contentCenterX.."---"..display.contentCenterY)
-    local partenzax = display.contentCenterX-600
-    local partenzay= display.contentCenterY+120
+    local partenzax = display.contentCenterX-625
+    local partenzay= display.contentCenterY+80
     local griglia = {}
 
     composer.setVariable( "grigliaOggetti", griglia )
@@ -487,8 +487,8 @@ local interfacciaConfig = {
     local posizioneY = partenzay
     for x=1, 2, 1 do
       for y=1, 5, 1 do
-        local casellaX = posizioneX + 50
-        local casellaY = posizioneY + 35
+        local casellaX = posizioneX + 70
+        local casellaY = posizioneY + 68
         print("casella = "..casellaX..", "..casellaY)
         local griglia = composer.getVariable( "grigliaOggetti" )
 
@@ -501,7 +501,7 @@ local interfacciaConfig = {
       end
 
       posizioneX = partenzax
-      posizioneY = posizioneY + 75
+      posizioneY = posizioneY + 136
     end
 
     --Ciclo di visualizzazione degli oggetti dell'inventario
@@ -552,14 +552,14 @@ local interfacciaConfig = {
 
       -- print("coordinate mappa: (" .. (display.contentCenterX+150) .. ", " .. (display.contentCenterY+100) .. ")")
 
-      if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-125)) and (event.y > (display.contentCenterY+100) and event.y < (altezza-75))) then
+      if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-50)) and (event.y > (display.contentCenterY+75) and event.y < (altezza-25))) then
         item.touchOffsetX=event.x-item.x
         item.touchOffsetY=event.y-item.y
       end
     elseif("moved"==phase) then
       -- Muove la nave
 
-      if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-125)) and (event.y > (display.contentCenterY+100) and event.y < (altezza-75))) then
+      if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-50)) and (event.y > (display.contentCenterY+75) and event.y < (altezza-25))) then
         item.x=event.x-item.touchOffsetX
         item.y=event.y-item.touchOffsetY
       end
@@ -604,7 +604,7 @@ local interfacciaConfig = {
       print(item.x..", "..item.y.."---"..event.x..", "..event.y)
     elseif("ended"==phase or "cancelled"==phase) then
       --Oggetto fuori dall'inventario (tentativo di rimozione)
-      if( (item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140)) ) then
+      if( (item.x < invx or item.x > (invx+700)) or (item.y < invy or item.y > (invy+270)) ) then
         print("appoggiato")
         for i=#curios, 1, -1 do
           if (item.x < curios[i].areaXUpper and item.x > curios[i].areaXLower and item.y < curios[i].areaYUpper and item.y > curios[i].areaYLower) then
@@ -646,8 +646,8 @@ local interfacciaConfig = {
         -- VA IMPLEMENTATO L'AUTO POSIZIONAMENTO DEGLI ITEM E LO SCAMBIO DI POSTO
         local xRel = item.x - invx
         local yRel = item.y - invy
-        local numCol, restCol = math.modf(xRel/100)
-        local numRiga, restRiga = math.modf(yRel/70)
+        local numCol, restCol = math.modf(xRel/140)
+        local numRiga, restRiga = math.modf(yRel/136)
         local numCasella = 0
 
         numCol = numCol + 1

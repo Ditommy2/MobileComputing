@@ -38,7 +38,7 @@ local inventario =
 
     --Creazionde della mappa
     local map = display.newRect( display.contentCenterX, display.contentCenterY, lunghezza+1000, altezza+1000 )
-    map:setFillColor(0.18, 0.18, 0.23)
+    map:setFillColor(0.23, 0.23, 0.23)
     mapGroup:insert(map)
     interfaccia.annullaVisite(mappaGenerata, mappaGenerata)
     interfaccia.displayStanza(mappaGenerata, display.contentCenterX, display.contentCenterY)-- -60, -30
