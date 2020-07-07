@@ -6,8 +6,6 @@
 
 local composer = require( "composer" )
 local characterInterface = require("characterInterface")
--- local enemyInterface
--- local stanzaCorrente
 local fileHandler = require("fileHandler")
 local customFont="MadnessHyperactive.otf"
 local scene = composer.newScene()
@@ -71,11 +69,13 @@ end
 -- Fine combattimento
 -- -----------------------------------------------------------------------------------
 local function gotoNuovaCarica()
+	composer.setVariable( "characterLife", character.life )
 	composer.removeScene( "Scenes.fight" )
 	composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
 end
 
 local function gotoLivello1()
+	composer.setVariable( "characterLife", character.life )
 	composer.removeScene( "Scenes.fight" )
 	composer.gotoScene( "Scenes.livello1", {time=800, effect="crossFade"} )
 end
@@ -100,6 +100,7 @@ local function turnEnemy()
 		fightText.x = 250
 		fightText.text = "Hit!"
 		timer.performWithDelay( 2000, removeTextFight )
+		characterInterface.esegui(5, character)
 
 		attackRandom = math.random(1, 50)
 		totAttacco = (attackRandom + enemy.damage) * enemy.mossa1.damage --mossa.damage
@@ -242,17 +243,17 @@ local function calcolaDanno()
 		textDamage.text = attacco
 		timer.performWithDelay(3000, removeTextDamageCharacter)
 
-		if(enemy.life > attacco) then
+		if(enemy1.life > attacco) then
 			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
-			local rapporto = lifeBarEnemy.width / enemy.life
+			local rapporto = lifeBarEnemy.width / enemy1.life
 			local y = totAttacco * rapporto		--Pixel dal levare
 			local x, z = math.modf(y)
 
-			enemy.life = enemy.life - totAttacco
+			enemy1.life = enemy1.life - totAttacco
 			lifeBarEnemy.width = lifeBarEnemy.width - x
 			lifeBarEnemy.x = lifeBarEnemy.x - x/2
 		else --Danno > vita => nemico morto
-			enemy.life = 0
+			enemy1.life = 0
 			display.remove( lifeBarEnemy )
 			punteggioPartita = composer.getVariable("score") + enemy.points
 			composer.setVariable( "score", punteggioPartita )
@@ -273,8 +274,12 @@ local function eseguiMossa()
 	if(not(numeroMossa==nil)) then
 		if(turno == "personaggio") then
 			calcolaDanno()
+			characterInterface.esegui(numeroMossa, character)
 
-			if(enemy.life > 0) then
+			-- timer.performWithDelay( 5000, character:setSequence("rightIdle"))
+			-- timer.performWithDelay( 5000, character:play())
+
+			if(enemy1.life > 0) then
 				turno = "nemico"
 				timer.performWithDelay( 2000, changeStarAvv)
 				timer.performWithDelay(8000, turnEnemy)
@@ -375,6 +380,11 @@ function scene:create ( event )
 	lifeBarCharacter = display.newImageRect( midGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
 	lifeBarCharacter.x = display.contentCenterX - 250
 	lifeBarCharacter.y = display.contentCenterY - 250
+	local rapporto = lifeBarCharacter.width / 3000
+	local x = character.life*rapporto
+	lifeBarCharacter.width = x
+	x = 200 - x
+	lifeBarCharacter.x = lifeBarCharacter.x - x/2
 	mossa1.text = character.mossa1.nome
 	mossa2.text = character.mossa2.nome
 	mossa3.text = character.mossa3.nome
@@ -391,6 +401,7 @@ function scene:create ( event )
 	lifeBarEnemy.x = display.contentCenterX + 250
 	lifeBarEnemy.y = display.contentCenterY - 250
 	enemy1:addEventListener("tap", eseguiMossa)
+	enemy1.life = enemy.life
 
 	timer.performWithDelay(2000, gameLoop())
 end

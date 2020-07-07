@@ -10,9 +10,10 @@ local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 local enemyInterface = require("enemyInterface")
+local curiosInterface = require("curiosInterface")
 composer.recycleOnSceneChange = true
 local customFont="MadnessHyperactive.otf"
-
+local oggetti = stanzaCorrente.oggetti
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
 physics.start()
@@ -34,7 +35,7 @@ local function gotoMenu()
     nomeSalvataggio = composer.getVariable( "nomePartita" ),
     giocatore = composer.getVariable( "username" ),
     nomePartita = composer.getVariable( "nomePartita" ),
-
+    vitaPersonaggio = composer.getVariable( "characterLife" ),
     score = composer.getVariable("score")
   }
 
@@ -60,15 +61,15 @@ local function gotoMenu()
 
 
   local stringaSalvataggio = "save".."$$"..composer.getVariable("username")..".json"
-  print("caricando da ")
-  print(stringaSalvataggio)
+  -- print("caricando da ")
+  -- print(stringaSalvataggio)
   local tabelloneSalvataggi = fileHandler.loadTable(stringaSalvataggio)
   if(tabelloneSalvataggi == nil) then
-    print("primoSalvataggio")
+    -- print("primoSalvataggio")
     tabelloneSalvataggi = {}
     table.insert(tabelloneSalvataggi, salvataggio)
   else
-    print("seguenti salvataggi")
+    -- print("seguenti salvataggi")
     local statoPartita = composer.getVariable( "statoPartita" )
     if(statoPartita.stato == "salvata") then
       tabelloneSalvataggi[statoPartita.indice] = salvataggio
@@ -77,8 +78,8 @@ local function gotoMenu()
     end
   end
 
-  print("salvando")
-  print(tabelloneSalvataggi)
+  -- print("salvando")
+  -- print(tabelloneSalvataggi)
   fileHandler.saveTable(tabelloneSalvataggi, stringaSalvataggio)
   fileHandler.caricaSave(salvataggio, stringaSalvataggio)
 
@@ -112,6 +113,7 @@ end
 
 local function goTo(direction)
   stanzaCorrente.corrente=false
+  stanzaCorrente.corridoioCorrente=direction
   composer.removeScene("Scenes.livello1")
   composer.gotoScene("Scenes.corridoio")
 end
@@ -236,6 +238,26 @@ function scene:create( event )
 	local sceneGroup = self.view
   local mainGroup=display.newGroup()
   local phase = event.phase
+  local curios = stanzaCorrente.curios
+  local activeCurios = {}
+    for i=#curios, 1, -1 do
+      if not(curios==nil) then
+        local curio = curiosInterface.createCurio(self, stanzaCorrente.curios[i])
+        if not(curio==nil) then
+          table.insert(activeCurios, curio)
+          composer.setVariable("mainGroup", mainGroup)
+          mainGroup:insert(curio)
+        end
+      end
+    end
+    composer.setVariable( "activeCurios", activeCurios )
+    stanzaCorrente.curios=curios
+    for j=#stanzaCorrente.oggetti, 1, -1 do
+    local oggetto = display.newImageRect("Images/Icons/icons3/"..stanzaCorrente.oggetti[j], 50, 50)
+    oggetto.x=lunghezza * 0.7
+    oggetto.y = altezza-390
+    mainGroup:insert(oggetto)
+  end
   funzioneEseguiDisplay(self,  stanzaCorrente, invloc)
   local numero = stanzaCorrente.seedBackground
   local immagine = "Images/Backgrounds/proceduralBack/Stanze/back"..numero..".png"
@@ -260,6 +282,8 @@ function scene:create( event )
           mainGroup:insert(enemy)
         end
     end
+
+
 
 
   mainGroup:insert(character)
@@ -321,8 +345,11 @@ function scene:create( event )
   tutorialButton.y = display.contentCenterY-300
   tutorialButton:addEventListener("tap", goToTutorial)
 
+
+
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
+  composer.setVariable("sceneGroup", sceneGroup)
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --fase show del display

@@ -3,6 +3,7 @@ local composer = require( "composer" )
 local lowerFixedMenu= require("lowerFixedMenu")
 local widget = require("widget")
 local characterInterface = require("characterInterface")
+local interfaceConfig = require("interfaceConfig")
 local scene = composer.newScene()
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
@@ -44,16 +45,21 @@ end
 
 function goBack()
   local direction = composer.getVariable("direzione")
+  stanzaCorrente.corridoioCorrente = nil
   stanzaCorrente.corrente=true
   composer.setVariable("stanzaCorrente", stanzaCorrente)
   composer.setVariable( "direzione", opposite(direction) )
-
+  timer.pause(moveTimer)
+  timer.cancel(moveTimer)
   composer.removeScene("Scenes.corridoio")
   composer.gotoScene("Scenes.livello1")
 end
 
 function changeRoom()
   local direction = composer.getVariable( "direzione" )
+  stanzaCorrente.corridoioCorrente = nil
+  timer.pause(moveTimer)
+  timer.cancel(moveTimer)
   composer.setVariable( "stanzaCorrente", stanzaCorrente[direction])
   local prossimaStanza =composer.getVariable( "stanzaCorrente" )
   prossimaStanza.corrente=true
@@ -77,12 +83,12 @@ function scene:create( event )
   local seedDirezionale = "seed"..direzioneCorridoio
   local numeroRandomico = stanzaCorrente[seedDirezionale]
   local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back"..numeroRandomico..".png", lunghezza, altezza-300)
-
+  background.direzione=stanzaCorrente.corridoioCorrente
   background.x=display.contentCenterX
-  background.y=display.contentCenterY-170
-  physics.addBody(background, "static", {shape={ 0, 0, lunghezza, 0, lunghezza, altezza-300, 0, altezza-300}})
+  background.y=display.contentCenterY-150
+  --physics.addBody(background, "static", {shape={ 0, 0, lunghezza, 0, lunghezza, altezza-300, 0, altezza-300}})
   background:addEventListener("touch", characterInterface.listener)
-
+  background:addEventListener("touch", interfaceConfig.tokenListener)
   --Setting non-movement area
   local area = {minX=lunghezza*0.2, minY=0, maxX=lunghezza-(lunghezza*0.2), maxY= altezza-300}
   background.nonMovementArea = area
@@ -126,6 +132,7 @@ function scene:create( event )
 
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
+  composer.setVariable("sceneGroup", sceneGroup)
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

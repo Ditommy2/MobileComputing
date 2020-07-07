@@ -38,7 +38,7 @@ local inventario =
 
     --Creazionde della mappa
     local map = display.newRect( display.contentCenterX, display.contentCenterY, lunghezza+1000, altezza+1000 )
-    map:setFillColor(0.18, 0.18, 0.23)
+    map:setFillColor(0.23, 0.23, 0.23)
     mapGroup:insert(map)
     interfaccia.annullaVisite(mappaGenerata, mappaGenerata)
     interfaccia.displayStanza(mappaGenerata, display.contentCenterX, display.contentCenterY)-- -60, -30
@@ -51,8 +51,10 @@ local inventario =
     --Posizionamento di mappa e inventario
     mapGroup.x=composer.getVariable( "mapx" )
     mapGroup.y=composer.getVariable( "mapy" )
-    inventoryGroup.x=-250
-    inventoryGroup.y=200
+    -- inventoryGroup.anchorX=0.5
+    -- inventoryGroup.anchorY=0.5
+    -- inventoryGroup.x=display.contentCenterX---250
+    -- inventoryGroup.y=display.contentCenterY--200
 
     --Listener per il drag della mappa
     mapGroup:addEventListener("touch", interfaccia.dragMapSet)
