@@ -11,7 +11,7 @@ local curios = {
     messaggio = "interazione",
     funzione = (
     function(item, curio)
-      if item.nome == "Images/Icons/icons3/029-key.png" then
+      if item.nome == "029-key.png" then
         print("aperto")
         curio.immagine = "Images/Icons/curios/treasureChest_open.png"
         table.insert(composer.getVariable( "stanzaCorrente" ).oggetti, curio.oggetto)

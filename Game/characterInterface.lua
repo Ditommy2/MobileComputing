@@ -99,11 +99,11 @@ local function move(event)
     if(dir=="r") then
       character.x = character.x + 10
       composer.setVariable( "characterX", character.x )
-      composer.setVariable( "characteY", character.y )
+      composer.setVariable( "characterY", character.y )
     elseif(dir=="l") then
       character.x = character.x - 10
       composer.setVariable( "characterX", character.x )
-      composer.setVariable( "characteY", character.y )
+      composer.setVariable( "characterY", character.y )
     end
 
     if(character.x < 0) then
@@ -207,6 +207,9 @@ local function create(scena)
   character.anchorY = 1
   character.x = lunghezza * 0.1
   character.y = altezza-310
+  composer.setVariable( "characterX", character.x )
+  composer.setVariable( "characterY", character.y )
+  print("settati nel composer: "..composer.getVariable( "characterX" ))
   physics.addBody(character, "dynamic", {radius=sheet_walking_Options.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
   character.myName = "Character"
   character.life = 3000

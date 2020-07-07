@@ -469,7 +469,7 @@ local interfacciaConfig = {
   displayGrid=
   (function(inventario, handler, inventoryGroup)
     local index=1
-    local itemInterface = require("items")
+    local itemInterface = require("itemsInterface")
     print(display.contentCenterX.."---"..display.contentCenterY)
     local partenzax = display.contentCenterX-600
     local partenzay= display.contentCenterY+120
@@ -509,26 +509,16 @@ local interfacciaConfig = {
     local griglia = composer.getVariable( "grigliaOggetti" )
     for x=1, 10, 1 do
       if(not(inventario[x] == "vuoto")) then
-        local item = {}
-        item.nome = inventario[x]
-        for i=#itemInterface, 1, -1 do
-          if itemInterface[i].nome==item.nome then
-            item.location = itemInterface[i].location
-            item.activeFunction = itemInterface[i].activeFunction
-          end
-        end
-        item = display.newImageRect(inventoryGroup,  item.location..item.nome, 50, 50)
+        local nomeItem = inventario[x]
+
+        item = display.newImageRect(inventoryGroup,  itemInterface[nomeItem].location..itemInterface[nomeItem].nome, 50, 50)
         item.x = griglia[x][1]
         item.y = griglia[x][2]
         print("item: "..item.x..", "..item.y)
         item.id = x
         item.nome = inventario[x]
-        for i=#itemInterface, 1, -1 do
-          if itemInterface[i].nome==item.nome then
-            item.location = itemInterface[i].location
-            item.activeFunction = itemInterface[i].activeFunction
-          end
-        end
+        item.location = itemInterface[nomeItem].location
+        item.activateFunction = itemInterface[nomeItem].activateFunction
         griglia[x][3] = true
         griglia[x][4] = item
 
@@ -616,7 +606,7 @@ local interfacciaConfig = {
 
       item.x=event.x-item.touchOffsetX
       item.y=event.y-item.touchOffsetY
-      print(item.x..", "..item.y.."---"..event.x..", "..event.y)
+      -- print(item.x..", "..item.y.."---"..event.x..", "..event.y)
     elseif("ended"==phase or "cancelled"==phase) then
       --Oggetto fuori dall'inventario (tentativo di rimozione)
       item.activateFunction(item.x, item.y)
@@ -718,7 +708,7 @@ local interfacciaConfig = {
               inventario[idItem] = "vuoto"
             else
               local curio = item.curio
-              inventario[numCasella] = "Images/Icons/icons3/"..curio.oggetto
+              inventario[numCasella] = curio.oggetto
               local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
               for i = #stanzaCorrente.oggetti, 1, -1 do
                 if stanzaCorrente.oggetti[i] == curio.oggetto then
