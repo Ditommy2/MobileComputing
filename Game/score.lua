@@ -1,4 +1,5 @@
 local customFont="MadnessHyperactive.otf"
+local composer = require( "composer" )
 local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sceneGroup)
   local widget = require( "widget" )
 
@@ -49,7 +50,7 @@ local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sc
   local textBackground = display.newRect(background1.x, background1.y, lunghezza-40, 400)
   textBackground:setFillColor(0.32, 0.36, 0.4)
   scrollView:insert(textBackground)
-  local titleScore = display.newText(  "SCORES\n\n"..composer.getVariable( "username" ).."  "..composer.getVariable( "username" ),
+  local titleScore = display.newText(  "SCORES\n\n"..composer.getVariable( "username" ).. "  "..composer.getVariable( "username" ),
   textBackground.x,
   textBackground.y,
 customFont,

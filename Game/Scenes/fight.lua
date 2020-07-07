@@ -43,7 +43,7 @@ local attackRandom
 local totAttacco
 local sommaChance = 0
 local turno
-local turnoStar
+local turnoHourglass
 -- local enemy = stanzaCorrente.nemici[1]
 local enemy
 
@@ -160,11 +160,11 @@ end
 -- Gestione elementi dinamici durante il combattimento
 -- -----------------------------------------------------------------------------------
 function changeStarAvv()
-	transition.to( turnoStar , { time=2000, alpha=1, x=890, y=250 } )
+	transition.to( turnoHourglass , { time=2000, alpha=1, x=890, y=250 } )
 end
 
 function changeStarTuo()
-	transition.to( turnoStar , { time=2000, alpha=1, x=380, y=250 } )
+	transition.to( turnoHourglass , { time=2000, alpha=1, x=380, y=250 } )
 end
 
 function removeTextDamageEnemy()
@@ -204,12 +204,12 @@ end
 -- -----------------------------------------------------------------------------------
 local function gameLoop()
 	if((enemy.speed + math.random(1, 6)) < (character.speed + math.random(1, 6))) then
-		transition.to( turnoStar , { time=3000, alpha=1, x=380, y=250 } )
+		transition.to( turnoHourglass , { time=3000, alpha=1, x=380, y=250 } )
 		turno = "personaggio"
 	else
-		transition.to( turnoStar , { time=3000, alpha=1, x=890, y=250 } )
+		transition.to( turnoHourglass , { time=3000, alpha=1, x=890, y=250 } )
 		turno = "nemico"
-		timer.performWithDelay( 6000, turnEnemy )
+		timer.performWithDelay( 3000, turnEnemy )
 	end
 end
 
@@ -356,9 +356,9 @@ function scene:create ( event )
 	textDamageEnemy = display.newText(textGroup, "", 500, 200, native.newFont( customFont), 100)
 	textDamageEnemy:setFillColor(1, 0, 0)
 
-	turnoStar = display.newImageRect( midGroup, "Images/Icons/icons2/038-hourglass.png", 50, 50)
-	turnoStar.x = 600
-	turnoStar.alpha = 0
+	turnoHourglass = display.newImageRect( midGroup, "Images/Icons/icons2/038-hourglass.png", 50, 50)
+	turnoHourglass.x = 600
+	turnoHourglass.alpha = 0
 
 	fightText = display.newText(textGroup, "", 2500000, 250, native.newFont( customFont), 150)
 	fightText:setFillColor(255, 153, 0)
