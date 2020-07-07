@@ -99,7 +99,7 @@ local function turnEnemy()
 		fightText.alpha = 1
 		fightText.x = 250
 		fightText.text = "Hit!"
-		timer.performWithDelay( 2000, removeTextFight )
+		timer.performWithDelay( 1500, removeTextFight )
 		characterInterface.esegui(5, character)
 
 		attackRandom = math.random(1, 50)
@@ -107,7 +107,7 @@ local function turnEnemy()
 
 		local attacco, resto = math.modf(totAttacco)
 		textDamageEnemy.text = attacco
-		timer.performWithDelay(3000, removeTextDamageEnemy)
+		timer.performWithDelay(1500, removeTextDamageEnemy)
 
 		if(character.life > attacco) then
 			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
@@ -125,20 +125,22 @@ local function turnEnemy()
 		fightText.alpha = 1
 		fightText.x = 250
 		fightText.text = "Missed!"
-		timer.performWithDelay( 3000, removeTextFight )
+		timer.performWithDelay( 1500, removeTextFight )
 	end
 
 	if(character.life > 0) then
-		timer.performWithDelay( 2000, changeStarTuo)
-		timer.performWithDelay(4000, eseguiMossa)
-		timer.performWithDelay(4000, addTasto)
+		timer.performWithDelay( 1500, changeStarTuo)
+		timer.performWithDelay(3000, eseguiMossa)
+		timer.performWithDelay(3000, addTasto)
 		textDamageEnemy.alpha = 1
 	else
 		local gameOverBack = display.newImageRect( backgroundGroup, "Images/Backgrounds/Black.jpg", 1280, 720)
 		gameOverBack.x = display.contentCenterX
 		gameOverBack.y = display.contentCenterY
-		local gameOver = display.newText(textGroup, "GAME OVER", 600, 200, native.systemFont, 100)
-		fightText:setFillColor(0, 0, 0)
+		local gameOver = display.newText(midGroup, "GAME OVER", 600, 200, native.newFont( customFont), 100)
+		gameOver:setFillColor(143, 0, 255)
+		local gameOverScore = display.newText(midGroup, "SCORE : "..punteggioPartita, 600, 400, native.newFont( customFont), 100)
+		gameOverScore:setFillColor(143, 0, 255)
 
 		saveScore(punteggioPartita)
 
@@ -161,11 +163,11 @@ end
 -- Gestione elementi dinamici durante il combattimento
 -- -----------------------------------------------------------------------------------
 function changeStarAvv()
-	transition.to( turnoHourglass , { time=2000, alpha=1, x=890, y=250 } )
+	transition.to( turnoHourglass , { time=1500, alpha=1, x=890, y=250 } )
 end
 
 function changeStarTuo()
-	transition.to( turnoHourglass , { time=2000, alpha=1, x=380, y=250 } )
+	transition.to( turnoHourglass , { time=1500, alpha=1, x=380, y=250 } )
 end
 
 function removeTextDamageEnemy()
@@ -205,12 +207,12 @@ end
 -- -----------------------------------------------------------------------------------
 local function gameLoop()
 	if((enemy.speed + math.random(1, 6)) < (character.speed + math.random(1, 6))) then
-		transition.to( turnoHourglass , { time=3000, alpha=1, x=380, y=250 } )
+		transition.to( turnoHourglass , { time=4000, alpha=1, x=380, y=250 } )
 		turno = "personaggio"
 	else
-		transition.to( turnoHourglass , { time=3000, alpha=1, x=890, y=250 } )
+		transition.to( turnoHourglass , { time=4000, alpha=1, x=890, y=250 } )
 		turno = "nemico"
-		timer.performWithDelay( 3000, turnEnemy )
+		timer.performWithDelay( 4000, turnEnemy )
 	end
 end
 
@@ -234,14 +236,14 @@ local function calcolaDanno()
 		fightText.alpha = 1
 		fightText.x = 1000
 		fightText.text = "Hit!"
-		timer.performWithDelay( 2000, removeTextFight )
+		timer.performWithDelay( 1500, removeTextFight )
 
 		attackRandom = math.random(1, 50)
 		totAttacco = (attackRandom + character.damage) * character[mossa].damage
 
 		local attacco, resto = math.modf(totAttacco)
 		textDamage.text = attacco
-		timer.performWithDelay(3000, removeTextDamageCharacter)
+		timer.performWithDelay(1500, removeTextDamageCharacter)
 
 		if(enemy1.life > attacco) then
 			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
@@ -262,7 +264,7 @@ local function calcolaDanno()
 		fightText.alpha = 1
 		fightText.x = 1000
 		fightText.text = "Missed!"
-		timer.performWithDelay( 3000, removeTextFight )
+		timer.performWithDelay( 1500, removeTextFight )
 	end
 end
 
@@ -281,8 +283,8 @@ local function eseguiMossa()
 
 			if(enemy1.life > 0) then
 				turno = "nemico"
-				timer.performWithDelay( 2000, changeStarAvv)
-				timer.performWithDelay(8000, turnEnemy)
+				timer.performWithDelay( 1000, changeStarAvv)
+				timer.performWithDelay(3000, turnEnemy)
 				textDamage.alpha = 1
 				enemy1:removeEventListener("tap", eseguiMossa)
 			else
@@ -335,20 +337,20 @@ function scene:create ( event )
 	--*******************TEXT GROUP************************************
 
 	testoMossa = display.newText( textGroup, "" ,1050, 585, 450, 0, native.newFont( customFont), 30 )
-	testoMossa:setFillColor( 1, 1, 1 )
+	testoMossa:setFillColor( 255,255,255 )
 
 	mossa1 = display.newText( textGroup, "" , 200, 515, native.newFont( customFont), 50 )
-	mossa1:setFillColor( 0.82, 0.86, 1 )
+	mossa1:setFillColor( 255,255,255 )
 
 
 	mossa2 = display.newText( textGroup, "", 560, 515, native.newFont( customFont), 50 )
-	mossa2:setFillColor( 0.82, 0.86, 1 )
+	mossa2:setFillColor( 255,255,255 )
 
 	mossa3 = display.newText( textGroup, "", 200, 650, native.newFont( customFont), 50 )
-	mossa3:setFillColor( 0.82, 0.86, 1 )
+	mossa3:setFillColor( 255,255,255 )
 
 	mossa4 = display.newText( textGroup, "", 560, 650, native.newFont( customFont), 50 )
-	mossa4:setFillColor( 0.82, 0.86, 1 )
+	mossa4:setFillColor( 255,255,255 )
 
 	mossa1:addEventListener( "tap", infoMossa1 )
 	mossa2:addEventListener( "tap", infoMossa2 )
