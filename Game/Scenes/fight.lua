@@ -3,7 +3,6 @@
 -- fight.lua
 --
 -----------------------------------------------------------------------------------------
-
 local composer = require( "composer" )
 local characterInterface = require("characterInterface")
 local fileHandler = require("fileHandler")
