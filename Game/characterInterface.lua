@@ -40,13 +40,19 @@ local sheet_kick_Options =
   numFrames=30,
 }
 
-
+local sheet_slay_Options =
+{
+  width=213,
+  height=197,
+  numFrames=30,
+}
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sprite sheet personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sheet_walking = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/walk.png", sheet_walking_Options )
 local sheet_idle = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/idle.png", sheet_idle_Options )
 local sheet_kick = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/kick.png", sheet_kick_Options )
+local sheet_slay = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/slay.png", sheet_slay_Options )
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sequences table personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -96,7 +102,7 @@ local sequences =
     sheet = sheet_idle
   },
 
-  --Left Idle
+  --Kick (mossa2)
   {
     name = "kick",
     start = 1,
@@ -105,6 +111,17 @@ local sequences =
     loopCount = 1,
     loopDirection = "forward",
     sheet = sheet_kick
+  },
+
+  --Slay (mossa3)
+  {
+    name = "slay",
+    start = 1,
+    count = 30,
+    time = 500,
+    loopCount = 1,
+    loopDirection = "forward",
+    sheet = sheet_slay
   }
 }
 
@@ -230,7 +247,8 @@ local function mossa2()
 end
 
 local function mossa3()
-  print("niente")
+  personaggio:setSequence("slay")
+  personaggio:play()
 end
 
 local function mossa4()
@@ -256,7 +274,6 @@ local function eseguiMossa(numeroMossa, pers)
   if(numeroMossa == 4) then
     mossa4()
   end
-
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Creazione del personaggio
@@ -287,13 +304,13 @@ local function create(scena)
   character.armor = 8
   character.damage = 100
   character.speed = 3
-  character.mossa1 = {nome="Pugno", hitChance = 18, damage = 5}
-  character.mossa2 = {nome="Calcio", hitChance = 4, damage = 0.8}
-  character.mossa3 = {nome="Cinta", hitChance = 2, damage = 0.4}
+  character.mossa1 = {nome="Pugno", hitChance = 5, damage = 0.4}
+  character.mossa2 = {nome="Calcio", hitChance = 4, damage = 0.6}
+  character.mossa3 = {nome="Fendete", hitChance = 3, damage = 1}
   character.mossa4 = {nome="Laccio", hitChance = 1, damage = 0.1}
   character.testoMossa1 = character.mossa1.nome .. ": Stordisci il tuo avversario \nDamage = " .. (character.mossa1.damage * 100) .. "%\nHit chance = " .. character.mossa1.hitChance .. "\n"
   character.testoMossa2 = character.mossa2.nome .. ": Questa mossa ti fa il caffè\nDamage = " .. (character.mossa2.damage * 100) .. "%\nHit chance = " .. character.mossa2.hitChance .. "\n"
-  character.testoMossa3 = character.mossa3.nome .. ": Questa mossa mammt\nDamage = " .. (character.mossa3.damage * 100) .. "%\nHit chance = " .. character.mossa3.hitChance .. "\n"
+  character.testoMossa3 = character.mossa3.nome .. ": Affetta il tuo avversario\nDamage = " .. (character.mossa3.damage * 100) .. "%\nHit chance = " .. character.mossa3.hitChance .. "\n"
   character.testoMossa4 = character.mossa4.nome .. ": Questa mossa genera gettere & settere\nDamage = " .. (character.mossa4.damage * 100) .. "%\nHit chance = " .. character.mossa4.hitChance .. "\n"
 
   return character
