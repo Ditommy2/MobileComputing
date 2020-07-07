@@ -226,17 +226,17 @@ local function calcolaDanno()
 		textDamage.text = attacco
 		timer.performWithDelay(3000, removeTextDamageCharacter)
 
-		if(enemy.life > attacco) then
+		if(enemy1.life > attacco) then
 			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
-			local rapporto = lifeBarEnemy.width / enemy.life
+			local rapporto = lifeBarEnemy.width / enemy1.life
 			local y = totAttacco * rapporto		--Pixel dal levare
 			local x, z = math.modf(y)
 
-			enemy.life = enemy.life - totAttacco
+			enemy1.life = enemy1.life - totAttacco
 			lifeBarEnemy.width = lifeBarEnemy.width - x
 			lifeBarEnemy.x = lifeBarEnemy.x - x/2
 		else --Danno > vita => nemico morto
-			enemy.life = 0
+			enemy1.life = 0
 			display.remove( lifeBarEnemy )
 		end
 	else
@@ -260,7 +260,7 @@ local function eseguiMossa()
 			-- timer.performWithDelay( 5000, character:setSequence("rightIdle"))
 			-- timer.performWithDelay( 5000, character:play())
 
-			if(enemy.life > 0) then
+			if(enemy1.life > 0) then
 				turno = "nemico"
 				timer.performWithDelay( 2000, changeStarAvv)
 				timer.performWithDelay(8000, turnEnemy)
@@ -382,6 +382,7 @@ function scene:create ( event )
 	lifeBarEnemy.x = display.contentCenterX + 250
 	lifeBarEnemy.y = display.contentCenterY - 250
 	enemy1:addEventListener("tap", eseguiMossa)
+	enemy1.life = enemy.life
 
 	timer.performWithDelay(2000, gameLoop())
 end
