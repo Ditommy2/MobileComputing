@@ -205,11 +205,11 @@ local function create(scena)
   character.y = altezza-310
   physics.addBody(character, "dynamic", {radius=sheet_walking_Options.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
   character.myName = "Character"
-  character.life = 3000
+  character.life = 1
   character.armor = 8
   character.damage = 100
   character.speed = 3
-  character.mossa1 = {nome="Pugno", hitChance = 4, damage = 0.6}
+  character.mossa1 = {nome="Pugno", hitChance = 4, damage = 1000}
   character.mossa2 = {nome="Calcio", hitChance = 4, damage = 0.8}
   character.mossa3 = {nome="Cinta", hitChance = 2, damage = 0.4}
   character.mossa4 = {nome="Laccio", hitChance = 1, damage = 0.1}

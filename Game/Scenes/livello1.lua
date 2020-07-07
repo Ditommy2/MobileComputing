@@ -33,8 +33,31 @@ local function gotoMenu()
     mapyToSave = composer.getVariable( "mapy" ),
     nomeSalvataggio = composer.getVariable( "nomePartita" ),
     giocatore = composer.getVariable( "username" ),
-    nomePartita = composer.getVariable( "nomePartita" )
+    nomePartita = composer.getVariable( "nomePartita" ),
+
+    score = composer.getVariable("score")
   }
+
+
+  -- local stringaScores = "saveScore".."$$"..".json"
+  -- local tabellonePunteggi= fileHandler.loadTable(stringaScores)
+  -- if(tabellonePunteggi == nil) then
+  --   print("primoSalvataggio")
+  --   tabellonePunteggi = {}
+  --   table.insert(tabellonePunteggi, punteggio)
+  -- else
+  --   print("seguenti salvataggi")
+  --   table.insert(tabellonePunteggi, punteggio)
+  -- end
+  --
+  -- local punteggio = {
+  --   score = composer.getVariable( "punteggioPartita" )
+  -- }
+  --
+  -- fileHandler.saveTable(tabellonePunteggi, stringaScores)
+  -- fileHandler.caricaSave(tabellonePunteggi, stringaScores)
+
+
 
   local stringaSalvataggio = "save".."$$"..composer.getVariable("username")..".json"
   print("caricando da ")

@@ -81,6 +81,7 @@ local function handleButtonEventNuovaNome(event)
 			composer.setVariable( "mapx", 352 )
 			composer.setVariable( "mapy", 200 )
 			composer.setVariable( "statoPartita", {stato = "nuova"} )
+			composer.setVariable( "score", 0 )
 			composer.removeScene( "Scenes.nuovaCarica" )
 			composer.gotoScene("Scenes.livello1")
 		else
@@ -399,7 +400,23 @@ local returnButton = display.newImageRect( gameGroup, "Images/Utility/returnArro
 returnButton.x = display.contentCenterX-550
 returnButton.y = display.contentCenterY-550
 returnButton:addEventListener("tap", gotoMenu)
+
+local function goToScore()
+	local scrollOverlayRequired = require("score")
+	local lunghezza =  display.contentWidth
+	local lunghezzaFinestra=lunghezza-400
+	local altezzzaFinestra=lunghezzaFinestra*(9/16)
+	scrollOverlayRequired.handleButton(display, lunghezzaFinestra, altezzaFinestra, sceneGroup)
+
 end
+
+local scoreButton = display.newText( gameGroup, "Scores",  150, 150, customFont, 60)
+scoreButton.x = display.contentCenterX+550
+scoreButton.y = display.contentCenterY-500
+scoreButton:addEventListener("tap", goToScore)
+end
+
+
 
 -- show()
 function scene:show( event )
