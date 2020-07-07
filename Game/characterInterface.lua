@@ -98,8 +98,12 @@ local function move(event)
   if(not(dir==nil)) then
     if(dir=="r") then
       character.x = character.x + 10
+      composer.setVariable( "characterX", character.x )
+      composer.setVariable( "characteY", character.y )
     elseif(dir=="l") then
       character.x = character.x - 10
+      composer.setVariable( "characterX", character.x )
+      composer.setVariable( "characteY", character.y )
     end
 
     if(character.x < 0) then

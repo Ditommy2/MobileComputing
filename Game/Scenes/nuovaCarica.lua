@@ -42,8 +42,8 @@ local function handleButtonEventNuovaNome(event)
 
 			if not trovato then
 			local lowerFixedMenu = require("lowerFixedMenu")
-			local inv = {"Images/Icons/icons2/054-ham.png", "Images/Icons/icons3/002-shield-2.png", "Images/Icons/icons3/016-potion-1.png", "Images/Icons/icons3/017-hammer.png", "Images/Icons/icons3/029-key.png", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto"}
-
+			local inv = {"vuoto", "vuoto", "016-potion-1.png", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto"}
+			--local inv = {"I054-ham.png", "002-shield-2.png", "016-potion-1.png", "017-hammer.png", "029-key.png", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto"}
 			-- print("inventario caricato: " )
 			-- for x=1, #inv, 1 do
 			-- 	print(inv[x])

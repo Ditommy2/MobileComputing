@@ -469,6 +469,7 @@ local interfacciaConfig = {
   displayGrid=
   (function(inventario, handler, inventoryGroup)
     local index=1
+    local itemInterface = require("items")
     print(display.contentCenterX.."---"..display.contentCenterY)
     local partenzax = display.contentCenterX-600
     local partenzay= display.contentCenterY+120
@@ -508,12 +509,26 @@ local interfacciaConfig = {
     local griglia = composer.getVariable( "grigliaOggetti" )
     for x=1, 10, 1 do
       if(not(inventario[x] == "vuoto")) then
-        local item = display.newImageRect(inventoryGroup,  inventario[x], 50, 50)
+        local item = {}
+        item.nome = inventario[x]
+        for i=#itemInterface, 1, -1 do
+          if itemInterface[i].nome==item.nome then
+            item.location = itemInterface[i].location
+            item.activeFunction = itemInterface[i].activeFunction
+          end
+        end
+        item = display.newImageRect(inventoryGroup,  item.location..item.nome, 50, 50)
         item.x = griglia[x][1]
         item.y = griglia[x][2]
         print("item: "..item.x..", "..item.y)
         item.id = x
         item.nome = inventario[x]
+        for i=#itemInterface, 1, -1 do
+          if itemInterface[i].nome==item.nome then
+            item.location = itemInterface[i].location
+            item.activeFunction = itemInterface[i].activeFunction
+          end
+        end
         griglia[x][3] = true
         griglia[x][4] = item
 
@@ -604,6 +619,7 @@ local interfacciaConfig = {
       print(item.x..", "..item.y.."---"..event.x..", "..event.y)
     elseif("ended"==phase or "cancelled"==phase) then
       --Oggetto fuori dall'inventario (tentativo di rimozione)
+      item.activateFunction(item.x, item.y)
       if( (item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140)) ) then
         print("appoggiato")
         for i=#curios, 1, -1 do
