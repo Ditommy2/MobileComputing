@@ -470,7 +470,7 @@ local interfacciaConfig = {
   (function(inventario, handler, inventoryGroup)
     local index=1
     print(display.contentCenterX.."---"..display.contentCenterY)
-    local partenzax = display.contentCenterX-560
+    local partenzax = display.contentCenterX-600
     local partenzay= display.contentCenterY+120
     local griglia = {}
 
