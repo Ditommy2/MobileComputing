@@ -10,9 +10,10 @@ local mappaloc= composer.getVariable( "mappa" )
 local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 local enemyInterface = require("enemyInterface")
+local curiosInterface = require("curiosInterface")
 composer.recycleOnSceneChange = true
 local customFont="MadnessHyperactive.otf"
-
+local oggetti = stanzaCorrente.oggetti
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
 physics.start()
@@ -90,6 +91,7 @@ end
 
 local function goTo(direction)
   stanzaCorrente.corrente=false
+  stanzaCorrente.corridoioCorrente=direction
   composer.removeScene("Scenes.livello1")
   composer.gotoScene("Scenes.corridoio")
 end
@@ -214,12 +216,30 @@ function scene:create( event )
 	local sceneGroup = self.view
   local mainGroup=display.newGroup()
   local phase = event.phase
+  local curios = stanzaCorrente.curios
+  local activeCurios = {}
+    for i=#curios, 1, -1 do
+      if not(curios==nil) then
+        local curio = curiosInterface.createCurio(self, stanzaCorrente.curios[i])
+        table.insert(activeCurios, curio)
+        composer.setVariable("mainGroup", mainGroup)
+        mainGroup:insert(curio)
+      end
+    end
+    composer.setVariable( "activeCurios", activeCurios )
+    stanzaCorrente.curios=curios
+    for j=#stanzaCorrente.oggetti, 1, -1 do
+    local oggetto = display.newImageRect("Images/Icons/icons3/"..stanzaCorrente.oggetti[j], 50, 50)
+    oggetto.x=lunghezza * 0.7
+    oggetto.y = altezza-390
+    mainGroup:insert(oggetto)
+  end
   funzioneEseguiDisplay(self,  stanzaCorrente, invloc)
   local numero = stanzaCorrente.seedBackground
   local immagine = "Images/Backgrounds/proceduralBack/Stanze/back"..numero..".png"
   local background=display.newImageRect(backGroup, immagine, lunghezza, altezza-300)
   background.x=display.contentCenterX
-  background.y=display.contentCenterY-170
+  background.y=display.contentCenterY-150
   physics.addBody(background, "static", {shape={ 0, 0, lunghezza, 0, lunghezza, altezza-300, 0, altezza-300}, isSensor=false})
   background:addEventListener("touch", characterInterface.listener)
 
@@ -238,6 +258,8 @@ function scene:create( event )
           mainGroup:insert(enemy)
         end
     end
+
+
 
 
   mainGroup:insert(character)
@@ -299,8 +321,11 @@ function scene:create( event )
   tutorialButton.y = display.contentCenterY-300
   tutorialButton:addEventListener("tap", goToTutorial)
 
+
+
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
+  composer.setVariable("sceneGroup", sceneGroup)
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --fase show del display
