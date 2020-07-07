@@ -5,10 +5,10 @@ local altezza=  lunghezza*(9/16)
 local math = require("math")
 local nemici = require("nemici")
 local curios = require("curios")
-local spawnRatioNemiciUpper = 100--21
-local spawnRatioNemiciLower = 99
-local spawnRatioCurioLower = 1
-local spawnRatioCurioUpper = 1
+local spawnRatioNemiciUpper = 42  --50%
+local spawnRatioNemiciLower = 1
+local spawnRatioCurioLower = 3
+local spawnRatioCurioUpper = 3
 local numeroBackgroundTotali = 9
 local token
 --Physics (necessaria per il movimento del personaggio)
@@ -471,8 +471,8 @@ local interfacciaConfig = {
     local index=1
     local itemInterface = require("itemsInterface")
     print(display.contentCenterX.."---"..display.contentCenterY)
-    local partenzax = display.contentCenterX-600
-    local partenzay= display.contentCenterY+120
+    local partenzax = display.contentCenterX-625
+    local partenzay= display.contentCenterY+80
     local griglia = {}
 
     composer.setVariable( "grigliaOggetti", griglia )
@@ -481,15 +481,15 @@ local interfacciaConfig = {
 
     --Ciclo di creazione delle caselle dell'inventario
     --TABELLA: parte dalle coordinate {partenzaX, partenzaY} (angolo alto a sinistra)
-    --         si estende di 500*140
-    --CASELLE: ognuna ha dimensioni 100*70
+    --         si estende di 700*272
+    --CASELLE: ognuna ha dimensioni 140*136
     --         ci sono 5 caselle per riga e 2 righe
     local posizioneX = partenzax    --Posizione dell'angolo in alto a sinistra di ogni casella
     local posizioneY = partenzay
     for x=1, 2, 1 do
       for y=1, 5, 1 do
-        local casellaX = posizioneX + 50
-        local casellaY = posizioneY + 35
+        local casellaX = posizioneX + 70
+        local casellaY = posizioneY + 68
         print("casella = "..casellaX..", "..casellaY)
         local griglia = composer.getVariable( "grigliaOggetti" )
 
@@ -502,7 +502,7 @@ local interfacciaConfig = {
       end
 
       posizioneX = partenzax
-      posizioneY = posizioneY + 75
+      posizioneY = posizioneY + 136
     end
 
     --Ciclo di visualizzazione degli oggetti dell'inventario
@@ -557,14 +557,14 @@ local interfacciaConfig = {
 
       -- print("coordinate mappa: (" .. (display.contentCenterX+150) .. ", " .. (display.contentCenterY+100) .. ")")
 
-      if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-125)) and (event.y > (display.contentCenterY+100) and event.y < (altezza-75))) then
+      if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-50)) and (event.y > (display.contentCenterY+75) and event.y < (altezza-25))) then
         item.touchOffsetX=event.x-item.x
         item.touchOffsetY=event.y-item.y
       end
     elseif("moved"==phase) then
       -- Muove la nave
 
-      if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-125)) and (event.y > (display.contentCenterY+100) and event.y < (altezza-75))) then
+      if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-50)) and (event.y > (display.contentCenterY+75) and event.y < (altezza-25))) then
         item.x=event.x-item.touchOffsetX
         item.y=event.y-item.touchOffsetY
       end
@@ -652,8 +652,8 @@ local interfacciaConfig = {
         -- VA IMPLEMENTATO L'AUTO POSIZIONAMENTO DEGLI ITEM E LO SCAMBIO DI POSTO
         local xRel = item.x - invx
         local yRel = item.y - invy
-        local numCol, restCol = math.modf(xRel/100)
-        local numRiga, restRiga = math.modf(yRel/70)
+        local numCol, restCol = math.modf(xRel/140)
+        local numRiga, restRiga = math.modf(yRel/136)
         local numCasella = 0
 
         numCol = numCol + 1

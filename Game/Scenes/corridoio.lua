@@ -85,7 +85,7 @@ function scene:create( event )
   local background=display.newImageRect(backGroup, "Images/Backgrounds/proceduralBack/Corridoi/back"..numeroRandomico..".png", lunghezza, altezza-300)
   background.direzione=stanzaCorrente.corridoioCorrente
   background.x=display.contentCenterX
-  background.y=display.contentCenterY-170
+  background.y=display.contentCenterY-150
   --physics.addBody(background, "static", {shape={ 0, 0, lunghezza, 0, lunghezza, altezza-300, 0, altezza-300}})
   background:addEventListener("touch", characterInterface.listener)
   background:addEventListener("touch", interfaceConfig.tokenListener)

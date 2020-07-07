@@ -35,7 +35,7 @@ local function handleButtonEventNuovaNome(event)
 			end
 			for i=#t, 1, -1 do
 				if t[i].nomePartita==partitaDaCercare then
-					print("nome riscontrato")
+					-- print("nome riscontrato")
 					 trovato = true
 				end
 			end
@@ -66,12 +66,12 @@ local function handleButtonEventNuovaNome(event)
 
 			invComp = composer.getVariable( "inv" )
 
-			print("inventario composer dopo: " )
-			if(not(invComp ==nil)) then
-				for x=1, #invComp, 1 do
-					print(invComp[x])
-				end
-			end
+			-- print("inventario composer dopo: " )
+			-- if(not(invComp ==nil)) then
+			-- 	for x=1, #invComp, 1 do
+			-- 		print(invComp[x])
+			-- 	end
+			-- end
 
 
 
@@ -80,6 +80,7 @@ local function handleButtonEventNuovaNome(event)
 			composer.setVariable( "mapx", 352 )
 			composer.setVariable( "mapy", 200 )
 			composer.setVariable( "statoPartita", {stato = "nuova"} )
+			composer.setVariable( "score", 0 )
 			composer.removeScene( "Scenes.nuovaCarica" )
 			composer.gotoScene("Scenes.livello1")
 		else
@@ -217,6 +218,7 @@ local function overlayCaricaSalvataggi()
 			composer.setVariable("nomePartita", salvataggio.nomeSalvataggio)
 			funzione=lowerFixedMenu.display
 			composer.setVariable( "funzione", funzione )
+			composer.setVariable( "characterLife", salvataggio.vitaPersonaggio )
 			--composer.setVariable( "funzione", salvataggi.displayFunzioneToSave )
 			composer.removeScene( "Scenes.nuovaCarica" )
 			composer.gotoScene("Scenes.livello1")
@@ -398,7 +400,23 @@ local returnButton = display.newImageRect( gameGroup, "Images/Utility/returnArro
 returnButton.x = display.contentCenterX-550
 returnButton.y = display.contentCenterY-550
 returnButton:addEventListener("tap", gotoMenu)
+
+local function goToScore()
+	local scrollOverlayRequired = require("score")
+	local lunghezza =  display.contentWidth
+	local lunghezzaFinestra=lunghezza-400
+	local altezzzaFinestra=lunghezzaFinestra*(9/16)
+	scrollOverlayRequired.handleButton(display, lunghezzaFinestra, altezzaFinestra, sceneGroup)
+
 end
+
+local scoreButton = display.newText( gameGroup, "Scores",  150, 150, customFont, 60)
+scoreButton.x = display.contentCenterX+550
+scoreButton.y = display.contentCenterY-500
+scoreButton:addEventListener("tap", goToScore)
+end
+
+
 
 -- show()
 function scene:show( event )

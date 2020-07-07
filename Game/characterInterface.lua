@@ -15,6 +15,7 @@ local character
 local animationTimer
 local moveTimer
 local scene
+local personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sheet options personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -32,11 +33,42 @@ local sheet_idle_Options =
   numFrames=120,
 }
 
+local sheet_kick_Options =
+{
+  width=123,
+  height=177,
+  numFrames=30,
+}
+
+local sheet_slay_Options =
+{
+  width=213,
+  height=197,
+  numFrames=30,
+}
+
+local sheet_punch_Options =
+{
+  width=141,
+  height=184,
+  numFrames=30,
+}
+
+local sheet_hurt_Options =
+{
+  width=142,
+  height=197,
+  numFrames=30,
+}
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sprite sheet personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local sheet_walking = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/walk.png", sheet_walking_Options )
 local sheet_idle = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/idle.png", sheet_idle_Options )
+local sheet_kick = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/kick.png", sheet_kick_Options )
+local sheet_slay = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/slay.png", sheet_slay_Options )
+local sheet_punch = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/punch.png", sheet_punch_Options )
+local sheet_hurt = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/hurt.png", sheet_hurt_Options )
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sequences table personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -84,6 +116,50 @@ local sequences =
     loopCount = 0,
     loopDirection = "forward",
     sheet = sheet_idle
+  },
+
+  --Punch (mossa1)
+  {
+    name = "punch",
+    start = 1,
+    count = 30,
+    time = 500,
+    loopCount = 1,
+    loopDirection = "forward",
+    sheet = sheet_punch
+  },
+
+  --Kick (mossa2)
+  {
+    name = "kick",
+    start = 1,
+    count = 30,
+    time = 500,
+    loopCount = 1,
+    loopDirection = "forward",
+    sheet = sheet_kick
+  },
+
+  --Slay (mossa3)
+  {
+    name = "slay",
+    start = 1,
+    count = 30,
+    time = 500,
+    loopCount = 1,
+    loopDirection = "forward",
+    sheet = sheet_slay
+  },
+
+  --Hurt
+  {
+    name = "hurt",
+    start = 1,
+    count = 30,
+    time = 500,
+    loopCount = 1,
+    loopDirection = "forward",
+    sheet = sheet_hurt
   }
 }
 
@@ -194,6 +270,64 @@ local function moveListener(event)
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Mosse del personaggio
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function resumeIdleing(event)
+  if(event.phase == "ended") then
+    personaggio:setSequence("rightIdle")
+    personaggio:play()
+  end
+end
+
+local function hurt()
+  personaggio:setSequence("hurt")
+  personaggio:play()
+end
+
+local function mossa1()
+  personaggio:setSequence("punch")
+  personaggio:play()
+end
+
+local function mossa2()
+  personaggio:setSequence("kick")
+  personaggio:play()
+end
+
+local function mossa3()
+  personaggio:setSequence("slay")
+  personaggio:play()
+end
+
+local function mossa4()
+  print("niente")
+end
+
+local function eseguiMossa(numeroMossa, pers)
+  personaggio = pers
+  personaggio:addEventListener("sprite", resumeIdleing)
+
+  if(numeroMossa == 1) then
+    mossa1()
+  end
+
+  if(numeroMossa == 2) then
+    mossa2()
+  end
+
+  if(numeroMossa == 3) then
+    mossa3()
+  end
+
+  if(numeroMossa == 4) then
+    mossa4()
+  end
+
+  if(numeroMossa == 5) then
+    hurt()
+  end
+end
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Creazione del personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function create(scena)
@@ -212,18 +346,27 @@ local function create(scena)
   print("settati nel composer: "..composer.getVariable( "characterX" ))
   physics.addBody(character, "dynamic", {radius=sheet_walking_Options.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
   character.myName = "Character"
-  character.life = 3000
+
+  local composerLife = composer.getVariable( "characterLife" )
+  if(not(composerLife==nil)) then
+    character.life = composerLife
+    composer.setVariable( "characterLife", character.life )
+  else
+    character.life = 3000
+    composer.setVariable( "characterLife", character.life )
+  end
+
   character.armor = 8
   character.damage = 100
   character.speed = 3
-  character.mossa1 = {nome="Pugno", hitChance = 4, damage = 0.6}
-  character.mossa2 = {nome="Calcio", hitChance = 4, damage = 0.8}
-  character.mossa3 = {nome="Cinta", hitChance = 2, damage = 0.4}
+  character.mossa1 = {nome="Pugno", hitChance = 8, damage = 0.4}
+  character.mossa2 = {nome="Calcio", hitChance = 7, damage = 0.6}
+  character.mossa3 = {nome="Fendente", hitChance = 3, damage = 1}
   character.mossa4 = {nome="Laccio", hitChance = 1, damage = 0.1}
-  character.testoMossa1 = character.mossa1.nome .. ": Stordisci il tuo avversario \nDamage = " .. (character.mossa1.damage * 100) .. "%\nHit chance = " .. character.mossa1.hitChance .. "\n"
-  character.testoMossa2 = character.mossa2.nome .. ": : Questa mossa ti fa il caffè\nDamage = " .. (character.mossa2.damage * 100) .. "%\nHit chance = " .. character.mossa2.hitChance .. "\n"
-  character.testoMossa3 = character.mossa3.nome .. ": Questa mossa mammt\nDamage = " .. (character.mossa3.damage * 100) .. "%\nHit chance = " .. character.mossa3.hitChance .. "\n"
-  character.testoMossa4 = character.mossa4.nome .. ": Questa mossa genera gettere & settere\nDamage = " .. (character.mossa4.damage * 100) .. "%\nHit chance = " .. character.mossa4.hitChance .. "\n"
+  character.testoMossa1 = character.mossa1.nome .. ": Semplice ma efficace\nDamage = " .. (character.mossa1.damage * 100) .. "%\nHit chance = " .. (character.mossa1.hitChance*10) .. "%\n"
+  character.testoMossa2 = character.mossa2.nome .. ": Colpisce dove fa piu' male\nDamage = " .. (character.mossa2.damage * 100) .. "%\nHit chance = " .. (character.mossa2.hitChance*10) .. "%\n"
+  character.testoMossa3 = character.mossa3.nome .. ": Affetta il tuo avversario\nDamage = " .. (character.mossa3.damage * 100) .. "%\nHit chance = " .. (character.mossa3.hitChance*10) .. "%\n"
+  character.testoMossa4 = character.mossa4.nome .. ": Questa mossa genera gettere & settere\nDamage = " .. (character.mossa4.damage * 100) .. "%\nHit chance = " .. (character.mossa4.hitChance*10) .. "%\n"
 
   return character
 end
@@ -238,6 +381,7 @@ local interfacciaPersonaggio =
   listener = (moveListener),
   changeRoom = (exitRight),
   goBack = (exitLeft),
+  esegui = (eseguiMossa),
 }
 
 return interfacciaPersonaggio

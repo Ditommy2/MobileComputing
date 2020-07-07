@@ -3,12 +3,29 @@ local nemici ={
   nemico1={   --OK
     immagine ="Images/Enemies/FallenAngel1/Idle.png",
     life= 900,
-    damage= 50,
+    damage= 70,
     armor= 6,
     speed= 3,
+    points= 1000,
     width=117,
     height=157,
     frames=37,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -25,12 +42,29 @@ local nemici ={
   nemico2={   --OK
     immagine ="Images/Enemies/FallenAngel2/Idle.png",
     life= 900,
-    damage= 50,
+    damage= 70,
     armor= 6,
     speed= 3,
+    points= 1000,
     width=117,
     height=147,
     frames=37,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -47,12 +81,29 @@ local nemici ={
   nemico3={   --OK
     immagine ="Images/Enemies/FallenAngel3/Idle.png",
     life= 900,
-    damage= 50,
+    damage= 70,
     armor= 6,
     speed= 3,
+    points= 1000,
     width=119,
     height=166,
     frames=36,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -69,12 +120,29 @@ local nemici ={
   nemico4={   --OK
     immagine ="Images/Enemies/IceGolem/Idle.png",
     life= 700,
-    damage= 40,
+    damage= 50,
     armor= 7,
     speed= 3,
+    points= 1000,
     width=104,
     height=138,
     frames=37,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -91,12 +159,29 @@ local nemici ={
   nemico5={   --TO FIX
     immagine ="Images/Enemies/EarthGolem/Idle.png",
     life= 700,
-    damage= 40,
+    damage= 50,
     armor= 7,
     speed= 3,
+    points= 1000,
     width=101,
     height=146,
     frames=36,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -113,12 +198,29 @@ local nemici ={
   nemico6={   --OK
     immagine ="Images/Enemies/MagmaGolem/Idle.png",
     life= 700,
-    damage= 40,
+    damage= 50,
     armor= 7,
     speed= 3,
+    points= 1000,
     width=98,
     height=134,
     frames=37,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -135,12 +237,29 @@ local nemici ={
   nemico7={   --OK
     immagine ="Images/Enemies/StoneGolem/Idle.png",
     life= 1200,
-    damage=55,
+    damage=75,
     armor= 5,
     speed= 2,
+    points= 1000,
     width=180,
     height=146,
     frames=26,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -157,12 +276,29 @@ local nemici ={
   nemico8={   --OK
     immagine ="Images/Enemies/MudGolem/Idle.png",
     life= 1200,
-    damage=55,
+    damage=75,
     armor= 5,
     speed= 2,
+    points= 1000,
     width=182,
     height=146,
     frames=26,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -179,12 +315,29 @@ local nemici ={
   nemico9={   --OK
     immagine ="Images/Enemies/WoodGolem/Idle.png",
     life= 1200,
-    damage=55,
+    damage=75,
     armor= 5,
     speed= 2,
+    points= 1000,
     width=180,
     height=145,
     frames=26,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -201,12 +354,29 @@ local nemici ={
   nemico10={    --OK
     immagine ="Images/Enemies/Goblin/Idle.png",
     life= 500,
-    damage=30,
+    damage=50,
     armor= 7,
     speed= 4,
+    points= 1000,
     width=101,
     height=134,
     frames=40,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -223,12 +393,29 @@ local nemici ={
   nemico11={    --OK
     immagine ="Images/Enemies/Ogre/Idle.png",
     life= 1400,
-    damage=55,
+    damage=80,
     armor= 5,
     speed= 2,
+    points= 1000,
     width=119,
     height=168,
     frames=40,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -245,12 +432,29 @@ local nemici ={
   nemico12={    --OK
     immagine ="Images/Enemies/Orco/Idle.png",
     life= 1600,
-    damage=60,
+    damage=90,
     armor= 4,
     speed= 2,
+    points= 1000,
     width=144,
     height=211,
     frames=36,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -267,12 +471,29 @@ local nemici ={
   nemico13={    --OK
     immagine ="Images/Enemies/ReaperMan1/Idle.png",
     life= 1000,
-    damage=50,
+    damage=70,
     armor= 6,
     speed= 3,
+    points= 1000,
     width=128,
     height=161,
     frames=35,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -289,12 +510,29 @@ local nemici ={
   nemico14={    --OK
     immagine ="Images/Enemies/ReaperMan2/Idle.png",
     life= 1000,
-    damage=50,
+    damage=70,
     armor= 6,
     speed= 3,
+    points= 1000,
     width=126,
     height=161,
     frames=35,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -311,12 +549,29 @@ local nemici ={
   nemico15={  --OK
     immagine ="Images/Enemies/ReaperMan3/Idle.png",
     life= 1000,
-    damage=50,
+    damage=70,
     armor= 6,
     speed= 3,
+    points= 1000,
     width=127,
     height=160,
     frames=36,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -336,6 +591,7 @@ local nemici ={
     damage=40,
     armor= 8,
     speed= 5,
+    points= 1000,
     width=124,
     height=125,
     frames=24,
@@ -374,6 +630,7 @@ local nemici ={
     damage=40,
     armor= 8,
     speed= 5,
+    points= 1000,
     width=135,
     height=123,
     frames=23,
@@ -412,6 +669,7 @@ local nemici ={
     damage=40,
     armor= 8,
     speed= 5,
+    points= 1000,
     width=143,
     height=123,
     frames=24,
@@ -447,12 +705,29 @@ local nemici ={
   nemico19={    --TO FIX
     immagine ="Images/Enemies/Troll1/Idle.png",
     life= 2000,
-    damage=80,
+    damage=100,
     armor= 3,
     speed= 1,
+    points= 1000,
     width=271,
     height=186,
     frames=58,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -469,12 +744,29 @@ local nemici ={
   nemico20={    --TO FIX
     immagine ="Images/Enemies/Troll2/Idle.png",
     life= 2000,
-    damage=80,
+    damage=100,
     armor= 3,
     speed= 1,
+    points= 1000,
     width=272,
     height=194,
     frames=60,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -491,12 +783,29 @@ local nemici ={
   nemico21={
     immagine ="Images/Enemies/Troll3/Idle.png",
     life= 2000,
-    damage=80,
+    damage=100,
     armor= 3,
     speed= 1,
+    points= 1000,
     width=263,
     height=198,
     frames=60,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
