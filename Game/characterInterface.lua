@@ -53,6 +53,13 @@ local sheet_punch_Options =
   height=184,
   numFrames=30,
 }
+
+local sheet_hurt_Options =
+{
+  width=142,
+  height=197,
+  numFrames=30,
+}
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sprite sheet personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -61,6 +68,7 @@ local sheet_idle = graphics.newImageSheet( "Images/Characters/Personaggio/Animat
 local sheet_kick = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/kick.png", sheet_kick_Options )
 local sheet_slay = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/slay.png", sheet_slay_Options )
 local sheet_punch = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/punch.png", sheet_punch_Options )
+local sheet_hurt = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/hurt.png", sheet_hurt_Options )
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sequences table personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -141,6 +149,17 @@ local sequences =
     loopCount = 1,
     loopDirection = "forward",
     sheet = sheet_slay
+  },
+
+  --Hurt
+  {
+    name = "hurt",
+    start = 1,
+    count = 30,
+    time = 500,
+    loopCount = 1,
+    loopDirection = "forward",
+    sheet = sheet_hurt
   }
 }
 
@@ -256,6 +275,11 @@ local function resumeIdleing(event)
   end
 end
 
+local function hurt()
+  personaggio:setSequence("hurt")
+  personaggio:play()
+end
+
 local function mossa1()
   personaggio:setSequence("punch")
   personaggio:play()
@@ -294,6 +318,10 @@ local function eseguiMossa(numeroMossa, pers)
   if(numeroMossa == 4) then
     mossa4()
   end
+
+  if(numeroMossa == 5) then
+    hurt()
+  end
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Creazione del personaggio
@@ -324,14 +352,14 @@ local function create(scena)
   character.armor = 8
   character.damage = 100
   character.speed = 3
-  character.mossa1 = {nome="Pugno", hitChance = 5, damage = 0.4}
-  character.mossa2 = {nome="Calcio", hitChance = 3, damage = 0.6}
-  character.mossa3 = {nome="Fendete", hitChance = 1, damage = 1}
+  character.mossa1 = {nome="Pugno", hitChance = 8, damage = 0.4}
+  character.mossa2 = {nome="Calcio", hitChance = 7, damage = 0.6}
+  character.mossa3 = {nome="Fendente", hitChance = 3, damage = 1}
   character.mossa4 = {nome="Laccio", hitChance = 1, damage = 0.1}
-  character.testoMossa1 = character.mossa1.nome .. ": Stordisci il tuo avversario \nDamage = " .. (character.mossa1.damage * 100) .. "%\nHit chance = " .. character.mossa1.hitChance .. "\n"
-  character.testoMossa2 = character.mossa2.nome .. ": Questa mossa ti fa il caffè\nDamage = " .. (character.mossa2.damage * 100) .. "%\nHit chance = " .. character.mossa2.hitChance .. "\n"
-  character.testoMossa3 = character.mossa3.nome .. ": Affetta il tuo avversario\nDamage = " .. (character.mossa3.damage * 100) .. "%\nHit chance = " .. character.mossa3.hitChance .. "\n"
-  character.testoMossa4 = character.mossa4.nome .. ": Questa mossa genera gettere & settere\nDamage = " .. (character.mossa4.damage * 100) .. "%\nHit chance = " .. character.mossa4.hitChance .. "\n"
+  character.testoMossa1 = character.mossa1.nome .. ": Semplice ma efficace\nDamage = " .. (character.mossa1.damage * 100) .. "%\nHit chance = " .. (character.mossa1.hitChance*10) .. "%\n"
+  character.testoMossa2 = character.mossa2.nome .. ": Colpisce dove fa piu' male\nDamage = " .. (character.mossa2.damage * 100) .. "%\nHit chance = " .. (character.mossa2.hitChance*10) .. "%\n"
+  character.testoMossa3 = character.mossa3.nome .. ": Affetta il tuo avversario\nDamage = " .. (character.mossa3.damage * 100) .. "%\nHit chance = " .. (character.mossa3.hitChance*10) .. "%\n"
+  character.testoMossa4 = character.mossa4.nome .. ": Questa mossa genera gettere & settere\nDamage = " .. (character.mossa4.damage * 100) .. "%\nHit chance = " .. (character.mossa4.hitChance*10) .. "%\n"
 
   return character
 end

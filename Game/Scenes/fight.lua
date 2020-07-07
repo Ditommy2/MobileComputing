@@ -86,6 +86,7 @@ local function turnEnemy()
 		fightText.x = 250
 		fightText.text = "Hit!"
 		timer.performWithDelay( 2000, removeTextFight )
+		characterInterface.esegui(5, character)
 
 		attackRandom = math.random(1, 50)
 		totAttacco = (attackRandom + enemy.damage) * enemy.mossa1.damage --mossa.damage

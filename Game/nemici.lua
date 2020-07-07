@@ -9,6 +9,22 @@ local nemici ={
     width=117,
     height=157,
     frames=37,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -31,6 +47,22 @@ local nemici ={
     width=117,
     height=147,
     frames=37,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -53,6 +85,22 @@ local nemici ={
     width=119,
     height=166,
     frames=36,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -75,6 +123,22 @@ local nemici ={
     width=104,
     height=138,
     frames=37,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -97,6 +161,22 @@ local nemici ={
     width=101,
     height=146,
     frames=36,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -119,6 +199,22 @@ local nemici ={
     width=98,
     height=134,
     frames=37,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -141,6 +237,22 @@ local nemici ={
     width=180,
     height=146,
     frames=26,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -163,6 +275,22 @@ local nemici ={
     width=182,
     height=146,
     frames=26,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -185,6 +313,22 @@ local nemici ={
     width=180,
     height=145,
     frames=26,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -207,6 +351,22 @@ local nemici ={
     width=101,
     height=134,
     frames=40,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -229,6 +389,22 @@ local nemici ={
     width=119,
     height=168,
     frames=40,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -251,6 +427,22 @@ local nemici ={
     width=144,
     height=211,
     frames=36,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -273,6 +465,22 @@ local nemici ={
     width=128,
     height=161,
     frames=35,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -295,6 +503,22 @@ local nemici ={
     width=126,
     height=161,
     frames=35,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -317,6 +541,22 @@ local nemici ={
     width=127,
     height=160,
     frames=36,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -453,6 +693,22 @@ local nemici ={
     width=271,
     height=186,
     frames=58,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -475,6 +731,22 @@ local nemici ={
     width=272,
     height=194,
     frames=60,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
@@ -497,6 +769,22 @@ local nemici ={
     width=263,
     height=198,
     frames=60,
+    mossa1={
+      damage=1,
+      hitChance=5,
+    },
+    mossa2={
+      damage=0.7,
+      hitChance=5,
+    },
+    mossa3={
+      damage=0.8,
+      hitChance=5,
+    },
+    mossa4={
+      damage=0.9,
+      hitChance=5,
+    },
     sequences =
     {
         {
