@@ -46,6 +46,13 @@ local sheet_slay_Options =
   height=197,
   numFrames=30,
 }
+
+local sheet_punch_Options =
+{
+  width=141,
+  height=184,
+  numFrames=30,
+}
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sprite sheet personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -53,6 +60,7 @@ local sheet_walking = graphics.newImageSheet( "Images/Characters/Personaggio/Ani
 local sheet_idle = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/idle.png", sheet_idle_Options )
 local sheet_kick = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/kick.png", sheet_kick_Options )
 local sheet_slay = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/slay.png", sheet_slay_Options )
+local sheet_punch = graphics.newImageSheet( "Images/Characters/Personaggio/Animations/punch.png", sheet_punch_Options )
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Walking sequences table personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -100,6 +108,17 @@ local sequences =
     loopCount = 0,
     loopDirection = "forward",
     sheet = sheet_idle
+  },
+
+  --Punch (mossa1)
+  {
+    name = "punch",
+    start = 1,
+    count = 30,
+    time = 500,
+    loopCount = 1,
+    loopDirection = "forward",
+    sheet = sheet_punch
   },
 
   --Kick (mossa2)
@@ -238,7 +257,8 @@ local function resumeIdleing(event)
 end
 
 local function mossa1()
-  print("niente")
+  personaggio:setSequence("punch")
+  personaggio:play()
 end
 
 local function mossa2()
@@ -305,8 +325,8 @@ local function create(scena)
   character.damage = 100
   character.speed = 3
   character.mossa1 = {nome="Pugno", hitChance = 5, damage = 0.4}
-  character.mossa2 = {nome="Calcio", hitChance = 4, damage = 0.6}
-  character.mossa3 = {nome="Fendete", hitChance = 3, damage = 1}
+  character.mossa2 = {nome="Calcio", hitChance = 3, damage = 0.6}
+  character.mossa3 = {nome="Fendete", hitChance = 1, damage = 1}
   character.mossa4 = {nome="Laccio", hitChance = 1, damage = 0.1}
   character.testoMossa1 = character.mossa1.nome .. ": Stordisci il tuo avversario \nDamage = " .. (character.mossa1.damage * 100) .. "%\nHit chance = " .. character.mossa1.hitChance .. "\n"
   character.testoMossa2 = character.mossa2.nome .. ": Questa mossa ti fa il caffè\nDamage = " .. (character.mossa2.damage * 100) .. "%\nHit chance = " .. character.mossa2.hitChance .. "\n"

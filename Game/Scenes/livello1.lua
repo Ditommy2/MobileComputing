@@ -221,9 +221,11 @@ function scene:create( event )
     for i=#curios, 1, -1 do
       if not(curios==nil) then
         local curio = curiosInterface.createCurio(self, stanzaCorrente.curios[i])
-        table.insert(activeCurios, curio)
-        composer.setVariable("mainGroup", mainGroup)
-        mainGroup:insert(curio)
+        if not(curio==nil) then
+          table.insert(activeCurios, curio)
+          composer.setVariable("mainGroup", mainGroup)
+          mainGroup:insert(curio)
+        end
       end
     end
     composer.setVariable( "activeCurios", activeCurios )
