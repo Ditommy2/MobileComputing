@@ -5,10 +5,10 @@ local altezza=  lunghezza*(9/16)
 local math = require("math")
 local nemici = require("nemici")
 local curios = require("curios")
-local spawnRatioNemiciUpper = 3  --50%
-local spawnRatioNemiciLower = 1
-local spawnRatioCurioLower = 3
-local spawnRatioCurioUpper = 3
+local spawnRatioNemiciUpper = 42  --50%
+local spawnRatioNemiciLower = 1 --1
+local spawnRatioCurioLower = 1
+local spawnRatioCurioUpper = 2
 local numeroBackgroundTotali = 9
 local token
 --Physics (necessaria per il movimento del personaggio)
@@ -469,6 +469,7 @@ local interfacciaConfig = {
   displayGrid=
   (function(inventario, handler, inventoryGroup)
     local index=1
+    local itemInterface = require("itemsInterface")
     print(display.contentCenterX.."---"..display.contentCenterY)
     local partenzax = display.contentCenterX-625
     local partenzay= display.contentCenterY+80
@@ -508,12 +509,16 @@ local interfacciaConfig = {
     local griglia = composer.getVariable( "grigliaOggetti" )
     for x=1, 10, 1 do
       if(not(inventario[x] == "vuoto")) then
-        local item = display.newImageRect(inventoryGroup,  inventario[x], 50, 50)
+        local nomeItem = inventario[x]
+
+        item = display.newImageRect(inventoryGroup,  itemInterface[nomeItem].location..itemInterface[nomeItem].nome, 70, 70)
         item.x = griglia[x][1]
         item.y = griglia[x][2]
         print("item: "..item.x..", "..item.y)
         item.id = x
-        item.nome = inventario[x]
+        item.nome = itemInterface[nomeItem].nome
+        item.location = itemInterface[nomeItem].location
+        item.activateFunction = itemInterface[nomeItem].activateFunction
         griglia[x][3] = true
         griglia[x][4] = item
 
@@ -601,9 +606,10 @@ local interfacciaConfig = {
 
       item.x=event.x-item.touchOffsetX
       item.y=event.y-item.touchOffsetY
-      print(item.x..", "..item.y.."---"..event.x..", "..event.y)
+      -- print(item.x..", "..item.y.."---"..event.x..", "..event.y)
     elseif("ended"==phase or "cancelled"==phase) then
       --Oggetto fuori dall'inventario (tentativo di rimozione)
+      item.activateFunction(item.x, item.y)
       if( (item.x < invx or item.x > (invx+700)) or (item.y < invy or item.y > (invy+272)) ) then
         print("appoggiato")
         for i=#curios, 1, -1 do
@@ -641,7 +647,7 @@ local interfacciaConfig = {
             composer.setVariable( "grigliaOggetti", griglia )
           end
         end
-
+        display.remove( item )
       else
         -- VA IMPLEMENTATO L'AUTO POSIZIONAMENTO DEGLI ITEM E LO SCAMBIO DI POSTO
         local xRel = item.x - invx
@@ -702,7 +708,7 @@ local interfacciaConfig = {
               inventario[idItem] = "vuoto"
             else
               local curio = item.curio
-              inventario[numCasella] = "Images/Icons/icons3/"..curio.oggetto
+              inventario[numCasella] = curio.oggetto
               local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
               for i = #stanzaCorrente.oggetti, 1, -1 do
                 if stanzaCorrente.oggetti[i] == curio.oggetto then

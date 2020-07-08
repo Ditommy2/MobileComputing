@@ -174,8 +174,12 @@ local function move(event)
   if(not(dir==nil)) then
     if(dir=="r") then
       character.x = character.x + 10
+      composer.setVariable( "characterX", character.x )
+      composer.setVariable( "characterY", character.y )
     elseif(dir=="l") then
       character.x = character.x - 10
+      composer.setVariable( "characterX", character.x )
+      composer.setVariable( "characterY", character.y )
     end
 
     if(character.x < 0) then
@@ -337,6 +341,9 @@ local function create(scena)
   character.anchorY = 1
   character.x = lunghezza * 0.1
   character.y = altezza-310
+  composer.setVariable( "characterX", character.x )
+  composer.setVariable( "characterY", character.y )
+  print("settati nel composer: "..composer.getVariable( "characterX" ))
   physics.addBody(character, "dynamic", {radius=sheet_walking_Options.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
   character.myName = "Character"
 
@@ -345,8 +352,14 @@ local function create(scena)
     character.life = composerLife
     composer.setVariable( "characterLife", character.life )
   else
-    character.life = 3000
+    character.maxLife = 3000
+    composer.setVariable( "characterMaxLife", character.maxLife )
+    character.life = character.maxLife
     composer.setVariable( "characterLife", character.life )
+    character.maxFood = 3000
+    composer.setVariable( "characterMaxFood", character.maxFood )
+    character.food = character.maxFood
+    composer.setVariable( "characterMaxLife", character.food )
   end
 
   character.armor = 8
