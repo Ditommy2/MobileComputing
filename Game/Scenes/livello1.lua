@@ -41,16 +41,18 @@ local function gotoMenu()
 
   local score = composer.getVariable( "score" )
   local user = composer.getVariable( "username" )
-  local partita = composer.getVariable( "nomePartita" )
+  local game = composer.getVariable( "nomePartita" )
   local stringaScores = "saveScore".."$$"..".json"
   local tabellonePunteggi= fileHandler.loadTableScores(stringaScores)
   if(tabellonePunteggi == nil) then
     print("primoSalvataggio")
     tabellonePunteggi = {}
-    table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
+    -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
+    table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
   else
     print("seguenti salvataggi")
-    table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
+    -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
+    table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
   end
 
   fileHandler.saveTable(tabellonePunteggi, stringaScores)

@@ -1,6 +1,7 @@
 local customFont="MadnessHyperactive.otf"
 local composer = require( "composer" )
 local fileHandler = require "fileHandler"
+local rowText = ""
 local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sceneGroup)
   local widget = require( "widget" )
 
@@ -48,26 +49,121 @@ local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sc
   background2.y=scrollView.y+920
 
   scrollView:insert( background2 )
-  local textBackground = display.newRect(background1.x, background1.y, lunghezza-40, 400)
-  textBackground:setFillColor(0.32, 0.36, 0.4)
-  scrollView:insert(textBackground)
+  -- local textBackground = display.newRect(background1.x, background1.y, lunghezza-40, 400)
+  -- textBackground:setFillColor(0.32, 0.36, 0.4)
+  -- scrollView:insert(textBackground)
 
   local stringaScores = "saveScore".."$$"..".json"
   local tabellonePunteggi= fileHandler.loadTableScores(stringaScores)
 
-  local titleScore = display.newText(  "SCORES\n\nPunteggio               Giocatore               Partita\n",
-    textBackground.x,
-    textBackground.y,
-    customFont,
-    30)
+  -- Screen size
+  local screenW, screenH, halfW, halfH = lunghezza, display.viewableContentHeight, lunghezza*0.5, display.viewableContentHeight*0.5
 
-  if(not(tabellonePunteggi==nil)) then
-    for i=1, #tabellonePunteggi, 1 do
-      titleScore.text = titleScore.text .. tabellonePunteggi[i]
-    end
+  local punteggiText = display.newText({text="PUNTEGGI", x=125, y=180, width=200, height=70, font=customFont, fontSize=60})
+  local posText = display.newText({text="POS", x=125, y=250, width=200, height=70, font=customFont, fontSize=60})
+  local scoreText = display.newText({text="SCORE", x=320, y=250, width=200, height=70, font=customFont, fontSize=60})
+  local playerText = display.newText({text="PLAYER", x=520, y=250, width=200, height=70, font=customFont, fontSize=60})
+  local gameText = display.newText({text="GAME", x=720, y=250, width=200, height=70, font=customFont, fontSize=60})
+
+  scrollView:insert(punteggiText)
+  scrollView:insert(posText)
+  scrollView:insert(scoreText)
+  scrollView:insert(playerText)
+  scrollView:insert(gameText)
+
+  -- Grid
+  numberOfColumns = 4
+  columnWidth = 200--math.floor( screenW / numberOfColumns )
+
+  function getColumnPosition( columnNumber )
+  	return 25 + ((columnNumber - 1) * columnWidth)
   end
 
-  scrollView:insert(titleScore)
+  function getColumnWidth( numberOfColumns )
+  	return numberOfColumns * columnWidth
+  end
+
+  -- Loop columns
+  for i = 1, numberOfColumns do
+  	-- Loop thru records
+  	for y = 1, #tabellonePunteggi do
+  		-- Set column and row
+  		local column = i
+  		local row = (y * 50 - 50) + 300
+
+  		-- Set text of label
+      if i == 1 then
+  			text = y
+  		end
+
+  		if i == 2 then
+  			text = tabellonePunteggi[y].punteggio
+  		end
+
+      if i == 3 then
+  			text = tabellonePunteggi[y].utente
+  		end
+
+      if i == 4 then
+  			text = tabellonePunteggi[y].partita
+  		end
+
+  		-- Add newText
+  		local options =
+  		{
+  			text = text,
+  			x = getColumnPosition(column),
+  			y = row,
+  			width = getColumnWidth(column+1),
+        font = customFont,
+  			fontSize = 40,
+  			align = "left"
+  		}
+  		local label1 = display.newText( options )
+  		label1.anchorX = 0
+  		label1.anchorY = 0
+
+      scrollView:insert(label1)
+  	end
+  end
+
+  -- local titoloTabella = display.newText("PUNTEGGI\n\nSCORE\tPLAYER\tPARTITA", 300, 200, customFont, 50 )
+  -- titoloTabella.x = display.contentCenterX - 250
+  -- titoloTabella.y = display.contentCenterY - 100
+  -- titoloTabella:setFillColor(1)
+
+  -- local function onRowRender( event )
+  --
+  --   -- Get reference to the row group
+  --   local row = event.row
+  --
+  --   -- Cache the row "contentWidth" and "contentHeight" because the row bounds can change as children objects are added
+  --   local rowHeight = row.contentHeight
+  --   local rowWidth = row.contentWidth
+  --
+  --   local rowTitle = display.newText( row, rowText, 0, 0, nil, 40 )
+  --   rowTitle:setFillColor( 0 )
+  --
+  --   -- Align the label left and vertically centered
+  --   rowTitle.anchorX = 0
+  --   rowTitle.x = 0
+  --   rowTitle.y = rowHeight * 0.5
+  -- end
+  --
+  -- local tabella = {}
+  -- if(not(tabellonePunteggi==nil)) then
+  --   tabella = widget.newTableView( {x=display.contentCenterX - 250, y=display.contentCenterY - 50, width=700, height=(100 * #tabellonePunteggi), onRowRender = onRowRender} )
+  --   tabella.anchorX = 0
+  --
+  --   rowText="PUNTEGGI\n\nSCORE\tPLAYER\tPARTITA"
+  --   tabella:insertRow{}
+  --   for i=1, #tabellonePunteggi, 1 do
+  --     rowText = i .. "   " .. tabellonePunteggi[i]
+  --     tabella:insertRow{}
+  --   end
+  -- end
+
+  -- scrollView:insert(tabella)
   local function handleButtonEvent(event)
     print("non ended")
     if ( "ended" == event.phase ) then

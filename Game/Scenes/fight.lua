@@ -57,17 +57,19 @@ physics.start()
 local function saveScore()
 	local score = composer.getVariable( "score" )
 	local user = composer.getVariable( "username" )
-	local partita = composer.getVariable( "nomePartita" )
+	local game = composer.getVariable( "nomePartita" )
 	local stringaScores = "saveScore".."$$"..".json"
 	local tabellonePunteggi= fileHandler.loadTableScores(stringaScores)
 	if(tabellonePunteggi == nil) then
-		print("primoSalvataggio")
-		tabellonePunteggi = {}
-		table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
-	else
-		print("seguenti salvataggi")
-		table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
-	end
+    print("primoSalvataggio")
+    tabellonePunteggi = {}
+    -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
+    table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
+  else
+    print("seguenti salvataggi")
+    -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
+    table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
+  end
 
 	fileHandler.saveTable(tabellonePunteggi, stringaScores)
 	fileHandler.caricaSave(tabellonePunteggi, stringaScores)
@@ -147,7 +149,8 @@ local function turnEnemy()
 		gameOverBack.y = display.contentCenterY
 		local gameOver = display.newText(midGroup, "GAME OVER", 600, 200, native.newFont( customFont), 100)
 		gameOver:setFillColor(143, 0, 255)
-		local gameOverScore = display.newText(midGroup, "SCORE : "..punteggioPartita, 600, 400, native.newFont( customFont), 100)
+		local score = composer.getVariable( "score" )
+		local gameOverScore = display.newText(midGroup, "SCORE : "..score, 600, 400, native.newFont( customFont), 100)
 		gameOverScore:setFillColor(143, 0, 255)
 
 		saveScore()
