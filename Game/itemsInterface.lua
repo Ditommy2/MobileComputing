@@ -12,7 +12,7 @@ local itemsTable = {
     function(posx, posy)
       local characterX = composer.getVariable( "characterX" )
       local characterY = composer.getVariable( "characterY" )
-      if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight/2)<posy and(characterY + characterHeight/2)>posy) then
+      if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
         print("curato")
         local curaLower = 300
         local curaUpper = 700

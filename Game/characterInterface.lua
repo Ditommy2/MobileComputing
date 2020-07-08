@@ -356,6 +356,10 @@ local function create(scena)
     composer.setVariable( "characterMaxLife", character.maxLife )
     character.life = character.maxLife
     composer.setVariable( "characterLife", character.life )
+    character.maxFood = 3000
+    composer.setVariable( "characterMaxFood", character.maxFood )
+    character.food = character.maxFood
+    composer.setVariable( "characterMaxLife", character.food )
   end
 
   character.armor = 8
