@@ -8,6 +8,7 @@ local itemsTable = {
     pozioneVita = {
     nome="016-potion-1.png",
     location=defaultItemLocation,
+    description = "Rigenera Salute",
     activateFunction = (
     function(posx, posy)
       local characterX = composer.getVariable( "characterX" )
@@ -41,6 +42,7 @@ local itemsTable = {
   chiaveForziere = {
     nome = "029-key.png",
     location = defaultItemLocation,
+    description = "Chiave",
     activateFunction = (
     function(posx, posy)
     end)

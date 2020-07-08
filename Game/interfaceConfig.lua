@@ -18,12 +18,20 @@ physics.setGravity(0, 0)
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- classe che si occupa di fornire tutte le funzioni tecniche per generare e costruire l'interfaccia bassa del gioco
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- funzione che displeya la desc dell'oggetto nell'inventario
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function viewDesc(event)
+local item = event.target
+local desc = display.newText(inventoryGroup, item.description , item.x, item.y - 60, native.newFont( customFont), 40)
+transition.to( desc , { time=2000, alpha=0 } )
+end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione che genera una mappa procedurale a partire da un numero di stanze desiderato. Per farlo costruisce una tabella con una stanza, la quale è a sua volta una tabella
 --con le varie direzioni NORD SUD EST OVEST alle quali sono associate altre stanze. Per gestire la mappa ed evitare l'appallottolarsi di stanze usa una tabella x, y che mano
 --mano viene riempita di token per segnare che la stanza è stata creata
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, primaY)
   local x
   local a, b
@@ -519,9 +527,12 @@ local interfacciaConfig = {
         item.nome = itemInterface[nomeItem].nome
         item.location = itemInterface[nomeItem].location
         item.activateFunction = itemInterface[nomeItem].activateFunction
+        item.description = itemInterface[nomeItem].description
         griglia[x][3] = true
         griglia[x][4] = item
 
+
+        item:addEventListener("tap", viewDesc)
         -- print("Visualizzato oggetto: " .. inventario[x] .. " in posizione (" .. griglia[x][1] .. ", " .. griglia[x][2] .. ") della griglia")
 
         inventoryGroup:insert(item)
