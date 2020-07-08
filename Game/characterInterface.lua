@@ -170,16 +170,25 @@ local sequences =
 --Perform movement
 local function move(event)
   local dir = event.source.params.direction
-
+  local fame = 0.5
+  local passo = 10
   if(not(dir==nil)) then
     if(dir=="r") then
-      character.x = character.x + 10
+      character.x = character.x + passo
       composer.setVariable( "characterX", character.x )
       composer.setVariable( "characterY", character.y )
+      local foodToken = composer.getVariable("foodToken")
+      foodToken.x= foodToken.x - fame
+      local composerFood = composer.getVariable( "characterFood" )
+      composer.setVariable( "characterFood", composerFood-fame )
     elseif(dir=="l") then
-      character.x = character.x - 10
+      character.x = character.x - passo
       composer.setVariable( "characterX", character.x )
       composer.setVariable( "characterY", character.y )
+      local foodToken = composer.getVariable("foodToken")
+      foodToken.x= foodToken.x - fame
+      local composerFood = composer.getVariable( "characterFood" )
+      composer.setVariable( "characterFood", composerFood-fame )
     end
 
     if(character.x < 0) then
@@ -356,10 +365,18 @@ local function create(scena)
     composer.setVariable( "characterMaxLife", character.maxLife )
     character.life = character.maxLife
     composer.setVariable( "characterLife", character.life )
-    character.maxFood = 3000
+  end
+
+  local composerFood = composer.getVariable( "characterFood" )
+  if(not(composerFood==nil)) then
+    print("impostata da composer"..composerFood)
+    character.food = composerFood
+    composer.setVariable( "characterFood", character.food )
+  else
+    character.maxFood = 500
     composer.setVariable( "characterMaxFood", character.maxFood )
     character.food = character.maxFood
-    composer.setVariable( "characterMaxLife", character.food )
+    composer.setVariable( "characterFood", character.food )
   end
 
   character.armor = 8

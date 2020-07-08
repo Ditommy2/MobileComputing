@@ -130,6 +130,17 @@ function scene:create( event )
     hidingGroup:insert(barDown)
   end
 
+
+  local foodBarGreen = display.newImageRect( mainGroup, "Images/Utility/lifeBarGreen.png", 500, 100 )
+  foodBarGreen.x = display.contentCenterX
+	foodBarGreen.y = display.contentCenterY - 300
+  mainGroup:insert(foodBarGreen)
+  local foodToken = display.newImageRect( mainGroup, "Images/Icons/icons3/054-ham.png", 50, 50 )
+  foodToken.x = (foodBarGreen.x + foodBarGreen.width/2) - (composer.getVariable( "characterMaxFood" )-composer.getVariable( "characterFood" ))
+  print("impostato food token x :"..foodToken.x)
+  foodToken.y = foodBarGreen.y
+  composer.setVariable("foodToken", foodToken)
+
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
   composer.setVariable("sceneGroup", sceneGroup)

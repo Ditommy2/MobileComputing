@@ -44,6 +44,42 @@ local itemsTable = {
     activateFunction = (
     function(posx, posy)
     end)
+  },
+  cibo = {
+    nome = "054-ham.png",
+    location = defaultItemLocation,
+    activateFunction = (
+    function(posx, posy)
+      local characterX = composer.getVariable( "characterX" )
+      local characterY = composer.getVariable( "characterY" )
+      if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
+        print("curato")
+        local curaLower = 90
+        local curaUpper = 300
+        local fightText = display.newText(composer.getVariable("mainGroup"), "", characterX, characterY-100, native.newFont( customFont), 100)
+        local cura = math.random(curaLower, curaUpper)
+
+        if composer.getVariable("characterFood")+cura > composer.getVariable( "characterMaxFood" ) then
+            fightText.text=composer.getVariable( "characterMaxFood" )-composer.getVariable("characterFood")
+          composer.setVariable( "characterFood", composer.getVariable( "characterMaxFood" ) )
+          local foodToken = composer.getVariable( "foodToken" )
+          foodToken.x=composer.getVariable( "characterMaxFood" )
+        else
+          fightText.text = cura
+          composer.setVariable( "characterFood", composer.getVariable("characterFood")+cura )
+          local foodToken = composer.getVariable( "foodToken" )
+          foodToken.x=foodToken.x + cura
+        end
+        fightText:setFillColor(0, 0.8, 0)
+        fightText.alpha = 1
+
+        composer.getVariable("mainGroup"):insert(fightText)
+        local function removeTextFight()
+        	fightText.alpha = 0
+        end
+    		timer.performWithDelay( 1500, removeTextFight )
+      end
+    end)
   }
 
 }
