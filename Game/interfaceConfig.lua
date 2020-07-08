@@ -18,12 +18,20 @@ physics.setGravity(0, 0)
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- classe che si occupa di fornire tutte le funzioni tecniche per generare e costruire l'interfaccia bassa del gioco
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- funzione che displeya la desc dell'oggetto nell'inventario
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function viewDesc(event)
+local item = event.target
+local desc = display.newText(inventoryGroup, item.description , item.x, item.y - 60, native.newFont( customFont), 40)
+transition.to( desc , { time=2000, alpha=0 } )
+end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione che genera una mappa procedurale a partire da un numero di stanze desiderato. Per farlo costruisce una tabella con una stanza, la quale è a sua volta una tabella
 --con le varie direzioni NORD SUD EST OVEST alle quali sono associate altre stanze. Per gestire la mappa ed evitare l'appallottolarsi di stanze usa una tabella x, y che mano
 --mano viene riempita di token per segnare che la stanza è stata creata
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, primaY)
   local x
   local a, b
@@ -469,6 +477,7 @@ local interfacciaConfig = {
   displayGrid=
   (function(inventario, handler, inventoryGroup)
     local index=1
+    local itemInterface = require("itemsInterface")
     print(display.contentCenterX.."---"..display.contentCenterY)
     local partenzax = display.contentCenterX-625
     local partenzay= display.contentCenterY+80
@@ -508,15 +517,22 @@ local interfacciaConfig = {
     local griglia = composer.getVariable( "grigliaOggetti" )
     for x=1, 10, 1 do
       if(not(inventario[x] == "vuoto")) then
-        local item = display.newImageRect(inventoryGroup,  inventario[x], 50, 50)
+        local nomeItem = inventario[x]
+
+        item = display.newImageRect(inventoryGroup,  itemInterface[nomeItem].location..itemInterface[nomeItem].nome, 70, 70)
         item.x = griglia[x][1]
         item.y = griglia[x][2]
         print("item: "..item.x..", "..item.y)
         item.id = x
-        item.nome = inventario[x]
+        item.nome = itemInterface[nomeItem].nome
+        item.location = itemInterface[nomeItem].location
+        item.activateFunction = itemInterface[nomeItem].activateFunction
+        item.description = itemInterface[nomeItem].description
         griglia[x][3] = true
         griglia[x][4] = item
 
+
+        item:addEventListener("tap", viewDesc)
         -- print("Visualizzato oggetto: " .. inventario[x] .. " in posizione (" .. griglia[x][1] .. ", " .. griglia[x][2] .. ") della griglia")
 
         inventoryGroup:insert(item)
@@ -601,9 +617,10 @@ local interfacciaConfig = {
 
       item.x=event.x-item.touchOffsetX
       item.y=event.y-item.touchOffsetY
-      print(item.x..", "..item.y.."---"..event.x..", "..event.y)
+      -- print(item.x..", "..item.y.."---"..event.x..", "..event.y)
     elseif("ended"==phase or "cancelled"==phase) then
       --Oggetto fuori dall'inventario (tentativo di rimozione)
+      item.activateFunction(item.x, item.y)
       if( (item.x < invx or item.x > (invx+700)) or (item.y < invy or item.y > (invy+272)) ) then
         print("appoggiato")
         for i=#curios, 1, -1 do
@@ -641,7 +658,7 @@ local interfacciaConfig = {
             composer.setVariable( "grigliaOggetti", griglia )
           end
         end
-
+        display.remove( item )
       else
         -- VA IMPLEMENTATO L'AUTO POSIZIONAMENTO DEGLI ITEM E LO SCAMBIO DI POSTO
         local xRel = item.x - invx
@@ -702,7 +719,7 @@ local interfacciaConfig = {
               inventario[idItem] = "vuoto"
             else
               local curio = item.curio
-              inventario[numCasella] = "Images/Icons/icons3/"..curio.oggetto
+              inventario[numCasella] = curio.oggetto
               local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
               for i = #stanzaCorrente.oggetti, 1, -1 do
                 if stanzaCorrente.oggetti[i] == curio.oggetto then
