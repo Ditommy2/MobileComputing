@@ -5,6 +5,7 @@
 -----------------------------------------------------------------------------------------
 local composer = require( "composer" )
 local characterInterface = require("characterInterface")
+local enemyInterface = require("enemyInterface")
 local fileHandler = require("fileHandler")
 local customFont="MadnessHyperactive.otf"
 local scene = composer.newScene()
@@ -106,6 +107,8 @@ local function turnEnemy()
 	totChance = sommaChance + enemy.mossa1.hitChance -- mossa.hitChance
 
 	if(totChance > character.armor) then
+		enemyInterface.attacca(enemy1)
+
 		fightText.alpha = 1
 		fightText.x = 250
 		fightText.text = "Hit!"
@@ -319,7 +322,6 @@ end
 -- -----------------------------------------------------------------------------------
 function scene:create ( event )
 	local sceneGroup = self.view
-	local enemyInterface = require("enemyInterface")
 	local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 	enemy = stanzaCorrente.nemici[1]
 

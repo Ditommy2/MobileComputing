@@ -49,14 +49,12 @@ local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sc
   background2.y=scrollView.y+920
 
   scrollView:insert( background2 )
-  -- local textBackground = display.newRect(background1.x, background1.y, lunghezza-40, 400)
-  -- textBackground:setFillColor(0.32, 0.36, 0.4)
-  -- scrollView:insert(textBackground)
 
+  -------------------------------------------------------------------------------------------------------------------------------------------
+  -- Visualizzazione dell'elenco dei punteggi
+  -------------------------------------------------------------------------------------------------------------------------------------------
   local stringaScores = "saveScore".."$$"..".json"
   local tabellonePunteggi= fileHandler.loadTableScores(stringaScores)
-
-  -- Screen size
   local screenW, screenH, halfW, halfH = lunghezza, display.viewableContentHeight, lunghezza*0.5, display.viewableContentHeight*0.5
 
   local punteggiText = display.newText({text="PUNTEGGI", x=125, y=180, width=200, height=70, font=customFont, fontSize=60})
@@ -127,43 +125,6 @@ local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sc
   	end
   end
 
-  -- local titoloTabella = display.newText("PUNTEGGI\n\nSCORE\tPLAYER\tPARTITA", 300, 200, customFont, 50 )
-  -- titoloTabella.x = display.contentCenterX - 250
-  -- titoloTabella.y = display.contentCenterY - 100
-  -- titoloTabella:setFillColor(1)
-
-  -- local function onRowRender( event )
-  --
-  --   -- Get reference to the row group
-  --   local row = event.row
-  --
-  --   -- Cache the row "contentWidth" and "contentHeight" because the row bounds can change as children objects are added
-  --   local rowHeight = row.contentHeight
-  --   local rowWidth = row.contentWidth
-  --
-  --   local rowTitle = display.newText( row, rowText, 0, 0, nil, 40 )
-  --   rowTitle:setFillColor( 0 )
-  --
-  --   -- Align the label left and vertically centered
-  --   rowTitle.anchorX = 0
-  --   rowTitle.x = 0
-  --   rowTitle.y = rowHeight * 0.5
-  -- end
-  --
-  -- local tabella = {}
-  -- if(not(tabellonePunteggi==nil)) then
-  --   tabella = widget.newTableView( {x=display.contentCenterX - 250, y=display.contentCenterY - 50, width=700, height=(100 * #tabellonePunteggi), onRowRender = onRowRender} )
-  --   tabella.anchorX = 0
-  --
-  --   rowText="PUNTEGGI\n\nSCORE\tPLAYER\tPARTITA"
-  --   tabella:insertRow{}
-  --   for i=1, #tabellonePunteggi, 1 do
-  --     rowText = i .. "   " .. tabellonePunteggi[i]
-  --     tabella:insertRow{}
-  --   end
-  -- end
-
-  -- scrollView:insert(tabella)
   local function handleButtonEvent(event)
     print("non ended")
     if ( "ended" == event.phase ) then

@@ -2,14 +2,12 @@ local nemici ={
 
   nemico1={   --OK
     immagine ="Images/Enemies/FallenAngel1/Idle.png",
+    attack ="Images/Enemies/FallenAngel1/slashing.png",
     life= 900,
-    damage= 50000,
+    damage= 70,
     armor= 6,
     speed= 3,
     points= 1000,
-    width=117,
-    height=157,
-    frames=37,
     mossa1={
       damage=1,
       hitChance=5,
@@ -26,29 +24,44 @@ local nemici ={
       damage=0.9,
       hitChance=5,
     },
-    sequences =
+    sheet_idle =
     {
-        {
-            name = "idle",
-            start = 1,
-            count = 37,
-            time = 600,
-            loopCount = 0,
-            loopDirection = "forward"
-        }
+      width=117,
+      height=157,
+      frames=37,
+    },
+    sheet_attack =
+    {
+      width=191,
+      height=173,
+      frames=25,
+    },
+    idleOptions=
+    {
+      start = 1,
+      count = 37,
+      time = 600,
+      loopCount = 0,
+      loopDirection = "forward",
+    },
+    attackOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
     },
   },
 
   nemico2={   --OK
     immagine ="Images/Enemies/FallenAngel2/Idle.png",
+    attack ="Images/Enemies/FallenAngel2/slashing.png",
     life= 900,
     damage= 70,
     armor= 6,
     speed= 3,
     points= 1000,
-    width=117,
-    height=147,
-    frames=37,
     mossa1={
       damage=1,
       hitChance=5,
@@ -65,29 +78,44 @@ local nemici ={
       damage=0.9,
       hitChance=5,
     },
-    sequences =
+    sheet_idle =
     {
-        {
-            name = "idle",
-            start = 1,
-            count = 37,
-            time = 600,
-            loopCount = 0,
-            loopDirection = "forward"
-        }
+      width=117,
+      height=147,
+      frames=37,
+    },
+    sheet_attack =
+    {
+      width=195,
+      height=177,
+      frames=25,
+    },
+    idleOptions=
+    {
+      start = 1,
+      count = 37,
+      time = 600,
+      loopCount = 0,
+      loopDirection = "forward",
+    },
+    attackOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
     },
   },
 
   nemico3={   --OK
     immagine ="Images/Enemies/FallenAngel3/Idle.png",
+    attack ="Images/Enemies/FallenAngel3/slashing.png",
     life= 900,
     damage= 70,
     armor= 6,
     speed= 3,
     points= 1000,
-    width=119,
-    height=166,
-    frames=36,
     mossa1={
       damage=1,
       hitChance=5,
@@ -104,29 +132,44 @@ local nemici ={
       damage=0.9,
       hitChance=5,
     },
-    sequences =
+    sheet_idle =
     {
-        {
-            name = "idle",
-            start = 1,
-            count = 36,
-            time = 600,
-            loopCount = 0,
-            loopDirection = "forward"
-        }
+      width=119,
+      height=167,
+      frames=37,
+    },
+    sheet_attack =
+    {
+      width=196,
+      height=181,
+      frames=25,
+    },
+    idleOptions=
+    {
+        start = 1,
+        count = 36,
+        time = 600,
+        loopCount = 0,
+        loopDirection = "forward"
+    },
+    attackOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
     },
   },
 
   nemico4={   --OK
     immagine ="Images/Enemies/IceGolem/Idle.png",
+    attack ="Images/Enemies/IceGolem/slashing.png",
     life= 700,
     damage= 50,
     armor= 7,
     speed= 3,
     points= 1000,
-    width=104,
-    height=138,
-    frames=37,
     mossa1={
       damage=1,
       hitChance=5,
@@ -143,29 +186,44 @@ local nemici ={
       damage=0.9,
       hitChance=5,
     },
-    sequences =
+    sheet_idle =
     {
-        {
-            name = "idle",
-            start = 1,
-            count = 37,
-            time = 600,
-            loopCount = 0,
-            loopDirection = "forward"
-        }
+      width=104,
+      height=138,
+      frames=37,
+    },
+    sheet_attack =
+    {
+      width=163,
+      height=150,
+      frames=25,
+    },
+    idleOptions=
+    {
+      start = 1,
+      count = 37,
+      time = 600,
+      loopCount = 0,
+      loopDirection = "forward"
+    },
+    attackOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
     },
   },
 
-  nemico5={   --TO FIX
+  nemico5={   --OK
     immagine ="Images/Enemies/EarthGolem/Idle.png",
+    attack ="Images/Enemies/EarthGolem/slashing.png",
     life= 700,
     damage= 50,
     armor= 7,
     speed= 3,
     points= 1000,
-    width=101,
-    height=146,
-    frames=36,
     mossa1={
       damage=1,
       hitChance=5,
@@ -182,29 +240,44 @@ local nemici ={
       damage=0.9,
       hitChance=5,
     },
-    sequences =
+    sheet_idle =
     {
-        {
-            name = "idle",
-            start = 1,
-            count = 36,
-            time = 600,
-            loopCount = 0,
-            loopDirection = "forward"
-        }
+      width=99,
+      height=145,
+      frames=37,
+    },
+    sheet_attack =
+    {
+      width=164,
+      height=158,
+      frames=25,
+    },
+    idleOptions=
+    {
+      start = 1,
+      count = 37,
+      time = 600,
+      loopCount = 0,
+      loopDirection = "forward"
+    },
+    attackOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
     },
   },
 
   nemico6={   --OK
     immagine ="Images/Enemies/MagmaGolem/Idle.png",
+    attack ="Images/Enemies/MagmaGolem/slashing.png",
     life= 700,
     damage= 50,
     armor= 7,
     speed= 3,
     points= 1000,
-    width=98,
-    height=134,
-    frames=37,
     mossa1={
       damage=1,
       hitChance=5,
@@ -221,16 +294,33 @@ local nemici ={
       damage=0.9,
       hitChance=5,
     },
-    sequences =
+    sheet_idle =
     {
-        {
-            name = "idle",
-            start = 1,
-            count = 37,
-            time = 600,
-            loopCount = 0,
-            loopDirection = "forward"
-        }
+      width=98,
+      height=134,
+      frames=37,
+    },
+    sheet_attack =
+    {
+      width=162,
+      height=144,
+      frames=25,
+    },
+    idleOptions=
+    {
+      start = 1,
+      count = 37,
+      time = 600,
+      loopCount = 0,
+      loopDirection = "forward"
+    },
+    attackOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
     },
   },
 

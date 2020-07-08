@@ -11,25 +11,33 @@ physics.start()
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local enemy
 local scene
-local animationTimer
-local sprite_sheet
-local sheet_Options
+local sheet_idle
+local sheet_idle_Options
+local sheet_attack
+local sheet_attack_Options
 local sequences
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Sequenze nemico
+--Funzioni di attacco del nemico
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--- local sequences =
--- {
---     --Right walking sequence
---     {
---         name = "idle",
---         start = 1,
---         count = 37,
---         time = 1000,
---         loopCount = 0,
---         loopDirection = "forward"
---     }
--- }
+local function resumeIdleing(event)
+  if(event.phase == "ended") then
+    enemy:setSequence("idle")
+    enemy:play()
+  end
+end
+
+local function slay()
+  enemy:setSequence("attack")
+  enemy:play()
+end
+
+local function attack(pers)
+  enemy = pers
+  enemy:addEventListener("sprite", resumeIdleing)
+
+  slay()
+end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Creazione nemico
@@ -38,30 +46,52 @@ local function create(scena, nemico)
   --Memorizing scene context
   scene = scena
 
-  -- local sequences =
-  -- {
-  --     --Right walking sequence
-  --     {
-  --         name = "idle",
-  --         start = 1,
-  --         count = nemico.frames,
-  --         time = 600,
-  --         loopCount = 0,
-  --         loopDirection = "forward"
-  --     }
-  -- }
-  --
-  -- --Opzioni di visualizzazione nemico
-  local sheet_Options =
+  --Sprite sheet options del nemico
+  sheet_idle_Options =
   {
-    width=nemico.width,
-    height=nemico.height,
-    numFrames=nemico.frames,
+    width=nemico.sheet_idle.width,
+    height=nemico.sheet_idle.height,
+    numFrames=nemico.sheet_idle.frames,
   }
 
-  --Display nemico
-  sprite_sheet = graphics.newImageSheet( nemico.immagine, sheet_Options )
-  enemy = display.newSprite( sprite_sheet, nemico.sequences )
+  sheet_attack_Options =
+  {
+    width=nemico.sheet_attack.width,
+    height=nemico.sheet_attack.height,
+    numFrames=nemico.sheet_attack.frames,
+  }
+
+  --Sprite sheets del nemico
+  sheet_idle = graphics.newImageSheet( nemico.immagine, sheet_idle_Options )
+  sheet_attack = graphics.newImageSheet( nemico.attack, sheet_attack_Options )
+
+  --Sequenze nemico
+  sequences=
+  {
+    --Idle
+    {
+      name="idle",
+      start = nemico.idleOptions.start,
+      count = nemico.idleOptions.count,
+      time = nemico.idleOptions.time,
+      loopCount = nemico.idleOptions.loopCount,
+      loopDirection = nemico.idleOptions.loopDirection,
+      sheet=sheet_idle
+    },
+
+    --Attack
+    {
+      name="attack",
+      start = nemico.attackOptions.start,
+      count = nemico.attackOptions.count,
+      time = nemico.attackOptions.time,
+      loopCount = nemico.attackOptions.loopCount,
+      loopDirection = nemico.attackOptions.loopDirection,
+      sheet=sheet_attack
+    }
+  }
+
+  enemy = display.newSprite( sheet_idle, sequences )
   enemy:setSequence(idle)
   enemy:play()
 
@@ -81,6 +111,7 @@ end
 local interfaceEnemy =
 {
   createEnemy = (create),
+  attacca = (attack),
 }
 
 return interfaceEnemy
