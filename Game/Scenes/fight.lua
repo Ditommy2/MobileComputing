@@ -344,7 +344,7 @@ function scene:create ( event )
 
 	--*******************TEXT GROUP************************************
 
-	testoMossa = display.newText( textGroup, "" ,1050, 585, 450, 0, native.newFont( customFont), 30 )
+	testoMossa = display.newText( textGroup, "" ,1050, 600, 450, 0, native.newFont( customFont), 30 )
 	testoMossa:setFillColor( 255,255,255 )
 
 	mossa1 = display.newText( textGroup, "" , 200, 515, native.newFont( customFont), 50 )
