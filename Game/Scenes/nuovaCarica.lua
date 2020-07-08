@@ -42,7 +42,7 @@ local function handleButtonEventNuovaNome(event)
 
 			if not trovato then
 			local lowerFixedMenu = require("lowerFixedMenu")
-			local inv = {"chiaveForziere", "cibo", "pozioneVita", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto"}
+			local inv = {"chiaveForziere", "cibo", "pozioneVita", "cibo", "cibo", "cibo", "cibo", "cibo", "cibo", "vuoto"}
 			--local inv = {"I054-ham.png", "002-shield-2.png", "016-potion-1.png", "017-hammer.png", "029-key.png", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto"}
 			-- print("inventario caricato: " )
 			-- for x=1, #inv, 1 do
@@ -219,6 +219,7 @@ local function overlayCaricaSalvataggi()
 			funzione=lowerFixedMenu.display
 			composer.setVariable( "funzione", funzione )
 			composer.setVariable( "characterLife", salvataggio.vitaPersonaggio )
+			composer.setVariable("characterFood", salvataggio.foodPersonaggio)
 			--composer.setVariable( "funzione", salvataggi.displayFunzioneToSave )
 			composer.removeScene( "Scenes.nuovaCarica" )
 			composer.gotoScene("Scenes.livello1")

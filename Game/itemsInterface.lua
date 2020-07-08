@@ -63,7 +63,7 @@ local itemsTable = {
             fightText.text=composer.getVariable( "characterMaxFood" )-composer.getVariable("characterFood")
           composer.setVariable( "characterFood", composer.getVariable( "characterMaxFood" ) )
           local foodToken = composer.getVariable( "foodToken" )
-          foodToken.x=composer.getVariable( "characterMaxFood" )
+          foodToken.x=foodToken.maxX
         else
           fightText.text = cura
           composer.setVariable( "characterFood", composer.getVariable("characterFood")+cura )

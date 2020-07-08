@@ -372,6 +372,8 @@ local function create(scena)
     print("impostata da composer"..composerFood)
     character.food = composerFood
     composer.setVariable( "characterFood", character.food )
+    character.maxFood = 500
+    composer.setVariable( "characterMaxFood", character.maxFood )
   else
     character.maxFood = 500
     composer.setVariable( "characterMaxFood", character.maxFood )
