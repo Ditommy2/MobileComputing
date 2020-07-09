@@ -89,6 +89,7 @@ end
 local function gotoLivello1()
 	composer.setVariable( "characterLife", character.life )
 	composer.removeScene( "Scenes.fight" )
+	interfaccia.dropItemFunction(enemy1.x, enemy1.y)
 	composer.gotoScene( "Scenes.livello1", {time=800, effect="crossFade"} )
 end
 
@@ -288,7 +289,6 @@ local function eseguiMossa()
 				transition.to( enemy1 , { time=3000, alpha=0 } )
 				stanzaCorrente.nemici[1] = nil
 				composer.setVariable( "stanzaCorrente", stanzaCorrente )
-				interfaccia.dropItemFunction(enemy1.x, enemy1.y)
 				timer.performWithDelay( 5000, gotoLivello1 )
 			end
 		end

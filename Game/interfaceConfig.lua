@@ -750,8 +750,8 @@ local interfacciaConfig = {
       -- print(item.x..", "..item.y.."---"..event.x..", "..event.y)
     elseif("ended"==phase or "cancelled"==phase) then
       --Oggetto fuori dall'inventario (tentativo di rimozione)
-      item.activateFunction(item.x, item.y)
       if( (item.x < invx or item.x > (invx+700)) or (item.y < invy or item.y > (invy+272)) ) then
+        item.activateFunction(item.x, item.y)
         print("appoggiato")
         for i=#curios, 1, -1 do
           if (item.x < curios[i].areaXUpper and item.x > curios[i].areaXLower and item.y < curios[i].areaYUpper and item.y > curios[i].areaYLower) then
@@ -780,7 +780,6 @@ local interfacciaConfig = {
             end
           end
         end
-        print(inventario[idItem].."inventario idItem")
         if not(inventario[idItem]=="vuoto") or not(griglia[idItem]==nil) then
           print("rimosso")
           inventario[idItem] = "vuoto"
@@ -849,12 +848,14 @@ local interfacciaConfig = {
               inventario[idItem] = "vuoto"
             else
               local curio = item.curio
-              inventario[numCasella] = curio.oggetto
-              local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
-              for i = #stanzaCorrente.oggetti, 1, -1 do
-                if stanzaCorrente.oggetti[i] == curio.oggetto then
-                  table.remove(stanzaCorrente.oggetti, i)
-                end
+              if(not(curio== nil)) then
+                  inventario[numCasella] = curio.oggetto
+                  local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
+                  for i = #stanzaCorrente.oggetti, 1, -1 do
+                    if stanzaCorrente.oggetti[i] == curio.oggetto then
+                      table.remove(stanzaCorrente.oggetti, i)
+                    end
+                  end
               end
             end
             composer.setVariable( "inv", inventario )
@@ -892,7 +893,14 @@ local interfacciaConfig = {
   dropItemFunction=
   (function(x, y)
     local itemInterface = require("itemsInterface")
-    local item = display.newImageRect( itemInterface.pozioneVita.nome, x, y, 70, 70)
+    local interfaccia = require("interfaceConfig")
+    local handler=interfaccia.dragItem
+    local pozione = itemInterface["pozioneVita"]
+    local item = display.newImageRect( pozione.location .. pozione.nome, 70, 70)
+    item.activateFunction = pozione.activateFunction
+    item.x = x
+    item.y = y - 100
+    item:addEventListener("touch", handler)
   end)
 }
 return interfacciaConfig
