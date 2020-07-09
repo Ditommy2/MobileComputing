@@ -53,8 +53,14 @@ local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sc
   -------------------------------------------------------------------------------------------------------------------------------------------
   -- Visualizzazione dell'elenco dei punteggi
   -------------------------------------------------------------------------------------------------------------------------------------------
+  local function sortPunteggi(a, b)
+    return a.punteggio > b.punteggio
+  end
+
   local stringaScores = "saveScore".."$$"..".json"
   local tabellonePunteggi= fileHandler.loadTableScores(stringaScores)
+  table.sort(tabellonePunteggi, sortPunteggi)
+
   local screenW, screenH, halfW, halfH = lunghezza, display.viewableContentHeight, lunghezza*0.5, display.viewableContentHeight*0.5
 
   local punteggiText = display.newText({text="PUNTEGGI", x=125, y=180, width=200, height=70, font=customFont, fontSize=60})
