@@ -439,7 +439,7 @@ local function die(group)
 
   end
   local function gotoNuovaCarica()
-    composer.setVariable( "characterLife", character.life )
+    composer.setVariable( "characterLife", nil )
     composer.removeScene( "Scenes.fight" )
     composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
   end
