@@ -367,7 +367,7 @@ function scene:create( event )
     end
 
   	textDamage:setFillColor(1, 0, 0)
-    local danno = 500
+    local danno = 5000
     textDamage.alpha = 1
 		textDamage.text = danno
 

@@ -421,9 +421,13 @@ local function die(group)
   local stringaSalvataggio = "save".."$$"..composer.getVariable("username")..".json"
   local tabelloneSalvataggi = fileHandler.loadTable(stringaSalvataggio)
   if(not(tabelloneSalvataggi == nil)) then
+    print("prepara a rimuovere")
     for i = #tabelloneSalvataggi, 1, -1 do
-      if(tabelloneSalvataggi[i].nome == composer.getVariable( "nomePartita" )) then
-        tabelloneSalvataggi[i] = nil
+      print("tenta di confrontare "..tabelloneSalvataggi[i].nomeSalvataggio..", "..composer.getVariable( "nomePartita" ))
+      if(tabelloneSalvataggi[i].nomeSalvataggio == composer.getVariable( "nomePartita" )) then
+        table.remove(tabelloneSalvataggi, i)
+        print("rimossa")
+        --tabelloneSalvataggi[i] = nil
       end
     end
     local punteggioPartita =  composer.getVariable( "score" )
@@ -444,7 +448,7 @@ local function die(group)
   fileHandler.caricaSave(tabelloneSalvataggi, stringaSalvataggio)
   composer.setVariable( "characterLife", composer.getVariable("characterMaxLife") )
   composer.setVariable( "characterFood", composer.getVariable("characterMaxFood") )
-  timer.performWithDelay( 5000, gotoNuovaCarica )
+  timer.performWithDelay( 2000, gotoNuovaCarica )
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Interfaccia del personaggio
