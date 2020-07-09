@@ -22,9 +22,9 @@ physics.setGravity(0, 0)
 -- funzione che displeya la desc dell'oggetto nell'inventario
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function viewDesc(event)
-local item = event.target
-local desc = display.newText(inventoryGroup, item.description , item.x, item.y - 60, native.newFont( customFont), 40)
-transition.to( desc , { time=2000, alpha=0 } )
+  local item = event.target
+  local desc = display.newText(inventoryGroup, item.description , item.x, item.y - 60, native.newFont( customFont), 40)
+  transition.to( desc , { time=2000, alpha=0 } )
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione che genera una mappa procedurale a partire da un numero di stanze desiderato. Per farlo costruisce una tabella con una stanza, la quale è a sua volta una tabella
