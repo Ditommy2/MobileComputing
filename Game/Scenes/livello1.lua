@@ -37,7 +37,8 @@ local function gotoMenu()
     nomePartita = composer.getVariable( "nomePartita" ),
     vitaPersonaggio = composer.getVariable( "characterLife" ),
     foodPersonaggio = composer.getVariable( "characterFood" ),
-    score = composer.getVariable("score")
+    score = composer.getVariable("score"),
+    armorBuff = composer.getVariable( "armorBuff" )
   }
 
   local score = composer.getVariable( "score" )
@@ -366,25 +367,47 @@ function scene:create( event )
 
   if composer.getVariable("characterFood") == 0 then
 
-    local textDamage = display.newText(mainGroup, "", character.x, character.y - character.height, native.newFont( customFont), 100)
+    local textDamage = display.newText(mainGroup, "", character.x, character.y - character.height-50, native.newFont( customFont), 100)
 
-    function removeTextDamage()
+    local function removeTextDamage()
     	textDamage.alpha = 0
     end
 
   	textDamage:setFillColor(1, 0, 0)
-    local danno = 3000
+    local danno = 500 --500
     textDamage.alpha = 1
 		textDamage.text = danno
-		timer.performWithDelay(1500, removeTextDamage)
+
     local vitaPersonaggio = composer.getVariable( "characterLife" )
     composer.setVariable( "characterLife", vitaPersonaggio-danno )
+
+    local  lifeBarCharacterBlack = display.newImageRect( mainGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
+    lifeBarCharacterBlack.alpha = 1
+  	lifeBarCharacterBlack.x = character.x
+  	lifeBarCharacterBlack.y = character.y - character.height
+
+  	local lifeBarCharacter = display.newImageRect( mainGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
+    lifeBarCharacter.alpha = 1
+  	lifeBarCharacter.x = character.x
+  	lifeBarCharacter.y = character.y - character.height
+    local rapporto = lifeBarCharacter.width / composer.getVariable( "characterLife" )
+    local x = danno * rapporto		--Pixel dal levare
+    lifeBarCharacter.width = lifeBarCharacter.width - x
+    lifeBarCharacter.x = lifeBarCharacter.x - x/2
+
+    local function removeBarDamage()
+      lifeBarCharacter.alpha = 0
+      lifeBarCharacterBlack.alpha = 0
+    end
+    timer.performWithDelay(1500, removeTextDamage)
+    timer.performWithDelay(1500, removeBarDamage)
   end
 
 
   if composer.getVariable("characterLife")<=0 then
     characterInterface.gameOver(mainGroup)
   end
+  print("armor personaggio : "..character.armor)
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
   composer.setVariable("sceneGroup", sceneGroup)

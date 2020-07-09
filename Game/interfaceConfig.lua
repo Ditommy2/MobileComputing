@@ -637,30 +637,30 @@ local interfacciaConfig = {
                   composer.getVariable( "stanzaCorrente" ).curios[j] = composer.getVariable( "activeCurios" )[i].nome
                 end
               end
-              display.remove( item )
-              inventario[idItem] = "vuoto"
-              griglia[idItem][3] = false
-              griglia[idItem][4] = nil
-              composer.setVariable( "inv", inventario )
-              composer.setVariable( "grigliaOggetti", griglia )
+              -- display.remove( item )
+              -- print("rimosso dopo essere stato posizionato nel curio")
+              -- inventario[idItem] = "vuoto"
+              -- griglia[idItem][3] = false
+              -- griglia[idItem][4] = nil
+              -- composer.setVariable( "inv", inventario )
+              -- composer.setVariable( "grigliaOggetti", griglia )
             else
               item.x = partenza[1]
               item.y = partenza[2]
             end
-          else
-            display.remove( item )
-            if not(inventario[idItem]==nil or not(griglia[idItem]==nil)) then
-              inventario[idItem] = "vuoto"
-              griglia[idItem][3] = false
-              griglia[idItem][4] = nil
-            end
-            composer.setVariable( "inv", inventario )
-            composer.setVariable( "grigliaOggetti", griglia )
           end
+        end
+        print(inventario[idItem].."inventario idItem")
+        if not(inventario[idItem]=="vuoto") or not(griglia[idItem]==nil) then
+          print("rimosso")
+          inventario[idItem] = "vuoto"
+          griglia[idItem][3] = false
+          griglia[idItem][4] = nil
         end
         display.remove( item )
       else
         -- VA IMPLEMENTATO L'AUTO POSIZIONAMENTO DEGLI ITEM E LO SCAMBIO DI POSTO
+        print("considerato dentroo")
         local xRel = item.x - invx
         local yRel = item.y - invy
         local numCol, restCol = math.modf(xRel/140)
