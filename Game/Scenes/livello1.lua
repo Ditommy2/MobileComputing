@@ -330,6 +330,12 @@ function scene:create( event )
   returnButton.y = display.contentCenterY-300
   returnButton:addEventListener("tap", gotoMenu)
 
+  Runtime:addEventListener('system', function(event)
+    if(event.type == "applicationExit") then
+      gotoMenu()
+    end
+  end )
+
   local function goToTutorial()
     local scrollOverlayRequired = require("tutorial")
     local lunghezza =  display.contentWidth
