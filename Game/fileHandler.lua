@@ -181,66 +181,43 @@ end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function M.loadTable( filename, location )
-	local loc = location
-	if not location then
-		loc = defaultLocation
-	end
+    local loc = location
+    if not location then
+        loc = defaultLocation
+    end
 
-	-- Path for the file to read
-	local path = system.pathForFile( filename, loc )
+    -- Path for the file to read
+    local path = system.pathForFile( filename, loc )
 
-	-- Open the file handle
-	local file, errorString = io.open( path, "r" )
+    -- Open the file handle
+    local file, errorString = io.open( path, "r" )
 
-	if not file then
-		-- Error occurred; output the cause
-		print( "File error: " .. errorString )
-	else
-		-- Read data from file
-		local contents = file:read( "*a" )
-		print("leggendo file da: ", path)
-		-- Decode JSON data into Lua table
-		local t = json.decode( contents )
-		-- Close the file handle
-		-- print("ANTICICLO SULLA MAPPA")
-		print(t)
-		-- t.mappaToSave=
-		for i=#t, 1, -1 do
-			antiReferenceCycle(t[i].mappaToSave, t[i].mappaToSave)
-			-- print("ANTICICLO SULLA STANZA")
-			-- t.stanzaCorrenteToSave=
-			antiReferenceCycle(t[i].stanzaCorrenteToSave, t[i].stanzaCorrenteToSave)
-		end
-		io.close( file )
-		-- Return table
-		return t
-	end
-end
-
-function M.loadTableScores( filename, location )
-	local loc = location
-	if not location then
-		loc = defaultLocation
-	end
-
-	-- Path for the file to read
-	local path = system.pathForFile( filename, loc )
-
-	-- Open the file handle
-	local file, errorString = io.open( path, "r" )
-
-	if not file then
-		-- Error occurred; output the cause
-	else
-		-- Read data from file
-		local contents = file:read( "*a" )
-		-- Decode JSON data into Lua table
-		local t = json.decode( contents )
-		-- Close the file handle
-
-		io.close( file )
-		return t
-	end
+    if not file then
+        -- Error occurred; output the cause
+        print( "File error: " .. errorString )
+    else
+        -- Read data from file
+        local contents = file:read( "*a" )
+        print("leggendo file da: ", path)
+        -- Decode JSON data into Lua table
+        local t = json.decode( contents )
+        -- Close the file handle
+        -- print("ANTICICLO SULLA MAPPA")
+				print(t)
+        -- t.mappaToSave=
+				if(t==nil) then
+				return {}
+				end
+				for i=#t, 1, -1 do
+				antiReferenceCycle(t[i].mappaToSave, t[i].mappaToSave)
+        -- print("ANTICICLO SULLA STANZA")
+        -- t.stanzaCorrenteToSave=
+        antiReferenceCycle(t[i].stanzaCorrenteToSave, t[i].stanzaCorrenteToSave)
+			end
+        io.close( file )
+        -- Return table
+        return t
+    end
 end
 
 return M

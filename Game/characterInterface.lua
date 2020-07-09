@@ -2,7 +2,7 @@ local composer = require( "composer" )
 local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
-
+local fileHandler = require("fileHandler")
 
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
@@ -170,16 +170,39 @@ local sequences =
 --Perform movement
 local function move(event)
   local dir = event.source.params.direction
-
+  local fame = 100 --0.5
+  local passo = 10
   if(not(dir==nil)) then
     if(dir=="r") then
-      character.x = character.x + 10
+      character.x = character.x + passo
       composer.setVariable( "characterX", character.x )
       composer.setVariable( "characterY", character.y )
+      local foodToken = composer.getVariable("foodToken")
+      foodToken.x= foodToken.x - fame
+      if foodToken.x<foodToken.minX then
+        foodToken.x = foodToken.minX
+      end
+      local composerFood = composer.getVariable( "characterFood" )
+      composerFood = composerFood - fame
+      if composerFood < 0 then
+        composerFood = 0
+      end
+      composer.setVariable( "characterFood", composerFood )
     elseif(dir=="l") then
-      character.x = character.x - 10
+      character.x = character.x - passo
       composer.setVariable( "characterX", character.x )
       composer.setVariable( "characterY", character.y )
+      local foodToken = composer.getVariable("foodToken")
+      foodToken.x= foodToken.x - fame
+      if foodToken.x<foodToken.minX then
+        foodToken.x = foodToken.minX
+      end
+      local composerFood = composer.getVariable( "characterFood" )
+      composerFood = composerFood - fame
+      if composerFood < 0 then
+        composerFood = 0
+      end
+      composer.setVariable( "characterFood", composerFood-fame )
     end
 
     if(character.x < 0) then
@@ -356,10 +379,20 @@ local function create(scena)
     composer.setVariable( "characterMaxLife", character.maxLife )
     character.life = character.maxLife
     composer.setVariable( "characterLife", character.life )
-    character.maxFood = 3000
+  end
+
+  local composerFood = composer.getVariable( "characterFood" )
+  if(not(composerFood==nil)) then
+    print("impostata da composer"..composerFood)
+    character.food = composerFood
+    composer.setVariable( "characterFood", character.food )
+    character.maxFood = 500
+    composer.setVariable( "characterMaxFood", character.maxFood )
+  else
+    character.maxFood = 500
     composer.setVariable( "characterMaxFood", character.maxFood )
     character.food = character.maxFood
-    composer.setVariable( "characterMaxLife", character.food )
+    composer.setVariable( "characterFood", character.food )
   end
 
   character.armor = 8
@@ -377,6 +410,42 @@ local function create(scena)
   return character
 end
 
+
+local function die(group)
+  local gameOverBack = display.newImageRect(group, "Images/Backgrounds/Black.jpg", 1280, 720)
+  gameOverBack.x = display.contentCenterX
+  gameOverBack.y = display.contentCenterY
+  local gameOver = display.newText(group, "GAME OVER", 600, 200, native.systemFont, 100)
+  gameOver:setFillColor(1, 0, 0)
+
+  local stringaSalvataggio = "save".."$$"..composer.getVariable("username")..".json"
+  local tabelloneSalvataggi = fileHandler.loadTable(stringaSalvataggio)
+  if(not(tabelloneSalvataggi == nil)) then
+    for i = #tabelloneSalvataggi, 1, -1 do
+      if(tabelloneSalvataggi[i].nome == composer.getVariable( "nomePartita" )) then
+        tabelloneSalvataggi[i] = nil
+      end
+    end
+    local punteggioPartita =  composer.getVariable( "score" )
+    function saveScore(punteggioPartita)
+    	local URL = "https://appmcsite.000webhostapp.com/insertScore.php?score=" .. punteggioPartita .. "&username=" .. composer.getVariable( "username" ) .. "&partita=" .. composer.getVariable( "nomePartita" )
+    		network.request(URL, "GET", networkListener)
+    end
+    saveScore(punteggioPartita)
+
+  end
+  local function gotoNuovaCarica()
+    composer.setVariable( "characterLife", character.life )
+    composer.removeScene( "Scenes.fight" )
+    composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
+  end
+
+  fileHandler.saveTable(tabelloneSalvataggi, stringaSalvataggio)
+  fileHandler.caricaSave(tabelloneSalvataggi, stringaSalvataggio)
+  composer.setVariable( "characterLife", composer.getVariable("characterMaxLife") )
+  composer.setVariable( "characterFood", composer.getVariable("characterMaxFood") )
+  timer.performWithDelay( 5000, gotoNuovaCarica )
+end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Interfaccia del personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -388,6 +457,7 @@ local interfacciaPersonaggio =
   changeRoom = (exitRight),
   goBack = (exitLeft),
   esegui = (eseguiMossa),
+  gameOver = (die)
 }
 
 return interfacciaPersonaggio
