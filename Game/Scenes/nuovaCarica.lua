@@ -74,7 +74,7 @@ local function handleButtonEventNuovaNome(event)
 			-- end
 
 
-
+			composer.setVariable( "armorBuff", 0 )
 			composer.setVariable( "mappa", mappa )
 			composer.setVariable( "funzione", funzione )
 			composer.setVariable( "mapx", 352 )
@@ -221,6 +221,7 @@ local function overlayCaricaSalvataggi()
 			composer.setVariable( "characterLife", salvataggio.vitaPersonaggio )
 			composer.setVariable("characterFood", salvataggio.foodPersonaggio)
 			composer.setVariable( "score", salvataggio.score )
+			composer.setVariable( "armorBuff", salvataggio.armorBuff )
 			--composer.setVariable( "funzione", salvataggi.displayFunzioneToSave )
 			composer.removeScene( "Scenes.nuovaCarica" )
 			composer.gotoScene("Scenes.livello1")

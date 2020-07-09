@@ -37,7 +37,8 @@ local function gotoMenu()
     nomePartita = composer.getVariable( "nomePartita" ),
     vitaPersonaggio = composer.getVariable( "characterLife" ),
     foodPersonaggio = composer.getVariable( "characterFood" ),
-    score = composer.getVariable("score")
+    score = composer.getVariable("score"),
+    armorBuff = composer.getVariable( "armorBuff" )
   }
 
   local score = composer.getVariable( "score" )
@@ -367,7 +368,7 @@ function scene:create( event )
     end
 
   	textDamage:setFillColor(1, 0, 0)
-    local danno = 5000
+    local danno = 500 --500
     textDamage.alpha = 1
 		textDamage.text = danno
 

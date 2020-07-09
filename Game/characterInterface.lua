@@ -170,7 +170,7 @@ local sequences =
 --Perform movement
 local function move(event)
   local dir = event.source.params.direction
-  local fame = 100 --0.5
+  local fame = 0.5
   local passo = 10
   if(not(dir==nil)) then
     if(dir=="r") then
@@ -394,7 +394,7 @@ local function create(scena)
     character.food = character.maxFood
     composer.setVariable( "characterFood", character.food )
   end
-
+  character.armorBuff = composer.getVariable( "armorBuff" )
   character.armor = 8
   character.damage = 100
   character.speed = 3

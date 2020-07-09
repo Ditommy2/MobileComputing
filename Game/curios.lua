@@ -38,7 +38,7 @@ local curios = {
     end
   ),
   sostitutivo = "curio2",
-  oggettiPossibili = {"pozioneVita"}
+  oggettiPossibili = {"anelloDifesa"}
 },
 curio2 = {
   nome="curio2",
