@@ -5,6 +5,7 @@
 -----------------------------------------------------------------------------------------
 local composer = require( "composer" )
 local characterInterface = require("characterInterface")
+local interfaccia = require("interfaceConfig")
 local enemyInterface = require("enemyInterface")
 local fileHandler = require("fileHandler")
 local customFont="MadnessHyperactive.otf"
@@ -287,6 +288,7 @@ local function eseguiMossa()
 				transition.to( enemy1 , { time=3000, alpha=0 } )
 				stanzaCorrente.nemici[1] = nil
 				composer.setVariable( "stanzaCorrente", stanzaCorrente )
+				interfaccia.dropItemFunction(enemy1.x, enemy1.y)
 				timer.performWithDelay( 5000, gotoLivello1 )
 			end
 		end
