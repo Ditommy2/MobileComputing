@@ -395,7 +395,7 @@ local function create(scena)
     composer.setVariable( "characterFood", character.food )
   end
   character.armorBuff = composer.getVariable( "armorBuff" )
-  character.armor = 8
+  character.armor = 8 + character.armorBuff
   character.damage = 100
   character.speed = 3
   character.mossa1 = {nome="Pugno", hitChance = 8, damage = 400}

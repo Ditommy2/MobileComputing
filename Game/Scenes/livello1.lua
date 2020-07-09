@@ -401,6 +401,7 @@ function scene:create( event )
   if composer.getVariable("characterLife")<=0 then
     characterInterface.gameOver(mainGroup)
   end
+  print("armor personaggio : "..character.armor)
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
   composer.setVariable("sceneGroup", sceneGroup)

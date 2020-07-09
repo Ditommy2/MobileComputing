@@ -648,25 +648,7 @@ local interfacciaConfig = {
               item.x = partenza[1]
               item.y = partenza[2]
             end
-          -- else
-          --   display.remove( item )
-          --   if not(inventario[idItem]==nil or not(griglia[idItem]==nil)) then
-          --     print("rimosso in seguito a non stare nel curio")
-          --     inventario[idItem] = "vuoto"
-          --     griglia[idItem][3] = false
-          --     griglia[idItem][4] = nil
-          --   end
-          --   composer.setVariable( "inv", inventario )
-          --   composer.setVariable( "grigliaOggetti", griglia )
           end
-          -- display.remove( item )
-          -- if not(inventario[idItem]==nil or not(griglia[idItem]==nil)) then
-          --   inventario[idItem] = "vuoto"
-          --   griglia[idItem][3] = false
-          --   griglia[idItem][4] = nil
-          -- end
-          -- composer.setVariable( "inv", inventario )
-          -- composer.setVariable( "grigliaOggetti", griglia )
         end
         print(inventario[idItem].."inventario idItem")
         if not(inventario[idItem]=="vuoto") or not(griglia[idItem]==nil) then
