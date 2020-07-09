@@ -241,16 +241,17 @@ function scene:create( event )
   local phase = event.phase
   local curios = stanzaCorrente.curios
   local activeCurios = {}
+  if not(curios==nil) then
     for i=#curios, 1, -1 do
-      if not(curios==nil) then
         local curio = curiosInterface.createCurio(self, stanzaCorrente.curios[i])
         if not(curio==nil) then
           table.insert(activeCurios, curio)
           composer.setVariable("mainGroup", mainGroup)
           mainGroup:insert(curio)
         end
-      end
     end
+  end
+
     composer.setVariable( "activeCurios", activeCurios )
     stanzaCorrente.curios=curios
     for j=#stanzaCorrente.oggetti, 1, -1 do
@@ -367,7 +368,7 @@ function scene:create( event )
     end
 
   	textDamage:setFillColor(1, 0, 0)
-    local danno = 3000
+    local danno = 500
     textDamage.alpha = 1
 		textDamage.text = danno
 		timer.performWithDelay(1500, removeTextDamage)
