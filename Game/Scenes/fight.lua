@@ -133,25 +133,9 @@ local function turnEnemy()
 		timer.performWithDelay(4000, addTasto)
 		textDamageEnemy.alpha = 1
 	else
-		local gameOverBack = display.newImageRect( backgroundGroup, "Images/Backgrounds/Black.jpg", 1280, 720)
-		gameOverBack.x = display.contentCenterX
-		gameOverBack.y = display.contentCenterY
-		local gameOver = display.newText(textGroup, "GAME OVER", 600, 200, native.systemFont, 100)
+		characterInterface.gameOver(textGroup)
 		fightText:setFillColor(0, 0, 0)
-
 		saveScore(punteggioPartita)
-
-		local stringaSalvataggio = "save".."$$"..composer.getVariable("username")..".json"
-		local tabelloneSalvataggi = fileHandler.loadTable(stringaSalvataggio)
-		if(not(tabelloneSalvataggi == nil)) then
-			for i = #tabelloneSalvataggi, 1, -1 do
-				if(tabelloneSalvataggi[i].nome == composer.getVariable( "nomePartita" )) then
-					tabelloneSalvataggi[i] = nil
-				end
-			end
-			fileHandler.saveTable(tabelloneSalvataggi, stringaSalvataggio)
-			fileHandler.caricaSave(tabelloneSalvataggi, stringaSalvataggio)
-		end
 		timer.performWithDelay( 5000, gotoNuovaCarica )
 	end
 end

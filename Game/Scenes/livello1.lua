@@ -353,9 +353,32 @@ function scene:create( event )
   local foodToken = display.newImageRect( mainGroup, "Images/Icons/icons3/054-ham.png", 50, 50 )
   foodToken.x = (foodBarGreen.x + foodBarGreen.width/2) - (composer.getVariable( "characterMaxFood" )-composer.getVariable( "characterFood" ))
   foodToken.maxX = foodBarGreen.x + foodBarGreen.width/2
+  foodToken.minX = foodBarGreen.x - foodBarGreen.width/2
   print("impostato food token x :"..foodToken.x)
   foodToken.y = foodBarGreen.y
   composer.setVariable("foodToken", foodToken)
+
+  if composer.getVariable("characterFood") == 0 then
+
+    local textDamage = display.newText(mainGroup, "", character.x, character.y - character.height, native.newFont( customFont), 100)
+
+    function removeTextDamage()
+    	textDamage.alpha = 0
+    end
+
+  	textDamage:setFillColor(1, 0, 0)
+    local danno = 3000
+    textDamage.alpha = 1
+		textDamage.text = danno
+		timer.performWithDelay(1500, removeTextDamage)
+    local vitaPersonaggio = composer.getVariable( "characterLife" )
+    composer.setVariable( "characterLife", vitaPersonaggio-danno )
+  end
+
+
+  if composer.getVariable("characterLife")<=0 then
+    characterInterface.gameOver(mainGroup)
+  end
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
   composer.setVariable("sceneGroup", sceneGroup)

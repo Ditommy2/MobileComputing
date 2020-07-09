@@ -205,6 +205,9 @@ function M.loadTable( filename, location )
         -- print("ANTICICLO SULLA MAPPA")
 				print(t)
         -- t.mappaToSave=
+				if(t==nil) then
+				return {}
+				end
 				for i=#t, 1, -1 do
 				antiReferenceCycle(t[i].mappaToSave, t[i].mappaToSave)
         -- print("ANTICICLO SULLA STANZA")

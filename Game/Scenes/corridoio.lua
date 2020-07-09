@@ -138,6 +138,7 @@ function scene:create( event )
   local foodToken = display.newImageRect( mainGroup, "Images/Icons/icons3/054-ham.png", 50, 50 )
   foodToken.x = (foodBarGreen.x + foodBarGreen.width/2) - (composer.getVariable( "characterMaxFood" )-composer.getVariable( "characterFood" ))
   foodToken.maxX = foodBarGreen.x + foodBarGreen.width/2
+  foodToken.minX = foodBarGreen.x - foodBarGreen.width/2
   print("impostato food token x :"..foodToken.x)
   foodToken.y = foodBarGreen.y
   composer.setVariable("foodToken", foodToken)
