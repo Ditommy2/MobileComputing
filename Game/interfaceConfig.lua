@@ -6,9 +6,9 @@ local math = require("math")
 local nemici = require("nemici")
 local curios = require("curios")
 local spawnRatioNemiciUpper = 42  --50%
-local spawnRatioNemiciLower = 1 --1
+local spawnRatioNemiciLower = 41 --1
 local spawnRatioCurioLower = 3
-local spawnRatioCurioUpper = 6
+local spawnRatioCurioUpper = 3
 local numeroBackgroundTotali = 9
 local token
 --Physics (necessaria per il movimento del personaggio)
@@ -780,8 +780,7 @@ local interfacciaConfig = {
             end
           end
         end
-        print(inventario[idItem].."inventario idItem")
-        if not(inventario[idItem]=="vuoto") or not(griglia[idItem]==nil) then
+        if not(inventario[idItem]=="vuoto") and not(griglia[idItem]==nil) then
           print("rimosso")
           inventario[idItem] = "vuoto"
           griglia[idItem][3] = false
