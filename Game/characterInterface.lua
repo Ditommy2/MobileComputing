@@ -170,7 +170,7 @@ local sequences =
 --Perform movement
 local function move(event)
   local dir = event.source.params.direction
-  local fame = 100 --0.5
+  local fame = 0.5
   local passo = 10
   if(not(dir==nil)) then
     if(dir=="r") then
@@ -394,8 +394,8 @@ local function create(scena)
     character.food = character.maxFood
     composer.setVariable( "characterFood", character.food )
   end
-
-  character.armor = 8
+  character.armorBuff = composer.getVariable( "armorBuff" )
+  character.armor = 8 + character.armorBuff
   character.damage = 100
   character.speed = 3
   character.mossa1 = {nome="Pugno", hitChance = 8, damage = 400}
@@ -421,9 +421,13 @@ local function die(group)
   local stringaSalvataggio = "save".."$$"..composer.getVariable("username")..".json"
   local tabelloneSalvataggi = fileHandler.loadTable(stringaSalvataggio)
   if(not(tabelloneSalvataggi == nil)) then
+    print("prepara a rimuovere")
     for i = #tabelloneSalvataggi, 1, -1 do
-      if(tabelloneSalvataggi[i].nome == composer.getVariable( "nomePartita" )) then
-        tabelloneSalvataggi[i] = nil
+      print("tenta di confrontare "..tabelloneSalvataggi[i].nomeSalvataggio..", "..composer.getVariable( "nomePartita" ))
+      if(tabelloneSalvataggi[i].nomeSalvataggio == composer.getVariable( "nomePartita" )) then
+        table.remove(tabelloneSalvataggi, i)
+        print("rimossa")
+        --tabelloneSalvataggi[i] = nil
       end
     end
     local punteggioPartita =  composer.getVariable( "score" )
@@ -435,7 +439,7 @@ local function die(group)
 
   end
   local function gotoNuovaCarica()
-    composer.setVariable( "characterLife", character.life )
+    composer.setVariable( "characterLife", nil )
     composer.removeScene( "Scenes.fight" )
     composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
   end
@@ -444,7 +448,7 @@ local function die(group)
   fileHandler.caricaSave(tabelloneSalvataggi, stringaSalvataggio)
   composer.setVariable( "characterLife", composer.getVariable("characterMaxLife") )
   composer.setVariable( "characterFood", composer.getVariable("characterMaxFood") )
-  timer.performWithDelay( 5000, gotoNuovaCarica )
+  timer.performWithDelay( 2000, gotoNuovaCarica )
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Interfaccia del personaggio

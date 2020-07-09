@@ -17,7 +17,7 @@ local itemsTable = {
         print("curato")
         local curaLower = 300
         local curaUpper = 700
-        local fightText = display.newText(composer.getVariable("mainGroup"), "", characterX, characterY-100, native.newFont( customFont), 100)
+        local fightText = display.newText(composer.getVariable("sceneGroup"), "", characterX, characterY-100, native.newFont( customFont), 100)
         local cura = math.random(curaLower, curaUpper)
 
         if composer.getVariable("characterLife")+cura > composer.getVariable( "characterMaxLife" ) then
@@ -31,7 +31,7 @@ local itemsTable = {
         fightText:setFillColor(0, 0.8, 0)
         fightText.alpha = 1
 
-        composer.getVariable("mainGroup"):insert(fightText)
+        composer.getVariable("sceneGroup"):insert(fightText)
         local function removeTextFight()
         	fightText.alpha = 0
         end
@@ -58,7 +58,7 @@ local itemsTable = {
         print("curato")
         local curaLower = 90
         local curaUpper = 300
-        local fightText = display.newText(composer.getVariable("mainGroup"), "", characterX, characterY-100, native.newFont( customFont), 100)
+        local fightText = display.newText(composer.getVariable("sceneGroup"), "", characterX, characterY-100, native.newFont( customFont), 100)
         local cura = math.random(curaLower, curaUpper)
 
         if composer.getVariable("characterFood")+cura > composer.getVariable( "characterMaxFood" ) then
@@ -75,11 +75,27 @@ local itemsTable = {
         fightText:setFillColor(0, 0.8, 0)
         fightText.alpha = 1
 
-        composer.getVariable("mainGroup"):insert(fightText)
+        composer.getVariable("sceneGroup"):insert(fightText)
         local function removeTextFight()
         	fightText.alpha = 0
         end
     		timer.performWithDelay( 1500, removeTextFight )
+      end
+    end)
+  },
+  anelloDifesa = {
+    nome = "003-ring.png",
+    location = defaultItemLocation,
+    activateFunction = (
+    function(posx, posy)
+      local invx = composer.getVariable( "invx" )
+      local invy = composer.getVariable( "invy" )
+      if ( (posx < invx or posx > (invx+700)) or (posy < invy or posy > (invy+272)) ) then
+        print("impostato buff a 0")
+        composer.setVariable( "armorBuff", 0 )
+      else
+        print("impostato buff a 2")
+        composer.setVariable( "armorBuff", 2 )
       end
     end)
   }

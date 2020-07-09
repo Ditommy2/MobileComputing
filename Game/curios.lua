@@ -5,7 +5,7 @@ local altezza=  lunghezza*(9/16)
 
 
 local curios = {
-  curio1 = {
+  curio3 = {
     nome="curio1",
     immagine = "Images/Icons/curios/treasureChest_close.png",
     messaggio = "interazione",
@@ -38,7 +38,7 @@ local curios = {
     end
   ),
   sostitutivo = "curio2",
-  oggettiPossibili = {"pozioneVita"}
+  oggettiPossibili = {"anelloDifesa", "pozioneVita"}
 },
 curio2 = {
   nome="curio2",
