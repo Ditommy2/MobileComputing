@@ -31,7 +31,7 @@ local itemsTable = {
         fightText:setFillColor(0, 0.8, 0)
         fightText.alpha = 1
 
-        composer.getVariable("mainGroup"):insert(fightText)
+        composer.getVariable("sceneGroup"):insert(fightText)
         local function removeTextFight()
         	fightText.alpha = 0
         end
@@ -58,7 +58,7 @@ local itemsTable = {
         print("curato")
         local curaLower = 90
         local curaUpper = 300
-        local fightText = display.newText(composer.getVariable("mainGroup"), "", characterX, characterY-100, native.newFont( customFont), 100)
+        local fightText = display.newText(composer.getVariable("sceneGroup"), "", characterX, characterY-100, native.newFont( customFont), 100)
         local cura = math.random(curaLower, curaUpper)
 
         if composer.getVariable("characterFood")+cura > composer.getVariable( "characterMaxFood" ) then
@@ -75,7 +75,7 @@ local itemsTable = {
         fightText:setFillColor(0, 0.8, 0)
         fightText.alpha = 1
 
-        composer.getVariable("mainGroup"):insert(fightText)
+        composer.getVariable("sceneGroup"):insert(fightText)
         local function removeTextFight()
         	fightText.alpha = 0
         end
