@@ -220,11 +220,13 @@ function M.loadTable( filename, location )
     end
 end
 
-function M.loadTableScores( filename, location )
-	local loc = location
-	if not location then
-		loc = defaultLocation
-	end
+function M.loadTableScores( filename)
+	-- local loc = location
+	-- if not location then
+	-- 	loc = defaultLocation
+	-- end
+
+	local loc = defaultLocation
 
 	-- Path for the file to read
 	local path = system.pathForFile( filename, loc )
@@ -233,17 +235,26 @@ function M.loadTableScores( filename, location )
 	local file, errorString = io.open( path, "r" )
 
 	if not file then
-		-- Error occurred; output the cause
-	else
-		-- Read data from file
-		local contents = file:read( "*a" )
-		-- Decode JSON data into Lua table
-		local t = json.decode( contents )
-		-- Close the file handle
+		local url = "https://appmcsite.000webhostapp.com/Upload/prendiSave.php"
 
-		io.close( file )
-		return t
+	  print(url)
+
+	  network.request( url, "GET", networkListener)
 	end
+
+	-- Open the file handle
+	if(file==nil) then return {} end
+
+	local file, errorString = io.open( path, "r" )
+	-- Error occurred; output the cause
+	-- Read data from file
+	local contents = file:read( "*a" )
+	-- Decode JSON data into Lua table
+	local t = json.decode( contents )
+	-- Close the file handle
+
+	io.close( file )
+	return t
 end
 
 return M

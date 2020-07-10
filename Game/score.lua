@@ -2,6 +2,7 @@ local customFont="MadnessHyperactive.otf"
 local composer = require( "composer" )
 local fileHandler = require "fileHandler"
 local rowText = ""
+
 local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sceneGroup)
   local widget = require( "widget" )
 

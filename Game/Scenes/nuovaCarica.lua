@@ -411,7 +411,7 @@ local function goToScore()
 	local scrollOverlayRequired = require("score")
 	local lunghezza =  display.contentWidth
 	local lunghezzaFinestra=lunghezza-400
-	local altezzzaFinestra=lunghezzaFinestra*(9/16)
+	local altezzaFinestra=lunghezzaFinestra*(9/16)
 	scrollOverlayRequired.handleButton(display, lunghezzaFinestra, altezzaFinestra, sceneGroup)
 
 end
