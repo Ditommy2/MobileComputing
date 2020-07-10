@@ -170,7 +170,7 @@ local sequences =
 --Perform movement
 local function move(event)
   local dir = event.source.params.direction
-  local fame = 0.5
+  local fame = 100--0.5
   local passo = 10
   if(not(dir==nil)) then
     if(dir=="r") then
@@ -396,7 +396,7 @@ local function create(scena)
   end
   character.armorBuff = composer.getVariable( "armorBuff" )
   character.armor = 8 + character.armorBuff
-  character.damage = 100
+  character.damage = 100000
   character.speed = 3
   character.mossa1 = {nome="Pugno", hitChance = 8, damage = 0.8}
   character.mossa2 = {nome="Calcio", hitChance = 7, damage = 0.6}
@@ -409,7 +409,22 @@ local function create(scena)
 
   return character
 end
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Torna alla schermata nuovaCarica
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function gotoNuovaCarica()
+  composer.setVariable( "characterLife", nil )
+  composer.removeScene( "Scenes.fight" )
+  composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
+end
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Salva il punteggio della partita
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function saveScore(punteggioPartita)
+  local URL = "https://appmcsite.000webhostapp.com/insertScore.php?score=" .. punteggioPartita .. "&username=" .. composer.getVariable( "username" ) .. "&partita=" .. composer.getVariable( "nomePartita" )
+    network.request(URL, "GET", networkListener)
+end
 
 local function die(group)
   local gameOverBack = display.newImageRect(group, "Images/Backgrounds/Black.jpg", 1280, 720)
@@ -431,17 +446,7 @@ local function die(group)
       end
     end
     local punteggioPartita =  composer.getVariable( "score" )
-    function saveScore(punteggioPartita)
-    	local URL = "https://appmcsite.000webhostapp.com/insertScore.php?score=" .. punteggioPartita .. "&username=" .. composer.getVariable( "username" ) .. "&partita=" .. composer.getVariable( "nomePartita" )
-    		network.request(URL, "GET", networkListener)
-    end
     saveScore(punteggioPartita)
-
-  end
-  local function gotoNuovaCarica()
-    composer.setVariable( "characterLife", nil )
-    composer.removeScene( "Scenes.fight" )
-    composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
   end
 
   fileHandler.saveTable(tabelloneSalvataggi, stringaSalvataggio)

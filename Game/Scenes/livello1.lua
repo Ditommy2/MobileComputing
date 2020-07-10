@@ -375,7 +375,7 @@ function scene:create( event )
     end
 
   	textDamage:setFillColor(1, 0, 0)
-    local danno = 500 --500
+    local danno = 3000 --500
     textDamage.alpha = 1
 		textDamage.text = danno
 
@@ -412,6 +412,17 @@ function scene:create( event )
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
   composer.setVariable("sceneGroup", sceneGroup)
+
+  --Drop item nemico
+  local interfaceConfig = require("interfaceConfig")
+  local enemyX = composer.getVariable( "enemyX" )
+  local enemyY = composer.getVariable( "enemyY" )
+  if not((enemyX==nil) and (enemyY==nil)) then
+    interfaceConfig.dropItemFunction(enemyX, enemyY, sceneGroup)
+    composer.setVariable( "enemyX", nil )
+    composer.setVariable( "enemyY", nil )
+  end
+
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --fase show del display

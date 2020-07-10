@@ -81,15 +81,17 @@ end
 -- Fine combattimento
 -- -----------------------------------------------------------------------------------
 local function gotoNuovaCarica()
-	composer.setVariable( "characterLife", character.life )
+	-- composer.setVariable( "characterLife", character.life )
 	composer.removeScene( "Scenes.fight" )
 	composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
 end
 
 local function gotoLivello1()
+	composer.setVariable( "enemyX", enemy1.x )
+	composer.setVariable( "enemyY", enemy1.y )
 	composer.setVariable( "characterLife", character.life )
 	composer.removeScene( "Scenes.fight" )
-	interfaccia.dropItemFunction(enemy1.x, enemy1.y)
+	-- interfaccia.dropItemFunction(enemy1.x, enemy1.y)
 	composer.gotoScene( "Scenes.livello1", {time=800, effect="crossFade"} )
 end
 
@@ -151,8 +153,8 @@ local function turnEnemy()
 	else
 		characterInterface.gameOver(textGroup)
 		fightText:setFillColor(0, 0, 0)
-		saveScore(punteggioPartita)
-		timer.performWithDelay( 5000, gotoNuovaCarica )
+		-- saveScore(punteggioPartita)
+		-- timer.performWithDelay( 5000, gotoNuovaCarica )
 	end
 end
 

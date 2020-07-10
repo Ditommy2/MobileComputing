@@ -6,9 +6,9 @@ local math = require("math")
 local nemici = require("nemici")
 local curios = require("curios")
 local spawnRatioNemiciUpper = 42  --50%
-local spawnRatioNemiciLower = 41 --1
-local spawnRatioCurioLower = 3
-local spawnRatioCurioUpper = 3
+local spawnRatioNemiciLower = 42 --1
+local spawnRatioCurioLower = 4
+local spawnRatioCurioUpper = 4
 local numeroBackgroundTotali = 9
 local token
 --Physics (necessaria per il movimento del personaggio)
@@ -891,7 +891,7 @@ local interfacciaConfig = {
   numeroStanze=8,
 
   dropItemFunction=
-  (function(x, y)
+  (function(x, y, sceneGroup)
     local itemInterface = require("itemsInterface")
     local interfaccia = require("interfaceConfig")
     local handler=interfaccia.dragItem
@@ -901,6 +901,7 @@ local interfacciaConfig = {
     item.x = x
     item.y = y - 100
     item:addEventListener("touch", handler)
+    sceneGroup:insert(item)
   end)
 }
 return interfacciaConfig
