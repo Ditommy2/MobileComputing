@@ -913,7 +913,10 @@ local interfacciaConfig = {
     item.id = 11
     item.oggetto = "pozioneVita"
     item:addEventListener("touch", handler)
-    composer.setVariable( "drop", item )
+    composer.getVariable( "sceneGroup" ):insert(item)
+    item:toFront()
+    print("Droppato oggetto")
+    composer.setVariable( "drop", false )
   end)
 }
 return interfacciaConfig
