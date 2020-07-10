@@ -219,12 +219,16 @@ local function move(event)
 
     local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
     local nemico = stanzaCorrente.nemici[1]
-    if(character.x > lunghezza - 500 and nemico ~= nill) then
-      -- print("partito combattimento con: " .. nemico.immagine)
-      timer.pause( moveTimer )
-      character:pause()
-      composer.removeScene( "Scenes.livello1")
-      composer.gotoScene( "Scenes.fight", {time=1500, effect="zoomInOutFade"} )
+    local currentScene = composer.getSceneName( "current" )
+
+    if(currentScene=="Scenes.livello1") then
+      if(character.x > lunghezza - 500 and nemico ~= nill) then
+        -- print("partito combattimento con: " .. nemico.immagine)
+        timer.pause( moveTimer )
+        character:pause()
+        composer.removeScene( "Scenes.livello1")
+        composer.gotoScene( "Scenes.fight", {time=1500, effect="zoomInOutFade"} )
+      end
     end
   end
 end
