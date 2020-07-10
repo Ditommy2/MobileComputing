@@ -127,7 +127,7 @@ local itemsTable = {
   pillolaSpeed = {
     nome = "024-pill.png",
     location = defaultItemLocation,
-    description = "Aumenta la velocità per un solo combattimento",
+    description = "Aumenta la velocita' per un solo combattimento",
     activateFunction = (
     function(posx, posy)
       local characterX = composer.getVariable( "characterX" )
