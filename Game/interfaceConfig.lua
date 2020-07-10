@@ -7,8 +7,8 @@ local nemici = require("nemici")
 local curios = require("curios")
 local spawnRatioNemiciUpper = 42  --50%
 local spawnRatioNemiciLower = 1 --1
-local spawnRatioCurioLower = 1
-local spawnRatioCurioUpper = 1
+local spawnRatioCurioLower = 3
+local spawnRatioCurioUpper = 4
 local numeroBackgroundTotali = 9
 local token
 --Physics (necessaria per il movimento del personaggio)
