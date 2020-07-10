@@ -87,11 +87,10 @@ local function gotoNuovaCarica()
 end
 
 local function gotoLivello1()
-	composer.setVariable( "enemyX", enemy1.x )
-	composer.setVariable( "enemyY", enemy1.y )
 	composer.setVariable( "characterLife", character.life )
 	composer.removeScene( "Scenes.fight" )
-	-- interfaccia.dropItemFunction(enemy1.x, enemy1.y)
+	composer.setVariable("endFight", true)
+	interfaccia.dropItemFunction(enemy1.x, enemy1.y)
 	composer.gotoScene( "Scenes.livello1", {time=800, effect="crossFade"} )
 end
 

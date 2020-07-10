@@ -5,8 +5,8 @@ local altezza=  lunghezza*(9/16)
 local math = require("math")
 local nemici = require("nemici")
 local curios = require("curios")
-local spawnRatioNemiciUpper = 42  --50%
-local spawnRatioNemiciLower = 42 --1
+local spawnRatioNemiciUpper = 2  --50%
+local spawnRatioNemiciLower = 2 --1
 local spawnRatioCurioLower = 4
 local spawnRatioCurioUpper = 4
 local numeroBackgroundTotali = 9
@@ -625,7 +625,7 @@ local interfacciaConfig = {
       for y=1, 5, 1 do
         local casellaX = posizioneX + 70
         local casellaY = posizioneY + 68
-        print("casella = "..casellaX..", "..casellaY)
+        -- print("casella = "..casellaX..", "..casellaY)
         local griglia = composer.getVariable( "grigliaOggetti" )
 
         --Ogni casella della griglia è composta dalle coordinate centrali della casella e da un booleano che inidica se la casella è occupata o meno
@@ -649,7 +649,7 @@ local interfacciaConfig = {
         item = display.newImageRect(inventoryGroup,  itemInterface[nomeItem].location..itemInterface[nomeItem].nome, 70, 70)
         item.x = griglia[x][1]
         item.y = griglia[x][2]
-        print("item: "..item.x..", "..item.y)
+        -- print("item: "..item.x..", "..item.y)
         item.id = x
         item.nome = itemInterface[nomeItem].nome
         item.location = itemInterface[nomeItem].location
@@ -857,6 +857,16 @@ local interfacciaConfig = {
                     end
                   end
               end
+
+              if(not(item.oggetto == nil)) then
+                  inventario[numCasella] = item.oggetto
+                  -- local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
+                  -- for i = #stanzaCorrente.oggetti, 1, -1 do
+                  --   if stanzaCorrente.oggetti[i] == curio.oggetto then
+                  --     table.remove(stanzaCorrente.oggetti, i)
+                  --   end
+                  -- end
+              end
             end
             composer.setVariable( "inv", inventario )
             composer.setVariable( "grigliaOggetti", griglia )
@@ -891,7 +901,7 @@ local interfacciaConfig = {
   numeroStanze=8,
 
   dropItemFunction=
-  (function(x, y, sceneGroup)
+  (function(x, y)
     local itemInterface = require("itemsInterface")
     local interfaccia = require("interfaceConfig")
     local handler=interfaccia.dragItem
@@ -900,8 +910,10 @@ local interfacciaConfig = {
     item.activateFunction = pozione.activateFunction
     item.x = x
     item.y = y - 100
+    item.id = 11
+    item.oggetto = "pozioneVita"
     item:addEventListener("touch", handler)
-    sceneGroup:insert(item)
+    composer.setVariable( "drop", item )
   end)
 }
 return interfacciaConfig
