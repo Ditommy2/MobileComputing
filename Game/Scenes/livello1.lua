@@ -368,64 +368,64 @@ function scene:create( event )
   foodToken.y = foodBarGreen.y
   composer.setVariable("foodToken", foodToken)
 
-  if composer.getVariable("characterFood") == 0 then
+  if(composer.getVariable( "endFight" )==true) then
+    if composer.getVariable("characterFood") == 0 then
 
-    local textDamage = display.newText(mainGroup, "", character.x, character.y - character.height-50, native.newFont( customFont), 100)
+      local textDamage = display.newText(mainGroup, "", character.x, character.y - character.height-50, native.newFont( customFont), 100)
 
-    local function removeTextDamage()
-    	textDamage.alpha = 0
+      local function removeTextDamage()
+      	textDamage.alpha = 0
+      end
+
+    	textDamage:setFillColor(1, 0, 0)
+      local danno = 500
+      textDamage.alpha = 1
+  		textDamage.text = danno
+
+      local vitaPersonaggio = composer.getVariable( "characterLife" )
+      composer.setVariable( "characterLife", vitaPersonaggio-danno )
+
+      local  lifeBarCharacterBlack = display.newImageRect( mainGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
+      lifeBarCharacterBlack.alpha = 1
+    	lifeBarCharacterBlack.x = character.x
+    	lifeBarCharacterBlack.y = character.y - character.height
+
+    	local lifeBarCharacter = display.newImageRect( mainGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
+      lifeBarCharacter.alpha = 1
+    	lifeBarCharacter.x = character.x
+    	lifeBarCharacter.y = character.y - character.height
+      local rapporto = lifeBarCharacter.width / composer.getVariable( "characterLife" )
+      local x = danno * rapporto		--Pixel dal levare
+      lifeBarCharacter.width = lifeBarCharacter.width - x
+      lifeBarCharacter.x = lifeBarCharacter.x - x/2
+
+      local function removeBarDamage()
+        lifeBarCharacter.alpha = 0
+        lifeBarCharacterBlack.alpha = 0
+      end
+      timer.performWithDelay(1500, removeTextDamage)
+      timer.performWithDelay(1500, removeBarDamage)
+      composer.setVariable( "endFight", false )
     end
-
-  	textDamage:setFillColor(1, 0, 0)
-    local danno = 3000 --500
-    textDamage.alpha = 1
-		textDamage.text = danno
-
-    local vitaPersonaggio = composer.getVariable( "characterLife" )
-    composer.setVariable( "characterLife", vitaPersonaggio-danno )
-
-    local  lifeBarCharacterBlack = display.newImageRect( mainGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
-    lifeBarCharacterBlack.alpha = 1
-  	lifeBarCharacterBlack.x = character.x
-  	lifeBarCharacterBlack.y = character.y - character.height
-
-  	local lifeBarCharacter = display.newImageRect( mainGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
-    lifeBarCharacter.alpha = 1
-  	lifeBarCharacter.x = character.x
-  	lifeBarCharacter.y = character.y - character.height
-    local rapporto = lifeBarCharacter.width / composer.getVariable( "characterLife" )
-    local x = danno * rapporto		--Pixel dal levare
-    lifeBarCharacter.width = lifeBarCharacter.width - x
-    lifeBarCharacter.x = lifeBarCharacter.x - x/2
-
-    local function removeBarDamage()
-      lifeBarCharacter.alpha = 0
-      lifeBarCharacterBlack.alpha = 0
-    end
-    timer.performWithDelay(1500, removeTextDamage)
-    timer.performWithDelay(1500, removeBarDamage)
   end
 
 
   if composer.getVariable("characterLife")<=0 then
     characterInterface.gameOver(mainGroup)
   end
-  print("armor personaggio : "..character.armor)
-  print("damage personaggio : "..character.damage)
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
   composer.setVariable("sceneGroup", sceneGroup)
 
   --Drop item nemico
-  local interfaceConfig = require("interfaceConfig")
-  local enemyX = composer.getVariable( "enemyX" )
-  local enemyY = composer.getVariable( "enemyY" )
-  if not((enemyX==nil) and (enemyY==nil)) then
-    interfaceConfig.dropItemFunction(enemyX, enemyY, sceneGroup)
-    composer.setVariable( "enemyX", nil )
-    composer.setVariable( "enemyY", nil )
-  end
+  local oggettoDroppato = composer.getVariable( "drop" )
 
+  if not(oggettoDroppato==nil) then
+    if not(oggettoDroppato=="nullo") then
+      sceneGroup:insert(oggettoDroppato)
+      composer.setVariable( "drop", "nullo" )
+    end
+  end
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --fase show del display

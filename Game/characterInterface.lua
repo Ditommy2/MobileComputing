@@ -170,7 +170,7 @@ local sequences =
 --Perform movement
 local function move(event)
   local dir = event.source.params.direction
-  local fame = 100--0.5
+  local fame = 100 --0.5
   local passo = 10
   if(not(dir==nil)) then
     if(dir=="r") then
@@ -223,9 +223,10 @@ local function move(event)
     local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
     local nemico = stanzaCorrente.nemici[1]
     if(character.x > lunghezza - 500 and nemico ~= nill) then
-      print("partito combattimento con: " .. nemico.immagine)
+      -- print("partito combattimento con: " .. nemico.immagine)
       timer.pause( moveTimer )
       character:pause()
+      composer.removeScene( "Scenes.livello1")
       composer.gotoScene( "Scenes.fight", {time=1500, effect="zoomInOutFade"} )
     end
   end
