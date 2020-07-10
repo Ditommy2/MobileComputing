@@ -90,6 +90,7 @@ local itemsTable = {
     function(posx, posy)
       local invx = composer.getVariable( "invx" )
       local invy = composer.getVariable( "invy" )
+      local character = composer.getVariable("character")
       if ( (posx < invx or posx > (invx+700)) or (posy < invy or posy > (invy+272)) ) then
         print("impostato buff a 0")
         composer.setVariable( "armorBuff", 0 )
@@ -97,6 +98,27 @@ local itemsTable = {
         print("impostato buff a 2")
         composer.setVariable( "armorBuff", 2 )
       end
+      character.armorBuff = composer.getVariable("armorBuff")
+      character.armor = character.baseArmor + character.armorBuff
+    end)
+  },
+  pozioneDanno = {
+    nome = "023-potion.png",
+    location = defaultItemLocation,
+    activateFunction = (
+    function(posx, posy)
+      local characterX = composer.getVariable( "characterX" )
+      local characterY = composer.getVariable( "characterY" )
+      local character = composer.getVariable("character")
+      if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
+        composer.setVariable("damageBuff", 100)
+        character.damageBuff = composer.getVariable( "damageBuff" )
+      else
+        composer.setVariable("damageBuff", 0)
+        character.damageBuff = composer.getVariable( "damageBuff" )
+      end
+
+      character.damage = character.baseDamage + character.damageBuff
     end)
   }
 

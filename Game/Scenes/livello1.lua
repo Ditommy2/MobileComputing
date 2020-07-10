@@ -38,7 +38,8 @@ local function gotoMenu()
     vitaPersonaggio = composer.getVariable( "characterLife" ),
     foodPersonaggio = composer.getVariable( "characterFood" ),
     score = composer.getVariable("score"),
-    armorBuff = composer.getVariable( "armorBuff" )
+    armorBuff = composer.getVariable( "armorBuff" ),
+    damageBuff = composer.getVariable("damageBuff")
   }
 
   local score = composer.getVariable( "score" )
@@ -275,7 +276,7 @@ function scene:create( event )
 
   --Displaying character and setting sprite sheets
   character = characterInterface.creaPersonaggio(self)
-
+  composer.setVariable("character", character)
     for i = #stanzaCorrente.nemici, 1, -1 do
         if(not(stanzaCorrente.nemici[i]==nil))then
           -- print("tabella nemico (in teoria)")
@@ -402,6 +403,7 @@ function scene:create( event )
     characterInterface.gameOver(mainGroup)
   end
   print("armor personaggio : "..character.armor)
+  print("damage personaggio : "..character.damage)
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
   composer.setVariable("sceneGroup", sceneGroup)
