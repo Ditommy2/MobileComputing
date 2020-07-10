@@ -284,6 +284,7 @@ local function eseguiMossa()
 				enemy1:removeEventListener("tap", eseguiMossa)
 			else
 				composer.setVariable( "damageBuff", 0 )
+				composer.setVariable( "speedBuff", 0)
 				enemy1:removeEventListener("tap", eseguiMossa)
 				transition.to( enemy1 , { time=3000, alpha=0 } )
 				stanzaCorrente.nemici[1] = nil

@@ -39,7 +39,8 @@ local function gotoMenu()
     foodPersonaggio = composer.getVariable( "characterFood" ),
     score = composer.getVariable("score"),
     armorBuff = composer.getVariable( "armorBuff" ),
-    damageBuff = composer.getVariable("damageBuff")
+    damageBuff = composer.getVariable("damageBuff"),
+    speedBuff = composer.getVariable("speedBuff")
   }
 
   local score = composer.getVariable( "score" )

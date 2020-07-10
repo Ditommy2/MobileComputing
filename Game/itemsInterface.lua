@@ -8,7 +8,7 @@ local itemsTable = {
     pozioneVita = {
     nome="016-potion-1.png",
     location=defaultItemLocation,
-    description = "Rigenera Salute",
+    description = "Rigenera la Salute",
     activateFunction = (
     function(posx, posy)
       local characterX = composer.getVariable( "characterX" )
@@ -42,7 +42,7 @@ local itemsTable = {
   chiaveForziere = {
     nome = "029-key.png",
     location = defaultItemLocation,
-    description = "Chiave",
+    description = "Apre i lucchetti",
     activateFunction = (
     function(posx, posy)
     end)
@@ -50,6 +50,7 @@ local itemsTable = {
   cibo = {
     nome = "054-ham.png",
     location = defaultItemLocation,
+    description = "Rigenera la tua Fame",
     activateFunction = (
     function(posx, posy)
       local characterX = composer.getVariable( "characterX" )
@@ -86,6 +87,7 @@ local itemsTable = {
   anelloDifesa = {
     nome = "003-ring.png",
     location = defaultItemLocation,
+    description = "Aumenta la tua difesa se nell'inventario",
     activateFunction = (
     function(posx, posy)
       local invx = composer.getVariable( "invx" )
@@ -105,6 +107,7 @@ local itemsTable = {
   pozioneDanno = {
     nome = "023-potion.png",
     location = defaultItemLocation,
+    description = "Aumenta l'attacco per un solo combattimento",
     activateFunction = (
     function(posx, posy)
       local characterX = composer.getVariable( "characterX" )
@@ -119,6 +122,26 @@ local itemsTable = {
       end
 
       character.damage = character.baseDamage + character.damageBuff
+    end)
+  },
+  pillolaSpeed = {
+    nome = "024-pill.png",
+    location = defaultItemLocation,
+    description = "Aumenta la velocità per un solo combattimento",
+    activateFunction = (
+    function(posx, posy)
+      local characterX = composer.getVariable( "characterX" )
+      local characterY = composer.getVariable( "characterY" )
+      local character = composer.getVariable("character")
+      if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
+        composer.setVariable("speedBuff", 100)
+        character.speedBuff = composer.getVariable( "speedBuff" )
+      else
+        composer.setVariable("speedBuff", 0)
+        character.speedBuff = composer.getVariable( "speedBuff" )
+      end
+
+      character.speed = character.baseSpeed + character.speedBuff
     end)
   }
 

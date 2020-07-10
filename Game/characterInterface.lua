@@ -177,6 +177,7 @@ local function move(event)
       character.x = character.x + passo
       -- print("character armor = "..character.armor)
       -- print("character damage = "..character.damage)
+      print("character speed = "..character.speed)
       composer.setVariable( "characterX", character.x )
       composer.setVariable( "characterY", character.y )
       local foodToken = composer.getVariable("foodToken")
@@ -399,10 +400,15 @@ local function create(scena)
   character.armorBuff = composer.getVariable( "armorBuff" )
   character.baseArmor = 8
   character.armor = character.baseArmor + character.armorBuff
+
   character.damageBuff = composer.getVariable( "damageBuff" )
   character.baseDamage = 100
   character.damage = character.baseDamage + character.damageBuff
-  character.speed = 3
+
+  character.speedBuff = composer.getVariable( "speedBuff" )
+  character.baseSpeed = 3
+  character.speed = character.baseSpeed + character.speedBuff
+
   character.mossa1 = {nome="Pugno", hitChance = 8, damage = 400}
   character.mossa2 = {nome="Calcio", hitChance = 7, damage = 0.6}
   character.mossa3 = {nome="Fendente", hitChance = 3, damage = 1}
