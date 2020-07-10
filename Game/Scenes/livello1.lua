@@ -421,9 +421,11 @@ function scene:create( event )
   local oggettoDroppato = composer.getVariable( "drop" )
 
   if not(oggettoDroppato==nil) then
-    if not(oggettoDroppato=="nullo") then
-      sceneGroup:insert(oggettoDroppato)
-      composer.setVariable( "drop", "nullo" )
+    if (oggettoDroppato==true) then
+      local interface = require("interfaceConfig")
+      interface.dropItemFunction(composer.getVariable( "enemyX" ), composer.getVariable( "enemyY" ))
+      -- sceneGroup:insert(oggettoDroppato)
+      -- composer.setVariable( "drop", false )
     end
   end
 end
