@@ -143,7 +143,39 @@ local itemsTable = {
 
       character.speed = character.baseSpeed + character.speedBuff
     end)
-  }
+  },
+  pozioneMaxVita = {
+  nome="020-potion.png",
+  location=defaultItemLocation,
+  description = "Rigenera la Salute al Massimo",
+  activateFunction = (
+  function(posx, posy)
+    local characterX = composer.getVariable( "characterX" )
+    local characterY = composer.getVariable( "characterY" )
+    if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
+      print("curato")
+      local fightText = display.newText(composer.getVariable("sceneGroup"), "", characterX, characterY-100, native.newFont( customFont), 100)
+      local cura = composer.getVariable( "characterMaxLife" )
+
+      if composer.getVariable("characterLife")+cura > composer.getVariable( "characterMaxLife" ) then
+          fightText.text=composer.getVariable( "characterMaxLife" )-composer.getVariable("characterLife")
+        composer.setVariable( "characterLife", composer.getVariable( "characterMaxLife" ) )
+      else
+        fightText.text = cura
+        composer.setVariable( "characterLife", composer.getVariable("characterLife")+cura )
+
+      end
+      fightText:setFillColor(0, 0.8, 0)
+      fightText.alpha = 1
+
+      composer.getVariable("sceneGroup"):insert(fightText)
+      local function removeTextFight()
+        fightText.alpha = 0
+      end
+      timer.performWithDelay( 1500, removeTextFight )
+    end
+  end)
+}
 
 }
 
