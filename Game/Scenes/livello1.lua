@@ -239,6 +239,12 @@ end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- create()
 function scene:create( event )
+  if(composer.getVariable( "endFight" ) == nil) then
+    composer.setVariable("endFight", "false")
+  end
+
+
+
 	local sceneGroup = self.view
   local mainGroup=display.newGroup()
   local phase = event.phase
@@ -368,8 +374,13 @@ function scene:create( event )
   foodToken.y = foodBarGreen.y
   composer.setVariable("foodToken", foodToken)
 
-  if(composer.getVariable( "endFight" )==true) then
-    if composer.getVariable("characterFood") == 0 then
+  if composer.getVariable( "endFight" ) == "true" then
+    print("composer end fight : true")
+  else
+    print("composer end fight : false")
+  end
+
+    if (composer.getVariable("characterFood") == 0 and not(composer.getVariable( "endFight" )=="true")) then
 
       local textDamage = display.newText(mainGroup, "", character.x, character.y - character.height-50, native.newFont( customFont), 100)
 
@@ -405,9 +416,8 @@ function scene:create( event )
       end
       timer.performWithDelay(1500, removeTextDamage)
       timer.performWithDelay(1500, removeBarDamage)
-      composer.setVariable( "endFight", false )
+
     end
-  end
 
 
   if composer.getVariable("characterLife")<=0 then
@@ -468,6 +478,7 @@ end
 function scene:destroy( event )
   local sceneGroup = scene.view
 	-- Code here runs prior to the removal of scene's view
+  composer.setVariable("endFight", "false")
   for i = sceneGroup.numChildren, 1, -1 do
     sceneGroup[i]:removeSelf()
     sceneGroup[i] = nil
