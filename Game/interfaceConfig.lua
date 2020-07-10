@@ -51,26 +51,50 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
     local stringaNemico = "nemico"..spawnNemico
     local stringaCurio = "curio"..spawnCurio
     local nemico = nemici[stringaNemico]
-    local stanza={
-      NORD=nil,
-      SUD=nil,
-      EST=nil,
-      OVEST=nil,
-      TESTO=index,
-      visitato=false,
-      corrente=false,
-      seedBackground=seed,
-      x=a,
-      y=b,
-      nemici={nemico},
-      curios = {stringaCurio},
-      oggetti={},
-      corridoioCorrente=nil
-    }
-    mappa[x]=stanza
-    trovato=true
-    tabella[a][b]=true
-    index=index+1
+
+    if(nemico==nil) then
+      local stanza={
+        NORD=nil,
+        SUD=nil,
+        EST=nil,
+        OVEST=nil,
+        TESTO=index,
+        visitato=false,
+        corrente=false,
+        seedBackground=seed,
+        x=a,
+        y=b,
+        nemici={nemico},
+        curios = {stringaCurio},
+        oggetti={},
+        corridoioCorrente=nil
+      }
+      mappa[x]=stanza
+      trovato=true
+      tabella[a][b]=true
+      index=index+1
+    else
+      local stanza={
+        NORD=nil,
+        SUD=nil,
+        EST=nil,
+        OVEST=nil,
+        TESTO=index,
+        visitato=false,
+        corrente=false,
+        seedBackground=seed,
+        x=a,
+        y=b,
+        nemici={nemico},
+        curios = {nil},
+        oggetti={},
+        corridoioCorrente=nil
+      }
+      mappa[x]=stanza
+      trovato=true
+      tabella[a][b]=true
+      index=index+1
+    end
   end
 
   while trovato==false do
@@ -82,29 +106,55 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
       local stringaNemico = "nemico"..spawnNemico
       local stringaCurio = "curio"..spawnCurio
       local nemico = nemici[stringaNemico]
-      local stanza = {
-        NORD=nil,
-        SUD=mappa[x],
-        EST=nil,
-        OVEST=nil,
-        TESTO=index,
-        visitato=false,
-        corrente=false,
-        seedBackground=seed,
-        x=a,
-        y=b+1,
-        seedSUD=seed,
-        nemici={nemico},
-        curios = {stringaCurio},
-        oggetti={},
-        corridoioCorrente=nil
-      }
-      mappa[x].NORD = stanza
-      index=index+1
-      mappa[index]=stanza
-      b=b+1
-      tabella[a][b]=true
-      trovato=true
+      if(nemico==nil) then
+        local stanza = {
+          NORD=nil,
+          SUD=mappa[x],
+          EST=nil,
+          OVEST=nil,
+          TESTO=index,
+          visitato=false,
+          corrente=false,
+          seedBackground=seed,
+          x=a,
+          y=b+1,
+          seedSUD=seed,
+          nemici={nemico},
+          curios = {stringaCurio},
+          oggetti={},
+          corridoioCorrente=nil
+        }
+        mappa[x].NORD = stanza
+        index=index+1
+        mappa[index]=stanza
+        b=b+1
+        tabella[a][b]=true
+        trovato=true
+      else
+        local stanza = {
+          NORD=nil,
+          SUD=mappa[x],
+          EST=nil,
+          OVEST=nil,
+          TESTO=index,
+          visitato=false,
+          corrente=false,
+          seedBackground=seed,
+          x=a,
+          y=b+1,
+          seedSUD=seed,
+          nemici={nemico},
+          curios = {nil},
+          oggetti={},
+          corridoioCorrente=nil
+        }
+        mappa[x].NORD = stanza
+        index=index+1
+        mappa[index]=stanza
+        b=b+1
+        tabella[a][b]=true
+        trovato=true
+      end
     end
 
     if (cardinale == 2) and (mappa[x].SUD == nil) and (tabella[a][b-1]==false) then
@@ -114,29 +164,55 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
       local stringaNemico = "nemico"..spawnNemico
       local stringaCurio = "curio"..spawnCurio
       local nemico = nemici[stringaNemico]
-      local stanza = {
-        NORD=mappa[x],
-        SUD=nil,
-        EST=nil,
-        OVEST=nil,
-        TESTO=index,
-        visitato=false,
-        corrente=false,
-        seedBackground=seed,
-        x=a,
-        y=b-1,
-        seedNORD=seed,
-        nemici={nemico},
-        curios = {stringaCurio},
-        oggetti={},
-        corridoioCorrente=nil
-      }
-      mappa[x].SUD = stanza
-      index=index+1
-      mappa[index]=stanza
-      b=b-1
-      tabella[a][b]=true
-      trovato=true
+      if(nemico==nil) then
+        local stanza = {
+          NORD=mappa[x],
+          SUD=nil,
+          EST=nil,
+          OVEST=nil,
+          TESTO=index,
+          visitato=false,
+          corrente=false,
+          seedBackground=seed,
+          x=a,
+          y=b-1,
+          seedNORD=seed,
+          nemici={nemico},
+          curios = {stringaCurio},
+          oggetti={},
+          corridoioCorrente=nil
+        }
+        mappa[x].SUD = stanza
+        index=index+1
+        mappa[index]=stanza
+        b=b-1
+        tabella[a][b]=true
+        trovato=true
+      else
+        local stanza = {
+          NORD=mappa[x],
+          SUD=nil,
+          EST=nil,
+          OVEST=nil,
+          TESTO=index,
+          visitato=false,
+          corrente=false,
+          seedBackground=seed,
+          x=a,
+          y=b-1,
+          seedNORD=seed,
+          nemici={nemico},
+          curios = {nil},
+          oggetti={},
+          corridoioCorrente=nil
+        }
+        mappa[x].SUD = stanza
+        index=index+1
+        mappa[index]=stanza
+        b=b-1
+        tabella[a][b]=true
+        trovato=true
+      end
     end
 
     if (cardinale == 3) and (mappa[x].EST == nil) and (tabella[a+1][b]==false) then
@@ -146,28 +222,53 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
       local stringaNemico = "nemico"..spawnNemico
       local stringaCurio = "curio"..spawnCurio
       local nemico = nemici[stringaNemico]
-      local stanza = {
-        NORD=nil,
-        SUD=nil,
-        EST=nil,
-        OVEST=mappa[x],
-        TESTO=index,
-        visitato=false,
-        corrente=false,
-        seedBackground=seed,
-        x=a+1, y=b,
-        seedOVEST=seed,
-        nemici={nemico},
-        curios = {stringaCurio},
-        oggetti={},
-        corridoioCorrente=nil
-      }
-      mappa[x].EST = stanza
-      index=index+1
-      mappa[index]=stanza
-      a=a+1
-      tabella[a][b]=true
-      trovato=true
+      if(nemico==nil) then
+        local stanza = {
+          NORD=nil,
+          SUD=nil,
+          EST=nil,
+          OVEST=mappa[x],
+          TESTO=index,
+          visitato=false,
+          corrente=false,
+          seedBackground=seed,
+          x=a+1, y=b,
+          seedOVEST=seed,
+          nemici={nemico},
+          curios = {stringaCurio},
+          oggetti={},
+          corridoioCorrente=nil
+        }
+        mappa[x].EST = stanza
+        index=index+1
+        mappa[index]=stanza
+        a=a+1
+        tabella[a][b]=true
+        trovato=true
+      else
+        local stanza = {
+          NORD=nil,
+          SUD=nil,
+          EST=nil,
+          OVEST=mappa[x],
+          TESTO=index,
+          visitato=false,
+          corrente=false,
+          seedBackground=seed,
+          x=a+1, y=b,
+          seedOVEST=seed,
+          nemici={nemico},
+          curios = {nil},
+          oggetti={},
+          corridoioCorrente=nil
+        }
+        mappa[x].EST = stanza
+        index=index+1
+        mappa[index]=stanza
+        a=a+1
+        tabella[a][b]=true
+        trovato=true
+      end
     end
 
     if (cardinale == 4) and (mappa[x].OVEST == nil) and (tabella[a-1][b]==false) then
@@ -177,29 +278,55 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
       local stringaNemico = "nemico"..spawnNemico
       local stringaCurio = "curio"..spawnCurio
       local nemico = nemici[stringaNemico]
-      local stanza = {
-        NORD=nil,
-        SUD=nil,
-        EST=mappa[x],
-        OVEST=nil,
-        TESTO=index,
-        visitato=false,
-        corrente=false,
-        seedBackground=seed,
-        x=a-1,
-        y=b,
-        seedEST=seed,
-        nemici={nemico},
-        curios = {stringaCurio},
-        oggetti={},
-        corridoioCorrente=nil
-      }
-      mappa[x].OVEST = stanza
-      index=index+1
-      mappa[index]=stanza
-      a=a-1
-      tabella[a][b]=true
-      trovato=true
+      if(nemico==nil) then
+        local stanza = {
+          NORD=nil,
+          SUD=nil,
+          EST=mappa[x],
+          OVEST=nil,
+          TESTO=index,
+          visitato=false,
+          corrente=false,
+          seedBackground=seed,
+          x=a-1,
+          y=b,
+          seedEST=seed,
+          nemici={nemico},
+          curios = {stringaCurio},
+          oggetti={},
+          corridoioCorrente=nil
+        }
+        mappa[x].OVEST = stanza
+        index=index+1
+        mappa[index]=stanza
+        a=a-1
+        tabella[a][b]=true
+        trovato=true
+      else
+        local stanza = {
+          NORD=nil,
+          SUD=nil,
+          EST=mappa[x],
+          OVEST=nil,
+          TESTO=index,
+          visitato=false,
+          corrente=false,
+          seedBackground=seed,
+          x=a-1,
+          y=b,
+          seedEST=seed,
+          nemici={nemico},
+          curios = {nil},
+          oggetti={},
+          corridoioCorrente=nil
+        }
+        mappa[x].OVEST = stanza
+        index=index+1
+        mappa[index]=stanza
+        a=a-1
+        tabella[a][b]=true
+        trovato=true
+      end
     end
   end
   if index==numero then
@@ -576,8 +703,10 @@ local interfacciaConfig = {
       -- Muove la nave
 
       if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-50)) and (event.y > (display.contentCenterY+75) and event.y < (altezza-25))) then
-        item.x=event.x-item.touchOffsetX
-        item.y=event.y-item.touchOffsetY
+        if not((item.touchOffsetX==nil) and (item.touchOffsetY==nil)) then
+          item.x=event.x-item.touchOffsetX
+          item.y=event.y-item.touchOffsetY
+        end
       end
     elseif("ended"==phase or "cancelled"==phase) then
       --rilascio del tocco
@@ -614,14 +743,15 @@ local interfacciaConfig = {
       -- end
     elseif("moved"==phase) then
       -- Muove la nave
-
-      item.x=event.x-item.touchOffsetX
-      item.y=event.y-item.touchOffsetY
+      if not((item.touchOffsetX==nil) and (item.touchOffsetY==nil)) then
+        item.x=event.x-item.touchOffsetX
+        item.y=event.y-item.touchOffsetY
+      end
       -- print(item.x..", "..item.y.."---"..event.x..", "..event.y)
     elseif("ended"==phase or "cancelled"==phase) then
       --Oggetto fuori dall'inventario (tentativo di rimozione)
-      item.activateFunction(item.x, item.y)
       if( (item.x < invx or item.x > (invx+700)) or (item.y < invy or item.y > (invy+272)) ) then
+        item.activateFunction(item.x, item.y)
         print("appoggiato")
         for i=#curios, 1, -1 do
           if (item.x < curios[i].areaXUpper and item.x > curios[i].areaXLower and item.y < curios[i].areaYUpper and item.y > curios[i].areaYLower) then
@@ -650,8 +780,7 @@ local interfacciaConfig = {
             end
           end
         end
-        print(inventario[idItem].."inventario idItem")
-        if not(inventario[idItem]=="vuoto") or not(griglia[idItem]==nil) then
+        if not(inventario[idItem]=="vuoto") and not(griglia[idItem]==nil) then
           print("rimosso")
           inventario[idItem] = "vuoto"
           griglia[idItem][3] = false
@@ -719,12 +848,14 @@ local interfacciaConfig = {
               inventario[idItem] = "vuoto"
             else
               local curio = item.curio
-              inventario[numCasella] = curio.oggetto
-              local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
-              for i = #stanzaCorrente.oggetti, 1, -1 do
-                if stanzaCorrente.oggetti[i] == curio.oggetto then
-                  table.remove(stanzaCorrente.oggetti, i)
-                end
+              if(not(curio== nil)) then
+                  inventario[numCasella] = curio.oggetto
+                  local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
+                  for i = #stanzaCorrente.oggetti, 1, -1 do
+                    if stanzaCorrente.oggetti[i] == curio.oggetto then
+                      table.remove(stanzaCorrente.oggetti, i)
+                    end
+                  end
               end
             end
             composer.setVariable( "inv", inventario )
@@ -757,6 +888,20 @@ local interfacciaConfig = {
   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   --numero di stanze
   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  numeroStanze=8
+  numeroStanze=8,
+
+  dropItemFunction=
+  (function(x, y, sceneGroup)
+    local itemInterface = require("itemsInterface")
+    local interfaccia = require("interfaceConfig")
+    local handler=interfaccia.dragItem
+    local pozione = itemInterface["pozioneVita"]
+    local item = display.newImageRect( pozione.location .. pozione.nome, 70, 70)
+    item.activateFunction = pozione.activateFunction
+    item.x = x
+    item.y = y - 100
+    item:addEventListener("touch", handler)
+    sceneGroup:insert(item)
+  end)
 }
 return interfacciaConfig

@@ -244,16 +244,17 @@ function scene:create( event )
   local phase = event.phase
   local curios = stanzaCorrente.curios
   local activeCurios = {}
+  if not(curios==nil) then
     for i=#curios, 1, -1 do
-      if not(curios==nil) then
         local curio = curiosInterface.createCurio(self, stanzaCorrente.curios[i])
         if not(curio==nil) then
           table.insert(activeCurios, curio)
           composer.setVariable("mainGroup", mainGroup)
           mainGroup:insert(curio)
         end
-      end
     end
+  end
+
     composer.setVariable( "activeCurios", activeCurios )
     stanzaCorrente.curios=curios
     for j=#stanzaCorrente.oggetti, 1, -1 do
@@ -334,6 +335,12 @@ function scene:create( event )
   returnButton.y = display.contentCenterY-300
   returnButton:addEventListener("tap", gotoMenu)
 
+  Runtime:addEventListener('system', function(event)
+    if(event.type == "applicationExit") then
+      gotoMenu()
+    end
+  end )
+
   local function goToTutorial()
     local scrollOverlayRequired = require("tutorial")
     local lunghezza =  display.contentWidth
@@ -370,7 +377,7 @@ function scene:create( event )
     end
 
   	textDamage:setFillColor(1, 0, 0)
-    local danno = 500 --500
+    local danno = 3000 --500
     textDamage.alpha = 1
 		textDamage.text = danno
 
@@ -408,6 +415,17 @@ function scene:create( event )
   sceneGroup:insert(mainGroup)
   sceneGroup:insert(hidingGroup)
   composer.setVariable("sceneGroup", sceneGroup)
+
+  --Drop item nemico
+  local interfaceConfig = require("interfaceConfig")
+  local enemyX = composer.getVariable( "enemyX" )
+  local enemyY = composer.getVariable( "enemyY" )
+  if not((enemyX==nil) and (enemyY==nil)) then
+    interfaceConfig.dropItemFunction(enemyX, enemyY, sceneGroup)
+    composer.setVariable( "enemyX", nil )
+    composer.setVariable( "enemyY", nil )
+  end
+
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --fase show del display
