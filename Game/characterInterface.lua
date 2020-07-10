@@ -175,8 +175,8 @@ local function move(event)
   if(not(dir==nil)) then
     if(dir=="r") then
       character.x = character.x + passo
-      print("character armor = "..character.armor)
-      print("character damage = "..character.damage)
+      -- print("character armor = "..character.armor)
+      -- print("character damage = "..character.damage)
       composer.setVariable( "characterX", character.x )
       composer.setVariable( "characterY", character.y )
       local foodToken = composer.getVariable("foodToken")
