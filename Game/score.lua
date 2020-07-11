@@ -57,7 +57,8 @@ local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sc
     return a.punteggio > b.punteggio
   end
 
-  local stringaScores = "saveScore".."$$"..".json"
+  local stringaScores = "saveScore.json"
+
   local tabellonePunteggi= fileHandler.loadTableScores(stringaScores)
   table.sort(tabellonePunteggi, sortPunteggi)
 

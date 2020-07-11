@@ -25,13 +25,13 @@ function M.scaricaSave(stringaSalvataggio)
 		elseif ( event.phase == "began" ) then
 			print( "Progress Phase: began" )
 		elseif ( event.phase == "ended" ) then
-			print( "Download completed" )
+			print( "Download completed for filename :"..stringaSalvataggio  )
 			print(event.response.filename)
 			-- local t = M.loadTable(event.response.filename, event.response.baseDirectory)
 			-- M.saveTable(t, event.response.filename, system.documentsDirectory)
 		end
 	end
-	print("Stringa Salvataggio: "..stringaSalvataggio)
+	print("Download Richiesto: "..stringaSalvataggio)
 	local params = {}
 	params.progress = true
 	network.download(
@@ -54,11 +54,11 @@ function M.caricaSave(salvataggio, stringaSalvataggio)
 			print(event.response)
 		else
 			if ( event.phase == "began" ) then
-				print( "Upload started" )
+				print( "Upload started for filename :"..stringaSalvataggio  )
 			elseif ( event.phase == "progress" ) then
 				print( "Uploading... bytes transferred ", event.bytesTransferred )
 			elseif ( event.phase == "ended" ) then
-				print( "Upload ended..." )
+				print( "Upload ended for filename :"..stringaSalvataggio  )
 				print( "Status:", event.status )
 				print( "Response:", event.response )
 			end
@@ -77,11 +77,45 @@ function M.caricaSave(salvataggio, stringaSalvataggio)
 	local filename = stringaSalvataggio
 	local baseDirectory = system.DocumentsDirectory
 	local contentType = "application/json"
-	print(system.pathForFile(filename))
 	local headers = {}
 	headers.filename = filename
 	params.headers = headers
-	print(salvataggio)
+	network.upload( url , method, uploadListener, params, filename, baseDirectory, contentType )
+end
+function M.caricaScore(salvataggio, stringaSalvataggio)
+
+	local function uploadListener( event )
+		if ( event.isError ) then
+			print( "Network Error." )
+			print(event.response)
+		else
+			if ( event.phase == "began" ) then
+				print( "Upload started for filename :"..stringaSalvataggio  )
+			elseif ( event.phase == "progress" ) then
+				print( "Uploading... bytes transferred ", event.bytesTransferred )
+			elseif ( event.phase == "ended" ) then
+				print( "Upload ended for filename :"..stringaSalvataggio )
+				print( "Status:", event.status )
+				print( "Response:", event.response )
+			end
+		end
+	end
+	local username = composer.getVariable( "username" )
+	local url = "https://appmcsite.000webhostapp.com/caricaScore.php"
+	local method = "POST"
+
+	local params = {
+		timeout = 120,
+		progress = true,
+		bodyType = "binary"
+	}
+
+	local filename = stringaSalvataggio
+	local baseDirectory = system.DocumentsDirectory
+	local contentType = "application/json"
+	local headers = {}
+	headers.filename = filename
+	params.headers = headers
 	network.upload( url , method, uploadListener, params, filename, baseDirectory, contentType )
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -107,7 +141,7 @@ function M.saveTable( t, filename, location )
 	else
 		-- Write encoded JSON data to file
 		file:write( json.encode( t, {indent = true} ) )
-		print("File written successfullt into: ", path)
+		print("File written successfully into: ", path)
 		-- Close the file handle
 		io.close( file )
 		return true
@@ -194,7 +228,7 @@ function M.loadTable( filename, location )
 
     if not file then
         -- Error occurred; output the cause
-        print( "File error: " .. errorString )
+        print( "File error: " .. errorString.." for filename "..filename )
     else
         -- Read data from file
         local contents = file:read( "*a" )
@@ -203,7 +237,6 @@ function M.loadTable( filename, location )
         local t = json.decode( contents )
         -- Close the file handle
         -- print("ANTICICLO SULLA MAPPA")
-				print(t)
         -- t.mappaToSave=
 				if(t==nil) then
 				return {}
@@ -219,6 +252,7 @@ function M.loadTable( filename, location )
         return t
     end
 end
+
 
 function M.loadTableScores( filename, location )
 	local loc = location

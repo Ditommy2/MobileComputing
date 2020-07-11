@@ -345,7 +345,8 @@ end
 -- create()
 function scene:create( event )
 	sceneGroup = self.view
-
+	local stringaScores = "saveScore.json"
+	fileHandler.scaricaSave(stringaScores)
   local background=display.newImageRect(sceneGroup, "Images/Backgrounds/proceduralBack/Corridoi/back1.png", width, height)
   background.x=display.contentCenterX
   background.y=display.contentCenterY
@@ -412,6 +413,8 @@ local function goToScore()
 	local lunghezza =  display.contentWidth
 	local lunghezzaFinestra=lunghezza-400
 	local altezzzaFinestra=lunghezzaFinestra*(9/16)
+	local stringaScores = "saveScore.json"
+	fileHandler.scaricaSave(stringaScores)
 	scrollOverlayRequired.handleButton(display, lunghezzaFinestra, altezzaFinestra, sceneGroup)
 
 end

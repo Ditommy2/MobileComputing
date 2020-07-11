@@ -437,9 +437,20 @@ end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Salva il punteggio della partita
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function saveScore(punteggioPartita)
-  local URL = "https://appmcsite.000webhostapp.com/insertScore.php?score=" .. punteggioPartita .. "&username=" .. composer.getVariable( "username" ) .. "&partita=" .. composer.getVariable( "nomePartita" )
-    network.request(URL, "GET", networkListener)
+local function saveScore(punteggioPartita)
+  local stringaScores = "saveScore.json"
+  fileHandler.scaricaSave(stringaScores)
+  local tabellonePunteggi = fileHandler.loadTableScores(stringaScores)
+  local user = composer.getVariable( "username" )
+  local game = composer.getVariable( "nomePartita" )
+  if tabellonePunteggi == nil then
+    tabellonePunteggi = {}
+    print("impostato nil")
+  end
+  table.insert( tabellonePunteggi, {punteggio=punteggioPartita, utente=user, partita=game} )
+  fileHandler.saveTable(tabellonePunteggi, stringaScores)
+  fileHandler.caricaScore({punteggio=punteggioPartita, utente=user, partita=game}, stringaScores)
+  fileHandler.scaricaSave(stringaScores)
 end
 
 local function die(group)
@@ -449,24 +460,24 @@ local function die(group)
   local gameOver = display.newText(group, "GAME OVER", 600, 200, native.systemFont, 100)
   gameOver:setFillColor(1, 0, 0)
 
+  --CANCELLA IL SALVATAGGIO PERCHè LA PARTITA è PERSA
   local stringaSalvataggio = "save".."$$"..composer.getVariable("username")..".json"
   local tabelloneSalvataggi = fileHandler.loadTable(stringaSalvataggio)
   if(not(tabelloneSalvataggi == nil)) then
-    print("prepara a rimuovere")
     for i = #tabelloneSalvataggi, 1, -1 do
-      print("tenta di confrontare "..tabelloneSalvataggi[i].nomeSalvataggio..", "..composer.getVariable( "nomePartita" ))
       if(tabelloneSalvataggi[i].nomeSalvataggio == composer.getVariable( "nomePartita" )) then
         table.remove(tabelloneSalvataggi, i)
-        print("rimossa")
-        --tabelloneSalvataggi[i] = nil
       end
     end
-    local punteggioPartita =  composer.getVariable( "score" )
-    saveScore(punteggioPartita)
+
   end
 
   fileHandler.saveTable(tabelloneSalvataggi, stringaSalvataggio)
-  fileHandler.caricaSave(tabelloneSalvataggi, stringaSalvataggio)
+  fileHandler.caricaScore(tabelloneSalvataggi, stringaSalvataggio)
+  local punteggioPartita =  composer.getVariable( "score" )
+
+  saveScore(punteggioPartita)
+
   composer.setVariable( "characterLife", composer.getVariable("characterMaxLife") )
   composer.setVariable( "characterFood", composer.getVariable("characterMaxFood") )
   timer.performWithDelay( 2000, gotoNuovaCarica )
