@@ -100,6 +100,7 @@ local function create(scena, nemico)
   enemy.x = lunghezza * 0.7
   enemy.y = altezza-313
   enemy.myName = "Enemy"
+  enemy.drop = nemico.drop
   physics.addBody(enemy, "dynamic", { isSensor=true } )
 
   return enemy

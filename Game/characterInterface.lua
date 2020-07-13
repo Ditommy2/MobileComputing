@@ -3,6 +3,8 @@ local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 local fileHandler = require("fileHandler")
+local customFont="MadnessHyperactive.otf"
+
 
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
@@ -177,7 +179,7 @@ local function move(event)
       character.x = character.x + passo
       -- print("character armor = "..character.armor)
       -- print("character damage = "..character.damage)
-      -- print("character speed = "..character.speed)
+      --print("character speed = "..character.speed)
       composer.setVariable( "characterX", character.x )
       composer.setVariable( "characterY", character.y )
       local foodToken = composer.getVariable("foodToken")
@@ -414,14 +416,14 @@ local function create(scena)
   character.baseSpeed = 3
   character.speed = character.baseSpeed + character.speedBuff
 
-  character.mossa1 = {nome="Pugno", hitChance = 8, damage = 400}
-  character.mossa2 = {nome="Calcio", hitChance = 7, damage = 0.6}
-  character.mossa3 = {nome="Fendente", hitChance = 3, damage = 1}
-  character.mossa4 = {nome="Laccio", hitChance = 1, damage = 0.1}
-  character.testoMossa1 = character.mossa1.nome .. ": Semplice ma efficace\nDamage = " .. (character.mossa1.damage * 100) .. "%\nHit chance = " .. (character.mossa1.hitChance*10) .. "%\n"
-  character.testoMossa2 = character.mossa2.nome .. ": Colpisce dove fa piu' male\nDamage = " .. (character.mossa2.damage * 100) .. "%\nHit chance = " .. (character.mossa2.hitChance*10) .. "%\n"
-  character.testoMossa3 = character.mossa3.nome .. ": Affetta il tuo avversario\nDamage = " .. (character.mossa3.damage * 100) .. "%\nHit chance = " .. (character.mossa3.hitChance*10) .. "%\n"
-  character.testoMossa4 = character.mossa4.nome .. ": Questa mossa genera gettere & settere\nDamage = " .. (character.mossa4.damage * 100) .. "%\nHit chance = " .. (character.mossa4.hitChance*10) .. "%\n"
+  character.mossa1 = {nome="Pugno del duellante", hitChance = 8, damage = 0.3, effect = {target = "armor", value = -2}}
+  character.mossa2 = {nome="Calcio respingente", hitChance = 7, damage = 0.6, effect = {target = "damage", value = -5}}
+  character.mossa3 = {nome="Fendente letale", hitChance = 3, damage = 1, effect = {target = "life", value = -200}}
+  character.mossa4 = {nome="Elsa stordente", hitChance = 1, damage = 0.1, effect = {target = "stunned", value = 2}}
+  character.testoMossa1 = character.mossa1.nome .. " : Abbassa le difese del nemico\nDamage = " .. (character.mossa1.damage * 100) .. "%\nHit chance = " .. (character.mossa1.hitChance*10) .. "%\n"
+  character.testoMossa2 = character.mossa2.nome .. " : Diminuisce il pericolo\nDamage = " .. (character.mossa2.damage * 100) .. "%\nHit chance = " .. (character.mossa2.hitChance*10) .. "%\n"
+  character.testoMossa3 = character.mossa3.nome .. " : Colpo letale con la spada\nDamage = " .. (character.mossa3.damage * 100) .. "%\nHit chance = " .. (character.mossa3.hitChance*10) .. "%\n"
+  character.testoMossa4 = character.mossa4.nome .. " : Colpo stordente\nDamage = " .. (character.mossa4.damage * 100) .. "%\nHit chance = " .. (character.mossa4.hitChance*10) .. "%\n"
 
   return character
 end
@@ -429,6 +431,9 @@ end
 --Torna alla schermata nuovaCarica
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function gotoNuovaCarica()
+  audio.stop( 3 )
+  audio.stop( 2 )
+  audio.play( menuTrack, {channel =1 , loops = -1})
   composer.setVariable( "characterLife", nil )
   composer.removeScene( "Scenes.fight" )
   composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
@@ -454,10 +459,12 @@ local function saveScore(punteggioPartita)
 end
 
 local function die(group)
+  audio.stop( 3 )
+  audio.stop( 2 )
   local gameOverBack = display.newImageRect(group, "Images/Backgrounds/Black.jpg", 1280, 720)
   gameOverBack.x = display.contentCenterX
   gameOverBack.y = display.contentCenterY
-  local gameOver = display.newText(group, "GAME OVER", 600, 200, native.systemFont, 100)
+  local gameOver = display.newText(group, "GAME OVER", 600, 200, native.newFont( customFont), 100)
   gameOver:setFillColor(1, 0, 0)
 
   --CANCELLA IL SALVATAGGIO PERCHè LA PARTITA è PERSA
