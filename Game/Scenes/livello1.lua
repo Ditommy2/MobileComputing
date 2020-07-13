@@ -125,7 +125,7 @@ local function goTo(direction)
 end
 
 local function errorTab(message)
-  local errorText = display.newText( message, display.contentCenterX, display.contentCenterY + 50, native.systemFont, 40 )
+  local errorText = display.newText( message, display.contentCenterX, display.contentCenterY + 50, native.newFont( customFont), 40 )
   errorText:setFillColor(1,0,0)
   transition.to(errorText, {time=2000, alpha=0, onComplete= function() display.remove( errorText) end})
 end
@@ -172,7 +172,7 @@ function changeRoom()
 	menuScelta:setFillColor(0.18, 0.18, 0.23)
 	menuGroup:insert(menuScelta)
 
-  local titolo = display.newText("Scegli una direzione", menuScelta.x, menuScelta.y - (altezzaFinestra/2), native.systemFontBold, 80)
+  local titolo = display.newText("Scegli una direzione", menuScelta.x, menuScelta.y - (altezzaFinestra/2), native.newFont( customFont), 80)
   titolo:setFillColor(1,0,0)
   titolo.anchorY = 0
   menuGroup:insert(titolo)
