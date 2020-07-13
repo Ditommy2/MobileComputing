@@ -14,6 +14,8 @@ local widget = require("widget")
 local lunghezza =  display.contentWidth
 local altezza = lunghezza*(9/16)
 local fileHandler = require("fileHandler")
+local fightTrack = audio.loadStream( "audio/fight/Ancient-Game-Open.mp3")
+
 
 --Scenes
 local backgroundGroup
@@ -81,12 +83,16 @@ physics.start()
 -- Fine combattimento
 -- -----------------------------------------------------------------------------------
 local function gotoNuovaCarica()
+	audio.stop( 2 )
+	audio.stop( 3 )
 	-- composer.setVariable( "characterLife", character.life )
 	composer.removeScene( "Scenes.fight" )
 	composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
 end
 
 local function gotoLivello1()
+	audio.stop( 3 )
+  audio.play( gameTrack, {channel =2 , loops = -1})
 	composer.setVariable( "characterLife", character.life )
 	composer.removeScene( "Scenes.fight" )
 	composer.setVariable("endFight", "true")
@@ -426,7 +432,8 @@ function scene:show( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs when the scene is entirely on screen
-		-- audio.play( menuTrack, {channel =1 , loops = -1})
+		audio.stop( 2 )
+    audio.play( fightTrack, { channel=3, loops=-1 } )
 	end
 end
 

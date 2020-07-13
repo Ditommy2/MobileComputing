@@ -431,6 +431,9 @@ end
 --Torna alla schermata nuovaCarica
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function gotoNuovaCarica()
+  audio.stop( 3 )
+  audio.stop( 2 )
+  audio.play( menuTrack, {channel =1 , loops = -1})
   composer.setVariable( "characterLife", nil )
   composer.removeScene( "Scenes.fight" )
   composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
@@ -456,6 +459,8 @@ local function saveScore(punteggioPartita)
 end
 
 local function die(group)
+  audio.stop( 3 )
+  audio.stop( 2 )
   local gameOverBack = display.newImageRect(group, "Images/Backgrounds/Black.jpg", 1280, 720)
   gameOverBack.x = display.contentCenterX
   gameOverBack.y = display.contentCenterY

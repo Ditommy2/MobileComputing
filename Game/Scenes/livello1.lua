@@ -14,6 +14,8 @@ local curiosInterface = require("curiosInterface")
 composer.recycleOnSceneChange = true
 local customFont="MadnessHyperactive.otf"
 local oggetti = stanzaCorrente.oggetti
+local gameTrack = audio.loadStream( "audio/back/Monsters-Underground.mp3")
+
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
 physics.start()
@@ -25,6 +27,8 @@ local character
 --funzione per tornare al menu. Quando chiamata deve salvare tutti i dati in maniera persistente per poter recuperare la partita in qualsiasi momento
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function gotoMenu()
+  audio.stop( 2 )
+  audio.play( menuTrack, {channel =1 , loops = -1})
   local fileHandler = require("fileHandler")
   local salvataggio = {
     stanzaCorrenteToSave = composer.getVariable( "stanzaCorrente" ),
@@ -454,6 +458,8 @@ function scene:show( event )
 
 	elseif ( phase == "did" ) then
     physics.start()
+    audio.stop( 1 )
+    audio.play( gameTrack, { channel=2, loops=-1 } )
 	end
 end
 
@@ -471,7 +477,6 @@ function scene:hide( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-
 	end
 end
 
