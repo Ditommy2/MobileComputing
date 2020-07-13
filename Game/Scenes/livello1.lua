@@ -43,24 +43,26 @@ local function gotoMenu()
     speedBuff = composer.getVariable("speedBuff")
   }
 
-  local score = composer.getVariable( "score" )
-  local user = composer.getVariable( "username" )
-  local game = composer.getVariable( "nomePartita" )
-  local stringaScores = "saveScore".."$$"..".json"
-  local tabellonePunteggi= fileHandler.loadTableScores(stringaScores)
-  if(tabellonePunteggi == nil) then
-    print("primoSalvataggio")
-    tabellonePunteggi = {}
-    -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
-    table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
-  else
-    print("seguenti salvataggi")
-    -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
-    table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
-  end
+  -- local score = composer.getVariable( "score" )
+  -- local user = composer.getVariable( "username" )
+  -- local game = composer.getVariable( "nomePartita" )
 
-  fileHandler.saveTable(tabellonePunteggi, stringaScores)
-  fileHandler.caricaSave(tabellonePunteggi, stringaScores)
+  --PERCHè SALVARE GLI SCORE QUANDO SI TORNA AL MENU. COMMENTATO DA CANCELLARE
+  -- local stringaScores = "saveScore".."$$"..".json"
+  -- local tabellonePunteggi= fileHandler.loadTableScores(stringaScores)
+  -- if(tabellonePunteggi == nil) then
+  --   print("primoSalvataggio")
+  --   tabellonePunteggi = {}
+  --   -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
+  --   table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
+  -- else
+  --   print("seguenti salvataggi")
+  --   -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
+  --   table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
+  -- end
+  --
+  -- fileHandler.saveTable(tabellonePunteggi, stringaScores)
+  -- fileHandler.caricaSave(tabellonePunteggi, stringaScores)
 
 
 
@@ -389,7 +391,7 @@ function scene:create( event )
       end
 
     	textDamage:setFillColor(1, 0, 0)
-      local danno = 500
+      local danno = 5000
       textDamage.alpha = 1
   		textDamage.text = danno
 

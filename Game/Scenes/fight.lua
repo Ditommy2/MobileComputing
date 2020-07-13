@@ -56,26 +56,26 @@ local lifeBarEnemyBlack
 local physics = require("physics")
 physics.start()
 
-local function saveScore()
-	local score = composer.getVariable( "score" )
-	local user = composer.getVariable( "username" )
-	local game = composer.getVariable( "nomePartita" )
-	local stringaScores = "saveScore".."$$"..".json"
-	local tabellonePunteggi= fileHandler.loadTableScores(stringaScores)
-	if(tabellonePunteggi == nil) then
-    print("primoSalvataggio")
-    tabellonePunteggi = {}
-    -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
-    table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
-  else
-    print("seguenti salvataggi")
-    -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
-    table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
-  end
-
-	fileHandler.saveTable(tabellonePunteggi, stringaScores)
-	fileHandler.caricaSave(tabellonePunteggi, stringaScores)
-end
+-- local function saveScore()
+-- 	local score = composer.getVariable( "score" )
+-- 	local user = composer.getVariable( "username" )
+-- 	local game = composer.getVariable( "nomePartita" )
+-- 	local stringaScores = "saveScore".."$$"..".json"
+-- 	local tabellonePunteggi= fileHandler.loadTableScores(stringaScores)
+-- 	if(tabellonePunteggi == nil) then
+--     print("primoSalvataggio")
+--     tabellonePunteggi = {}
+--     -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
+--     table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
+--   else
+--     print("seguenti salvataggi")
+--     -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
+--     table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
+--   end
+--
+-- 	fileHandler.saveTable(tabellonePunteggi, stringaScores)
+-- 	fileHandler.caricaSave(tabellonePunteggi, stringaScores)
+-- end
 
 -- -----------------------------------------------------------------------------------
 -- Fine combattimento
