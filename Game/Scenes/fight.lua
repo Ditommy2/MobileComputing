@@ -297,6 +297,18 @@ local function eseguiMossa()
 				composer.setVariable( "speedBuff", 0)
 				enemy1:removeEventListener("tap", eseguiMossa)
 				transition.to( enemy1 , { time=3000, alpha=0 } )
+
+				local nemici = composer.getVariable( "nemici" )
+				local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
+				print("index stanza corrente: " .. stanzaCorrente.TESTO)
+				for i=1, #nemici, 1 do
+				-- print("id nemico: " .. nemici[i].id)
+					if(stanzaCorrente.TESTO == nemici[i].id) then
+						table.remove( nemici, i )
+						break
+					end
+				end
+
 				stanzaCorrente.nemici[1] = nil
 				composer.setVariable( "stanzaCorrente", stanzaCorrente )
 				timer.performWithDelay( 5000, gotoLivello1 )

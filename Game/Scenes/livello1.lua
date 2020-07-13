@@ -11,7 +11,7 @@ local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 local enemyInterface = require("enemyInterface")
 local curiosInterface = require("curiosInterface")
-composer.recycleOnSceneChange = true
+-- composer.recycleOnSceneChange = true
 local customFont="MadnessHyperactive.otf"
 local oggetti = stanzaCorrente.oggetti
 --Physics (necessaria per il movimento del personaggio)
@@ -21,6 +21,36 @@ physics.start()
 --Variabili personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local character
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--funzione per caricare un nuovo livello quando sono stati sconfitti tutti i nemici
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function nuovoLivello(self)
+  local sceneGroup = self.view
+  local interfaccia = require("interfaceConfig")
+  local numero = interfaccia.numeroStanze
+  local tabella = interfaccia.tabellaFunction(numero)
+  mappa = lowerFixedMenu.create.mappaGenerata(0, {}, numero, tabella, numero+1, numero+1)
+  mappa.corrente=true
+
+  local newLevelBack = display.newImageRect(sceneGroup, "Images/Backgrounds/Black.jpg", 1280, 720)
+  newLevelBack.x = display.contentCenterX
+  newLevelBack.y = display.contentCenterY
+  local newLevel = display.newText(sceneGroup, "LIVELLO COMPLETATO", 600, 200, native.systemFont, 100)
+  newLevel.x = display.contentCenterX
+  newLevel.y = display.contentCenterY
+  newLevel:setFillColor(0, 1, 0)
+
+  local function goToNuovoLivello()
+    composer.setVariable( "stanzaCorrente", mappa )
+    composer.setVariable( "mappa", mappa )
+    composer.setVariable( "mapx", 352 )
+    composer.setVariable( "mapy", 200 )
+    composer.removeScene( "Scenes.livello1" )
+    composer.gotoScene("Scenes.livello1")
+  end
+
+  timer.performWithDelay( 2000, goToNuovoLivello )
+end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione per tornare al menu. Quando chiamata deve salvare tutti i dati in maniera persistente per poter recuperare la partita in qualsiasi momento
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -40,7 +70,8 @@ local function gotoMenu()
     score = composer.getVariable("score"),
     armorBuff = composer.getVariable( "armorBuff" ),
     damageBuff = composer.getVariable("damageBuff"),
-    speedBuff = composer.getVariable("speedBuff")
+    speedBuff = composer.getVariable("speedBuff"),
+    nemici = composer.getVariable( "nemici" )
   }
 
   -- local score = composer.getVariable( "score" )
@@ -364,6 +395,11 @@ function scene:create( event )
   tutorialButton.y = display.contentCenterY-300
   tutorialButton:addEventListener("tap", goToTutorial)
 
+  local scoreText = display.newText( mainGroup,   "",  150, 150, customFont)
+  scoreText.x = display.contentCenterX+550
+  scoreText.y = display.contentCenterY-275
+  scoreText.text = "score: " .. composer.getVariable( "score" )
+
   local foodBarGreen = display.newImageRect( mainGroup, "Images/Utility/lifeBarGreen.png", 500, 100 )
   foodBarGreen.x = display.contentCenterX
 	foodBarGreen.y = display.contentCenterY - 300
@@ -391,7 +427,7 @@ function scene:create( event )
       end
 
     	textDamage:setFillColor(1, 0, 0)
-      local danno = 5000
+      local danno = 500
       textDamage.alpha = 1
   		textDamage.text = danno
 
@@ -438,6 +474,19 @@ function scene:create( event )
       interface.dropItemFunction(composer.getVariable( "enemyX" ), composer.getVariable( "enemyY" ))
       -- sceneGroup:insert(oggettoDroppato)
       -- composer.setVariable( "drop", false )
+    end
+  end
+
+  --Controllo se il livello è stato superato
+  local nemici = composer.getVariable( "nemici" )
+  if not(nemici == "vuoto") then
+    if(#nemici==0) then
+      print("controllo true")
+      nuovoLivello(self)
+    end
+
+    for i=1, #nemici, 1 do
+      print(nemici[i].id .. ": " .. nemici[i].enemy.immagine)
     end
   end
 end
