@@ -3,6 +3,8 @@ local lunghezza =  display.contentWidth
 local altezza=  lunghezza*(9/16)
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 local fileHandler = require("fileHandler")
+local customFont="MadnessHyperactive.otf"
+
 
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
@@ -429,6 +431,9 @@ end
 --Torna alla schermata nuovaCarica
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function gotoNuovaCarica()
+  audio.stop( 3 )
+  audio.stop( 2 )
+  audio.play( menuTrack, {channel =1 , loops = -1})
   composer.setVariable( "characterLife", nil )
   composer.removeScene( "Scenes.fight" )
   composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
@@ -454,10 +459,12 @@ local function saveScore(punteggioPartita)
 end
 
 local function die(group)
+  audio.stop( 3 )
+  audio.stop( 2 )
   local gameOverBack = display.newImageRect(group, "Images/Backgrounds/Black.jpg", 1280, 720)
   gameOverBack.x = display.contentCenterX
   gameOverBack.y = display.contentCenterY
-  local gameOver = display.newText(group, "GAME OVER", 600, 200, native.systemFont, 100)
+  local gameOver = display.newText(group, "GAME OVER", 600, 200, native.newFont( customFont), 100)
   gameOver:setFillColor(1, 0, 0)
 
   --CANCELLA IL SALVATAGGIO PERCHè LA PARTITA è PERSA

@@ -14,6 +14,8 @@ local curiosInterface = require("curiosInterface")
 composer.recycleOnSceneChange = true
 local customFont="MadnessHyperactive.otf"
 local oggetti = stanzaCorrente.oggetti
+local gameTrack = audio.loadStream( "audio/back/Monsters-Underground.mp3")
+
 --Physics (necessaria per il movimento del personaggio)
 local physics = require("physics")
 physics.start()
@@ -25,6 +27,8 @@ local character
 --funzione per tornare al menu. Quando chiamata deve salvare tutti i dati in maniera persistente per poter recuperare la partita in qualsiasi momento
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function gotoMenu()
+  audio.stop( 2 )
+  audio.play( menuTrack, {channel =1 , loops = -1})
   local fileHandler = require("fileHandler")
   local salvataggio = {
     stanzaCorrenteToSave = composer.getVariable( "stanzaCorrente" ),
@@ -125,7 +129,7 @@ local function goTo(direction)
 end
 
 local function errorTab(message)
-  local errorText = display.newText( message, display.contentCenterX, display.contentCenterY + 50, native.systemFont, 40 )
+  local errorText = display.newText( message, display.contentCenterX, display.contentCenterY + 50, native.newFont( customFont), 40 )
   errorText:setFillColor(1,0,0)
   transition.to(errorText, {time=2000, alpha=0, onComplete= function() display.remove( errorText) end})
 end
@@ -172,7 +176,7 @@ function changeRoom()
 	menuScelta:setFillColor(0.18, 0.18, 0.23)
 	menuGroup:insert(menuScelta)
 
-  local titolo = display.newText("Scegli una direzione", menuScelta.x, menuScelta.y - (altezzaFinestra/2), native.systemFontBold, 80)
+  local titolo = display.newText("Scegli una direzione", menuScelta.x, menuScelta.y - (altezzaFinestra/2), native.newFont( customFont), 80)
   titolo:setFillColor(1,0,0)
   titolo.anchorY = 0
   menuGroup:insert(titolo)
@@ -435,7 +439,7 @@ function scene:create( event )
   if not(oggettoDroppato==nil) then
     if (oggettoDroppato==true) then
       local interface = require("interfaceConfig")
-      interface.dropItemFunction(composer.getVariable( "enemyX" ), composer.getVariable( "enemyY" ))
+      interface.dropItemFunction(composer.getVariable( "enemyX" ), composer.getVariable( "enemyY" ), composer.getVariable( "tabDrop" ))
       -- sceneGroup:insert(oggettoDroppato)
       -- composer.setVariable( "drop", false )
     end
@@ -454,6 +458,8 @@ function scene:show( event )
 
 	elseif ( phase == "did" ) then
     physics.start()
+    audio.stop( 1 )
+    audio.play( gameTrack, { channel=2, loops=-1 } )
 	end
 end
 
@@ -471,7 +477,6 @@ function scene:hide( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-
 	end
 end
 
