@@ -8,6 +8,10 @@ local nemici ={
     armor= 6,
     speed= 3,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -62,6 +66,10 @@ local nemici ={
     armor= 6,
     speed= 3,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -116,6 +124,10 @@ local nemici ={
     armor= 6,
     speed= 3,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -170,6 +182,10 @@ local nemici ={
     armor= 7,
     speed= 3,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -224,6 +240,10 @@ local nemici ={
     armor= 7,
     speed= 3,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -278,6 +298,10 @@ local nemici ={
     armor= 7,
     speed= 3,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -332,6 +356,10 @@ local nemici ={
     armor= 5,
     speed= 2,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -386,6 +414,10 @@ local nemici ={
     armor= 5,
     speed= 2,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -440,6 +472,10 @@ local nemici ={
     armor= 5,
     speed= 2,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -494,6 +530,10 @@ local nemici ={
     armor= 7,
     speed= 4,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -548,6 +588,10 @@ local nemici ={
     armor= 5,
     speed= 2,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "chiaveForziere",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -602,6 +646,10 @@ local nemici ={
     armor= 4,
     speed= 2,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "chiaveForziere",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -656,6 +704,10 @@ local nemici ={
     armor= 6,
     speed= 3,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -710,6 +762,10 @@ local nemici ={
     armor= 6,
     speed= 3,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -764,6 +820,10 @@ local nemici ={
     armor= 6,
     speed= 3,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -818,6 +878,10 @@ local nemici ={
     armor= 8,
     speed= 5,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -872,6 +936,10 @@ local nemici ={
     armor= 8,
     speed= 5,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -926,6 +994,10 @@ local nemici ={
     armor= 8,
     speed= 5,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "cibo",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -980,6 +1052,10 @@ local nemici ={
     armor= 3,
     speed= 1,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "chiaveForziere",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -1034,6 +1110,10 @@ local nemici ={
     armor= 3,
     speed= 1,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "chiaveForziere",
+    },
     mossa1={
       damage=1,
       hitChance=5,
@@ -1088,6 +1168,10 @@ local nemici ={
     armor= 3,
     speed= 1,
     points= 1000,
+    drop = {
+      "pozioneVita",
+      "chiaveForziere",
+    },
     mossa1={
       damage=1,
       hitChance=5,

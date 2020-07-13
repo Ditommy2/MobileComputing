@@ -901,17 +901,19 @@ local interfacciaConfig = {
   numeroStanze=8,
 
   dropItemFunction=
-  (function(x, y)
+  (function(x, y, drop)
     local itemInterface = require("itemsInterface")
     local interfaccia = require("interfaceConfig")
     local handler=interfaccia.dragItem
-    local pozione = itemInterface["pozioneVita"]
-    local item = display.newImageRect( pozione.location .. pozione.nome, 70, 70)
-    item.activateFunction = pozione.activateFunction
+    local tabDrop = drop
+    local n = math.random(1, 2)
+    local oggetto = itemInterface[tabDrop[n]]
+    local item = display.newImageRect( oggetto.location .. oggetto.nome, 70, 70)
+    item.activateFunction = oggetto.activateFunction
     item.x = x
     item.y = y - 100
     item.id = 11
-    item.oggetto = "pozioneVita"
+    item.oggetto = tabDrop[n]
     item:addEventListener("touch", handler)
     composer.getVariable( "sceneGroup" ):insert(item)
     item:toFront()
