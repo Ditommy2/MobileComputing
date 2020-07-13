@@ -136,7 +136,7 @@ Button.y=display.contentCenterY+90
 
 local function handleBackButtonEventNuova(event)
 	if ( "ended" == event.phase ) then
-		nuovaPartitaOverlayGroup:remove( backButton )
+		sceneGroup:remove( nuovaPartitaOverlayGroup )
 	end
 end
 
