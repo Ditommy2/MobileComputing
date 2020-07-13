@@ -95,6 +95,7 @@ local function gotoLivello1()
 	-- composer.setVariable("endFight", "true")
 	composer.setVariable( "enemyX", enemy1.x )
 	composer.setVariable( "enemyY", enemy1.y )
+	composer.setVariable( "tabDrop", enemy1.drop )
 	composer.setVariable( "drop", true )
 	-- interfaccia.dropItemFunction(enemy1.x, enemy1.y)
 

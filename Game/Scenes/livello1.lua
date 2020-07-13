@@ -433,7 +433,7 @@ function scene:create( event )
   if not(oggettoDroppato==nil) then
     if (oggettoDroppato==true) then
       local interface = require("interfaceConfig")
-      interface.dropItemFunction(composer.getVariable( "enemyX" ), composer.getVariable( "enemyY" ))
+      interface.dropItemFunction(composer.getVariable( "enemyX" ), composer.getVariable( "enemyY" ), composer.getVariable( "tabDrop" ))
       -- sceneGroup:insert(oggettoDroppato)
       -- composer.setVariable( "drop", false )
     end
