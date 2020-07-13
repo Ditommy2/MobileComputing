@@ -131,6 +131,7 @@ if enemy1.stunned == 0 then
 
 		local attacco, resto = math.modf(totAttacco)
 		textDamageEnemy.text = attacco
+		textDamageEnemy.alpha = 1
 		timer.performWithDelay(1500, removeTextDamageEnemy)
 
 		if(character.life > attacco) then
