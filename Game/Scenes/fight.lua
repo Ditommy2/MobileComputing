@@ -112,8 +112,9 @@ end
 -- Gestione turno nemico
 -- -----------------------------------------------------------------------------------
 local function turnEnemy()
-	local mossa = "mossa" .. math.random(1, 1)
-
+	local mossa = "mossa" .. math.random(1, 4)
+	print("statistiche enemy e enemy1:\n"..enemy.armor..", "..enemy1.armor.."\n"..enemy.life..", "..enemy1.life.."\n"..enemy.damage..", "..enemy1.damage)
+if enemy1.stunned == 0 then
 	chanceRandom = math.random(1, 6)
 	while(chanceRandom == 6) do
 		sommaChance = sommaChance + chanceRandom
@@ -121,7 +122,7 @@ local function turnEnemy()
 	end
 	sommaChance = sommaChance + chanceRandom
 
-	totChance = sommaChance + enemy.mossa1.hitChance -- mossa.hitChance
+	totChance = sommaChance + enemy[mossa].hitChance
 
 	if(totChance > character.armor) then
 		enemyInterface.attacca(enemy1)
@@ -133,10 +134,11 @@ local function turnEnemy()
 		characterInterface.esegui(5, character)
 
 		attackRandom = math.random(1, 50)
-		totAttacco = (attackRandom + enemy.damage) * enemy.mossa1.damage --mossa.damage
+		totAttacco = (attackRandom + enemy1.damage) * enemy[mossa].damage
 
 		local attacco, resto = math.modf(totAttacco)
 		textDamageEnemy.text = attacco
+		textDamageEnemy.alpha = 1
 		timer.performWithDelay(1500, removeTextDamageEnemy)
 
 		if(character.life > attacco) then
@@ -158,17 +160,25 @@ local function turnEnemy()
 		timer.performWithDelay( 1500, removeTextFight )
 	end
 
+else
+	fightText.alpha = 1
+	fightText.x = 1000
+	fightText.text = "Stunned!"
+	timer.performWithDelay( 1500, removeTextFight )
+	enemy1.stunned = 0
+end
+
 	if(character.life > 0) then
 		timer.performWithDelay( 1500, changeStarTuo)
 		timer.performWithDelay(3000, eseguiMossa)
 		timer.performWithDelay(3000, addTasto)
-		textDamageEnemy.alpha = 1
 	else
 		characterInterface.gameOver(textGroup)
 		fightText:setFillColor(0, 0, 0)
 		-- saveScore(punteggioPartita)
 		-- timer.performWithDelay( 5000, gotoNuovaCarica )
 	end
+
 end
 
 -- -----------------------------------------------------------------------------------
@@ -233,21 +243,30 @@ end
 -- ------------------------------------------------------------------------------------
 local function calcolaDanno()
 	local mossa = "mossa" .. numeroMossa	--Prendo la mossa
-
+	local criticalEffect = {target = "false"}
 	--Vedo se colpisco il nemico
 	chanceRandom = math.random(1, 6)
-	while(chanceRandom == 6) do
+	while(chanceRandom < 6) do  --(chanceRandom == 6)
 		sommaChance = sommaChance + chanceRandom
 		chanceRandom = math.random(1, 6)
+		criticalEffect = character[mossa].effect
 	end
 
 	sommaChance = sommaChance + chanceRandom + character[mossa].hitChance
 
 	--Ho colpito il nemico
-	if(sommaChance > enemy.armor) then
-		fightText.alpha = 1
-		fightText.x = 1000
-		fightText.text = "Hit!"
+	if(sommaChance > enemy1.armor) then
+
+		if not(criticalEffect.target == "false") then
+			print("effetto critico aplicato : "..criticalEffect.target..", "..criticalEffect.value)
+			fightText.alpha = 1
+			fightText.x = 1000
+			fightText.text = "Critical Hit!"
+		else
+			fightText.alpha = 1
+			fightText.x = 1000
+			fightText.text = "Hit!"
+	  end
 		timer.performWithDelay( 1500, removeTextFight )
 
 		attackRandom = math.random(1, 50)
@@ -256,6 +275,12 @@ local function calcolaDanno()
 		local attacco, resto = math.modf(totAttacco)
 		textDamage.text = attacco
 		timer.performWithDelay(1500, removeTextDamageCharacter)
+
+		if not(criticalEffect.target == "false") then
+			local app = enemy1[criticalEffect.target]
+			enemy1[criticalEffect.target] = app + criticalEffect.value
+
+		end
 
 		if(enemy1.life > attacco) then
 			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
@@ -417,7 +442,10 @@ function scene:create ( event )
 	lifeBarEnemy.y = display.contentCenterY - 250
 	enemy1:addEventListener("tap", eseguiMossa)
 	enemy1.life = enemy.life
-
+	enemy1.armor = enemy.armor
+	enemy1.speed = enemy.speed
+	enemy1.damage = enemy.damage
+	enemy1.stunned = 0
 	timer.performWithDelay(2000, gameLoop())
 end
 
