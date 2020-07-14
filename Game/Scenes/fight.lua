@@ -102,15 +102,10 @@ local function gotoLivello1()
 	composer.setVariable( "characterLife", character.life )
 	composer.removeScene( "Scenes.fight" )
 	composer.setVariable("endFight", "true")
-	-- interfaccia.dropItemFunction(enemy1.x, enemy1.y)
-
-	-- composer.setVariable("endFight", "true")
 	composer.setVariable( "enemyX", enemy1.x )
 	composer.setVariable( "enemyY", enemy1.y )
 	composer.setVariable( "tabDrop", enemy1.drop )
-	composer.setVariable( "drop", true )
-	-- interfaccia.dropItemFunction(enemy1.x, enemy1.y)
-
+	-- composer.setVariable( "drop", true )
 	composer.gotoScene( "Scenes.livello1", {time=800, effect="crossFade"} )
 end
 
@@ -332,6 +327,18 @@ local function calcolaDanno()
 			display.remove( lifeBarEnemy )
 			punteggioPartita = composer.getVariable("score") + enemy.points
 			composer.setVariable( "score", punteggioPartita )
+
+			local nemici = composer.getVariable( "nemici" )
+			local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
+
+			print("stanza corrente: " ..  stanzaCorrente.TESTO)
+			for i=1, #nemici, 1 do
+				if(stanzaCorrente.TESTO == nemici[i].id) then
+					table.remove( nemici, i )
+					print("rimosso nemico numero: " ..  i)
+					break
+				end
+			end
 
 			character.speed = startingStats.speed
 			character.armor = startingStats.armor

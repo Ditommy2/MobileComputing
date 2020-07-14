@@ -978,7 +978,7 @@ local interfacciaConfig = {
     composer.getVariable( "sceneGroup" ):insert(item)
     item:toFront()
     print("Droppato oggetto")
-    composer.setVariable( "drop", false )
+    composer.setVariable( "endFight", "false" )
   end)
 }
 return interfacciaConfig
