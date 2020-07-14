@@ -432,7 +432,7 @@ function scene:create( event )
       end
 
     	textDamage:setFillColor(1, 0, 0)
-      local danno = 5000
+      local danno = 500
       textDamage.alpha = 1
   		textDamage.text = danno
 
@@ -477,16 +477,11 @@ function scene:create( event )
   sceneGroup:insert(hidingGroup)
   composer.setVariable("sceneGroup", sceneGroup)
 
-  --Drop item nemico
-  local oggettoDroppato = composer.getVariable( "drop" )
+  local endFight = composer.getVariable( "endFight" )
 
-  if not(oggettoDroppato==nil) then
-    if (oggettoDroppato==true) then
-      local interface = require("interfaceConfig")
-      interface.dropItemFunction(composer.getVariable( "enemyX" ), composer.getVariable( "enemyY" ), composer.getVariable( "tabDrop" ))
-      -- sceneGroup:insert(oggettoDroppato)
-      -- composer.setVariable( "drop", false )
-    end
+  if (endFight=="true") then
+    local interface = require("interfaceConfig")
+    interface.dropItemFunction(composer.getVariable( "enemyX" ), composer.getVariable( "enemyY" ), composer.getVariable( "tabDrop" ))
   end
 
   --Controllo se il livello è stato superato

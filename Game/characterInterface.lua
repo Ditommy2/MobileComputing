@@ -172,7 +172,7 @@ local sequences =
 --Perform movement
 local function move(event)
   local dir = event.source.params.direction
-  local fame = 100--0.5
+  local fame = 0.5
   local passo = 10
   if(not(dir==nil)) then
     if(dir=="r") then
