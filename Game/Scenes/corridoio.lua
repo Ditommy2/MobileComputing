@@ -136,6 +136,7 @@ function scene:create( event )
 	foodBarGreen.y = display.contentCenterY - 300
   mainGroup:insert(foodBarGreen)
   local foodToken = display.newImageRect( mainGroup, "Images/Icons/icons3/054-ham.png", 50, 50 )
+  print("food situation: " .. (composer.getVariable( "characterMaxFood" )-composer.getVariable( "characterFood" )))
   foodToken.x = (foodBarGreen.x + foodBarGreen.width/2) - (composer.getVariable( "characterMaxFood" )-composer.getVariable( "characterFood" ))
   foodToken.maxX = foodBarGreen.x + foodBarGreen.width/2
   foodToken.minX = foodBarGreen.x - foodBarGreen.width/2

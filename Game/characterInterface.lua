@@ -207,7 +207,7 @@ local function move(event)
       if composerFood < 0 then
         composerFood = 0
       end
-      composer.setVariable( "characterFood", composerFood-fame )
+      composer.setVariable( "characterFood", composerFood )
     end
 
     if(character.x < 0) then
