@@ -16,6 +16,8 @@ local curios = {
         print("aperto")
         curio.immagine = "Images/Icons/curios/treasureChest_open.png"
         table.insert(composer.getVariable( "stanzaCorrente" ).oggetti, curio.oggetto)
+        table.remove(composer.getVariable( "stanzaCorrente" ).curios, 1)
+        table.insert(composer.getVariable( "stanzaCorrente" ).curios, curio.sostitutivo)
         local datiOggetto = itemInterface[curio.oggetto]
         local oggetto = display.newImageRect(datiOggetto.location..datiOggetto.nome, 70, 70)
         oggetto.x=curio.x-20
@@ -38,7 +40,7 @@ local curios = {
     end
   ),
   sostitutivo = "curio2",
-  oggettiPossibili = {"anelloDifesa", "pozioneVita"}
+  oggettiPossibili = {"anelloDifesa", "pozioneVita", "pozioneDanno", "pillolaSpeed", "pozioneMaxVita"}
 },
 curio2 = {
   nome="curio2",

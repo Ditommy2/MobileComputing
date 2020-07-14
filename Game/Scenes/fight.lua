@@ -113,7 +113,7 @@ end
 -- Gestione turno nemico
 -- -----------------------------------------------------------------------------------
 local function turnEnemy()
-	local mossa = "mossa" .. 4--math.random(1, 4)
+	local mossa = "mossa" .. math.random(1, 4)
 	print("statistiche enemy e enemy1:\n"..enemy.armor..", "..enemy1.armor.."\n"..enemy.life..", "..enemy1.life.."\n"..enemy.damage..", "..enemy1.damage)
 	if enemy1.stunned == 0 then
 		chanceRandom = math.random(1, 6)

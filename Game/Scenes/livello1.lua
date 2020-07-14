@@ -115,7 +115,7 @@ local function gotoMenu()
     if(statoPartita.stato == "salvata") then
       tabelloneSalvataggi[statoPartita.indice] = salvataggio
     else
-    table.insert(tabelloneSalvataggi, salvataggio)
+      table.insert(tabelloneSalvataggi, salvataggio)
     end
   end
 
@@ -125,8 +125,8 @@ local function gotoMenu()
   fileHandler.caricaSave(salvataggio, stringaSalvataggio)
 
   composer.removeScene("Scenes.livello1")
- 	composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
- end
+  composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
+end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione che gestisce la pressione dei tasti delle freccette. Anche questo è momentaneo, non rappresenta la versione finale
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -170,9 +170,9 @@ local function handleDirectionChoose(event)
   local direction = source.id
 
   if(((direction == "NORD") and (stanzaCorrente.NORD ~= nil)) or
-     ((direction == "SUD") and (stanzaCorrente.SUD ~= nil)) or
-     ((direction == "EST") and (stanzaCorrente.EST ~= nil)) or
-     ((direction == "OVEST") and (stanzaCorrente.OVEST ~= nil))) then
+  ((direction == "SUD") and (stanzaCorrente.SUD ~= nil)) or
+  ((direction == "EST") and (stanzaCorrente.EST ~= nil)) or
+  ((direction == "OVEST") and (stanzaCorrente.OVEST ~= nil))) then
 
     composer.setVariable( "direzione", direction )
     goTo(direction)
@@ -199,13 +199,13 @@ function changeRoom()
 
   --Menu di scelta della direzione
   local lunghezzaFinestra=lunghezza-400
-	local altezzaFinestra=lunghezzaFinestra*(9/16)
+  local altezzaFinestra=lunghezzaFinestra*(9/16)
 
   local menuGroup = display.newGroup()
 
   local menuScelta = display.newRect( display.contentCenterX, display.contentCenterY, lunghezzaFinestra, altezzaFinestra )
-	menuScelta:setFillColor(0.18, 0.18, 0.23)
-	menuGroup:insert(menuScelta)
+  menuScelta:setFillColor(0.18, 0.18, 0.23)
+  menuGroup:insert(menuScelta)
 
   local titolo = display.newText("Scegli una direzione", menuScelta.x, menuScelta.y - (altezzaFinestra/2), native.newFont( customFont), 80)
   titolo:setFillColor(1,0,0)
@@ -213,55 +213,55 @@ function changeRoom()
   menuGroup:insert(titolo)
 
   buttonNord = widget.newButton({
-      shape = "roundedRect",
-      x = menuScelta.x,
-      y =  menuScelta.y - 100,
-      width=150,
-      height= 75,
-      id = "NORD",
-      label = "NORD",
-      labelColor={default={0.5, 0, 0}},
-      fontSize=20,
-      onEvent = handleDirectionChoose
+    shape = "roundedRect",
+    x = menuScelta.x,
+    y =  menuScelta.y - 100,
+    width=150,
+    height= 75,
+    id = "NORD",
+    label = "NORD",
+    labelColor={default={0.5, 0, 0}},
+    fontSize=20,
+    onEvent = handleDirectionChoose
   })
 
   buttonSud = widget.newButton({
-      shape = "roundedRect",
-      x = menuScelta.x,
-      y =  menuScelta.y + 200,
-      width=150,
-      height= 75,
-      id = "SUD",
-      label = "SUD",
-      labelColor={default={0.5, 0, 0}},
-      fontSize=20,
-      onEvent = handleDirectionChoose
+    shape = "roundedRect",
+    x = menuScelta.x,
+    y =  menuScelta.y + 200,
+    width=150,
+    height= 75,
+    id = "SUD",
+    label = "SUD",
+    labelColor={default={0.5, 0, 0}},
+    fontSize=20,
+    onEvent = handleDirectionChoose
   })
 
   buttonEst = widget.newButton({
-      shape = "roundedRect",
-      x = menuScelta.x + 275,
-      y =  menuScelta.y + 50,
-      width=150,
-      height= 75,
-      id = "EST",
-      label = "EST",
-      labelColor={default={0.5, 0, 0}},
-      fontSize=20,
-      onEvent = handleDirectionChoose
+    shape = "roundedRect",
+    x = menuScelta.x + 275,
+    y =  menuScelta.y + 50,
+    width=150,
+    height= 75,
+    id = "EST",
+    label = "EST",
+    labelColor={default={0.5, 0, 0}},
+    fontSize=20,
+    onEvent = handleDirectionChoose
   })
 
   buttonOvest = widget.newButton({
-      shape = "roundedRect",
-      x = menuScelta.x - 275,
-      y =  menuScelta.y + 50,
-      width=150,
-      height= 75,
-      id = "OVEST",
-      label = "OVEST",
-      labelColor={default={0.5, 0, 0}},
-      fontSize=20,
-      onEvent = handleDirectionChoose
+    shape = "roundedRect",
+    x = menuScelta.x - 275,
+    y =  menuScelta.y + 50,
+    width=150,
+    height= 75,
+    id = "OVEST",
+    label = "OVEST",
+    labelColor={default={0.5, 0, 0}},
+    fontSize=20,
+    onEvent = handleDirectionChoose
   })
 
   menuGroup:insert(buttonNord)
@@ -282,25 +282,25 @@ function scene:create( event )
 
 
 
-	local sceneGroup = self.view
+  local sceneGroup = self.view
   local mainGroup=display.newGroup()
   local phase = event.phase
   local curios = stanzaCorrente.curios
   local activeCurios = {}
   if not(curios==nil) then
     for i=#curios, 1, -1 do
-        local curio = curiosInterface.createCurio(self, stanzaCorrente.curios[i])
-        if not(curio==nil) then
-          table.insert(activeCurios, curio)
-          composer.setVariable("mainGroup", mainGroup)
-          mainGroup:insert(curio)
-        end
+      local curio = curiosInterface.createCurio(self, stanzaCorrente.curios[i])
+      if not(curio==nil) then
+        table.insert(activeCurios, curio)
+        composer.setVariable("mainGroup", mainGroup)
+        mainGroup:insert(curio)
+      end
     end
   end
 
-    composer.setVariable( "activeCurios", activeCurios )
-    stanzaCorrente.curios=curios
-    for j=#stanzaCorrente.oggetti, 1, -1 do
+  composer.setVariable( "activeCurios", activeCurios )
+  stanzaCorrente.curios=curios
+  for j=#stanzaCorrente.oggetti, 1, -1 do
     local oggetto = display.newImageRect("Images/Icons/icons3/"..stanzaCorrente.oggetti[j], 50, 50)
     oggetto.x=lunghezza * 0.7
     oggetto.y = altezza-390
@@ -322,14 +322,14 @@ function scene:create( event )
   --Displaying character and setting sprite sheets
   character = characterInterface.creaPersonaggio(self)
   composer.setVariable("character", character)
-    for i = #stanzaCorrente.nemici, 1, -1 do
-        if(not(stanzaCorrente.nemici[i]==nil))then
-          -- print("tabella nemico (in teoria)")
-          -- print(stanzaCorrente.nemici[i].immagine)
-          enemy = enemyInterface.createEnemy(self, stanzaCorrente.nemici[i])
-          mainGroup:insert(enemy)
-        end
+  for i = #stanzaCorrente.nemici, 1, -1 do
+    if(not(stanzaCorrente.nemici[i]==nil))then
+      -- print("tabella nemico (in teoria)")
+      -- print(stanzaCorrente.nemici[i].immagine)
+      enemy = enemyInterface.createEnemy(self, stanzaCorrente.nemici[i])
+      mainGroup:insert(enemy)
     end
+  end
 
 
 
@@ -388,7 +388,7 @@ function scene:create( event )
     local scrollOverlayRequired = require("tutorial")
     local lunghezza =  display.contentWidth
     local lunghezzaFinestra=lunghezza-400
-  	local altezzzaFinestra=lunghezzaFinestra*(9/16)
+    local altezzzaFinestra=lunghezzaFinestra*(9/16)
     scrollOverlayRequired.handleButton(display, lunghezzaFinestra, altezzaFinestra, sceneGroup)
 
   end
@@ -406,7 +406,7 @@ function scene:create( event )
 
   local foodBarGreen = display.newImageRect( mainGroup, "Images/Utility/lifeBarGreen.png", 500, 100 )
   foodBarGreen.x = display.contentCenterX
-	foodBarGreen.y = display.contentCenterY - 300
+  foodBarGreen.y = display.contentCenterY - 300
   mainGroup:insert(foodBarGreen)
   local foodToken = display.newImageRect( mainGroup, "Images/Icons/icons3/054-ham.png", 50, 50 )
   print("food situation: " .. (composer.getVariable( "characterMaxFood" )-composer.getVariable( "characterFood" )))
@@ -423,9 +423,9 @@ function scene:create( event )
     print("composer end fight : false")
   end
 
-    if (composer.getVariable("characterFood") == 0 and not(composer.getVariable( "endFight" )=="true")) then
+  if (composer.getVariable("characterFood") == 0 and not(composer.getVariable( "endFight" )=="true")) then
 
-      local textDamage = display.newText(mainGroup, "", character.x, character.y - character.height-50, native.newFont( customFont), 100)
+    local textDamage = display.newText(mainGroup, "", character.x, character.y - character.height-50, native.newFont( customFont), 100)
 
       local function removeTextDamage()
       	textDamage.alpha = 0
@@ -467,7 +467,36 @@ function scene:create( event )
       timer.performWithDelay(1500, removeTextDamage)
       timer.performWithDelay(1500, removeBarDamage)
 
+    textDamage:setFillColor(1, 0, 0)
+    local danno = 500
+    textDamage.alpha = 1
+    textDamage.text = danno
+
+    local vitaPersonaggio = composer.getVariable( "characterLife" )
+    composer.setVariable( "characterLife", vitaPersonaggio-danno )
+
+    local  lifeBarCharacterBlack = display.newImageRect( mainGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
+    lifeBarCharacterBlack.alpha = 1
+    lifeBarCharacterBlack.x = character.x
+    lifeBarCharacterBlack.y = character.y - character.height
+
+    local lifeBarCharacter = display.newImageRect( mainGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
+    lifeBarCharacter.alpha = 1
+    lifeBarCharacter.x = character.x
+    lifeBarCharacter.y = character.y - character.height
+    local rapporto = lifeBarCharacter.width / composer.getVariable( "characterLife" )
+    local x = danno * rapporto		--Pixel dal levare
+    lifeBarCharacter.width = lifeBarCharacter.width - x
+    lifeBarCharacter.x = lifeBarCharacter.x - x/2
+
+    local function removeBarDamage()
+      lifeBarCharacter.alpha = 0
+      lifeBarCharacterBlack.alpha = 0
     end
+    timer.performWithDelay(1500, removeTextDamage)
+    timer.performWithDelay(1500, removeBarDamage)
+
+  end
 
 
   if composer.getVariable("characterLife")<=0 then
@@ -503,16 +532,16 @@ end
 -- show()
 function scene:show( event )
 
-	local sceneGroup = self.view
+  local sceneGroup = self.view
   local phase=event.phase
 
-	if ( phase == "will" ) then
+  if ( phase == "will" ) then
 
-	elseif ( phase == "did" ) then
+  elseif ( phase == "did" ) then
     physics.start()
     audio.stop( 1 )
     audio.play( gameTrack, { channel=2, loops=-1 } )
-	end
+  end
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -521,15 +550,15 @@ end
 -- hide()
 function scene:hide( event )
 
-	local sceneGroup = self.view
-	local phase = event.phase
+  local sceneGroup = self.view
+  local phase = event.phase
 
-	if ( phase == "will" ) then
-		-- Code here runs when the scene is on screen (but is about to go off screen)
+  if ( phase == "will" ) then
+    -- Code here runs when the scene is on screen (but is about to go off screen)
 
-	elseif ( phase == "did" ) then
-		-- Code here runs immediately after the scene goes entirely off screen
-	end
+  elseif ( phase == "did" ) then
+    -- Code here runs immediately after the scene goes entirely off screen
+  end
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -538,7 +567,7 @@ end
 -- destroy()
 function scene:destroy( event )
   local sceneGroup = scene.view
-	-- Code here runs prior to the removal of scene's view
+  -- Code here runs prior to the removal of scene's view
   composer.setVariable("endFight", "false")
   for i = sceneGroup.numChildren, 1, -1 do
     sceneGroup[i]:removeSelf()

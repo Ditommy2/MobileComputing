@@ -428,7 +428,7 @@ local function create(scena)
 
   character.mossa1 = {nome="Pugno del duellante", hitChance = 8, damage = 0.3, effect = {target = "armor", value = -2}}
   character.mossa2 = {nome="Calcio respingente", hitChance = 7, damage = 0.6, effect = {target = "damage", value = -5}}
-  character.mossa3 = {nome="Fendente letale", hitChance = 3, damage = 1, effect = {target = "life", value = -200}}
+  character.mossa3 = {nome="Fendente letale", hitChance = 3, damage = 1000, effect = {target = "life", value = -200}}
   character.mossa4 = {nome="Elsa stordente", hitChance = 1, damage = 0.1, effect = {target = "stunned", value = 2}}
   character.testoMossa1 = character.mossa1.nome .. " : Abbassa le difese del nemico\nDamage = " .. (character.mossa1.damage * 100) .. "%\nHit chance = " .. (character.mossa1.hitChance*10) .. "%\n"
   character.testoMossa2 = character.mossa2.nome .. " : Diminuisce il pericolo\nDamage = " .. (character.mossa2.damage * 100) .. "%\nHit chance = " .. (character.mossa2.hitChance*10) .. "%\n"
