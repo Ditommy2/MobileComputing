@@ -438,7 +438,13 @@ local function gotoNuovaCarica()
   audio.stop( 2 )
   audio.play( menuTrack, {channel =1 , loops = -1})
 
-  composer.removeScene( "Scenes.fight" )
+  local currentScene = composer.getSceneName( "current" )
+
+  if(currentScene=="Scenes.livello1") then
+    composer.removeScene( "Scenes.livello1" )
+  else
+    composer.removeScene( "Scenes.fight" )
+  end
   composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
 end
 
@@ -483,7 +489,7 @@ local function die(group)
   end
 
   fileHandler.saveTable(tabelloneSalvataggi, stringaSalvataggio)
-  fileHandler.caricaScore(tabelloneSalvataggi, stringaSalvataggio)
+  fileHandler.caricaSave(tabelloneSalvataggi, stringaSalvataggio)
   local punteggioPartita =  composer.getVariable( "score" )
 
   saveScore(punteggioPartita)
