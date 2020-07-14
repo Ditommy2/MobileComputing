@@ -420,20 +420,19 @@ function scene:create ( event )
 
 	--*******************TEXT GROUP************************************
 
-	testoMossa = display.newText( textGroup, "" ,1050, 600, 450, 0, native.newFont( customFont), 30 )
+	testoMossa = display.newText( textGroup, "" ,1050, 600, 450, 0, native.newFont( customFont), 29 )
 	testoMossa:setFillColor( 255,255,255 )
 
-	mossa1 = display.newText( textGroup, "" , 200, 515, native.newFont( customFont), 50 )
+	mossa1 = display.newText( textGroup, "" , 200, 515, native.newFont( customFont), 40 )
 	mossa1:setFillColor( 255,255,255 )
 
-
-	mossa2 = display.newText( textGroup, "", 560, 515, native.newFont( customFont), 50 )
+	mossa2 = display.newText( textGroup, "", 560, 515, native.newFont( customFont), 40 )
 	mossa2:setFillColor( 255,255,255 )
 
-	mossa3 = display.newText( textGroup, "", 200, 650, native.newFont( customFont), 50 )
+	mossa3 = display.newText( textGroup, "", 200, 650, native.newFont( customFont), 40 )
 	mossa3:setFillColor( 255,255,255 )
 
-	mossa4 = display.newText( textGroup, "", 560, 650, native.newFont( customFont), 50 )
+	mossa4 = display.newText( textGroup, "", 560, 650, native.newFont( customFont), 40 )
 	mossa4:setFillColor( 255,255,255 )
 
 	mossa1:addEventListener( "tap", infoMossa1 )
