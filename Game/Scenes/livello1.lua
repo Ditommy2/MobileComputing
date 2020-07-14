@@ -11,7 +11,7 @@ local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 local enemyInterface = require("enemyInterface")
 local curiosInterface = require("curiosInterface")
-composer.recycleOnSceneChange = true
+-- composer.recycleOnSceneChange = true
 local customFont="MadnessHyperactive.otf"
 local oggetti = stanzaCorrente.oggetti
 local gameTrack = audio.loadStream( "audio/back/Monsters-Underground.mp3")
@@ -23,6 +23,36 @@ physics.start()
 --Variabili personaggio
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local character
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--funzione per caricare un nuovo livello quando sono stati sconfitti tutti i nemici
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function nuovoLivello(self)
+  local sceneGroup = self.view
+  local interfaccia = require("interfaceConfig")
+  local numero = interfaccia.numeroStanze
+  local tabella = interfaccia.tabellaFunction(numero)
+  mappa = lowerFixedMenu.create.mappaGenerata(0, {}, numero, tabella, numero+1, numero+1)
+  mappa.corrente=true
+
+  local newLevelBack = display.newImageRect(sceneGroup, "Images/Backgrounds/Black.jpg", 1280, 720)
+  newLevelBack.x = display.contentCenterX
+  newLevelBack.y = display.contentCenterY
+  local newLevel = display.newText(sceneGroup, "LIVELLO COMPLETATO", 600, 200, native.systemFont, 100)
+  newLevel.x = display.contentCenterX
+  newLevel.y = display.contentCenterY
+  newLevel:setFillColor(0, 1, 0)
+
+  local function goToNuovoLivello()
+    composer.setVariable( "stanzaCorrente", mappa )
+    composer.setVariable( "mappa", mappa )
+    composer.setVariable( "mapx", 352 )
+    composer.setVariable( "mapy", 200 )
+    composer.removeScene( "Scenes.livello1" )
+    composer.gotoScene("Scenes.livello1")
+  end
+
+  timer.performWithDelay( 2000, goToNuovoLivello )
+end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione per tornare al menu. Quando chiamata deve salvare tutti i dati in maniera persistente per poter recuperare la partita in qualsiasi momento
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -44,7 +74,8 @@ local function gotoMenu()
     score = composer.getVariable("score"),
     armorBuff = composer.getVariable( "armorBuff" ),
     damageBuff = composer.getVariable("damageBuff"),
-    speedBuff = composer.getVariable("speedBuff")
+    speedBuff = composer.getVariable("speedBuff"),
+    nemici = composer.getVariable( "nemici" )
   }
 
   -- local score = composer.getVariable( "score" )
@@ -368,11 +399,17 @@ function scene:create( event )
   tutorialButton.y = display.contentCenterY-300
   tutorialButton:addEventListener("tap", goToTutorial)
 
+  local scoreText = display.newText( mainGroup,   "",  150, 150, customFont)
+  scoreText.x = display.contentCenterX+550
+  scoreText.y = display.contentCenterY-275
+  scoreText.text = "score: " .. composer.getVariable( "score" )
+
   local foodBarGreen = display.newImageRect( mainGroup, "Images/Utility/lifeBarGreen.png", 500, 100 )
   foodBarGreen.x = display.contentCenterX
   foodBarGreen.y = display.contentCenterY - 300
   mainGroup:insert(foodBarGreen)
   local foodToken = display.newImageRect( mainGroup, "Images/Icons/icons3/054-ham.png", 50, 50 )
+  print("food situation: " .. (composer.getVariable( "characterMaxFood" )-composer.getVariable( "characterFood" )))
   foodToken.x = (foodBarGreen.x + foodBarGreen.width/2) - (composer.getVariable( "characterMaxFood" )-composer.getVariable( "characterFood" ))
   foodToken.maxX = foodBarGreen.x + foodBarGreen.width/2
   foodToken.minX = foodBarGreen.x - foodBarGreen.width/2
@@ -390,9 +427,45 @@ function scene:create( event )
 
     local textDamage = display.newText(mainGroup, "", character.x, character.y - character.height-50, native.newFont( customFont), 100)
 
-    local function removeTextDamage()
-      textDamage.alpha = 0
-    end
+      local function removeTextDamage()
+      	textDamage.alpha = 0
+      end
+
+    	textDamage:setFillColor(1, 0, 0)
+      local danno = 5000
+      textDamage.alpha = 1
+  		textDamage.text = danno
+
+      local vitaPersonaggio = composer.getVariable( "characterLife" )
+
+      local  lifeBarCharacterBlack = display.newImageRect( mainGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
+      lifeBarCharacterBlack.alpha = 1
+    	lifeBarCharacterBlack.x = character.x
+    	lifeBarCharacterBlack.y = character.y - character.height
+
+    	local lifeBarCharacter = display.newImageRect( mainGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
+      lifeBarCharacter.alpha = 1
+    	lifeBarCharacter.x = character.x
+    	lifeBarCharacter.y = character.y - character.height
+      print("lunghezza barra prima: " .. lifeBarCharacter.width)
+      -- local rapporto = lifeBarCharacter.width / composer.getVariable( "characterLife" )
+      local rapporto = lifeBarCharacter.width / 3000
+      print("rapporto: " .. rapporto)
+      print("vitaPersonaggio: " .. vitaPersonaggio)
+      local x = (3000 - (vitaPersonaggio - danno)) * rapporto		--Pixel dal levare
+      print("pixel calcolati: " .. x)
+      -- lifeBarCharacter.width = (rapporto * composer.getVariable( "characterLife" )) - x
+      lifeBarCharacter.width = lifeBarCharacter.width - x
+      lifeBarCharacter.x = lifeBarCharacter.x - x/2
+      print("lunghezza barra dopo: " .. lifeBarCharacter.width)
+      composer.setVariable( "characterLife", vitaPersonaggio-danno )
+
+      local function removeBarDamage()
+        lifeBarCharacter.alpha = 0
+        lifeBarCharacterBlack.alpha = 0
+      end
+      timer.performWithDelay(1500, removeTextDamage)
+      timer.performWithDelay(1500, removeBarDamage)
 
     textDamage:setFillColor(1, 0, 0)
     local danno = 5000
@@ -442,6 +515,19 @@ function scene:create( event )
       interface.dropItemFunction(composer.getVariable( "enemyX" ), composer.getVariable( "enemyY" ), composer.getVariable( "tabDrop" ))
       -- sceneGroup:insert(oggettoDroppato)
       -- composer.setVariable( "drop", "false" )
+    end
+  end
+
+  --Controllo se il livello è stato superato
+  local nemici = composer.getVariable( "nemici" )
+  if not(nemici == "vuoto") then
+    if(#nemici==0) then
+      print("controllo true")
+      nuovoLivello(self)
+    end
+
+    for i=1, #nemici, 1 do
+      print(nemici[i].id .. ": " .. nemici[i].enemy.immagine)
     end
   end
 end

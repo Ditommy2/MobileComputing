@@ -172,7 +172,7 @@ local sequences =
 --Perform movement
 local function move(event)
   local dir = event.source.params.direction
-  local fame = 0.5
+  local fame = 100--0.5
   local passo = 10
   if(not(dir==nil)) then
     if(dir=="r") then
@@ -207,7 +207,7 @@ local function move(event)
       if composerFood < 0 then
         composerFood = 0
       end
-      composer.setVariable( "characterFood", composerFood-fame )
+      composer.setVariable( "characterFood", composerFood )
     end
 
     if(character.x < 0) then
@@ -318,22 +318,29 @@ local function hurt()
 end
 
 local function mossa1()
+  local punchSound = audio.loadSound( "audio/eff/punch.mp3" )
+  audio.play( punchSound )
   personaggio:setSequence("punch")
   personaggio:play()
 end
 
 local function mossa2()
+  local kickSound = audio.loadSound( "audio/eff/kick.mp3" )
+  audio.play( kickSound )
   personaggio:setSequence("kick")
   personaggio:play()
 end
 
 local function mossa3()
+  local swordSound = audio.loadSound( "audio/eff/sword.mp3" )
+  audio.play( swordSound )
   personaggio:setSequence("slay")
   personaggio:play()
 end
 
 local function mossa4()
-  print("niente")
+  local stunSound = audio.loadSound( "audio/eff/stun.mp3" )
+  audio.play( stunSound )
 end
 
 local function eseguiMossa(numeroMossa, pers)
@@ -381,15 +388,18 @@ local function create(scena)
   character.myName = "Character"
 
   local composerLife = composer.getVariable( "characterLife" )
-  if(not(composerLife==nil)) then
-    character.life = composerLife
-    composer.setVariable( "characterLife", character.life )
-  else
-    character.maxLife = 3000
-    composer.setVariable( "characterMaxLife", character.maxLife )
-    character.life = character.maxLife
-    composer.setVariable( "characterLife", character.life )
-  end
+  -- if(not(composerLife==nil)) then
+  --   character.life = composerLife
+  --   composer.setVariable( "characterLife", character.life )
+  -- else
+  --   character.maxLife = 3000
+  --   composer.setVariable( "characterMaxLife", character.maxLife )
+  --   character.life = character.maxLife
+  --   composer.setVariable( "characterLife", character.life )
+  -- end
+
+  character.life = composerLife
+  composer.setVariable( "characterMaxLife", 3000 )
 
   local composerFood = composer.getVariable( "characterFood" )
   if(not(composerFood==nil)) then
@@ -434,8 +444,14 @@ local function gotoNuovaCarica()
   audio.stop( 3 )
   audio.stop( 2 )
   audio.play( menuTrack, {channel =1 , loops = -1})
-  composer.setVariable( "characterLife", nil )
-  composer.removeScene( "Scenes.fight" )
+
+  local currentScene = composer.getSceneName( "current" )
+
+  if(currentScene=="Scenes.livello1") then
+    composer.removeScene( "Scenes.livello1" )
+  else
+    composer.removeScene( "Scenes.fight" )
+  end
   composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
 end
 
@@ -461,6 +477,8 @@ end
 local function die(group)
   audio.stop( 3 )
   audio.stop( 2 )
+  local gameOverSound = audio.loadSound( "audio/eff/GameOver.mp3" )
+  audio.play( gameOverSound )
   local gameOverBack = display.newImageRect(group, "Images/Backgrounds/Black.jpg", 1280, 720)
   gameOverBack.x = display.contentCenterX
   gameOverBack.y = display.contentCenterY
@@ -480,14 +498,14 @@ local function die(group)
   end
 
   fileHandler.saveTable(tabelloneSalvataggi, stringaSalvataggio)
-  fileHandler.caricaScore(tabelloneSalvataggi, stringaSalvataggio)
+  fileHandler.caricaSave(tabelloneSalvataggi, stringaSalvataggio)
   local punteggioPartita =  composer.getVariable( "score" )
 
   saveScore(punteggioPartita)
 
   composer.setVariable( "characterLife", composer.getVariable("characterMaxLife") )
   composer.setVariable( "characterFood", composer.getVariable("characterMaxFood") )
-  timer.performWithDelay( 2000, gotoNuovaCarica )
+  timer.performWithDelay( 4000, gotoNuovaCarica )
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Interfaccia del personaggio

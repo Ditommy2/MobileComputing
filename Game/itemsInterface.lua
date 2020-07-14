@@ -13,8 +13,10 @@ local itemsTable = {
     function(posx, posy)
       local characterX = composer.getVariable( "characterX" )
       local characterY = composer.getVariable( "characterY" )
+      local drinkSound = audio.loadSound( "audio/eff/drink.mp3" )
       if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
         print("curato")
+        audio.play( drinkSound )
         local curaLower = 300
         local curaUpper = 700
         local fightText = display.newText(composer.getVariable("sceneGroup"), "", characterX, characterY-100, native.newFont( customFont), 100)
@@ -45,6 +47,8 @@ local itemsTable = {
     description = "Apre i lucchetti",
     activateFunction = (
     function(posx, posy)
+      local chestSound = audio.loadSound( "audio/eff/chest.mp3" )
+      audio.play( chestSound )
     end)
   },
   cibo = {
@@ -55,8 +59,10 @@ local itemsTable = {
     function(posx, posy)
       local characterX = composer.getVariable( "characterX" )
       local characterY = composer.getVariable( "characterY" )
+      local eatSound = audio.loadSound( "audio/eff/eat.mp3" )
       if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
         print("curato")
+        audio.play( eatSound )
         local curaLower = 90
         local curaUpper = 300
         local fightText = display.newText(composer.getVariable("sceneGroup"), "", characterX, characterY-100, native.newFont( customFont), 100)
@@ -113,7 +119,9 @@ local itemsTable = {
       local characterX = composer.getVariable( "characterX" )
       local characterY = composer.getVariable( "characterY" )
       local character = composer.getVariable("character")
+      local drinkSound = audio.loadSound( "audio/eff/drink.mp3" )
       if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
+        audio.play( drinkSound )
         composer.setVariable("damageBuff", 100)
         character.damageBuff = composer.getVariable( "damageBuff" )
       else
@@ -132,9 +140,11 @@ local itemsTable = {
     function(posx, posy)
       local characterX = composer.getVariable( "characterX" )
       local characterY = composer.getVariable( "characterY" )
+      local bionicSound = audio.loadSound( "audio/eff/bionic.mp3" )
       local character = composer.getVariable("character")
       if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
         composer.setVariable("speedBuff", 100)
+        audio.play( bionicSound )
         character.speedBuff = composer.getVariable( "speedBuff" )
       else
         composer.setVariable("speedBuff", 0)
@@ -152,8 +162,10 @@ local itemsTable = {
   function(posx, posy)
     local characterX = composer.getVariable( "characterX" )
     local characterY = composer.getVariable( "characterY" )
+    local bionicSound = audio.loadSound( "audio/eff/bionic.mp3" )
     if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
       print("curato")
+      audio.play( bionicSound )
       local fightText = display.newText(composer.getVariable("sceneGroup"), "", characterX, characterY-100, native.newFont( customFont), 100)
       local cura = composer.getVariable( "characterMaxLife" )
 

@@ -74,6 +74,18 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
       tabella[a][b]=true
       index=index+1
     else
+      --Aggiunta del nemico al composer
+      local nemici = composer.getVariable( "nemici" )
+      local idNemico
+      if(nemici=="vuoto") then
+        nemici = {}
+        idNemico = 1
+      else
+        idNemico = #nemici + 1
+      end
+      table.insert(nemici, {id=index, enemy=nemico})
+      composer.setVariable( "nemici", nemici )
+
       local stanza={
         NORD=nil,
         SUD=nil,
@@ -131,6 +143,18 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
         tabella[a][b]=true
         trovato=true
       else
+        --Aggiunta del nemico al composer
+        local nemici = composer.getVariable( "nemici" )
+        local idNemico
+        if(nemici=="vuoto") then
+          nemici = {}
+          idNemico = 1
+        else
+          idNemico = #nemici + 1
+        end
+        table.insert(nemici, {id=index, enemy=nemico})
+        composer.setVariable( "nemici", nemici )
+
         local stanza = {
           NORD=nil,
           SUD=mappa[x],
@@ -189,6 +213,18 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
         tabella[a][b]=true
         trovato=true
       else
+        --Aggiunta del nemico al composer
+        local nemici = composer.getVariable( "nemici" )
+        local idNemico
+        if(nemici=="vuoto") then
+          nemici = {}
+          idNemico = 1
+        else
+          idNemico = #nemici + 1
+        end
+        table.insert(nemici, {id=index, enemy=nemico})
+        composer.setVariable( "nemici", nemici )
+
         local stanza = {
           NORD=mappa[x],
           SUD=nil,
@@ -246,6 +282,18 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
         tabella[a][b]=true
         trovato=true
       else
+        --Aggiunta del nemico al composer
+        local nemici = composer.getVariable( "nemici" )
+        local idNemico
+        if(nemici=="vuoto") then
+          nemici = {}
+          idNemico = 1
+        else
+          idNemico = #nemici + 1
+        end
+        table.insert(nemici, {id=index, enemy=nemico})
+        composer.setVariable( "nemici", nemici )
+
         local stanza = {
           NORD=nil,
           SUD=nil,
@@ -303,6 +351,18 @@ local function proceduraleMappaFunzione(index, mappa, numero, tabella, primaX, p
         tabella[a][b]=true
         trovato=true
       else
+        --Aggiunta del nemico al composer
+        local nemici = composer.getVariable( "nemici" )
+        local idNemico
+        if(nemici=="vuoto") then
+          nemici = {}
+          idNemico = 1
+        else
+          idNemico = #nemici + 1
+        end
+        table.insert(nemici, {id=index, enemy=nemico})
+        composer.setVariable( "nemici", nemici )
+
         local stanza = {
           NORD=nil,
           SUD=nil,

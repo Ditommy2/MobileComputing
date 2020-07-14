@@ -24,9 +24,6 @@ local function handleButtonEventNuovaNome(event)
 	if ( "ended" == event.phase ) then
 		if bottone.id=="NuovaPartitaNome" then
 			composer.setVariable( "nomePartita", nomePartita.text )
-			-- local table = {}
-			-- table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
-			-- composer.setVariable( "tabellaOgegttiInventario", table )
 			local partitaDaCercare = composer.getVariable( "nomePartita" )
 			local t = fileHandler.loadTable("save$$"..composer.getVariable("username")..".json")
 			local trovato = false
@@ -42,22 +39,9 @@ local function handleButtonEventNuovaNome(event)
 
 			if not trovato then
 				local lowerFixedMenu = require("lowerFixedMenu")
-				local inv = {"chiaveForziere", "cibo", "cibo", "cibo", "cibo", "cibo", "cibo", "cibo", "cibo", "cibo"}
-				--local inv = {"I054-ham.png", "002-shield-2.png", "016-potion-1.png", "017-hammer.png", "029-key.png", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto"}
-				-- print("inventario caricato: " )
-				-- for x=1, #inv, 1 do
-				-- 	print(inv[x])
-				-- end
-				--
-				-- local invComp = composer.getVariable( "inv" )
-				--
-				-- print("inventario composer prima: " )
-				-- if(not(invComp ==nil)) then
-				-- 	for x=1, #invComp, 1 do
-				-- 		print(invComp[x])
-				-- 	end
-				-- end
+				local inv = {"chiaveForziere", "cibo", "pozioneDanno", "pillolaSpeed", "pozioneMaxVita", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto"}
 
+				composer.setVariable( "nemici", "vuoto" )
 				mappa = lowerFixedMenu.create.mappaGenerata(0, {}, numero, tabella, numero+1, numero+1)
 				mappa.corrente=true
 				funzione=lowerFixedMenu.display
@@ -65,15 +49,6 @@ local function handleButtonEventNuovaNome(event)
 				composer.setVariable( "inv", inv )
 
 				invComp = composer.getVariable( "inv" )
-
-				-- print("inventario composer dopo: " )
-				-- if(not(invComp ==nil)) then
-				-- 	for x=1, #invComp, 1 do
-				-- 		print(invComp[x])
-				-- 	end
-				-- end
-
-
 				composer.setVariable( "armorBuff", 0 )
 				composer.setVariable( "damageBuff", 0 )
 				composer.setVariable( "speedBuff", 0)
@@ -83,6 +58,7 @@ local function handleButtonEventNuovaNome(event)
 				composer.setVariable( "mapy", 200 )
 				composer.setVariable( "statoPartita", {stato = "nuova"} )
 				composer.setVariable( "score", 0 )
+				composer.setVariable( "characterLife", 3000 )
 				composer.removeScene( "Scenes.nuovaCarica" )
 				composer.gotoScene("Scenes.livello1")
 			else
@@ -252,6 +228,7 @@ local function handleLoadButtonEvent(event)
 		composer.setVariable( "armorBuff", salvataggio.armorBuff )
 		composer.setVariable( "damageBuff", salvataggio.damageBuff )
 		composer.setVariable( "speedBuff", salvataggio.speedBuff )
+		composer.setVariable( "nemici", salvataggio.nemici )
 		composer.removeScene( "Scenes.nuovaCarica" )
 		composer.gotoScene("Scenes.livello1")
 	end
