@@ -108,7 +108,7 @@ local function gotoLivello1()
 	composer.setVariable( "enemyX", enemy1.x )
 	composer.setVariable( "enemyY", enemy1.y )
 	composer.setVariable( "tabDrop", enemy1.drop )
-	composer.setVariable( "drop", true )
+	composer.setVariable( "drop", "true" )
 	-- interfaccia.dropItemFunction(enemy1.x, enemy1.y)
 
 	composer.gotoScene( "Scenes.livello1", {time=800, effect="crossFade"} )
@@ -118,7 +118,7 @@ end
 -- Gestione turno nemico
 -- -----------------------------------------------------------------------------------
 local function turnEnemy()
-	local mossa = "mossa" .. 4--math.random(1, 4)
+	local mossa = "mossa" .. math.random(1, 4)
 	print("statistiche enemy e enemy1:\n"..enemy.armor..", "..enemy1.armor.."\n"..enemy.life..", "..enemy1.life.."\n"..enemy.damage..", "..enemy1.damage)
 	if enemy1.stunned == 0 then
 		chanceRandom = math.random(1, 6)
