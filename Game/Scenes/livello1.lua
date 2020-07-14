@@ -468,7 +468,7 @@ function scene:create( event )
       timer.performWithDelay(1500, removeBarDamage)
 
     textDamage:setFillColor(1, 0, 0)
-    local danno = 5000
+    local danno = 500
     textDamage.alpha = 1
     textDamage.text = danno
 
