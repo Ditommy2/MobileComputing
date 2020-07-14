@@ -34,8 +34,18 @@ end
 
 local function attack(pers)
   enemy = pers
-  enemy:addEventListener("sprite", resumeIdleing)
+    if (enemy.suono == "spada") then
+      local spadaSound = audio.loadSound( "audio/eff/spadina.mp3" )
+      audio.play( spadaSound )
+      elseif (enemy.suono == "mazza") then
+        local mazzaSound = audio.loadSound( "audio/eff/mazza.mp3" )
+        audio.play( mazzaSound )
+      else
+        local accettaSound = audio.loadSound( "audio/eff/accetta.mp3" )
+        audio.play( accettaSound )
+    end
 
+  enemy:addEventListener("sprite", resumeIdleing)
   slay()
 end
 
@@ -101,6 +111,7 @@ local function create(scena, nemico)
   enemy.y = altezza-313
   enemy.myName = "Enemy"
   enemy.drop = nemico.drop
+  enemy.suono = nemico.suono
   physics.addBody(enemy, "dynamic", { isSensor=true } )
 
   return enemy
