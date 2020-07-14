@@ -172,7 +172,7 @@ local sequences =
 --Perform movement
 local function move(event)
   local dir = event.source.params.direction
-  local fame = 0.5
+  local fame = 100--0.5
   local passo = 10
   if(not(dir==nil)) then
     if(dir=="r") then
@@ -381,15 +381,18 @@ local function create(scena)
   character.myName = "Character"
 
   local composerLife = composer.getVariable( "characterLife" )
-  if(not(composerLife==nil)) then
-    character.life = composerLife
-    composer.setVariable( "characterLife", character.life )
-  else
-    character.maxLife = 3000
-    composer.setVariable( "characterMaxLife", character.maxLife )
-    character.life = character.maxLife
-    composer.setVariable( "characterLife", character.life )
-  end
+  -- if(not(composerLife==nil)) then
+  --   character.life = composerLife
+  --   composer.setVariable( "characterLife", character.life )
+  -- else
+  --   character.maxLife = 3000
+  --   composer.setVariable( "characterMaxLife", character.maxLife )
+  --   character.life = character.maxLife
+  --   composer.setVariable( "characterLife", character.life )
+  -- end
+
+  character.life = composerLife
+  composer.setVariable( "characterMaxLife", 3000 )
 
   local composerFood = composer.getVariable( "characterFood" )
   if(not(composerFood==nil)) then
@@ -434,7 +437,7 @@ local function gotoNuovaCarica()
   audio.stop( 3 )
   audio.stop( 2 )
   audio.play( menuTrack, {channel =1 , loops = -1})
-  composer.setVariable( "characterLife", nil )
+
   composer.removeScene( "Scenes.fight" )
   composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
 end

@@ -58,6 +58,7 @@ local function handleButtonEventNuovaNome(event)
 				composer.setVariable( "mapy", 200 )
 				composer.setVariable( "statoPartita", {stato = "nuova"} )
 				composer.setVariable( "score", 0 )
+				composer.setVariable( "characterLife", 3000 )
 				composer.removeScene( "Scenes.nuovaCarica" )
 				composer.gotoScene("Scenes.livello1")
 			else
