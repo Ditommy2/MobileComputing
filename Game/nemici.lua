@@ -15,18 +15,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -73,18 +77,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -131,18 +139,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -189,18 +201,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -247,18 +263,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -305,18 +325,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
-      hitChance=5,
+      hitChance=5,effect = {target = "life", value = -200}
+
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -363,18 +387,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -421,18 +449,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -479,18 +511,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -537,18 +573,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -595,18 +635,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -653,18 +697,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -711,18 +759,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -769,18 +821,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -827,18 +883,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -885,18 +945,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -943,18 +1007,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -1001,18 +1069,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -1059,18 +1131,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -1117,18 +1193,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {
@@ -1175,18 +1255,22 @@ local nemici ={
     mossa1={
       damage=1,
       hitChance=5,
+      effect = {target = "armor", value = -2}
     },
     mossa2={
       damage=0.7,
       hitChance=5,
+      effect = {target = "damage", value = -5}
     },
     mossa3={
       damage=0.8,
       hitChance=5,
+      effect = {target = "life", value = -200}
     },
     mossa4={
       damage=0.9,
       hitChance=5,
+      effect = {target = "stunned", value = 2}
     },
     sheet_idle =
     {

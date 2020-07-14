@@ -34,6 +34,12 @@ local fightText
 
 --Game objects
 local character = characterInterface.creaPersonaggio(self)
+character["stunned"] = 0
+local startingStats = {
+	speed = character.speed,
+	armor = character.armor,
+	damage = character.damage
+}
 local punteggioPartita = 0
 -- local enemy1 = enemyInterface.createEnemy(self, stanzaCorrente.nemici[1])
 local enemy1
@@ -92,7 +98,7 @@ end
 
 local function gotoLivello1()
 	audio.stop( 3 )
-  audio.play( gameTrack, {channel =2 , loops = -1})
+	audio.play( gameTrack, {channel =2 , loops = -1})
 	composer.setVariable( "characterLife", character.life )
 	composer.removeScene( "Scenes.fight" )
 	composer.setVariable("endFight", "true")
@@ -112,66 +118,97 @@ end
 -- Gestione turno nemico
 -- -----------------------------------------------------------------------------------
 local function turnEnemy()
-	local mossa = "mossa" .. math.random(1, 4)
+	local mossa = "mossa" .. 4--math.random(1, 4)
 	print("statistiche enemy e enemy1:\n"..enemy.armor..", "..enemy1.armor.."\n"..enemy.life..", "..enemy1.life.."\n"..enemy.damage..", "..enemy1.damage)
-if enemy1.stunned == 0 then
-	chanceRandom = math.random(1, 6)
-	while(chanceRandom == 6) do
-		sommaChance = sommaChance + chanceRandom
+	if enemy1.stunned == 0 then
 		chanceRandom = math.random(1, 6)
-	end
-	sommaChance = sommaChance + chanceRandom
-
-	totChance = sommaChance + enemy[mossa].hitChance
-
-	if(totChance > character.armor) then
-		enemyInterface.attacca(enemy1)
-
-		fightText.alpha = 1
-		fightText.x = 250
-		fightText.text = "Hit!"
-		timer.performWithDelay( 1500, removeTextFight )
-		characterInterface.esegui(5, character)
-
-		attackRandom = math.random(1, 50)
-		totAttacco = (attackRandom + enemy1.damage) * enemy[mossa].damage
-
-		local attacco, resto = math.modf(totAttacco)
-		textDamageEnemy.text = attacco
-		textDamageEnemy.alpha = 1
-		timer.performWithDelay(1500, removeTextDamageEnemy)
-
-		if(character.life > attacco) then
-			--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
-			local rapporto = lifeBarCharacter.width / character.life
-			local x = totAttacco * rapporto		--Pixel dal levare
-
-			character.life = character.life - totAttacco
-			lifeBarCharacter.width = lifeBarCharacter.width - x
-			lifeBarCharacter.x = lifeBarCharacter.x - x/2
-		else --Danno > vita => nemico morto
-			character.life = 0
-			display.remove( lifeBarCharacter )
+		local criticalEffect = {target="false"}
+		while(chanceRandom == 6) do --==6
+			sommaChance = sommaChance + chanceRandom
+			chanceRandom = math.random(1, 6)
+			criticalEffect = enemy[mossa].effect
 		end
+		sommaChance = sommaChance + chanceRandom
+
+		totChance = sommaChance + enemy[mossa].hitChance
+
+		if(totChance > character.armor) then
+			enemyInterface.attacca(enemy1)
+
+			if not(criticalEffect.target == "false") then
+				print("effetto critico aplicato : "..criticalEffect.target..", "..criticalEffect.value)
+				fightText.alpha = 1
+				fightText.x = 250
+				fightText.text = "Critical Hit!"
+			else
+
+				fightText.alpha = 1
+				fightText.x = 250
+				fightText.text = "Hit!"
+
+
+			end
+			timer.performWithDelay( 1500, removeTextFight )
+			characterInterface.esegui(5, character)
+			attackRandom = math.random(1, 50)
+			totAttacco = (attackRandom + enemy1.damage) * enemy[mossa].damage
+
+			local attacco, resto = math.modf(totAttacco)
+			textDamageEnemy.text = attacco
+			textDamageEnemy.alpha = 1
+			timer.performWithDelay(1500, removeTextDamageEnemy)
+
+			if not(criticalEffect.target == "false") then
+				local app = character[criticalEffect.target]
+				character[criticalEffect.target] = app + criticalEffect.value
+
+			end
+			if(character.life > attacco) then
+				--Rapporto dei pixel della barra con i punti vita, per poter convertire il danno in pixel da 'levare'
+				local rapporto = lifeBarCharacter.width / character.life
+				local x = totAttacco * rapporto		--Pixel dal levare
+
+				character.life = character.life - totAttacco
+				lifeBarCharacter.width = lifeBarCharacter.width - x
+				lifeBarCharacter.x = lifeBarCharacter.x - x/2
+			else --Danno > vita => nemico morto
+				character.life = 0
+				display.remove( lifeBarCharacter )
+			end
+
+		else
+			fightText.alpha = 1
+			fightText.x = 250
+			fightText.text = "Missed!"
+			timer.performWithDelay( 1500, removeTextFight )
+		end
+
 	else
 		fightText.alpha = 1
-		fightText.x = 250
-		fightText.text = "Missed!"
+		fightText.x = 1000
+		fightText.text = "Stunned!"
 		timer.performWithDelay( 1500, removeTextFight )
+		enemy1.stunned = 0
 	end
-
-else
-	fightText.alpha = 1
-	fightText.x = 1000
-	fightText.text = "Stunned!"
-	timer.performWithDelay( 1500, removeTextFight )
-	enemy1.stunned = 0
-end
 
 	if(character.life > 0) then
 		timer.performWithDelay( 1500, changeStarTuo)
-		timer.performWithDelay(3000, eseguiMossa)
-		timer.performWithDelay(3000, addTasto)
+		--timer.performWithDelay(3000, eseguiMossa)
+		if character["stunned"]==0 then
+			timer.performWithDelay(3000, addTasto)
+		else
+			local function stunnedCharacterFunction()
+				fightText.alpha = 1
+				fightText.x = 250
+				fightText.text = "Stunned!"
+				timer.performWithDelay( 1500, removeTextFight )
+				enemy1.stunned = 0
+				character["stunned"]=0
+				timer.performWithDelay( 1000, changeStarAvv)
+				timer.performWithDelay(3000, turnEnemy)
+			end
+			timer.performWithDelay( 3100, stunnedCharacterFunction )
+		end
 	else
 		characterInterface.gameOver(textGroup)
 		fightText:setFillColor(0, 0, 0)
@@ -246,7 +283,7 @@ local function calcolaDanno()
 	local criticalEffect = {target = "false"}
 	--Vedo se colpisco il nemico
 	chanceRandom = math.random(1, 6)
-	while(chanceRandom < 6) do  --(chanceRandom == 6)
+	while(chanceRandom == 6) do  --(chanceRandom == 6)
 		sommaChance = sommaChance + chanceRandom
 		chanceRandom = math.random(1, 6)
 		criticalEffect = character[mossa].effect
@@ -266,7 +303,7 @@ local function calcolaDanno()
 			fightText.alpha = 1
 			fightText.x = 1000
 			fightText.text = "Hit!"
-	  end
+		end
 		timer.performWithDelay( 1500, removeTextFight )
 
 		attackRandom = math.random(1, 50)
@@ -279,7 +316,6 @@ local function calcolaDanno()
 		if not(criticalEffect.target == "false") then
 			local app = enemy1[criticalEffect.target]
 			enemy1[criticalEffect.target] = app + criticalEffect.value
-
 		end
 
 		if(enemy1.life > attacco) then
@@ -296,6 +332,10 @@ local function calcolaDanno()
 			display.remove( lifeBarEnemy )
 			punteggioPartita = composer.getVariable("score") + enemy.points
 			composer.setVariable( "score", punteggioPartita )
+
+			character.speed = startingStats.speed
+			character.armor = startingStats.armor
+			character.damage = startingStats.damage
 		end
 	else
 		fightText.alpha = 1
@@ -310,43 +350,30 @@ end
 -- -----------------------------------------------------------------------------------
 local function eseguiMossa()
 	local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
-	if(not(numeroMossa==nil)) then
-		if(turno == "personaggio") then
-			calcolaDanno()
-			characterInterface.esegui(numeroMossa, character)
-
-			-- timer.performWithDelay( 5000, character:setSequence("rightIdle"))
-			-- timer.performWithDelay( 5000, character:play())
-
-			if(enemy1.life > 0) then
-				turno = "nemico"
-				timer.performWithDelay( 1000, changeStarAvv)
-				timer.performWithDelay(3000, turnEnemy)
-				textDamage.alpha = 1
-				enemy1:removeEventListener("tap", eseguiMossa)
-			else
-				composer.setVariable( "damageBuff", 0 )
-				composer.setVariable( "speedBuff", 0)
-				enemy1:removeEventListener("tap", eseguiMossa)
-				transition.to( enemy1 , { time=3000, alpha=0 } )
-
-				local nemici = composer.getVariable( "nemici" )
-				local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
-				print("index stanza corrente: " .. stanzaCorrente.TESTO)
-				for i=1, #nemici, 1 do
-				-- print("id nemico: " .. nemici[i].id)
-					if(stanzaCorrente.TESTO == nemici[i].id) then
-						table.remove( nemici, i )
-						break
-					end
+	print("statistiche del personaggio (armor, life, damage): \n"..character.armor.."\n"..character.life.."\n"..character.damage.."\n"..character.stunned)
+		if(not(numeroMossa==nil)) then
+			if(turno == "personaggio") then
+				calcolaDanno()
+				characterInterface.esegui(numeroMossa, character)
+				if(enemy1.life > 0) then
+					turno = "nemico"
+					timer.performWithDelay( 1000, changeStarAvv)
+					timer.performWithDelay(3000, turnEnemy)
+					textDamage.alpha = 1
+					enemy1:removeEventListener("tap", eseguiMossa)
+				else
+					composer.setVariable( "damageBuff", 0 )
+					composer.setVariable( "speedBuff", 0)
+					enemy1:removeEventListener("tap", eseguiMossa)
+					transition.to( enemy1 , { time=3000, alpha=0 } )
+					stanzaCorrente.nemici[1] = nil
+					composer.setVariable( "stanzaCorrente", stanzaCorrente )
+					timer.performWithDelay( 5000, gotoLivello1 )
 				end
-
-				stanzaCorrente.nemici[1] = nil
-				composer.setVariable( "stanzaCorrente", stanzaCorrente )
-				timer.performWithDelay( 5000, gotoLivello1 )
 			end
 		end
-	end
+
+
 end
 
 function addTasto()
@@ -473,7 +500,7 @@ function scene:show( event )
 	elseif ( phase == "did" ) then
 		-- Code here runs when the scene is entirely on screen
 		audio.stop( 2 )
-    audio.play( fightTrack, { channel=3, loops=-1 } )
+		audio.play( fightTrack, { channel=3, loops=-1 } )
 	end
 end
 
@@ -501,9 +528,9 @@ function scene:destroy( event )
 	local sceneGroup = self.view
 	-- Code here runs prior to the removal of scene's view
 	for i = sceneGroup.numChildren, 1, -1 do
-    sceneGroup[i]:removeSelf()
-    sceneGroup[i] = nil
-  end
+		sceneGroup[i]:removeSelf()
+		sceneGroup[i] = nil
+	end
 end
 
 -- -----------------------------------------------------------------------------------
