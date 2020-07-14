@@ -431,12 +431,11 @@ function scene:create( event )
       end
 
     	textDamage:setFillColor(1, 0, 0)
-      local danno = 5000
+      local danno = 500
       textDamage.alpha = 1
   		textDamage.text = danno
 
       local vitaPersonaggio = composer.getVariable( "characterLife" )
-      composer.setVariable( "characterLife", vitaPersonaggio-danno )
 
       local  lifeBarCharacterBlack = display.newImageRect( mainGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
       lifeBarCharacterBlack.alpha = 1
@@ -447,10 +446,18 @@ function scene:create( event )
       lifeBarCharacter.alpha = 1
     	lifeBarCharacter.x = character.x
     	lifeBarCharacter.y = character.y - character.height
-      local rapporto = lifeBarCharacter.width / composer.getVariable( "characterLife" )
-      local x = danno * rapporto		--Pixel dal levare
+      print("lunghezza barra prima: " .. lifeBarCharacter.width)
+      -- local rapporto = lifeBarCharacter.width / composer.getVariable( "characterLife" )
+      local rapporto = lifeBarCharacter.width / 3000
+      print("rapporto: " .. rapporto)
+      print("vitaPersonaggio: " .. vitaPersonaggio)
+      local x = (3000 - (vitaPersonaggio - danno)) * rapporto		--Pixel dal levare
+      print("pixel calcolati: " .. x)
+      -- lifeBarCharacter.width = (rapporto * composer.getVariable( "characterLife" )) - x
       lifeBarCharacter.width = lifeBarCharacter.width - x
       lifeBarCharacter.x = lifeBarCharacter.x - x/2
+      print("lunghezza barra dopo: " .. lifeBarCharacter.width)
+      composer.setVariable( "characterLife", vitaPersonaggio-danno )
 
       local function removeBarDamage()
         lifeBarCharacter.alpha = 0
