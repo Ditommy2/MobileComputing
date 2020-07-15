@@ -4,6 +4,7 @@ local nemici ={
     immagine ="Images/Enemies/FallenAngel1/Idle.png",
     attack ="Images/Enemies/FallenAngel1/slashing.png",
     hurt ="Images/Enemies/FallenAngel1/hurt.png",
+    die ="Images/Enemies/FallenAngel1/die.png",
     suono = "spada",
     life= 900,
     damage= 70,
@@ -46,6 +47,18 @@ local nemici ={
       height=173,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=188,
+      height=178,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=175,
+      height=205,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -59,6 +72,22 @@ local nemici ={
       start = 1,
       count = 25,
       time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
       loopCount = 1,
       loopDirection = "forward",
     },
@@ -110,6 +139,12 @@ local nemici ={
       height=177,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=202,
+      height=183,
+      frames=25,
+    },
     idleOptions=
     {
       start = 1,
@@ -119,6 +154,14 @@ local nemici ={
       loopDirection = "forward",
     },
     attackOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    hurtOptions=
     {
       start = 1,
       count = 25,
@@ -174,6 +217,12 @@ local nemici ={
       height=181,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=196,
+      height=186,
+      frames=25,
+    },
     idleOptions=
     {
         start = 1,
@@ -183,6 +232,14 @@ local nemici ={
         loopDirection = "forward"
     },
     attackOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    hurtOptions=
     {
       start = 1,
       count = 25,

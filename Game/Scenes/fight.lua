@@ -288,7 +288,7 @@ local function calcolaDanno()
 
 	--Ho colpito il nemico
 	if(sommaChance > enemy1.armor) then
-
+		enemyInterface.danno(enemy1)
 		if not(criticalEffect.target == "false") then
 			print("effetto critico aplicato : "..criticalEffect.target..", "..criticalEffect.value)
 			fightText.alpha = 1
@@ -323,6 +323,7 @@ local function calcolaDanno()
 			lifeBarEnemy.width = lifeBarEnemy.width - x
 			lifeBarEnemy.x = lifeBarEnemy.x - x/2
 		else --Danno > vita => nemico morto
+			enemyInterface.muori(enemy1)
 			enemy1.life = 0
 			display.remove( lifeBarEnemy )
 			punteggioPartita = composer.getVariable("score") + enemy.points
