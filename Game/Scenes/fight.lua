@@ -45,10 +45,9 @@ local punteggioPartita = 0
 local enemy1
 local numeroMossa
 local chanceRandom
-local totChance
+
 local attackRandom
 local totAttacco
-local sommaChance = 0
 local turno
 local turnoHourglass
 -- local enemy = stanzaCorrente.nemici[1]
@@ -118,15 +117,17 @@ local function turnEnemy()
 	if enemy1.stunned == 0 then
 		chanceRandom = math.random(1, 6)
 		local criticalEffect = {target="false"}
+		local sommaChance = 0
 		while(chanceRandom == 6) do --==6
 			sommaChance = sommaChance + chanceRandom
 			chanceRandom = math.random(1, 6)
 			criticalEffect = enemy[mossa].effect
 		end
+
 		sommaChance = sommaChance + chanceRandom
-
+		local totChance = 0
 		totChance = sommaChance + enemy[mossa].hitChance
-
+		print("tiro totale per colpire "..totChance)
 		if(totChance > character.armor) then
 			enemyInterface.attacca(enemy1)
 
@@ -277,15 +278,15 @@ local function calcolaDanno()
 	local mossa = "mossa" .. numeroMossa	--Prendo la mossa
 	local criticalEffect = {target = "false"}
 	--Vedo se colpisco il nemico
+	local sommaChance = 0
 	chanceRandom = math.random(1, 6)
 	while(chanceRandom == 6) do  --(chanceRandom == 6)
 		sommaChance = sommaChance + chanceRandom
 		chanceRandom = math.random(1, 6)
 		criticalEffect = character[mossa].effect
 	end
-
 	sommaChance = sommaChance + chanceRandom + character[mossa].hitChance
-
+	print("Tiro totale per colpire "..sommaChance)
 	--Ho colpito il nemico
 	if(sommaChance > enemy1.armor) then
 
