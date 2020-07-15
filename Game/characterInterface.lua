@@ -319,6 +319,7 @@ end
 
 local function mossa1()
   local punchSound = audio.loadSound( "audio/eff/punch.mp3" )
+  audio.setVolume( 0.5 )
   audio.play( punchSound )
   personaggio:setSequence("punch")
   personaggio:play()
@@ -326,6 +327,7 @@ end
 
 local function mossa2()
   local kickSound = audio.loadSound( "audio/eff/kick.mp3" )
+  audio.setVolume( 0.5 )
   audio.play( kickSound )
   personaggio:setSequence("kick")
   personaggio:play()
@@ -333,6 +335,7 @@ end
 
 local function mossa3()
   local swordSound = audio.loadSound( "audio/eff/sword.mp3" )
+  audio.setVolume( 0.5 )
   audio.play( swordSound )
   personaggio:setSequence("slay")
   personaggio:play()
@@ -340,6 +343,7 @@ end
 
 local function mossa4()
   local stunSound = audio.loadSound( "audio/eff/stun.mp3" )
+  audio.setVolume( 0.5 )
   audio.play( stunSound )
 end
 
@@ -478,6 +482,7 @@ local function die(group)
   audio.stop( 3 )
   audio.stop( 2 )
   local gameOverSound = audio.loadSound( "audio/eff/GameOver.mp3" )
+  audio.setVolume( 0.5 )
   audio.play( gameOverSound )
   local gameOverBack = display.newImageRect(group, "Images/Backgrounds/Black.jpg", 1280, 720)
   gameOverBack.x = display.contentCenterX
