@@ -14,6 +14,7 @@ local itemsTable = {
       local characterX = composer.getVariable( "characterX" )
       local characterY = composer.getVariable( "characterY" )
       local drinkSound = audio.loadSound( "audio/eff/drink.mp3" )
+      audio.setVolume( 0.5 )
       if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
         print("curato")
         audio.play( drinkSound )
@@ -48,6 +49,7 @@ local itemsTable = {
     activateFunction = (
     function(posx, posy)
       local chestSound = audio.loadSound( "audio/eff/chest.mp3" )
+      audio.setVolume( 0.5 )
       audio.play( chestSound )
     end)
   },
@@ -60,6 +62,7 @@ local itemsTable = {
       local characterX = composer.getVariable( "characterX" )
       local characterY = composer.getVariable( "characterY" )
       local eatSound = audio.loadSound( "audio/eff/eat.mp3" )
+      audio.setVolume( 0.5 )
       if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
         print("curato")
         audio.play( eatSound )
@@ -120,6 +123,7 @@ local itemsTable = {
       local characterY = composer.getVariable( "characterY" )
       local character = composer.getVariable("character")
       local drinkSound = audio.loadSound( "audio/eff/drink.mp3" )
+      audio.setVolume( 0.5 )
       if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
         audio.play( drinkSound )
         composer.setVariable("damageBuff", 100)
@@ -141,6 +145,7 @@ local itemsTable = {
       local characterX = composer.getVariable( "characterX" )
       local characterY = composer.getVariable( "characterY" )
       local bionicSound = audio.loadSound( "audio/eff/bionic.mp3" )
+      audio.setVolume( 0.5 )
       local character = composer.getVariable("character")
       if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
         composer.setVariable("speedBuff", 100)
@@ -163,6 +168,7 @@ local itemsTable = {
     local characterX = composer.getVariable( "characterX" )
     local characterY = composer.getVariable( "characterY" )
     local bionicSound = audio.loadSound( "audio/eff/bionic.mp3" )
+    audio.setVolume( 0.5 )
     if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
       print("curato")
       audio.play( bionicSound )
