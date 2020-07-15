@@ -444,21 +444,24 @@ function scene:create( event )
     	lifeBarCharacterBlack.y = character.y - character.height
 
     	local lifeBarCharacter = display.newImageRect( mainGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
+      lifeBarCharacter.anchorX = 0
+      lifeBarCharacter.anchorY = 0.5
       lifeBarCharacter.alpha = 1
-    	lifeBarCharacter.x = character.x
+    	lifeBarCharacter.x = lifeBarCharacterBlack.x - (lifeBarCharacterBlack.width/2)
     	lifeBarCharacter.y = character.y - character.height
       print("lunghezza barra prima: " .. lifeBarCharacter.width)
       -- local rapporto = lifeBarCharacter.width / composer.getVariable( "characterLife" )
       local rapporto = lifeBarCharacter.width / 3000
       print("rapporto: " .. rapporto)
-      print("vitaPersonaggio: " .. vitaPersonaggio)
+      print("vitaPersonaggio prima: " .. vitaPersonaggio)
       local x = (3000 - (vitaPersonaggio - danno)) * rapporto		--Pixel dal levare
       print("pixel calcolati: " .. x)
       -- lifeBarCharacter.width = (rapporto * composer.getVariable( "characterLife" )) - x
       lifeBarCharacter.width = lifeBarCharacter.width - x
-      lifeBarCharacter.x = lifeBarCharacter.x - x/2
+      -- lifeBarCharacter.x = lifeBarCharacter.x - x/2
       print("lunghezza barra dopo: " .. lifeBarCharacter.width)
-      composer.setVariable( "characterLife", vitaPersonaggio-danno )
+      composer.setVariable( "characterLife", vitaPersonaggio-danno)
+      print("vitaPersonaggio dopo: " .. vitaPersonaggio-danno)
 
       local function removeBarDamage()
         lifeBarCharacter.alpha = 0
@@ -472,29 +475,29 @@ function scene:create( event )
     textDamage.alpha = 1
     textDamage.text = danno
 
-    local vitaPersonaggio = composer.getVariable( "characterLife" )
-    composer.setVariable( "characterLife", vitaPersonaggio-danno )
-
-    local  lifeBarCharacterBlack = display.newImageRect( mainGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
-    lifeBarCharacterBlack.alpha = 1
-    lifeBarCharacterBlack.x = character.x
-    lifeBarCharacterBlack.y = character.y - character.height
-
-    local lifeBarCharacter = display.newImageRect( mainGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
-    lifeBarCharacter.alpha = 1
-    lifeBarCharacter.x = character.x
-    lifeBarCharacter.y = character.y - character.height
-    local rapporto = lifeBarCharacter.width / composer.getVariable( "characterLife" )
-    local x = danno * rapporto		--Pixel dal levare
-    lifeBarCharacter.width = lifeBarCharacter.width - x
-    lifeBarCharacter.x = lifeBarCharacter.x - x/2
-
-    local function removeBarDamage()
-      lifeBarCharacter.alpha = 0
-      lifeBarCharacterBlack.alpha = 0
-    end
-    timer.performWithDelay(1500, removeTextDamage)
-    timer.performWithDelay(1500, removeBarDamage)
+    -- local vitaPersonaggio = composer.getVariable( "characterLife" )
+    -- composer.setVariable( "characterLife", vitaPersonaggio-danno )
+    --
+    -- local  lifeBarCharacterBlack = display.newImageRect( mainGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
+    -- lifeBarCharacterBlack.alpha = 1
+    -- lifeBarCharacterBlack.x = character.x
+    -- lifeBarCharacterBlack.y = character.y - character.height
+    --
+    -- local lifeBarCharacter = display.newImageRect( mainGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
+    -- lifeBarCharacter.alpha = 1
+    -- lifeBarCharacter.x = character.x
+    -- lifeBarCharacter.y = character.y - character.height
+    -- local rapporto = lifeBarCharacter.width / composer.getVariable( "characterLife" )
+    -- local x = danno * rapporto		--Pixel dal levare
+    -- lifeBarCharacter.width = lifeBarCharacter.width - x
+    -- lifeBarCharacter.x = lifeBarCharacter.x - x/2
+    --
+    -- local function removeBarDamage()
+    --   lifeBarCharacter.alpha = 0
+    --   lifeBarCharacterBlack.alpha = 0
+    -- end
+    -- timer.performWithDelay(1500, removeTextDamage)
+    -- timer.performWithDelay(1500, removeBarDamage)
 
   end
 
