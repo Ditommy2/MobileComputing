@@ -127,8 +127,8 @@ local function turnEnemy()
 		sommaChance = sommaChance + chanceRandom
 		local totChance = 0
 		totChance = sommaChance + enemy[mossa].hitChance
-		print("tiro totale per colpire "..totChance)
-		if(totChance > character.armor) then
+		print("tiro totale per colpire nemico->personaggio"..totChance)
+		if(totChance >= character.armor) then
 			enemyInterface.attacca(enemy1)
 
 			if not(criticalEffect.target == "false") then
@@ -173,6 +173,7 @@ local function turnEnemy()
 			end
 
 		else
+			textDamageEnemy.alpha=0
 			fightText.alpha = 1
 			fightText.x = 250
 			fightText.text = "Missed!"
@@ -286,7 +287,7 @@ local function calcolaDanno()
 		criticalEffect = character[mossa].effect
 	end
 	sommaChance = sommaChance + chanceRandom + character[mossa].hitChance
-	print("Tiro totale per colpire "..sommaChance)
+	print("Tiro totale per colpire personaggio->nemico"..sommaChance)
 	--Ho colpito il nemico
 	if(sommaChance > enemy1.armor) then
 
@@ -307,6 +308,7 @@ local function calcolaDanno()
 
 		local attacco, resto = math.modf(totAttacco)
 		textDamage.text = attacco
+		textDamage.alpha = 1
 		timer.performWithDelay(1500, removeTextDamageCharacter)
 
 		if not(criticalEffect.target == "false") then
@@ -350,6 +352,7 @@ local function calcolaDanno()
 		fightText.x = 1000
 		fightText.text = "Missed!"
 		timer.performWithDelay( 1500, removeTextFight )
+		timer.performWithDelay(1500, removeTextDamageCharacter)
 	end
 end
 
@@ -367,7 +370,7 @@ local function eseguiMossa()
 					turno = "nemico"
 					timer.performWithDelay( 1000, changeStarAvv)
 					timer.performWithDelay(3000, turnEnemy)
-					textDamage.alpha = 1
+
 					enemy1:removeEventListener("tap", eseguiMossa)
 				else
 					composer.setVariable( "damageBuff", 0 )
