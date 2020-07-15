@@ -194,7 +194,6 @@ scrollView:insert( background1 )
 local background2 = display.newImageRect(  "Images/Backgrounds/brickWall.jpg", lunghezza, 920)
 background2.x=scrollView.x-200
 background2.y=scrollView.y+920
-
 scrollView:insert( background2 )
 
 local function handleBackButtonEvent(event)
@@ -257,9 +256,9 @@ for i = #salvataggi, 1, -1 do
 	print (salvataggi[i].nomeSalvataggio)
 	local saveButton = widget.newButton({
 		shape = "roundedRect",
-		x = background1.x * 0.3,
-		y = background1.y * 0.2 * (i+1),
-		width=background1.width*0.99999,
+		x = background1.x, -------------------------------------------------* 0.3,
+		y = (background1.y-270) * (i+1),-------------------------------------------------* 0.2 * (i+1),
+		width=background1.width-600,
 		height=background1.height * 0.07,
 		id = i,
 		label = "SAVE "..i..":"..salvataggi[i].nomeSalvataggio,
