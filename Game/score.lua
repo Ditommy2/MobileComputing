@@ -51,6 +51,9 @@ local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sc
 
   scrollView:insert( background2 )
 
+  local textBackground = display.newRect(background1.x, background1.y, lunghezza-40, 1840)
+  textBackground:setFillColor(0.32, 0.36, 0.4)
+  scrollView:insert(textBackground)
   -------------------------------------------------------------------------------------------------------------------------------------------
   -- Visualizzazione dell'elenco dei punteggi
   -------------------------------------------------------------------------------------------------------------------------------------------
@@ -65,12 +68,19 @@ local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sc
 
   local screenW, screenH, halfW, halfH = lunghezza, display.viewableContentHeight, lunghezza*0.5, display.viewableContentHeight*0.5
 
+
+
   local punteggiText = display.newText({text="PUNTEGGI", x=125, y=180, width=200, height=70, font=customFont, fontSize=60})
   local posText = display.newText({text="POS", x=125, y=250, width=200, height=70, font=customFont, fontSize=60})
   local scoreText = display.newText({text="SCORE", x=320, y=250, width=200, height=70, font=customFont, fontSize=60})
   local playerText = display.newText({text="PLAYER", x=520, y=250, width=200, height=70, font=customFont, fontSize=60})
   local gameText = display.newText({text="GAME", x=720, y=250, width=200, height=70, font=customFont, fontSize=60})
-
+  local colore={0.8, 0.58, 0.05}
+  punteggiText:setFillColor(colore[1], colore[2], colore[3])
+  posText:setFillColor(colore[1], colore[2], colore[3])
+  scoreText:setFillColor(colore[1], colore[2], colore[3])
+  playerText:setFillColor(colore[1], colore[2], colore[3])
+  gameText:setFillColor(colore[1], colore[2], colore[3])
   scrollView:insert(punteggiText)
   scrollView:insert(posText)
   scrollView:insert(scoreText)
@@ -126,6 +136,7 @@ local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sc
   			align = "left"
   		}
   		local label1 = display.newText( options )
+      label1:setFillColor(colore[1], colore[2], colore[3])
   		label1.anchorX = 0
   		label1.anchorY = 0
 
