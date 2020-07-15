@@ -474,31 +474,6 @@ function scene:create( event )
     local danno = 500
     textDamage.alpha = 1
     textDamage.text = danno
-
-    -- local vitaPersonaggio = composer.getVariable( "characterLife" )
-    -- composer.setVariable( "characterLife", vitaPersonaggio-danno )
-    --
-    -- local  lifeBarCharacterBlack = display.newImageRect( mainGroup, "Images/Utility/lifeBarBlack.png", 200, 200 )
-    -- lifeBarCharacterBlack.alpha = 1
-    -- lifeBarCharacterBlack.x = character.x
-    -- lifeBarCharacterBlack.y = character.y - character.height
-    --
-    -- local lifeBarCharacter = display.newImageRect( mainGroup, "Images/Utility/lifeBarGreen.png", 200, 200 )
-    -- lifeBarCharacter.alpha = 1
-    -- lifeBarCharacter.x = character.x
-    -- lifeBarCharacter.y = character.y - character.height
-    -- local rapporto = lifeBarCharacter.width / composer.getVariable( "characterLife" )
-    -- local x = danno * rapporto		--Pixel dal levare
-    -- lifeBarCharacter.width = lifeBarCharacter.width - x
-    -- lifeBarCharacter.x = lifeBarCharacter.x - x/2
-    --
-    -- local function removeBarDamage()
-    --   lifeBarCharacter.alpha = 0
-    --   lifeBarCharacterBlack.alpha = 0
-    -- end
-    -- timer.performWithDelay(1500, removeTextDamage)
-    -- timer.performWithDelay(1500, removeBarDamage)
-
   end
 
 
