@@ -35,7 +35,14 @@ local function stopping(event)
   if(event.phase == "ended") then
     -- enemy:pause()
     enemy:setSequence("die")
-    enemy:setFrame(30)
+
+    if(sheet_die_Options.numFrames == 30) then
+      enemy:setFrame(30)
+    end
+
+    if(sheet_die_Options.numFrames == 60) then
+      enemy:setFrame(60)
+    end
   end
 end
 

@@ -5,9 +5,9 @@ local altezza=  lunghezza*(9/16)
 local math = require("math")
 local nemici = require("nemici")
 local curios = require("curios")
-local spawnRatioNemiciUpper = 27  --circa il 70% di spawn rate
-local spawnRatioNemiciLower = 1 --1
-local spawnRatioCurioLower = 3
+local spawnRatioNemiciUpper = 21--27  --circa il 70% di spawn rate
+local spawnRatioNemiciLower = 21 --1
+local spawnRatioCurioLower = 4
 local spawnRatioCurioUpper = 4
 local numeroBackgroundTotali = 9
 local token
