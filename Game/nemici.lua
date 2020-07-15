@@ -1224,6 +1224,7 @@ local nemici ={
       height=173,
       frames=25,
     },
+
     idleOptions=
     {
       start = 1,
@@ -1240,6 +1241,7 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+
   },
 
   nemico15={  --OK
@@ -1287,6 +1289,7 @@ local nemici ={
       height=171,
       frames=25,
     },
+
     idleOptions=
     {
       start = 1,
@@ -1303,6 +1306,7 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+
   },
 
   nemico16={    --OK

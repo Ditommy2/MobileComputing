@@ -58,7 +58,7 @@ local textBackground = display.newRect(background1.x, background1.y, lunghezza-4
 textBackground:setFillColor(0.32, 0.36, 0.4)
 scrollView:insert(textBackground)
 
-local textTutorial1 = display.newText(  "Benvenuto nel Danger Dungeon!!\n\nLa tua avventura inizia in questa stanza, tocca il lato destro o sinistro per muoverti nella rispettiva direzione.\n\nQuando avrai raggiunto l'altro capo della stanza scegli la prossima destinazione d esplora il labirinto!\n\nRicordati di usare la mappa che ti e' stata data, che puoi navigare in basso a sinistra!",
+local textTutorial1 = display.newText(  "Benvenuto nel Danger Dungeon!!\nIn queste gallerie senza fine gli Eroi hanno l'opportunita' di dimostrare il loro valore!\n\nLa tua avventura inizia in questa stanza, tocca il lato destro o sinistro per muoverti nella rispettiva direzione.\n\nQuando avrai raggiunto l'altro capo della stanza scegli la prossima destinazione d esplora il labirinto!\n\nRicordati di usare la mappa che ti e' stata data, che puoi navigare in basso a sinistra!",
 textBackground.x,
 textBackground.y,
 customFont,
@@ -74,7 +74,7 @@ local textBackground2 = display.newRect(tutorial1Image.x, tutorial1Image.y + tut
 textBackground2:setFillColor(0.32, 0.36, 0.4)
 scrollView:insert(textBackground2)
 
-local textTutorial2 = display.newText(  "Nel corso della tua avventura potresti trovare degli oggetti utili o persino dei tesori.\n\nUn bravo avventuriero sa come ottenere il massimo da quello che trova,\nquindi ricordati di trascinare gli oggetti che trovi nel tuo inventario!\n\nTocca una volta l'oggetto raccolto per scoprirne gli effetti e trascinalo sul bersaglio quando desidedri usarlo.\n\nRicorda di fare particolare attenzione alle provviste, non vorrai morire di fame!",
+local textTutorial2 = display.newText(  "Nel corso della tua avventura potresti trovare degli oggetti utili o persino dei tesori.\n\nUn bravo avventuriero sa come ottenere il massimo da quello che trova,\nquindi ricordati di trascinare gli oggetti che trovi nel tuo inventario!\n\nTocca una volta l'oggetto raccolto per scoprirne gli effetti e trascinalo sul bersaglio quando desidedri usarlo.\n\nLa barra in alto indica la tua sazieta', \nricorda di fare particolare attenzione alle provviste, non vorrai morire di fame!",
 textBackground2.x,
 textBackground2.y,
 customFont,
@@ -90,13 +90,34 @@ local textBackground3 = display.newRect(tutorial2Image.x, tutorial2Image.y + tut
 textBackground3:setFillColor(0.32, 0.36, 0.4)
 scrollView:insert(textBackground3)
 
-local textTutorial3 = display.newText(  "Il Danger Dungeon e' un luogo persicoloso e pieno di insidie, tieniti pronto al combattimento!\n\nAppena entrerai in contatto con un nemico comincera' il duello, \nil piu' veloce colpisce per primo!\n\nQuando e' il tuo turno tocca una volta l'attacco che intendi sferrare e poi tocca il nemico per colpire!\n\nSpera di essere tu il piu' veloce, letale e preciso o il Dnager Dungeon avra' vinto!",
+local textTutorial3 = display.newText(  "Il Danger Dungeon e' un luogo persicoloso e pieno di insidie, tieniti pronto al combattimento!\n\nAppena ti avvicinerai ad un nemico comincera' il duello, \nil piu' veloce colpisce per primo!\n\nQuando e' il tuo turno tocca una volta l'attacco che intendi sferrare e poi tocca il nemico per colpire!\n\nSe sferri un colpo critico l'avversario verra' indebolito,\nma potrebbe succedere anche a te!\n\nSpera di essere tu il piu' veloce, letale e preciso o il Danger Dungeon avra' vinto!",
 textBackground3.x,
 textBackground3.y,
 customFont,
 30)
 scrollView:insert(textTutorial3)
 
+local tutorial3Image = display.newImageRect("Images/Utility/tutorial3.png", textBackground.width, textBackground.height)
+tutorial3Image.x = textBackground3.x
+tutorial3Image.y = textBackground3.y + textBackground3.height + 10
+scrollView:insert(tutorial3Image)
+
+local textBackground4 = display.newRect(tutorial3Image.x, tutorial3Image.y + tutorial3Image.height + 10, lunghezza-40, 400)
+textBackground4:setFillColor(0.32, 0.36, 0.4)
+scrollView:insert(textBackground4)
+
+local textTutorial4 = display.newText(  "Ogni nemico sconfitto aumentera' il tuo punteggio da Eroe, \nassicurati quindi di controllare in ogni stanza, non lasciarti sfuggire nessuno!\n\nQuando avrai sconfitto tutti i nemici di un piano proseguirai con il prossimo, \nnessuno sa quanto sono profonde le gallerie del Danger Dungeon, sarai tu a scoprirlo?\n\nRipulisci da ogni nemico piano dopo piano e scolpisci il tuo nome nella classifica degli Eroi,\nil Danger Dungeon ti aspetta!!",
+textBackground4.x,
+textBackground4.y,
+customFont,
+30)
+scrollView:insert(textTutorial4)
+
+local colore={0.8, 0.58, 0.05}
+textTutorial1:setFillColor(colore[1], colore[2], colore[3])
+textTutorial2:setFillColor(colore[1], colore[2], colore[3])
+textTutorial3:setFillColor(colore[1], colore[2], colore[3])
+textTutorial4:setFillColor(colore[1], colore[2], colore[3])
 local function handleButtonEvent(event)
   print("non ended")
   if ( "ended" == event.phase ) then

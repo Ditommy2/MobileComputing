@@ -58,12 +58,15 @@ local function attack(pers)
   enemy = pers
     if (enemy.suono == "spada") then
       local spadaSound = audio.loadSound( "audio/eff/spadina.mp3" )
+      audio.setVolume( 0.5 )
       audio.play( spadaSound )
       elseif (enemy.suono == "mazza") then
         local mazzaSound = audio.loadSound( "audio/eff/mazza.mp3" )
+        audio.setVolume( 0.5 )
         audio.play( mazzaSound )
       else
         local accettaSound = audio.loadSound( "audio/eff/accetta.mp3" )
+        audio.setVolume( 0.5 )
         audio.play( accettaSound )
     end
 
