@@ -45,10 +45,9 @@ local punteggioPartita = 0
 local enemy1
 local numeroMossa
 local chanceRandom
-local totChance
+
 local attackRandom
 local totAttacco
-local sommaChance = 0
 local turno
 local turnoHourglass
 -- local enemy = stanzaCorrente.nemici[1]
@@ -118,16 +117,18 @@ local function turnEnemy()
 	if enemy1.stunned == 0 then
 		chanceRandom = math.random(1, 6)
 		local criticalEffect = {target="false"}
+		local sommaChance = 0
 		while(chanceRandom == 6) do --==6
 			sommaChance = sommaChance + chanceRandom
 			chanceRandom = math.random(1, 6)
 			criticalEffect = enemy[mossa].effect
 		end
+
 		sommaChance = sommaChance + chanceRandom
-
+		local totChance = 0
 		totChance = sommaChance + enemy[mossa].hitChance
-
-		if(totChance > character.armor) then
+		print("tiro totale per colpire nemico->personaggio"..totChance)
+		if(totChance >= character.armor) then
 			enemyInterface.attacca(enemy1)
 
 			if not(criticalEffect.target == "false") then
@@ -172,6 +173,7 @@ local function turnEnemy()
 			end
 
 		else
+			textDamageEnemy.alpha=0
 			fightText.alpha = 1
 			fightText.x = 250
 			fightText.text = "Missed!"
@@ -277,15 +279,15 @@ local function calcolaDanno()
 	local mossa = "mossa" .. numeroMossa	--Prendo la mossa
 	local criticalEffect = {target = "false"}
 	--Vedo se colpisco il nemico
+	local sommaChance = 0
 	chanceRandom = math.random(1, 6)
 	while(chanceRandom == 6) do  --(chanceRandom == 6)
 		sommaChance = sommaChance + chanceRandom
 		chanceRandom = math.random(1, 6)
 		criticalEffect = character[mossa].effect
 	end
-
 	sommaChance = sommaChance + chanceRandom + character[mossa].hitChance
-
+	print("Tiro totale per colpire personaggio->nemico"..sommaChance)
 	--Ho colpito il nemico
 	if(sommaChance > enemy1.armor) then
 
@@ -306,6 +308,7 @@ local function calcolaDanno()
 
 		local attacco, resto = math.modf(totAttacco)
 		textDamage.text = attacco
+		textDamage.alpha = 1
 		timer.performWithDelay(1500, removeTextDamageCharacter)
 
 		if not(criticalEffect.target == "false") then
@@ -349,6 +352,7 @@ local function calcolaDanno()
 		fightText.x = 1000
 		fightText.text = "Missed!"
 		timer.performWithDelay( 1500, removeTextFight )
+		timer.performWithDelay(1500, removeTextDamageCharacter)
 	end
 end
 
@@ -366,7 +370,7 @@ local function eseguiMossa()
 					turno = "nemico"
 					timer.performWithDelay( 1000, changeStarAvv)
 					timer.performWithDelay(3000, turnEnemy)
-					textDamage.alpha = 1
+
 					enemy1:removeEventListener("tap", eseguiMossa)
 				else
 					composer.setVariable( "damageBuff", 0 )
