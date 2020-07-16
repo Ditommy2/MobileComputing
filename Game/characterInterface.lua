@@ -430,14 +430,18 @@ local function create(scena)
   character.baseSpeed = 3
   character.speed = character.baseSpeed + character.speedBuff
 
-  character.mossa1 = {nome="Pugno del duellante", hitChance = 8, damage = 0.3, effect = {target = "armor", value = -2}}
-  character.mossa2 = {nome="Calcio respingente", hitChance = 7, damage = 0.6, effect = {target = "damage", value = -5}}
-  character.mossa3 = {nome="Fendente letale", hitChance = 3, damage = 1, effect = {target = "life", value = -200}}
-  character.mossa4 = {nome="Elsa stordente", hitChance = 1, damage = 0.1, effect = {target = "stunned", value = 2}}
-  character.testoMossa1 = character.mossa1.nome .. " : Abbassa le difese del nemico\nDamage = " .. (character.mossa1.damage * 100) .. "%\nHit chance = " .. (character.mossa1.hitChance*10) .. "%\n"
-  character.testoMossa2 = character.mossa2.nome .. " : Diminuisce il pericolo\nDamage = " .. (character.mossa2.damage * 100) .. "%\nHit chance = " .. (character.mossa2.hitChance*10) .. "%\n"
-  character.testoMossa3 = character.mossa3.nome .. " : Colpo letale con la spada\nDamage = " .. (character.mossa3.damage * 100) .. "%\nHit chance = " .. (character.mossa3.hitChance*10) .. "%\n"
-  character.testoMossa4 = character.mossa4.nome .. " : Colpo stordente\nDamage = " .. (character.mossa4.damage * 100) .. "%\nHit chance = " .. (character.mossa4.hitChance*10) .. "%\n"
+  character.mossa1 = {nome="Pugno del duellante", hitChance = 8, damage = 0.3, effect = {target = "armor", value = -2}, critChance = 4}
+  character.mossa2 = {nome="Calcio respingente", hitChance = 7, damage = 0.6, effect = {target = "damage", value = -5}, critChance = 5}
+  character.mossa3 = {nome="Fendente letale", hitChance = 3, damage = 1, effect = {target = "life", value = -200}, critChance = 6}
+  character.mossa4 = {nome="Elsa stordente", hitChance = 1, damage = 0.1, effect = {target = "stunned", value = 2}, critChance = 3}
+  local modCrit1, resCrit1 = math.modf((7-character.mossa1.critChance)*(100/6))
+  local modCrit2, resCrit2 = math.modf((7-character.mossa2.critChance)*(100/6))
+  local modCrit3, resCrit3 = math.modf((7-character.mossa3.critChance)*(100/6))
+  local modCrit4, resCrit4 = math.modf((7-character.mossa4.critChance)*(100/6))
+  character.testoMossa1 = character.mossa1.nome .. " : Abbassa le difese del nemico\nDamage = " .. (character.mossa1.damage * 100) .. "%\nHit chance = " .. (character.mossa1.hitChance*10) .. "%\nCritical chance = "..modCrit1.."%\nCritical Effect = -2 armor"
+  character.testoMossa2 = character.mossa2.nome .. " : Diminuisce il pericolo\nDamage = " .. (character.mossa2.damage * 100) .. "%\nHit chance = " .. (character.mossa2.hitChance*10) .. "%\nCritical chance = "..modCrit2.."%\nCritical Effect = -5 damage"
+  character.testoMossa3 = character.mossa3.nome .. " : Colpo letale con la spada\nDamage = " .. (character.mossa3.damage * 100) .. "%\nHit chance = " .. (character.mossa3.hitChance*10) .. "%\nCritical chance = "..modCrit3.."%\nCritical Effect = -200 life"
+  character.testoMossa4 = character.mossa4.nome .. " : Colpo stordente\nDamage = " .. (character.mossa4.damage * 100) .. "%\nHit chance = " .. (character.mossa4.hitChance*10) .. "%\nCritical chance = "..modCrit4.."%\nCritical Effect = stunned"
 
   return character
 end

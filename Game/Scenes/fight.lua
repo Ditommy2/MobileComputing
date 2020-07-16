@@ -118,7 +118,8 @@ local function turnEnemy()
 		chanceRandom = math.random(1, 6)
 		local criticalEffect = {target="false"}
 		local sommaChance = 0
-		while(chanceRandom == 6) do --==6
+		local critChance = enemy[mossa].critChance
+		while(chanceRandom >= critChance) do --==6
 			sommaChance = sommaChance + chanceRandom
 			chanceRandom = math.random(1, 6)
 			criticalEffect = enemy[mossa].effect
@@ -280,8 +281,9 @@ local function calcolaDanno()
 	local criticalEffect = {target = "false"}
 	--Vedo se colpisco il nemico
 	local sommaChance = 0
+	local critChance = character[mossa].critChance
 	chanceRandom = math.random(1, 6)
-	while(chanceRandom == 6) do  --(chanceRandom == 6)
+	while(chanceRandom >= critChance) do  --(chanceRandom == 6)
 		sommaChance = sommaChance + chanceRandom
 		chanceRandom = math.random(1, 6)
 		criticalEffect = character[mossa].effect
@@ -424,7 +426,7 @@ function scene:create ( event )
 
 	--*******************TEXT GROUP************************************
 
-	testoMossa = display.newText( textGroup, "" ,1050, 600, 450, 0, native.newFont( customFont), 29 )
+	testoMossa = display.newText( textGroup, "" ,1050, 590, 450, 0, native.newFont( customFont), 27 )
 	testoMossa:setFillColor( 255,255,255 )
 
 	mossa1 = display.newText( textGroup, "" , 200, 515, native.newFont( customFont), 40 )
