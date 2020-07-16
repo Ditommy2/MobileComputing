@@ -1,8 +1,10 @@
 local nemici ={
 
-  nemico1={   --OK
+  nemico1={
     immagine ="Images/Enemies/FallenAngel1/Idle.png",
     attack ="Images/Enemies/FallenAngel1/slashing.png",
+    hurt ="Images/Enemies/FallenAngel1/hurt.png",
+    die ="Images/Enemies/FallenAngel1/die.png",
     suono = "spada",
     life= 900,
     damage= 70,
@@ -49,6 +51,18 @@ local nemici ={
       height=173,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=188,
+      height=178,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=166,
+      height=205,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -65,11 +79,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico2={   --OK
+  nemico2={
     immagine ="Images/Enemies/FallenAngel2/Idle.png",
     attack ="Images/Enemies/FallenAngel2/slashing.png",
+    hurt ="Images/Enemies/FallenAngel2/hurt.png",
+    die ="Images/Enemies/FallenAngel2/die.png",
     suono = "spada",
     life= 900,
     damage= 70,
@@ -112,9 +144,21 @@ local nemici ={
     },
     sheet_attack =
     {
-      width=195,
-      height=177,
+      width=174,
+      height=158,
       frames=25,
+    },
+    sheet_hurt =
+    {
+      width=180,
+      height=164,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=179,
+      height=232,
+      frames=30,
     },
     idleOptions=
     {
@@ -132,11 +176,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico3={   --OK
+  nemico3={
     immagine ="Images/Enemies/FallenAngel3/Idle.png",
     attack ="Images/Enemies/FallenAngel3/slashing.png",
+    hurt ="Images/Enemies/FallenAngel3/hurt.png",
+    die ="Images/Enemies/FallenAngel3/die.png",
     suono = "spada",
     life= 900,
     damage= 70,
@@ -183,6 +245,18 @@ local nemici ={
       height=181,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=196,
+      height=186,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=176,
+      height=213,
+      frames=30,
+    },
     idleOptions=
     {
         start = 1,
@@ -199,11 +273,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico4={   --OK
+  nemico4={
     immagine ="Images/Enemies/IceGolem/Idle.png",
     attack ="Images/Enemies/IceGolem/slashing.png",
+    hurt ="Images/Enemies/IceGolem/hurt.png",
+    die ="Images/Enemies/IceGolem/die.png",
     suono = "spada",
     life= 700,
     damage= 50,
@@ -250,6 +342,18 @@ local nemici ={
       height=150,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=159,
+      height=147,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=185,
+      height=202,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -266,11 +370,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico5={   --OK
+  nemico5={
     immagine ="Images/Enemies/EarthGolem/Idle.png",
     attack ="Images/Enemies/EarthGolem/slashing.png",
+    hurt ="Images/Enemies/EarthGolem/hurt.png",
+    die ="Images/Enemies/EarthGolem/die.png",
     suono = "mazza",
     life= 700,
     damage= 50,
@@ -317,6 +439,18 @@ local nemici ={
       height=158,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=162,
+      height=155,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=195,
+      height=206,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -333,11 +467,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico6={   --OK
+  nemico6={
     immagine ="Images/Enemies/MagmaGolem/Idle.png",
     attack ="Images/Enemies/MagmaGolem/slashing.png",
+    hurt ="Images/Enemies/MagmaGolem/hurt.png",
+    die ="Images/Enemies/MagmaGolem/die.png",
     suono = "spada",
     life= 700,
     damage= 50,
@@ -383,6 +535,18 @@ local nemici ={
       height=144,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=151,
+      height=143,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=179,
+      height=194,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -399,11 +563,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico7={   --OK
+  nemico7={
     immagine ="Images/Enemies/StoneGolem/Idle.png",
     attack ="Images/Enemies/StoneGolem/slashing.png",
+    hurt ="Images/Enemies/StoneGolem/hurt.png",
+    die ="Images/Enemies/StoneGolem/die.png",
     suono = "mazza",
     life= 1200,
     damage=75,
@@ -450,6 +632,18 @@ local nemici ={
       height=183,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=191,
+      height=167,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=226,
+      height=196,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -466,11 +660,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico8={   --OK
+  nemico8={
     immagine ="Images/Enemies/MudGolem/Idle.png",
     attack ="Images/Enemies/MudGolem/slashing.png",
+    hurt ="Images/Enemies/MudGolem/hurt.png",
+    die ="Images/Enemies/MudGolem/die.png",
     suono = "accetta",
     life= 1200,
     damage=75,
@@ -517,6 +729,18 @@ local nemici ={
       height=185,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=194,
+      height=167,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=229,
+      height=198,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -533,11 +757,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico9={   --OK
+  nemico9={
     immagine ="Images/Enemies/WoodGolem/Idle.png",
     attack ="Images/Enemies/WoodGolem/slashing.png",
+    hurt ="Images/Enemies/WoodGolem/hurt.png",
+    die ="Images/Enemies/WoodGolem/die.png",
     suono = "mazza",
     life= 1200,
     damage=75,
@@ -584,6 +826,18 @@ local nemici ={
       height=182,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=191,
+      height=167,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=225,
+      height=196,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -600,11 +854,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico10={    --OK
+  nemico10={
     immagine ="Images/Enemies/Goblin/Idle.png",
     attack ="Images/Enemies/Goblin/slashing.png",
+    hurt ="Images/Enemies/Goblin/hurt.png",
+    die ="Images/Enemies/Goblin/die.png",
     suono = "accetta",
     life= 500,
     damage=50,
@@ -651,6 +923,18 @@ local nemici ={
       height=147,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=157,
+      height=144,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=175,
+      height=204,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -667,11 +951,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico11={    --OK
+  nemico11={
     immagine ="Images/Enemies/Ogre/Idle.png",
     attack ="Images/Enemies/Ogre/slashing.png",
+    hurt ="Images/Enemies/Ogre/hurt.png",
+    die ="Images/Enemies/Ogre/die.png",
     suono = "accetta",
     life= 1400,
     damage=80,
@@ -718,6 +1020,18 @@ local nemici ={
       height=181,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=191,
+      height=180,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=217,
+      height=247,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -734,11 +1048,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico12={    --OK
+  nemico12={
     immagine ="Images/Enemies/Orco/Idle.png",
     attack ="Images/Enemies/Orco/slashing.png",
+    hurt ="Images/Enemies/Orco/hurt.png",
+    die ="Images/Enemies/Orco/die.png",
     suono = "mazza",
     life= 1600,
     damage=90,
@@ -785,6 +1117,18 @@ local nemici ={
       height=226,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=237,
+      height=223,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=272,
+      height=306,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -801,11 +1145,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico13={    --OK
+  nemico13={
     immagine ="Images/Enemies/ReaperMan1/Idle.png",
     attack ="Images/Enemies/ReaperMan1/slashing.png",
+    hurt ="Images/Enemies/ReaperMan1/hurt.png",
+    die ="Images/Enemies/ReaperMan1/die.png",
     suono = "spada",
     life= 1000,
     damage=70,
@@ -852,6 +1214,18 @@ local nemici ={
       height=173,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=203,
+      height=176,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=249,
+      height=273,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -868,11 +1242,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico14={    --OK
+  nemico14={
     immagine ="Images/Enemies/ReaperMan2/Idle.png",
     attack ="Images/Enemies/ReaperMan2/slashing.png",
+    hurt ="Images/Enemies/ReaperMan2/hurt.png",
+    die ="Images/Enemies/ReaperMan2/die.png",
     suono = "spada",
     life= 1000,
     damage=70,
@@ -919,7 +1311,18 @@ local nemici ={
       height=173,
       frames=25,
     },
-
+    sheet_hurt =
+    {
+      width=201,
+      height=176,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=247,
+      height=272,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -936,12 +1339,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
-
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico15={  --OK
+  nemico15={
     immagine ="Images/Enemies/ReaperMan3/Idle.png",
     attack ="Images/Enemies/ReaperMan3/slashing.png",
+    hurt ="Images/Enemies/ReaperMan3/hurt.png",
+    die ="Images/Enemies/ReaperMan3/die.png",
     suono = "spada",
     life= 1000,
     damage=70,
@@ -988,7 +1408,18 @@ local nemici ={
       height=171,
       frames=25,
     },
-
+    sheet_hurt =
+    {
+      width=201,
+      height=175,
+      frames=25,
+    },
+    sheet_die =
+    {
+      width=247,
+      height=271,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -1005,12 +1436,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
-
+    hurtOptions=
+    {
+      start = 1,
+      count = 25,
+      time = 400,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico16={    --OK
+  nemico16={
     immagine ="Images/Enemies/Satiro1/Idle.png",
     attack ="Images/Enemies/Satiro1/slashing.png",
+    hurt ="Images/Enemies/Satiro1/hurt.png",
+    die ="Images/Enemies/Satiro1/die.png",
     suono = "mazza",
     life= 300,
     damage=40,
@@ -1057,6 +1505,18 @@ local nemici ={
       height=133,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=160,
+      height=131,
+      frames=30,
+    },
+    sheet_die =
+    {
+      width=218,
+      height=180,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -1073,11 +1533,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico17={    --OK
+  nemico17={
     immagine ="Images/Enemies/Satiro2/Idle.png",
     attack ="Images/Enemies/Satiro2/slashing.png",
+    hurt ="Images/Enemies/Satiro2/hurt.png",
+    die ="Images/Enemies/Satiro2/die.png",
     suono = "spada",
     life= 300,
     damage=40,
@@ -1124,6 +1602,18 @@ local nemici ={
       height=134,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=169,
+      height=131,
+      frames=30,
+    },
+    sheet_die =
+    {
+      width=222,
+      height=187,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -1140,11 +1630,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico18={    --OK
+  nemico18={
     immagine ="Images/Enemies/Satiro3/Idle.png",
     attack ="Images/Enemies/Satiro3/slashing.png",
+    hurt ="Images/Enemies/Satiro3/hurt.png",
+    die ="Images/Enemies/Satiro3/die.png",
     suono = "accetta",
     life= 300,
     damage=40,
@@ -1191,6 +1699,18 @@ local nemici ={
       height=138,
       frames=25,
     },
+    sheet_hurt =
+    {
+      width=175,
+      height=131,
+      frames=30,
+    },
+    sheet_die =
+    {
+      width=227,
+      height=187,
+      frames=30,
+    },
     idleOptions=
     {
       start = 1,
@@ -1207,11 +1727,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 30,
+      time = 500,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico19={    --OK
+  nemico19={
     immagine ="Images/Enemies/Troll1/Idle.png",
     attack ="Images/Enemies/Troll1/slashing.png",
+    hurt ="Images/Enemies/Troll1/hurt.png",
+    die ="Images/Enemies/Troll1/die.png",
     suono = "mazza",
     life= 2000,
     damage=100,
@@ -1258,6 +1796,18 @@ local nemici ={
       height=302,
       frames=60,
     },
+    sheet_hurt =
+    {
+      width=274,
+      height=221,
+      frames=60,
+    },
+    sheet_die =
+    {
+      width=393,
+      height=226,
+      frames=60,
+    },
     idleOptions=
     {
       start = 1,
@@ -1274,11 +1824,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 60,
+      time = 1000,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 60,
+      time = 1000,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico20={    --OK
+  nemico20={
     immagine ="Images/Enemies/Troll2/Idle.png",
     attack ="Images/Enemies/Troll2/slashing.png",
+    hurt ="Images/Enemies/Troll2/hurt.png",
+    die ="Images/Enemies/Troll2/die.png",
     suono = "mazza",
     life= 2000,
     damage=100,
@@ -1325,6 +1893,18 @@ local nemici ={
       height=290,
       frames=60,
     },
+    sheet_hurt =
+    {
+      width=268,
+      height=212,
+      frames=60,
+    },
+    sheet_die =
+    {
+      width=381,
+      height=219,
+      frames=60,
+    },
     idleOptions=
     {
       start = 1,
@@ -1341,11 +1921,29 @@ local nemici ={
       loopCount = 1,
       loopDirection = "forward",
     },
+    hurtOptions=
+    {
+      start = 1,
+      count = 60,
+      time = 1000,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
+    {
+      start = 1,
+      count = 60,
+      time = 1000,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
   },
 
-  nemico21={    --OK
+  nemico21={    
     immagine ="Images/Enemies/Troll3/Idle.png",
     attack ="Images/Enemies/Troll3/slashing.png",
+    hurt ="Images/Enemies/Troll3/hurt.png",
+    die ="Images/Enemies/Troll3/die.png",
     suono = "mazza",
     life= 2000,
     damage=100,
@@ -1392,6 +1990,18 @@ local nemici ={
       height=293,
       frames=60,
     },
+    sheet_hurt =
+    {
+      width=263,
+      height=216,
+      frames=60,
+    },
+    sheet_die =
+    {
+      width=380,
+      height=221,
+      frames=60,
+    },
     idleOptions=
     {
       start = 1,
@@ -1401,6 +2011,22 @@ local nemici ={
       loopDirection = "forward"
     },
     attackOptions=
+    {
+      start = 1,
+      count = 60,
+      time = 1000,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    hurtOptions=
+    {
+      start = 1,
+      count = 60,
+      time = 1000,
+      loopCount = 1,
+      loopDirection = "forward",
+    },
+    dieOptions=
     {
       start = 1,
       count = 60,

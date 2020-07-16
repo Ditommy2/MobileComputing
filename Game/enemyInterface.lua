@@ -15,6 +15,10 @@ local sheet_idle
 local sheet_idle_Options
 local sheet_attack
 local sheet_attack_Options
+local sheet_hurt
+local sheet_hurt_Options
+local sheet_die
+local sheet_die_Options
 local sequences
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -27,8 +31,34 @@ local function resumeIdleing(event)
   end
 end
 
+local function stopping(event)
+  if(event.phase == "ended") then
+    local diffY = enemy.y + 25
+    transition.to(enemy, {time=250, y = diffY})
+    enemy:setSequence("die")
+
+    if(sheet_die_Options.numFrames == 30) then
+      enemy:setFrame(30)
+    end
+
+    if(sheet_die_Options.numFrames == 60) then
+      enemy:setFrame(60)
+    end
+  end
+end
+
 local function slay()
   enemy:setSequence("attack")
+  enemy:play()
+end
+
+local function hurt()
+  enemy:setSequence("hurt")
+  enemy:play()
+end
+
+local function die()
+  enemy:setSequence("die")
   enemy:play()
 end
 
@@ -50,6 +80,20 @@ local function attack(pers)
 
   enemy:addEventListener("sprite", resumeIdleing)
   slay()
+end
+
+local function damage(pers)
+  enemy=pers
+
+  enemy:addEventListener("sprite", resumeIdleing)
+  hurt()
+end
+
+local function dead(pers)
+  enemy=pers
+
+  enemy:addEventListener("sprite", stopping)
+  die()
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -74,9 +118,25 @@ local function create(scena, nemico)
     numFrames=nemico.sheet_attack.frames,
   }
 
+  sheet_hurt_Options =
+  {
+    width=nemico.sheet_hurt.width,
+    height=nemico.sheet_hurt.height,
+    numFrames=nemico.sheet_hurt.frames,
+  }
+
+  sheet_die_Options =
+  {
+    width=nemico.sheet_die.width,
+    height=nemico.sheet_die.height,
+    numFrames=nemico.sheet_die.frames,
+  }
+
   --Sprite sheets del nemico
   sheet_idle = graphics.newImageSheet( nemico.immagine, sheet_idle_Options )
   sheet_attack = graphics.newImageSheet( nemico.attack, sheet_attack_Options )
+  sheet_hurt = graphics.newImageSheet( nemico.hurt, sheet_hurt_Options )
+  sheet_die = graphics.newImageSheet( nemico.die, sheet_die_Options )
 
   --Sequenze nemico
   sequences=
@@ -101,6 +161,28 @@ local function create(scena, nemico)
       loopCount = nemico.attackOptions.loopCount,
       loopDirection = nemico.attackOptions.loopDirection,
       sheet=sheet_attack
+    },
+
+    --Hurt
+    {
+      name="hurt",
+      start = nemico.hurtOptions.start,
+      count = nemico.hurtOptions.count,
+      time = nemico.hurtOptions.time,
+      loopCount = nemico.hurtOptions.loopCount,
+      loopDirection = nemico.hurtOptions.loopDirection,
+      sheet=sheet_hurt
+    },
+
+    --Hurt
+    {
+      name="die",
+      start = nemico.dieOptions.start,
+      count = nemico.dieOptions.count,
+      time = nemico.dieOptions.time,
+      loopCount = nemico.dieOptions.loopCount,
+      loopDirection = nemico.dieOptions.loopDirection,
+      sheet=sheet_die
     }
   }
 
@@ -127,6 +209,8 @@ local interfaceEnemy =
 {
   createEnemy = (create),
   attacca = (attack),
+  danno = (damage),
+  muori = (dead),
 }
 
 return interfaceEnemy

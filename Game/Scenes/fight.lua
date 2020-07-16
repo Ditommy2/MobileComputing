@@ -41,7 +41,6 @@ local startingStats = {
 	damage = character.damage
 }
 local punteggioPartita = 0
--- local enemy1 = enemyInterface.createEnemy(self, stanzaCorrente.nemici[1])
 local enemy1
 local numeroMossa
 local chanceRandom
@@ -50,7 +49,6 @@ local attackRandom
 local totAttacco
 local turno
 local turnoHourglass
--- local enemy = stanzaCorrente.nemici[1]
 local enemy
 
 --Life bar
@@ -63,34 +61,12 @@ local lifeBarEnemyBlack
 local physics = require("physics")
 physics.start()
 
--- local function saveScore()
--- 	local score = composer.getVariable( "score" )
--- 	local user = composer.getVariable( "username" )
--- 	local game = composer.getVariable( "nomePartita" )
--- 	local stringaScores = "saveScore".."$$"..".json"
--- 	local tabellonePunteggi= fileHandler.loadTableScores(stringaScores)
--- 	if(tabellonePunteggi == nil) then
---     print("primoSalvataggio")
---     tabellonePunteggi = {}
---     -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
---     table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
---   else
---     print("seguenti salvataggi")
---     -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
---     table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
---   end
---
--- 	fileHandler.saveTable(tabellonePunteggi, stringaScores)
--- 	fileHandler.caricaSave(tabellonePunteggi, stringaScores)
--- end
-
 -- -----------------------------------------------------------------------------------
 -- Fine combattimento
 -- -----------------------------------------------------------------------------------
 local function gotoNuovaCarica()
 	audio.stop( 2 )
 	audio.stop( 3 )
-	-- composer.setVariable( "characterLife", character.life )
 	composer.removeScene( "Scenes.fight" )
 	composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
 end
@@ -104,7 +80,6 @@ local function gotoLivello1()
 	composer.setVariable( "enemyX", enemy1.x )
 	composer.setVariable( "enemyY", enemy1.y )
 	composer.setVariable( "tabDrop", enemy1.drop )
-	-- composer.setVariable( "drop", true )
 	composer.gotoScene( "Scenes.livello1", {time=800, effect="crossFade"} )
 end
 
@@ -191,7 +166,6 @@ local function turnEnemy()
 
 	if(character.life > 0) then
 		timer.performWithDelay( 1500, changeStarTuo)
-		--timer.performWithDelay(3000, eseguiMossa)
 		if character["stunned"]==0 then
 			timer.performWithDelay(3000, addTasto)
 		else
@@ -210,10 +184,7 @@ local function turnEnemy()
 	else
 		characterInterface.gameOver(textGroup)
 		fightText:setFillColor(0, 0, 0)
-		-- saveScore(punteggioPartita)
-		-- timer.performWithDelay( 5000, gotoNuovaCarica )
 	end
-
 end
 
 -- -----------------------------------------------------------------------------------
@@ -264,10 +235,10 @@ end
 -- -----------------------------------------------------------------------------------
 local function gameLoop()
 	if((enemy.speed + math.random(1, 6)) < (character.speed + math.random(1, 6))) then
-		transition.to( turnoHourglass , { time=4000, alpha=1, x=380, y=250 } )
+		transition.to( turnoHourglass , { time=2000, alpha=1, x=380, y=250 } )
 		turno = "personaggio"
 	else
-		transition.to( turnoHourglass , { time=4000, alpha=1, x=890, y=250 } )
+		transition.to( turnoHourglass , { time=2000, alpha=1, x=890, y=250 } )
 		turno = "nemico"
 		timer.performWithDelay( 4000, turnEnemy )
 	end
@@ -292,7 +263,7 @@ local function calcolaDanno()
 	print("Tiro totale per colpire personaggio->nemico"..sommaChance)
 	--Ho colpito il nemico
 	if(sommaChance > enemy1.armor) then
-
+		enemyInterface.danno(enemy1)
 		if not(criticalEffect.target == "false") then
 			print("effetto critico aplicato : "..criticalEffect.target..", "..criticalEffect.value)
 			fightText.alpha = 1
@@ -328,6 +299,7 @@ local function calcolaDanno()
 			lifeBarEnemy.width = lifeBarEnemy.width - x
 			lifeBarEnemy.x = lifeBarEnemy.x - x/2
 		else --Danno > vita => nemico morto
+			enemyInterface.muori(enemy1)
 			enemy1.life = 0
 			display.remove( lifeBarEnemy )
 			punteggioPartita = composer.getVariable("score") + enemy.points
@@ -385,8 +357,6 @@ local function eseguiMossa()
 				end
 			end
 		end
-
-
 end
 
 function addTasto()

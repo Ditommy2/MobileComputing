@@ -177,9 +177,6 @@ local function move(event)
   if(not(dir==nil)) then
     if(dir=="r") then
       character.x = character.x + passo
-      -- print("character armor = "..character.armor)
-      -- print("character damage = "..character.damage)
-      --print("character speed = "..character.speed)
       composer.setVariable( "characterX", character.x )
       composer.setVariable( "characterY", character.y )
       local foodToken = composer.getVariable("foodToken")
@@ -211,13 +208,13 @@ local function move(event)
     end
 
     if(character.x < 0) then
-      timer.pause( moveTimer )
+      timer.cancel(moveTimer)
       character:pause()
       scene.goBack()
     end
 
     if(character.x > lunghezza) then
-      timer.pause( moveTimer )
+      timer.cancel(moveTimer)
       character:pause()
       scene.changeRoom()
     end
@@ -228,8 +225,7 @@ local function move(event)
 
     if(currentScene=="Scenes.livello1") then
       if(character.x > lunghezza - 500 and nemico ~= nill) then
-        -- print("partito combattimento con: " .. nemico.immagine)
-        timer.pause( moveTimer )
+        timer.cancel(moveTimer)
         character:pause()
         composer.removeScene( "Scenes.livello1")
         composer.gotoScene( "Scenes.fight", {time=1500, effect="zoomInOutFade"} )
@@ -392,15 +388,6 @@ local function create(scena)
   character.myName = "Character"
 
   local composerLife = composer.getVariable( "characterLife" )
-  -- if(not(composerLife==nil)) then
-  --   character.life = composerLife
-  --   composer.setVariable( "characterLife", character.life )
-  -- else
-  --   character.maxLife = 3000
-  --   composer.setVariable( "characterMaxLife", character.maxLife )
-  --   character.life = character.maxLife
-  --   composer.setVariable( "characterLife", character.life )
-  -- end
 
   character.life = composerLife
   composer.setVariable( "characterMaxLife", 3000 )

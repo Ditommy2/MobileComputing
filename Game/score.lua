@@ -89,7 +89,7 @@ local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sc
 
   -- Grid
   numberOfColumns = 4
-  columnWidth = 200--math.floor( screenW / numberOfColumns )
+  columnWidth = 200
 
   function getColumnPosition( columnNumber )
   	return 25 + ((columnNumber - 1) * columnWidth)
