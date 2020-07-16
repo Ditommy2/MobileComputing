@@ -17,7 +17,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -35,7 +35,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -84,7 +84,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -102,7 +102,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -151,7 +151,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -169,7 +169,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -218,7 +218,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -236,7 +236,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -285,7 +285,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -303,7 +303,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -352,7 +352,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -369,7 +369,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -418,7 +418,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -436,7 +436,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -485,7 +485,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -503,7 +503,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -552,7 +552,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -570,7 +570,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -619,7 +619,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -637,7 +637,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -686,7 +686,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -704,7 +704,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -753,7 +753,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -771,7 +771,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -820,7 +820,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -838,7 +838,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -887,7 +887,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -905,7 +905,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -956,7 +956,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -974,7 +974,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -1025,7 +1025,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -1043,7 +1043,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -1092,7 +1092,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -1110,7 +1110,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -1159,7 +1159,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -1177,7 +1177,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -1226,7 +1226,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -1244,7 +1244,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -1293,7 +1293,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -1311,7 +1311,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
@@ -1360,7 +1360,7 @@ local nemici ={
       damage=1,
       hitChance=5,
       effect = {target = "armor", value = -2},
-      critChance = 4
+      critChance = 5
     },
     mossa2={
       damage=0.7,
@@ -1378,7 +1378,7 @@ local nemici ={
       damage=0.9,
       hitChance=5,
       effect = {target = "stunned", value = 2},
-      critChance = 3
+      critChance = 5
     },
     sheet_idle =
     {
