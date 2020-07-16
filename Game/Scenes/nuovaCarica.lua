@@ -37,7 +37,7 @@ local function handleButtonEventNuovaNome(event)
 
 			if not trovato then
 				local lowerFixedMenu = require("lowerFixedMenu")
-				local inv = {"chiaveForziere", "cibo", "cibo", "pozioneVita", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto", "vuoto"}
+				local inv = {"chiaveForziere", "cibo", "pozioneVita", "anelloDifesa", "pozioneDanno", "pillolaSpeed", "pozioneMaxVita", "vuoto", "vuoto", "vuoto"}
 
 				composer.setVariable( "nemici", "vuoto" )
 				mappa = lowerFixedMenu.create.mappaGenerata(0, {}, numero, tabella, numero+1, numero+1)
