@@ -234,10 +234,10 @@ end
 -- -----------------------------------------------------------------------------------
 local function gameLoop()
 	if((enemy.speed + math.random(1, 6)) < (character.speed + math.random(1, 6))) then
-		transition.to( turnoHourglass , { time=4000, alpha=1, x=380, y=250 } )
+		transition.to( turnoHourglass , { time=2000, alpha=1, x=380, y=250 } )
 		turno = "personaggio"
 	else
-		transition.to( turnoHourglass , { time=4000, alpha=1, x=890, y=250 } )
+		transition.to( turnoHourglass , { time=2000, alpha=1, x=890, y=250 } )
 		turno = "nemico"
 		timer.performWithDelay( 4000, turnEnemy )
 	end
