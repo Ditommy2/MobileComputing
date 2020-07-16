@@ -34,6 +34,8 @@ end
 local function stopping(event)
   if(event.phase == "ended") then
     -- enemy:pause()
+    local diffY = enemy.y + 25
+    transition.to(enemy, {time=250, y = diffY})
     enemy:setSequence("die")
 
     if(sheet_die_Options.numFrames == 30) then

@@ -136,20 +136,20 @@ local nemici ={
     },
     sheet_attack =
     {
-      width=195,
-      height=177,
+      width=174,
+      height=158,
       frames=25,
     },
     sheet_hurt =
     {
-      width=202,
-      height=183,
+      width=180,
+      height=164,
       frames=25,
     },
     sheet_die =
     {
       width=179,
-      height=215,
+      height=232,
       frames=30,
     },
     idleOptions=
