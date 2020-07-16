@@ -1,4 +1,3 @@
-
 local composer = require( "composer" )
 local lowerFixedMenu= require("lowerFixedMenu")
 local widget = require("widget")
@@ -84,7 +83,6 @@ function scene:create( event )
   background.direzione=stanzaCorrente.corridoioCorrente
   background.x=display.contentCenterX
   background.y=display.contentCenterY-150
-  --physics.addBody(background, "static", {shape={ 0, 0, lunghezza, 0, lunghezza, altezza-300, 0, altezza-300}})
   background:addEventListener("touch", characterInterface.listener)
   background:addEventListener("touch", interfaceConfig.tokenListener)
   --Setting non-movement area

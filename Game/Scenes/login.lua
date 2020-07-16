@@ -20,8 +20,6 @@ end
 local function networkListener( event )
   local risposta = event.response
 
-  -- print(event.response)
-
     if ( event.isError ) then
         print( "Network error: ", risposta )
     else
@@ -52,8 +50,6 @@ end
 
 local function getSavings()
   local url = "https://appmcsite.000webhostapp.com/carica.php?user=".. urlencode(utenteTextField.text) .. "&passw=" ..urlencode(passTextField.text)
-
-  -- print(url)
 
   network.request( url, "GET", networkListener)
 end

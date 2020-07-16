@@ -15,7 +15,6 @@ local tabella = interfaccia.tabellaFunction(numero)
 local sceneGroup
 local customFont="MadnessHyperactive.otf"
 local fileHandler = require("fileHandler")
---local customFont=native.systemFont
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --handle del bottone per 'overlay sottostante. Non so perchè ma non andava con quello classico
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -32,7 +31,6 @@ local function handleButtonEventNuovaNome(event)
 			end
 			for i=#t, 1, -1 do
 				if t[i].nomePartita==partitaDaCercare then
-					-- print("nome riscontrato")
 					trovato = true
 				end
 			end
@@ -62,7 +60,6 @@ local function handleButtonEventNuovaNome(event)
 				composer.removeScene( "Scenes.nuovaCarica" )
 				composer.gotoScene("Scenes.livello1")
 			else
-				--il nome partia è già usato per questo utente
 				print("il nome partita è già preso per questo utente")
 				local serverAnswer = display.newText("", display.contentCenterX, height*0.85, customFont, height*0.1)
 				serverAnswer.text = "Nome partita in uso"
@@ -207,10 +204,8 @@ local function handleLoadButtonEvent(event)
 	if ( "ended" == event.phase ) then
 		local table = {}
 		table[1]={posizionamentoFixedX=0, posizionamentoFixedY=0}
-		-- composer.setVariable( "tabellaOgegttiInventario", table )
 		local lowerFixedMenu = require("lowerFixedMenu")
 		local fileHandler = require("fileHandler")
-		--overlayCaricaSalvataggi()
 		local salvataggio = salvataggi[event.target.id]
 		composer.setVariable( "statoPartita", {stato = "salvata", indice = event.target.id} )
 		composer.setVariable( "stanzaCorrente", salvataggio.stanzaCorrenteToSave )
@@ -246,9 +241,6 @@ local backButton = widget.newButton({
 	onEvent = handleBackButtonEvent,
 	font=customFont
 })
-
-
-
 
 
 for i = #salvataggi, 1, -1 do
@@ -396,8 +388,6 @@ function scene:create( event )
 	buttonCarica.anchorX = 0
 
 	gameGroup.y = height * 0.35
-
-	--button:addEventListener("tap", getSavings)
 
 	sceneGroup:insert(gameGroup)
 

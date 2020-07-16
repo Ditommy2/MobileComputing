@@ -11,7 +11,6 @@ local invloc= composer.getVariable( "inv" )
 local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 local enemyInterface = require("enemyInterface")
 local curiosInterface = require("curiosInterface")
--- composer.recycleOnSceneChange = true
 local customFont="MadnessHyperactive.otf"
 local oggetti = stanzaCorrente.oggetti
 local gameTrack = audio.loadStream( "audio/back/Monsters-Underground.mp3")
@@ -78,39 +77,13 @@ local function gotoMenu()
     nemici = composer.getVariable( "nemici" )
   }
 
-  -- local score = composer.getVariable( "score" )
-  -- local user = composer.getVariable( "username" )
-  -- local game = composer.getVariable( "nomePartita" )
-
-  --PERCHè SALVARE GLI SCORE QUANDO SI TORNA AL MENU. COMMENTATO DA CANCELLARE
-  -- local stringaScores = "saveScore".."$$"..".json"
-  -- local tabellonePunteggi= fileHandler.loadTableScores(stringaScores)
-  -- if(tabellonePunteggi == nil) then
-  --   print("primoSalvataggio")
-  --   tabellonePunteggi = {}
-  --   -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
-  --   table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
-  -- else
-  --   print("seguenti salvataggi")
-  --   -- table.insert(tabellonePunteggi, score .. "               " .. user .. "               " .. partita .. "\n")
-  --   table.insert(tabellonePunteggi, {punteggio=score, utente=user, partita=game})
-  -- end
-  --
-  -- fileHandler.saveTable(tabellonePunteggi, stringaScores)
-  -- fileHandler.caricaSave(tabellonePunteggi, stringaScores)
-
-
 
   local stringaSalvataggio = "save".."$$"..composer.getVariable("username")..".json"
-  -- print("caricando da ")
-  -- print(stringaSalvataggio)
   local tabelloneSalvataggi = fileHandler.loadTable(stringaSalvataggio)
   if(tabelloneSalvataggi == nil) then
-    -- print("primoSalvataggio")
     tabelloneSalvataggi = {}
     table.insert(tabelloneSalvataggi, salvataggio)
   else
-    -- print("seguenti salvataggi")
     local statoPartita = composer.getVariable( "statoPartita" )
     if(statoPartita.stato == "salvata") then
       tabelloneSalvataggi[statoPartita.indice] = salvataggio
@@ -119,14 +92,13 @@ local function gotoMenu()
     end
   end
 
-  -- print("salvando")
-  -- print(tabelloneSalvataggi)
   fileHandler.saveTable(tabelloneSalvataggi, stringaSalvataggio)
   fileHandler.caricaSave(salvataggio, stringaSalvataggio)
 
   composer.removeScene("Scenes.livello1")
   composer.gotoScene( "Scenes.nuovaCarica", {time=800, effect="crossFade"} )
 end
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione che gestisce la pressione dei tasti delle freccette. Anche questo è momentaneo, non rappresenta la versione finale
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -324,15 +296,10 @@ function scene:create( event )
   composer.setVariable("character", character)
   for i = #stanzaCorrente.nemici, 1, -1 do
     if(not(stanzaCorrente.nemici[i]==nil))then
-      -- print("tabella nemico (in teoria)")
-      -- print(stanzaCorrente.nemici[i].immagine)
       enemy = enemyInterface.createEnemy(self, stanzaCorrente.nemici[i])
       mainGroup:insert(enemy)
     end
   end
-
-
-
 
   mainGroup:insert(character)
 
@@ -450,15 +417,12 @@ function scene:create( event )
     	lifeBarCharacter.x = lifeBarCharacterBlack.x - (lifeBarCharacterBlack.width/2)
     	lifeBarCharacter.y = character.y - character.height
       print("lunghezza barra prima: " .. lifeBarCharacter.width)
-      -- local rapporto = lifeBarCharacter.width / composer.getVariable( "characterLife" )
       local rapporto = lifeBarCharacter.width / 3000
       print("rapporto: " .. rapporto)
       print("vitaPersonaggio prima: " .. vitaPersonaggio)
       local x = (3000 - (vitaPersonaggio - danno)) * rapporto		--Pixel dal levare
       print("pixel calcolati: " .. x)
-      -- lifeBarCharacter.width = (rapporto * composer.getVariable( "characterLife" )) - x
       lifeBarCharacter.width = lifeBarCharacter.width - x
-      -- lifeBarCharacter.x = lifeBarCharacter.x - x/2
       print("lunghezza barra dopo: " .. lifeBarCharacter.width)
       composer.setVariable( "characterLife", vitaPersonaggio-danno)
       print("vitaPersonaggio dopo: " .. vitaPersonaggio-danno)

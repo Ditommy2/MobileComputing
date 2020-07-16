@@ -1,6 +1,6 @@
 local nemici ={
 
-  nemico1={   --OK
+  nemico1={
     immagine ="Images/Enemies/FallenAngel1/Idle.png",
     attack ="Images/Enemies/FallenAngel1/slashing.png",
     hurt ="Images/Enemies/FallenAngel1/hurt.png",
@@ -93,7 +93,7 @@ local nemici ={
     },
   },
 
-  nemico2={   --OK
+  nemico2={
     immagine ="Images/Enemies/FallenAngel2/Idle.png",
     attack ="Images/Enemies/FallenAngel2/slashing.png",
     hurt ="Images/Enemies/FallenAngel2/hurt.png",
@@ -186,7 +186,7 @@ local nemici ={
     },
   },
 
-  nemico3={   --OK
+  nemico3={
     immagine ="Images/Enemies/FallenAngel3/Idle.png",
     attack ="Images/Enemies/FallenAngel3/slashing.png",
     hurt ="Images/Enemies/FallenAngel3/hurt.png",
@@ -279,7 +279,7 @@ local nemici ={
     },
   },
 
-  nemico4={   --OK
+  nemico4={
     immagine ="Images/Enemies/IceGolem/Idle.png",
     attack ="Images/Enemies/IceGolem/slashing.png",
     hurt ="Images/Enemies/IceGolem/hurt.png",
@@ -372,7 +372,7 @@ local nemici ={
     },
   },
 
-  nemico5={   --OK
+  nemico5={
     immagine ="Images/Enemies/EarthGolem/Idle.png",
     attack ="Images/Enemies/EarthGolem/slashing.png",
     hurt ="Images/Enemies/EarthGolem/hurt.png",
@@ -465,7 +465,7 @@ local nemici ={
     },
   },
 
-  nemico6={   --OK
+  nemico6={
     immagine ="Images/Enemies/MagmaGolem/Idle.png",
     attack ="Images/Enemies/MagmaGolem/slashing.png",
     hurt ="Images/Enemies/MagmaGolem/hurt.png",
@@ -558,7 +558,7 @@ local nemici ={
     },
   },
 
-  nemico7={   --OK
+  nemico7={
     immagine ="Images/Enemies/StoneGolem/Idle.png",
     attack ="Images/Enemies/StoneGolem/slashing.png",
     hurt ="Images/Enemies/StoneGolem/hurt.png",
@@ -651,7 +651,7 @@ local nemici ={
     },
   },
 
-  nemico8={   --OK
+  nemico8={
     immagine ="Images/Enemies/MudGolem/Idle.png",
     attack ="Images/Enemies/MudGolem/slashing.png",
     hurt ="Images/Enemies/MudGolem/hurt.png",
@@ -744,7 +744,7 @@ local nemici ={
     },
   },
 
-  nemico9={   --OK
+  nemico9={
     immagine ="Images/Enemies/WoodGolem/Idle.png",
     attack ="Images/Enemies/WoodGolem/slashing.png",
     hurt ="Images/Enemies/WoodGolem/hurt.png",
@@ -837,7 +837,7 @@ local nemici ={
     },
   },
 
-  nemico10={    --OK
+  nemico10={
     immagine ="Images/Enemies/Goblin/Idle.png",
     attack ="Images/Enemies/Goblin/slashing.png",
     hurt ="Images/Enemies/Goblin/hurt.png",
@@ -930,7 +930,7 @@ local nemici ={
     },
   },
 
-  nemico11={    --OK
+  nemico11={
     immagine ="Images/Enemies/Ogre/Idle.png",
     attack ="Images/Enemies/Ogre/slashing.png",
     hurt ="Images/Enemies/Ogre/hurt.png",
@@ -1023,7 +1023,7 @@ local nemici ={
     },
   },
 
-  nemico12={    --OK
+  nemico12={
     immagine ="Images/Enemies/Orco/Idle.png",
     attack ="Images/Enemies/Orco/slashing.png",
     hurt ="Images/Enemies/Orco/hurt.png",
@@ -1116,7 +1116,7 @@ local nemici ={
     },
   },
 
-  nemico13={    --OK
+  nemico13={
     immagine ="Images/Enemies/ReaperMan1/Idle.png",
     attack ="Images/Enemies/ReaperMan1/slashing.png",
     hurt ="Images/Enemies/ReaperMan1/hurt.png",
@@ -1209,7 +1209,7 @@ local nemici ={
     },
   },
 
-  nemico14={    --OK
+  nemico14={
     immagine ="Images/Enemies/ReaperMan2/Idle.png",
     attack ="Images/Enemies/ReaperMan2/slashing.png",
     hurt ="Images/Enemies/ReaperMan2/hurt.png",
@@ -1302,7 +1302,7 @@ local nemici ={
     },
   },
 
-  nemico15={  --OK
+  nemico15={
     immagine ="Images/Enemies/ReaperMan3/Idle.png",
     attack ="Images/Enemies/ReaperMan3/slashing.png",
     hurt ="Images/Enemies/ReaperMan3/hurt.png",
@@ -1395,7 +1395,7 @@ local nemici ={
     },
   },
 
-  nemico16={    --OK
+  nemico16={
     immagine ="Images/Enemies/Satiro1/Idle.png",
     attack ="Images/Enemies/Satiro1/slashing.png",
     hurt ="Images/Enemies/Satiro1/hurt.png",
@@ -1488,7 +1488,7 @@ local nemici ={
     },
   },
 
-  nemico17={    --OK
+  nemico17={
     immagine ="Images/Enemies/Satiro2/Idle.png",
     attack ="Images/Enemies/Satiro2/slashing.png",
     hurt ="Images/Enemies/Satiro2/hurt.png",
@@ -1581,7 +1581,7 @@ local nemici ={
     },
   },
 
-  nemico18={    --OK
+  nemico18={
     immagine ="Images/Enemies/Satiro3/Idle.png",
     attack ="Images/Enemies/Satiro3/slashing.png",
     hurt ="Images/Enemies/Satiro3/hurt.png",
@@ -1674,7 +1674,7 @@ local nemici ={
     },
   },
 
-  nemico19={    --OK
+  nemico19={
     immagine ="Images/Enemies/Troll1/Idle.png",
     attack ="Images/Enemies/Troll1/slashing.png",
     hurt ="Images/Enemies/Troll1/hurt.png",
@@ -1767,7 +1767,7 @@ local nemici ={
     },
   },
 
-  nemico20={    --OK
+  nemico20={
     immagine ="Images/Enemies/Troll2/Idle.png",
     attack ="Images/Enemies/Troll2/slashing.png",
     hurt ="Images/Enemies/Troll2/hurt.png",
@@ -1860,7 +1860,7 @@ local nemici ={
     },
   },
 
-  nemico21={    --OK
+  nemico21={    
     immagine ="Images/Enemies/Troll3/Idle.png",
     attack ="Images/Enemies/Troll3/slashing.png",
     hurt ="Images/Enemies/Troll3/hurt.png",
