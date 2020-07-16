@@ -145,9 +145,9 @@ local function handleButtonEventTutorialFunzione(display, lunghezza, altezza, sc
   end
 
   local function handleButtonEvent(event)
-    print("non ended")
+    --print("non ended")
     if ( "ended" == event.phase ) then
-      print("cancellato")
+      --print("cancellato")
   sceneGroup:remove( scrollView )
   end
   end

@@ -21,7 +21,7 @@ local function networkListener( event )
   local risposta = event.response
 
     if ( event.isError ) then
-        print( "Network error: ", risposta )
+        --print( "Network error: ", risposta )
     else
       if(risposta == "" ) then
         serverAnswer.text = "Username o password errati."

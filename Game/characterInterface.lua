@@ -383,7 +383,7 @@ local function create(scena)
   character.y = altezza-310
   composer.setVariable( "characterX", character.x )
   composer.setVariable( "characterY", character.y )
-  print("settati nel composer: "..composer.getVariable( "characterX" ))
+  --print("settati nel composer: "..composer.getVariable( "characterX" ))
   physics.addBody(character, "dynamic", {radius=sheet_walking_Options.width, isSensor=true, filter={categoryBits=1, maskBits=6}})
   character.myName = "Character"
 
@@ -394,7 +394,7 @@ local function create(scena)
 
   local composerFood = composer.getVariable( "characterFood" )
   if(not(composerFood==nil)) then
-    print("impostata da composer"..composerFood)
+    --print("impostata da composer"..composerFood)
     character.food = composerFood
     composer.setVariable( "characterFood", character.food )
     character.maxFood = 500
@@ -461,7 +461,7 @@ local function saveScore(punteggioPartita)
   local game = composer.getVariable( "nomePartita" )
   if tabellonePunteggi == nil then
     tabellonePunteggi = {}
-    print("impostato nil")
+    --print("impostato nil")
   end
   table.insert( tabellonePunteggi, {punteggio=punteggioPartita, utente=user, partita=game} )
   fileHandler.saveTable(tabellonePunteggi, stringaScores)

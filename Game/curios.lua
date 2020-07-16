@@ -13,7 +13,7 @@ local curios = {
     function(item, curio)
       local itemInterface = require("itemsInterface")
       if item.nome == "029-key.png" then
-        print("aperto")
+        --print("aperto")
         curio.immagine = "Images/Icons/curios/treasureChest_open.png"
         table.insert(composer.getVariable( "stanzaCorrente" ).oggetti, curio.oggetto)
         table.remove(composer.getVariable( "stanzaCorrente" ).curios, 1)
@@ -34,7 +34,7 @@ local curios = {
         display.remove(curio)
         return true
       else
-        print("tentativo di interazione fallito")
+        --print("tentativo di interazione fallito")
         return false
       end
     end
@@ -48,7 +48,7 @@ curio2 = {
   messaggio="interazione",
   funzione = (
   function(item, curio)
-    print(curio.messaggio)
+    --print(curio.messaggio)
   end
 )
 }

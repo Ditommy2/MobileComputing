@@ -640,7 +640,7 @@ local interfacciaConfig = {
   (function(inventario, handler, inventoryGroup)
     local index=1
     local itemInterface = require("itemsInterface")
-    print(display.contentCenterX.."---"..display.contentCenterY)
+    --print(display.contentCenterX.."---"..display.contentCenterY)
     local partenzax = display.contentCenterX-625
     local partenzay= display.contentCenterY+80
     local griglia = {}
@@ -660,7 +660,7 @@ local interfacciaConfig = {
       for y=1, 5, 1 do
         local casellaX = posizioneX + 70
         local casellaY = posizioneY + 68
-        -- print("casella = "..casellaX..", "..casellaY)
+        -- --print("casella = "..casellaX..", "..casellaY)
         local griglia = composer.getVariable( "grigliaOggetti" )
 
         --Ogni casella della griglia è composta dalle coordinate centrali della casella e da un booleano che inidica se la casella è occupata o meno
@@ -780,7 +780,7 @@ local interfacciaConfig = {
       --Oggetto fuori dall'inventario (tentativo di rimozione)
       if( (item.x < invx or item.x > (invx+700)) or (item.y < invy or item.y > (invy+272)) ) then
         item.activateFunction(item.x, item.y)
-        print("appoggiato")
+        --print("appoggiato")
         for i=#curios, 1, -1 do
           if (item.x < curios[i].areaXUpper and item.x > curios[i].areaXLower and item.y < curios[i].areaYUpper and item.y > curios[i].areaYLower) then
             if curios[i].funzione(item, curios[i]) then
@@ -801,7 +801,7 @@ local interfacciaConfig = {
           end
         end
         if not(inventario[idItem]=="vuoto") and not(griglia[idItem]==nil) then
-          print("rimosso")
+          --print("rimosso")
           inventario[idItem] = "vuoto"
           griglia[idItem][3] = false
           griglia[idItem][4] = nil
@@ -809,7 +809,7 @@ local interfacciaConfig = {
         display.remove( item )
       else
         -- VA IMPLEMENTATO L'AUTO POSIZIONAMENTO DEGLI ITEM E LO SCAMBIO DI POSTO
-        print("considerato dentroo")
+        --print("considerato dentroo")
         local xRel = item.x - invx
         local yRel = item.y - invy
         local numCol, restCol = math.modf(xRel/140)
@@ -932,7 +932,7 @@ local interfacciaConfig = {
     item:addEventListener("touch", handler)
     composer.getVariable( "sceneGroup" ):insert(item)
     item:toFront()
-    print("Droppato oggetto")
+    --print("Droppato oggetto")
     composer.setVariable( "endFight", "false" )
   end)
 }

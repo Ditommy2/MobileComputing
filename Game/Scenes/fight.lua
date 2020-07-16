@@ -88,7 +88,7 @@ end
 -- -----------------------------------------------------------------------------------
 local function turnEnemy()
 	local mossa = "mossa" .. math.random(1, 4)
-	print("statistiche enemy e enemy1:\n"..enemy.armor..", "..enemy1.armor.."\n"..enemy.life..", "..enemy1.life.."\n"..enemy.damage..", "..enemy1.damage)
+	--print("statistiche enemy e enemy1:\n"..enemy.armor..", "..enemy1.armor.."\n"..enemy.life..", "..enemy1.life.."\n"..enemy.damage..", "..enemy1.damage)
 	if enemy1.stunned == 0 then
 		chanceRandom = math.random(1, 6)
 		local criticalEffect = {target="false"}
@@ -103,12 +103,12 @@ local function turnEnemy()
 		sommaChance = sommaChance + chanceRandom
 		local totChance = 0
 		totChance = sommaChance + enemy[mossa].hitChance
-		print("tiro totale per colpire nemico->personaggio"..totChance)
+		--print("tiro totale per colpire nemico->personaggio"..totChance)
 		if(totChance >= character.armor) then
 			enemyInterface.attacca(enemy1)
 
 			if not(criticalEffect.target == "false") then
-				print("effetto critico aplicato : "..criticalEffect.target..", "..criticalEffect.value)
+				--print("effetto critico aplicato : "..criticalEffect.target..", "..criticalEffect.value)
 				fightText.alpha = 1
 				fightText.x = 250
 				fightText.text = "Critical Hit!"
@@ -260,12 +260,12 @@ local function calcolaDanno()
 		criticalEffect = character[mossa].effect
 	end
 	sommaChance = sommaChance + chanceRandom + character[mossa].hitChance
-	print("Tiro totale per colpire personaggio->nemico"..sommaChance)
+	--print("Tiro totale per colpire personaggio->nemico"..sommaChance)
 	--Ho colpito il nemico
 	if(sommaChance > enemy1.armor) then
 		enemyInterface.danno(enemy1)
 		if not(criticalEffect.target == "false") then
-			print("effetto critico aplicato : "..criticalEffect.target..", "..criticalEffect.value)
+			--print("effetto critico aplicato : "..criticalEffect.target..", "..criticalEffect.value)
 			fightText.alpha = 1
 			fightText.x = 1000
 			fightText.text = "Critical Hit!"
@@ -308,11 +308,11 @@ local function calcolaDanno()
 			local nemici = composer.getVariable( "nemici" )
 			local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
 
-			print("stanza corrente: " ..  stanzaCorrente.TESTO)
+			--print("stanza corrente: " ..  stanzaCorrente.TESTO)
 			for i=1, #nemici, 1 do
 				if(stanzaCorrente.TESTO == nemici[i].id) then
 					table.remove( nemici, i )
-					print("rimosso nemico numero: " ..  i)
+					--print("rimosso nemico numero: " ..  i)
 					break
 				end
 			end
@@ -335,7 +335,7 @@ end
 -- -----------------------------------------------------------------------------------
 local function eseguiMossa()
 	local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
-	print("statistiche del personaggio (armor, life, damage): \n"..character.armor.."\n"..character.life.."\n"..character.damage.."\n"..character.stunned)
+	--print("statistiche del personaggio (armor, life, damage): \n"..character.armor.."\n"..character.life.."\n"..character.damage.."\n"..character.stunned)
 		if(not(numeroMossa==nil)) then
 			if(turno == "personaggio") then
 				calcolaDanno()

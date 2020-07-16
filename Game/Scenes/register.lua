@@ -50,7 +50,7 @@ local function loadDatas()
 
     if file then
         contents = file:read( "*a" )
-				print(contents)
+				--print(contents)
         io.close( file )
 		end
 end
@@ -60,9 +60,9 @@ end
 local function networkListener( event )
 
     if ( event.isError ) then
-			print("network Error")
+			--print("network Error")
     else
-    	print( event.response .." EVENTO")
+    	--print( event.response .." EVENTO")
 			if event.response=="" then
 				saveDatas(username.text, password.text)
 				loadDatas()
@@ -79,7 +79,7 @@ local function networkListener( event )
         composer.setVariable( "username", username.text )
 				composer.gotoScene( "Scenes.nuovaCarica" )
 			elseif event.response == ("Duplicate entry '"..username.text.."' for key 'PRIMARY'") then
-			print("Username gia in uso")
+			--print("Username gia in uso")
 
 			local file = io.open( filePathComandi, "w" )
 
@@ -154,7 +154,7 @@ function scene:create( event )
   --sul file sono presenti messaggi che comunicano alla funzione se creare o meno i messaggi di controllo come "username in uso" e varie
   if file then
   	local contents = file:read( "*a" )
-  	print(contents)
+  	--print(contents)
   	io.close( file )
   	if contents=="\"true\"" then
   		local risposta = display.newText( sceneGroup, "Username già in uso",display.contentCenterX, display.contentCenterY-160, native.newFont( customFont ), 40)

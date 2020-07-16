@@ -60,7 +60,7 @@ local function handleButtonEventNuovaNome(event)
 				composer.removeScene( "Scenes.nuovaCarica" )
 				composer.gotoScene("Scenes.livello1")
 			else
-				print("il nome partita è già preso per questo utente")
+				--print("il nome partita è già preso per questo utente")
 				local serverAnswer = display.newText("", display.contentCenterX, height*0.85, customFont, height*0.1)
 				serverAnswer.text = "Nome partita in uso"
 				serverAnswer:setFillColor(1,0,0)
@@ -195,7 +195,7 @@ scrollView:insert( background2 )
 
 local function handleBackButtonEvent(event)
 	if ( "ended" == event.phase ) then
-		print("cancellato")
+		--print("cancellato")
 		caricaPartitaOverlayGroup:remove( scrollView )
 	end
 end
@@ -244,8 +244,8 @@ local backButton = widget.newButton({
 
 
 for i = #salvataggi, 1, -1 do
-	print("nome del salvataggio: ")
-	print (salvataggi[i].nomeSalvataggio)
+	--print("nome del salvataggio: ")
+	--print (salvataggi[i].nomeSalvataggio)
 	local saveButton = widget.newButton({
 		shape = "roundedRect",
 		x = background1.x, -------------------------------------------------* 0.3,
@@ -303,7 +303,7 @@ end
 local function networkListener( event )
 	local risposta = event.response
 	if ( event.isError ) then
-		print( "Network error: ", risposta )
+		--print( "Network error: ", risposta )
 	else
 		if(risposta == "" ) then
 			serverAnswer.text = "Username o password errati."
@@ -331,7 +331,7 @@ end
 local function getSavings()
 	local url = "https://appmcsite.000webhostapp.com/carica.php?user=".. urlencode(utenteTextField.text) .. "&passw=" ..urlencode(passTextField.text)
 
-	print(url)
+	--print(url)
 
 	network.request( url, "GET", networkListener)
 end

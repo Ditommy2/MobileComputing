@@ -380,18 +380,18 @@ function scene:create( event )
   foodBarGreen.y = display.contentCenterY - 300
   mainGroup:insert(foodBarGreen)
   local foodToken = display.newImageRect( mainGroup, "Images/Icons/icons3/054-ham.png", 50, 50 )
-  print("food situation: " .. (composer.getVariable( "characterMaxFood" )-composer.getVariable( "characterFood" )))
+  --print("food situation: " .. (composer.getVariable( "characterMaxFood" )-composer.getVariable( "characterFood" )))
   foodToken.x = (foodBarGreen.x + foodBarGreen.width/2) - (composer.getVariable( "characterMaxFood" )-composer.getVariable( "characterFood" ))
   foodToken.maxX = foodBarGreen.x + foodBarGreen.width/2
   foodToken.minX = foodBarGreen.x - foodBarGreen.width/2
-  print("impostato food token x :"..foodToken.x)
+  --print("impostato food token x :"..foodToken.x)
   foodToken.y = foodBarGreen.y
   composer.setVariable("foodToken", foodToken)
 
   if composer.getVariable( "endFight" ) == "true" then
-    print("composer end fight : true")
+    --print("composer end fight : true")
   else
-    print("composer end fight : false")
+    --print("composer end fight : false")
   end
 
   if (composer.getVariable("characterFood") == 0 and not(composer.getVariable( "endFight" )=="true")) then
@@ -420,16 +420,16 @@ function scene:create( event )
       lifeBarCharacter.alpha = 1
     	lifeBarCharacter.x = lifeBarCharacterBlack.x - (lifeBarCharacterBlack.width/2)
     	lifeBarCharacter.y = character.y - character.height
-      print("lunghezza barra prima: " .. lifeBarCharacter.width)
+      --print("lunghezza barra prima: " .. lifeBarCharacter.width)
       local rapporto = lifeBarCharacter.width / 3000
-      print("rapporto: " .. rapporto)
-      print("vitaPersonaggio prima: " .. vitaPersonaggio)
+      --print("rapporto: " .. rapporto)
+      --print("vitaPersonaggio prima: " .. vitaPersonaggio)
       local x = (3000 - (vitaPersonaggio - danno)) * rapporto		--Pixel dal levare
-      print("pixel calcolati: " .. x)
+      --print("pixel calcolati: " .. x)
       lifeBarCharacter.width = lifeBarCharacter.width - x
-      print("lunghezza barra dopo: " .. lifeBarCharacter.width)
+      --print("lunghezza barra dopo: " .. lifeBarCharacter.width)
       composer.setVariable( "characterLife", vitaPersonaggio-danno)
-      print("vitaPersonaggio dopo: " .. vitaPersonaggio-danno)
+      --print("vitaPersonaggio dopo: " .. vitaPersonaggio-danno)
 
       local function removeBarDamage()
         lifeBarCharacter.alpha = 0
@@ -463,12 +463,12 @@ function scene:create( event )
   local nemici = composer.getVariable( "nemici" )
   if not(nemici == "vuoto") then
     if(#nemici==0) then
-      print("controllo true")
+      --print("controllo true")
       nuovoLivello(self)
     end
 
     for i=1, #nemici, 1 do
-      print(nemici[i].id .. ": " .. nemici[i].enemy.immagine)
+      --print(nemici[i].id .. ": " .. nemici[i].enemy.immagine)
     end
   end
 end

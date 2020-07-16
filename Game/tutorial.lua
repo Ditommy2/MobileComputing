@@ -119,9 +119,9 @@ textTutorial2:setFillColor(colore[1], colore[2], colore[3])
 textTutorial3:setFillColor(colore[1], colore[2], colore[3])
 textTutorial4:setFillColor(colore[1], colore[2], colore[3])
 local function handleButtonEvent(event)
-  print("non ended")
+  --print("non ended")
   if ( "ended" == event.phase ) then
-    print("cancellato")
+    --print("cancellato")
     sceneGroup:remove( scrollView )
   end
 end

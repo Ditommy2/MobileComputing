@@ -16,7 +16,7 @@ local itemsTable = {
       local drinkSound = audio.loadSound( "audio/eff/drink.mp3" )
       audio.setVolume( 0.5 )
       if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
-        print("curato")
+        --print("curato")
         audio.play( drinkSound )
         local curaLower = 300
         local curaUpper = 700
@@ -64,7 +64,7 @@ local itemsTable = {
       local eatSound = audio.loadSound( "audio/eff/eat.mp3" )
       audio.setVolume( 0.5 )
       if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
-        print("curato")
+        --print("curato")
         audio.play( eatSound )
         local curaLower = 90
         local curaUpper = 300
@@ -103,10 +103,10 @@ local itemsTable = {
       local invy = composer.getVariable( "invy" )
       local character = composer.getVariable("character")
       if ( (posx < invx or posx > (invx+700)) or (posy < invy or posy > (invy+272)) ) then
-        print("impostato buff a 0")
+        --print("impostato buff a 0")
         composer.setVariable( "armorBuff", 0 )
       else
-        print("impostato buff a 2")
+        --print("impostato buff a 2")
         composer.setVariable( "armorBuff", 2 )
       end
       character.armorBuff = composer.getVariable("armorBuff")
@@ -170,7 +170,7 @@ local itemsTable = {
     local bionicSound = audio.loadSound( "audio/eff/bionic.mp3" )
     audio.setVolume( 0.5 )
     if( (characterX - characterWidth/2)<posx and(characterX + characterWidth/2)>posx) and ( (characterY - characterHeight)<posy and(characterY )>posy) then
-      print("curato")
+      --print("curato")
       audio.play( bionicSound )
       local fightText = display.newText(composer.getVariable("sceneGroup"), "", characterX, characterY-100, native.newFont( customFont), 100)
       local cura = composer.getVariable( "characterMaxLife" )
