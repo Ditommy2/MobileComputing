@@ -7,7 +7,7 @@ local nemici = require("nemici")
 local curios = require("curios")
 local spawnRatioNemiciUpper = 27  --circa il 70% di spawn rate
 local spawnRatioNemiciLower = 1
-local spawnRatioCurioLower = 4
+local spawnRatioCurioLower = 3
 local spawnRatioCurioUpper = 4
 local numeroBackgroundTotali = 9
 local token
