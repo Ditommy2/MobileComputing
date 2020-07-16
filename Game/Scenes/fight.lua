@@ -422,7 +422,7 @@ function scene:create ( event )
 	textDamageEnemy = display.newText(textGroup, "", 500, 200, native.newFont( customFont), 100)
 	textDamageEnemy:setFillColor(1, 0, 0)
 
-	turnoHourglass = display.newImageRect( midGroup, "Images/Icons/icons2/038-hourglass.png", 50, 50)
+	turnoHourglass = display.newImageRect( midGroup, "Images/Icons/icons3/038-hourglass.png", 50, 50)
 	turnoHourglass.x = 600
 	turnoHourglass.alpha = 0
 
