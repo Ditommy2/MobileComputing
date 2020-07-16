@@ -5,8 +5,8 @@ local altezza=  lunghezza*(9/16)
 local math = require("math")
 local nemici = require("nemici")
 local curios = require("curios")
-local spawnRatioNemiciUpper = 21--27  --circa il 70% di spawn rate
-local spawnRatioNemiciLower = 21 --1
+local spawnRatioNemiciUpper = 21
+local spawnRatioNemiciLower = 21
 local spawnRatioCurioLower = 4
 local spawnRatioCurioUpper = 4
 local numeroBackgroundTotali = 9
@@ -448,13 +448,6 @@ local function move(event)
       timer.pause(moveTimer)
       timer.cancel(moveTimer)
     end
-    -- if not(token.x <token.partenzaX and token.x > token.partenzaX-token.movimentoMassimo) or not(token.x > token.partenzaX and token.x < token.partenzaX+token.movimentoMassimo) then
-    --   timer.pause(moveTimer)
-    -- end
-    --
-    -- if not(token.y <token.partenzaY and token.y > token.partenzaY-token.movimentoMassimo) or not(token.y > token.partenzaY and token.y < token.partenzaY+token.movimentoMassimo) then
-    --   timer.pause(moveTimer)
-    -- end
   end
 
 end
@@ -560,7 +553,6 @@ local function displayStanzaFunzione(stanza, offx, offy)
     token.movimentoMassimo=lunghezzaCorridoio
     token.x = item.x
     token.y = item.y
-    --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
     tokenGroup:insert(token)
   end
 
@@ -568,10 +560,8 @@ local function displayStanzaFunzione(stanza, offx, offy)
     item=display.newImageRect( "Images/Icons/corridoioVert.png",  spessoreCorridoio, lunghezzaCorridoio )
     item.x = offx
     item.y = offy-(dimensioniStanza/2)-(lunghezzaCorridoio/2)+diff
-    --item:setFillColor(coloreCorridoio[1], coloreCorridoio[2], coloreCorridoio[3])
     mapGroup:insert(item)
     stanza.NORD.visitato=true
-    -- displayStanzaFunzione(stanza.NORD, offx, (offy-lunghezzaCorridoio))
     if(stanza.corridoioCorrente=="NORD") then
       token = display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
       token.movimentoMassimo=lunghezzaCorridoio
@@ -580,7 +570,6 @@ local function displayStanzaFunzione(stanza, offx, offy)
       token.partenzaY = item.y + lunghezzaCorridoio/2
       token.x = item.x
       token.y = item.y + lunghezzaCorridoio/2
-      --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
       tokenGroup:insert(token)
     end
     displayStanzaFunzione(stanza.NORD, offx, (offy-lunghezzaCorridoio-(dimensioniStanza/2)))
@@ -590,10 +579,8 @@ local function displayStanzaFunzione(stanza, offx, offy)
     item=display.newImageRect( "Images/Icons/corridoioVert.png",  spessoreCorridoio, lunghezzaCorridoio )
     item.x=offx
     item.y=offy+(dimensioniStanza/2)+(lunghezzaCorridoio/2)-diff
-    --  item:setFillColor(1, 0, 0)
     mapGroup:insert(item)
     stanza.SUD.visitato=true
-    -- displayStanzaFunzione(stanza.SUD, offx, (offy+lunghezzaCorridoio))
     if(stanza.corridoioCorrente=="SUD") then
       token = display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
       token.movimentoMassimo=lunghezzaCorridoio
@@ -602,7 +589,6 @@ local function displayStanzaFunzione(stanza, offx, offy)
       token.partenzaY = item.y - lunghezzaCorridoio/2
       token.x = item.x
       token.y = item.y - lunghezzaCorridoio/2
-      --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
       tokenGroup:insert(token)
     end
     displayStanzaFunzione(stanza.SUD, offx, (offy+lunghezzaCorridoio+(dimensioniStanza/2)))
@@ -610,12 +596,10 @@ local function displayStanzaFunzione(stanza, offx, offy)
 
   if stanza.EST~=nil and stanza.EST.visitato~=true then
     item=display.newImageRect( "Images/Icons/corridoioOriz.png",  lunghezzaCorridoio, spessoreCorridoio )
-    --item:setFillColor(1, 0, 0)
     item.x=offx+(dimensioniStanza/2)+(lunghezzaCorridoio/2)-diff
     item.y=offy
     mapGroup:insert(item)
     stanza.EST.visitato=true
-    -- displayStanzaFunzione(stanza.EST, offx+lunghezzaCorridoio, offy)
     if(stanza.corridoioCorrente=="EST") then
       token = display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
       token.movimentoMassimo=lunghezzaCorridoio
@@ -624,7 +608,6 @@ local function displayStanzaFunzione(stanza, offx, offy)
       token.partenzaY = item.y
       token.x = item.x - lunghezzaCorridoio/2
       token.y = item.y
-      --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
       tokenGroup:insert(token)
     end
     displayStanzaFunzione(stanza.EST, offx+lunghezzaCorridoio+(dimensioniStanza/2), offy)
@@ -635,10 +618,8 @@ local function displayStanzaFunzione(stanza, offx, offy)
     item.x=offx-(dimensioniStanza/2)-(lunghezzaCorridoio/2)+diff
     item.y=offy
 
-    --item:setFillColor(1, 0, 0)
     mapGroup:insert(item)
     stanza.OVEST.visitato=true
-    -- displayStanzaFunzione(stanza.OVEST, offx-lunghezzaCorridoio, offy)
     if(stanza.corridoioCorrente=="OVEST") then
       token =  display.newImageRect("Images/Icons/icons3/020-crown.png", dimensioniStanza/1.5, dimensioniStanza/1.5 )
       token.movimentoMassimo=lunghezzaCorridoio
@@ -647,7 +628,6 @@ local function displayStanzaFunzione(stanza, offx, offy)
       token.partenzaY = item.y
       token.x = item.x + lunghezzaCorridoio/2
       token.y = item.y
-      --token:setFillColor(coloreCorrente[1], coloreCorrente[2], coloreCorrente[3])
       tokenGroup:insert(token)
     end
     displayStanzaFunzione(stanza.OVEST, offx-lunghezzaCorridoio-(dimensioniStanza/2), offy)
@@ -709,7 +689,6 @@ local interfacciaConfig = {
         item = display.newImageRect(inventoryGroup,  itemInterface[nomeItem].location..itemInterface[nomeItem].nome, 70, 70)
         item.x = griglia[x][1]
         item.y = griglia[x][2]
-        -- print("item: "..item.x..", "..item.y)
         item.id = x
         item.nome = itemInterface[nomeItem].nome
         item.location = itemInterface[nomeItem].location
@@ -720,7 +699,6 @@ local interfacciaConfig = {
 
 
         item:addEventListener("tap", viewDesc)
-        -- print("Visualizzato oggetto: " .. inventario[x] .. " in posizione (" .. griglia[x][1] .. ", " .. griglia[x][2] .. ") della griglia")
 
         inventoryGroup:insert(item)
         item:addEventListener("touch", handler)
@@ -752,8 +730,6 @@ local interfacciaConfig = {
     local phase=event.phase
     if("began"==phase) then
       display.currentStage:setFocus(item)
-
-      -- print("coordinate mappa: (" .. (display.contentCenterX+150) .. ", " .. (display.contentCenterY+100) .. ")")
 
       if((event.x > (display.contentCenterX+150) and event.x < (lunghezza-50)) and (event.y > (display.contentCenterY+75) and event.y < (altezza-25))) then
         item.touchOffsetX=event.x-item.x
@@ -795,9 +771,7 @@ local interfacciaConfig = {
     if("began"==phase) then
       display.currentStage:setFocus(item)
 
-      -- print("coordinate mappa: (" .. invx .. ", " .. invy .. ")")
 
-      -- if( not((item.x < invx or item.x > (invx+500)) or (item.y < invy or item.y > (invy+140))) ) then
       item.touchOffsetX=event.x-item.x
       item.touchOffsetY=event.y-item.y
       -- end
@@ -807,7 +781,6 @@ local interfacciaConfig = {
         item.x=event.x-item.touchOffsetX
         item.y=event.y-item.touchOffsetY
       end
-      -- print(item.x..", "..item.y.."---"..event.x..", "..event.y)
     elseif("ended"==phase or "cancelled"==phase) then
       --Oggetto fuori dall'inventario (tentativo di rimozione)
       if( (item.x < invx or item.x > (invx+700)) or (item.y < invy or item.y > (invy+272)) ) then
@@ -821,19 +794,11 @@ local interfacciaConfig = {
               composer.getVariable( "mainGroup" ):insert(composer.getVariable( "activeCurios" )[i])
               composer.getVariable( "activeCurios" )[i]:toBack()
               for j = #composer.getVariable( "stanzaCorrente" ).curios, 1, -1 do
-                --print("confronto tra "..composer.getVariable( "stanzaCorrente" ).curios[j]..", "..app.nome)
                 if composer.getVariable( "stanzaCorrente" ).curios[j] == app.nome then
-                  --print("trovata corrisponenza")
                   composer.getVariable( "stanzaCorrente" ).curios[j] = composer.getVariable( "activeCurios" )[i].nome
                 end
               end
-              -- display.remove( item )
-              -- print("rimosso dopo essere stato posizionato nel curio")
-              -- inventario[idItem] = "vuoto"
-              -- griglia[idItem][3] = false
-              -- griglia[idItem][4] = nil
-              -- composer.setVariable( "inv", inventario )
-              -- composer.setVariable( "grigliaOggetti", griglia )
+
             else
               item.x = partenza[1]
               item.y = partenza[2]
@@ -920,12 +885,7 @@ local interfacciaConfig = {
 
               if(not(item.oggetto == nil)) then
                   inventario[numCasella] = item.oggetto
-                  -- local stanzaCorrente = composer.getVariable( "stanzaCorrente" )
-                  -- for i = #stanzaCorrente.oggetti, 1, -1 do
-                  --   if stanzaCorrente.oggetti[i] == curio.oggetto then
-                  --     table.remove(stanzaCorrente.oggetti, i)
-                  --   end
-                  -- end
+                
               end
             end
             composer.setVariable( "inv", inventario )

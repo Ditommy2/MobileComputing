@@ -154,7 +154,6 @@ function scene:create( event )
   --sul file sono presenti messaggi che comunicano alla funzione se creare o meno i messaggi di controllo come "username in uso" e varie
   if file then
   	local contents = file:read( "*a" )
-  	--local printare = json.decode(cotents)
   	print(contents)
   	io.close( file )
   	if contents=="\"true\"" then

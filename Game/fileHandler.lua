@@ -3,7 +3,6 @@ local composer= require("composer")
 local json = require( "json" )
 local defaultLocation = system.DocumentsDirectory
 local customFont="MadnessHyperactive.otf"
---local customFont=native.systemFont
 
 local function urlencode(str)
 	if (str) then
@@ -27,8 +26,6 @@ function M.scaricaSave(stringaSalvataggio)
 		elseif ( event.phase == "ended" ) then
 			print( "Download completed for filename :"..stringaSalvataggio  )
 			print(event.response.filename)
-			-- local t = M.loadTable(event.response.filename, event.response.baseDirectory)
-			-- M.saveTable(t, event.response.filename, system.documentsDirectory)
 		end
 	end
 	print("Download Richiesto: "..stringaSalvataggio)
@@ -152,63 +149,38 @@ end
 --annotazioni: le back cycling sono assolutamente insensate, puntano a se stesse o a stanze casuali, è per questo che si rompe tutto
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function antiReferenceCycle(precedente, attuale)
-	-- print("ITERAZIONE ANTICICLO SU STANZA ", attuale.TESTO)
-	-- for i = 1, #startingTable, 1 do
-	--   if
-	--   if startingTable[i]=="<reference cycle>" then
-	--     print("swappato il reference")
-	--     startingTable[i]=startingTable
-	--   else
-	--     print("non era ciclato")
-	--     t=antiReferenceCycle(startingTable[i])
-	--   end
-	-- end
 	local t = attuale
 	if not (attuale.NORD == nil) then
 		if attuale.NORD=="<reference cycle>" then
-			-- print("swappato il reference")
 			attuale.NORD=precedente
 		else
-			-- print("non era ciclato")
-			-- t=
 			antiReferenceCycle(attuale, attuale.NORD)
 		end
 	end
 
 	if not (attuale.SUD == nil) then
 		if attuale.SUD=="<reference cycle>" then
-			-- print("swappato il reference")
 			attuale.SUD=precedente
 		else
-			-- print("non era ciclato")
-			-- t=
 			antiReferenceCycle(attuale, attuale.SUD)
 		end
 	end
 
 	if not (attuale.EST == nil) then
 		if attuale.EST=="<reference cycle>" then
-			-- print("swappato il reference")
 			attuale.EST=precedente
 		else
-			-- print("non era ciclato")
-			-- t=
 			antiReferenceCycle(attuale, attuale.EST)
 		end
 	end
 
 	if not (attuale.OVEST == nil) then
 		if attuale.OVEST=="<reference cycle>" then
-			-- print("swappato il reference")
 			attuale.OVEST=precedente
 		else
-			-- print("non era ciclato")
-			-- t=
 			antiReferenceCycle(attuale, attuale.OVEST)
 		end
 	end
-
-	-- return t
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione per caricare da filepath una tabella
@@ -236,15 +208,11 @@ function M.loadTable( filename, location )
         -- Decode JSON data into Lua table
         local t = json.decode( contents )
         -- Close the file handle
-        -- print("ANTICICLO SULLA MAPPA")
-        -- t.mappaToSave=
 				if(t==nil) then
 				return {}
 				end
 				for i=#t, 1, -1 do
 				antiReferenceCycle(t[i].mappaToSave, t[i].mappaToSave)
-        -- print("ANTICICLO SULLA STANZA")
-        -- t.stanzaCorrenteToSave=
         antiReferenceCycle(t[i].stanzaCorrenteToSave, t[i].stanzaCorrenteToSave)
 			end
         io.close( file )

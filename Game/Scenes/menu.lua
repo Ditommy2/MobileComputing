@@ -77,7 +77,6 @@ function scene:destroy( event )
 
 	local sceneGroup = self.view
 	-- Code here runs prior to the removal of scene's view
-  -- Dispose audio!
 	for i = sceneGroup.numChildren, 1, -1 do
     sceneGroup[i]:removeSelf()
     sceneGroup[i] = nil

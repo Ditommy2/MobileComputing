@@ -15,11 +15,6 @@ local tabella = interfaccia.tabellaFunction(numero)
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local inventario =
 {
---
---   moveToken=
---   (
---
---   )
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --funzione display che si occupa del display degli oggetti dell'interfaccia bassa
 --ci sono delle parti commentate giganti che non mi sentirei di rimuovere. Fanno parte della vecchia costruzione dell'interfaccia prima del commit "implemented nuovo background"
@@ -41,7 +36,7 @@ local inventario =
     map:setFillColor(0.23, 0.23, 0.23)
     mapGroup:insert(map)
     interfaccia.annullaVisite(mappaGenerata, mappaGenerata)
-    interfaccia.displayStanza(mappaGenerata, display.contentCenterX, display.contentCenterY)-- -60, -30
+    interfaccia.displayStanza(mappaGenerata, display.contentCenterX, display.contentCenterY)
 
     --Creazione del background dell'inventario
     local overlayBackground = display.newImageRect(lowerOverlay, "Images/Backgrounds/lowerBackground.png", lunghezza+20, altezza+200)
@@ -51,11 +46,7 @@ local inventario =
     --Posizionamento di mappa e inventario
     mapGroup.x=composer.getVariable( "mapx" )
     mapGroup.y=composer.getVariable( "mapy" )
-    -- inventoryGroup.anchorX=0.5
-    -- inventoryGroup.anchorY=0.5
-    -- inventoryGroup.x=display.contentCenterX---250
-    -- inventoryGroup.y=display.contentCenterY--200
-
+  
     --Listener per il drag della mappa
     mapGroup:addEventListener("touch", interfaccia.dragMapSet)
 
