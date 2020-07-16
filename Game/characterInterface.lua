@@ -211,13 +211,13 @@ local function move(event)
     end
 
     if(character.x < 0) then
-      timer.pause( moveTimer )
+      timer.cancel(moveTimer)
       character:pause()
       scene.goBack()
     end
 
     if(character.x > lunghezza) then
-      timer.pause( moveTimer )
+      timer.cancel(moveTimer)
       character:pause()
       scene.changeRoom()
     end
@@ -228,8 +228,7 @@ local function move(event)
 
     if(currentScene=="Scenes.livello1") then
       if(character.x > lunghezza - 500 and nemico ~= nill) then
-        -- print("partito combattimento con: " .. nemico.immagine)
-        timer.pause( moveTimer )
+        timer.cancel(moveTimer)
         character:pause()
         composer.removeScene( "Scenes.livello1")
         composer.gotoScene( "Scenes.fight", {time=1500, effect="zoomInOutFade"} )

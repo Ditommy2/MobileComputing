@@ -440,23 +440,13 @@ local function move(event)
     end
 
     if token.x < token.partenzaX - token.movimentoMassimo or token.x > token.partenzaX + token.movimentoMassimo then
-      timer.pause(moveTimer)
       timer.cancel(moveTimer)
     end
 
     if token.y < token.partenzaY - token.movimentoMassimo or token.y > token.partenzaY  + token.movimentoMassimo then
-      timer.pause(moveTimer)
       timer.cancel(moveTimer)
     end
-    -- if not(token.x <token.partenzaX and token.x > token.partenzaX-token.movimentoMassimo) or not(token.x > token.partenzaX and token.x < token.partenzaX+token.movimentoMassimo) then
-    --   timer.pause(moveTimer)
-    -- end
-    --
-    -- if not(token.y <token.partenzaY and token.y > token.partenzaY-token.movimentoMassimo) or not(token.y > token.partenzaY and token.y < token.partenzaY+token.movimentoMassimo) then
-    --   timer.pause(moveTimer)
-    -- end
   end
-
 end
 
 --Movement Listener
@@ -523,14 +513,12 @@ local function moveListener(event)
     -- --Touch falls in the non-movement area
     if((event.x > target.nonMovementArea.minX and event.x < target.nonMovementArea.maxX) or (event.y > target.nonMovementArea.maxY)) then
       if not(moveTimer==nil) then
-        timer.pause(moveTimer)
         timer.cancel( moveTimer )
       end
       return true
     end
   elseif (phase=="ended" or phase=="cancelled") then
     if not(moveTimer==nil) then
-      timer.pause(moveTimer)
       timer.cancel( moveTimer )
     end
   end
